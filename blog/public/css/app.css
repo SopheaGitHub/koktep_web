@@ -1,0 +1,244 @@
+body {
+    font-family: 'Lato';
+    background: #F1F3FA;
+}
+
+.fa-btn {
+    margin-right: 6px;
+}
+
+.padding-fixed-header {
+    padding: 30px;
+}
+
+/* Profile container */
+.profile {
+  margin: 20px 0;
+}
+
+/* Profile sidebar */
+.profile-sidebar {
+  padding: 20px 0 10px 0;
+  background: #fff;
+}
+
+.profile-userpic {
+    text-align: center;
+}
+
+.profile-userpic img {
+  width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255,255,255,0.5);
+}
+
+.profile-usertitle {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.profile-usertitle-name {
+  color: #5a7391;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.profile-usertitle-job {
+  text-transform: uppercase;
+  color: #5b9bd1;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.profile-userbuttons {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profile-userbuttons .btn {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 15px;
+  margin-right: 5px;
+}
+
+.profile-userbuttons .btn:last-child {
+  margin-right: 0px;
+}
+    
+.profile-usermenu {
+  margin-top: 30px;
+}
+
+.profile-usermenu ul li {
+  border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-usermenu ul li ul li {
+  border-bottom: 1px solid #f0f4f7;
+  list-style: none;
+  padding: 10px 0px;
+}
+
+.profile-usermenu ul li ul li a{
+  text-decoration: none;
+}
+
+.profile-usermenu ul li:last-child {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li a {
+  color: #27C3ED;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.profile-usermenu ul li a i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.profile-usermenu ul li a:hover {
+  background-color: #fafcfd;
+  color: #5b9bd1;
+}
+
+.profile-usermenu ul li.active {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li.active a {
+  color: #0F97B7;
+  background-color: #f6f9fb;
+  border-left: 2px solid #0F97B7;
+  margin-left: -2px;
+}
+
+/* Profile Content */
+.profile-content {
+  padding: 20px;
+  background: #fff;
+  min-height: 460px;
+}
+
+.social {
+    padding: 5px;
+    text-align: center;
+}
+
+.social .btn{ border-radius: 50%; width:32px; height:32px; line-height:18px;  }
+
+footer {
+  margin-top: 30px;
+  height: 300px;
+  background: #fff;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: #27C3ED;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+  color: #0F97B7;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+  color: #0F97B7;
+  background-color: #e7e7e7;
+}
+
+.dropdown-menu>li>a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: 400;
+  line-height: 1.42857143;
+  color: #27C3ED;
+  white-space: nowrap;
+}
+
+.dropdown-menu>li>a:hover {
+  color: #0F97B7;
+}
+
+/*@media (max-width: 767px) {
+  navbar.less:475
+  .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+      color: #777;
+  }
+}*/
+
+@media screen and (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+      color: #27C3ED;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
+    color: #0F97B7;
+  }
+}
+
+a {
+  color: #27C3ED;
+}
+
+a:hover {
+  color: #0F97B7;
+  text-decoration: none;
+}
+
+.progress-bar {
+  background-color: #27C3ED;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #27C3ED;
+    border-color: #27C3ED;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #0F97B7;
+    border-color: #0F97B7;
+}
+
+h3 {
+  margin: 0px;
+  padding: 0px;
+  color: #EEE82D;
+}
+
+.panel-body form .nav {
+  margin-bottom: 20px;
+}
+
+label {
+  color: #555;
+  font-size: 12px;
+}
+
+.panel-title {
+  color: #EEE82D;
+}
+
+div.required .control-label:not(span):before, td.required:before {
+    content: '* ';
+    color: #F00;
+    font-weight: bold;
+}
+
+.table thead td span[data-toggle="tooltip"]:after, label.control-label span:after {
+    font-family: FontAwesome;
+    color: #1E91CF;
+    content: "\f059";
+    margin-left: 4px;
+}
