@@ -10,7 +10,7 @@
             <div class="profile-content">
                 <div class="row">
                     <div class="col-sm-12 col-md-12">
-                      <h3 style="margin:0px; padding:0px;">Smile Company</h3>
+                      <h4 style="margin:0px; padding:0px;"><i class="fa fa-btn fa-university"></i> Smile Company</h4>
                       <hr />
                       <div class="table-responsive">
                         <table class="table table-bordered table-hover">
@@ -33,7 +33,7 @@
                                   <p>Email: company@gmail.com </p>
                                   <p>Website: <a href="#">www.company.com</a> </p>
                                 </td>
-                                <td>Company, Home, Organization</td>
+                                <td>Company, Home, Organization, Institue, Center, University, School</td>
                               </tr>
                             </tbody>
                         </table>

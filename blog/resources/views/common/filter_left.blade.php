@@ -7,7 +7,7 @@
         <table class="table">
         <thead>
             <tr>
-                <th style="margin:0px; padding:0px 0px 10px 0px;"><h3><i class="fa fa-btn fa-search"></i> Search ...</h3></th>
+                <th style="margin:0px; padding:0px 0px 10px 0px;"><h4><i class="fa fa-btn fa-search"></i> Search ...</h4></th>
             </tr>
         </thead>
         <tbody>
@@ -25,7 +25,7 @@
         <table class="table">
         <thead>
             <tr>
-                <th colspan="2" style="margin:0px; padding:0px 0px 10px 0px;"><h3><i class="fa fa-btn fa-search-plus"></i>Filter Options</h3></th>
+                <th colspan="2" style="margin:0px; padding:0px 0px 10px 0px;"><h4><i class="fa fa-btn fa-search-plus"></i>Filter Options</h4></th>
             </tr>
         </thead>
         <tbody>
@@ -33,7 +33,7 @@
             <td width="20%">VIEW</td>
             <td>
                 <select class="form-control">
-                    <option>Project</option>
+                    <option>Posted</option>
                     <option>People</option>
                     <option>Teams</option>
                     <option>Collection</option>
@@ -81,7 +81,7 @@
             <td>ALPHA</td>
             <td>
                 <select class="form-control">
-                    <option>All</option>
+                    <option>All Alpha</option>
                     <option>A</option>
                     <option>B</option>
                     <option>C</option>

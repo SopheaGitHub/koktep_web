@@ -9,7 +9,7 @@
         <div class="col-md-9">
             <div class="profile-content">
                 <div class="row">
-                    <div class="col-md-6"><h3><i class="fa fa-btn fa-tasks"></i>Posts Management</h3></div>
+                    <div class="col-md-6"><h4><i class="fa fa-btn fa-tasks"></i>Posts Management</h4></div>
                     <div class="col-md-6">
                         <span class="pull-right">
                         <a href="<?php echo url('/posts/create'); ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-plus"></i> Add New Post</a>

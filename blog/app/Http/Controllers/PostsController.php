@@ -149,6 +149,16 @@ class PostsController extends Controller
         exit();
     }
 
+    /**
+     * Show the form for creating a new post.
+     *
+     * @return Response
+     */
+    public function getPostsGroups()
+    {
+        return view('post.posts_groups');
+    }
+
     public function getPostForm($datas=[]) {
         
         $this->data->go_category_autocomplete = url('/category/autocomplete');

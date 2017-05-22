@@ -242,3 +242,7 @@ div.required .control-label:not(span):before, td.required:before {
     content: "\f059";
     margin-left: 4px;
 }
+
+.flex-control-paging {
+  display: none;
+}

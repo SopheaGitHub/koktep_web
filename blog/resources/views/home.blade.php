@@ -51,6 +51,34 @@
                             <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
                         </div>
                     </div>
+                    <div class="col-sm-6 col-md-6">
+                        <img src="<?php echo url('/images/catalog/lights.jpg'); ?>" alt="Norway" style="width:100%" class="w3-hover-opacity">
+                        <div class="w3-container w3-white">
+                            <p><b>Lorem Ipsum</b></p>
+                            <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <img src="<?php echo url('/images/catalog/mountains.jpg'); ?>" alt="Norway" style="width:100%" class="w3-hover-opacity">
+                        <div class="w3-container w3-white">
+                            <p><b>Lorem Ipsum</b></p>
+                            <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <img src="<?php echo url('/images/catalog/p2.jpg'); ?>" alt="Norway" style="width:100%" class="w3-hover-opacity">
+                        <div class="w3-container w3-white">
+                            <p><b>Lorem Ipsum</b></p>
+                            <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <img src="<?php echo url('/images/catalog/p3.jpg'); ?>" alt="Norway" style="width:100%" class="w3-hover-opacity">
+                        <div class="w3-container w3-white">
+                            <p><b>Lorem Ipsum</b></p>
+                            <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="blog-pagination">
                     <nav aria-label="Page navigation">
