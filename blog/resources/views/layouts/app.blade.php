@@ -9,7 +9,7 @@
     <base href="<?php echo url('/').'/'; ?>" />
 
     <!-- main js -->
-    <script type="text/javascript" src="<?php echo asset('/javascript/jquery/jquery-2.1.1.min.js'); ?>"></script>
+    <script type="text/javascript" src="https://demo.opencart.com/catalog/view/javascript/jquery/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="<?php echo asset('/javascript/bootstrap/js/bootstrap.min.js'); ?>"></script>
 
     <!-- Fonts -->
@@ -23,6 +23,9 @@
     <!-- Sommernote form -->
     <link href="<?php echo asset('/javascript/summernote/summernote.css'); ?>" rel="stylesheet" />
     <script type="text/javascript" src="<?php echo asset('/javascript/summernote/summernote.js'); ?>"></script>
+
+    <link rel="stylesheet" href="https://demo.opencart.com/catalog/view/javascript/jquery/flexslider/flexslider.css">
+    <script type="text/javascript" src="https://demo.opencart.com/catalog/view/javascript/jquery/flexslider/jquery.flexslider-min.js"></script>
 
 </head>
 <body id="app-layout">
