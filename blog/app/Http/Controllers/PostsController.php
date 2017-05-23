@@ -159,6 +159,10 @@ class PostsController extends Controller
         return view('post.posts_groups');
     }
 
+    public function getPostsGroupsCreate() {
+        return view('post.posts_groups_form'); 
+    }
+
     public function getPostForm($datas=[]) {
         
         $this->data->go_category_autocomplete = url('/category/autocomplete');

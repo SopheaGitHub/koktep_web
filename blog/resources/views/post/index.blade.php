@@ -31,7 +31,7 @@
                         <hr />
                         <div>
                             <a href="<?php echo url('/posts/edit/1'); ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> Edit</a>
-                            <a href="<?php echo url('/posts/delete/1'); ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
+                            <a href="<?php echo url('/posts/delete/1'); ?>" class="btn btn-sm btn-danger"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                         <hr />
                         <div>
                             <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> Edit</a>
-                            <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
+                            <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                         <hr />
                         <div>
                             <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> Edit</a>
-                            <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
+                            <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                         <hr />
                         <div>
                             <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> Edit</a>
-                            <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
+                            <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
                         </div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                         <hr />
                         <div>
                             <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> Edit</a>
-                            <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
+                            <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                         <hr />
                         <div>
                             <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> Edit</a>
-                            <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
+                            <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
                         </div>
                     </div>
                 </div>

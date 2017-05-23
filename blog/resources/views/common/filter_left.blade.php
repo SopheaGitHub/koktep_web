@@ -7,7 +7,7 @@
         <table class="table">
         <thead>
             <tr>
-                <th style="margin:0px; padding:0px 0px 10px 0px;"><h4><i class="fa fa-btn fa-search"></i> Search ...</h4></th>
+                <th style="margin:0px; padding:0px 0px 10px 0px;"><h4><i class="fa fa-btn fa-search"></i>Search ...</h4></th>
             </tr>
         </thead>
         <tbody>
@@ -37,18 +37,6 @@
                     <option>People</option>
                     <option>Teams</option>
                     <option>Collection</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>POPULAR</td>
-            <td>
-                <select class="form-control">
-                    <option>All Category</option>
-                    <option>Art</option>
-                    <option>Graphic Design</option>
-                    <option>Architectural</option>
-                    <option>Photography</option>
                 </select>
             </td>
         </tr>

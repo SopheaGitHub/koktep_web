@@ -34,7 +34,8 @@ body {
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-    border: 5px solid rgba(255,255,255,0.5);
+    border: 5px solid rgba(255,255,255,0.9);
+    border: 5px solid #f8f8f8;
 }
 
 .profile-usertitle {
@@ -149,11 +150,19 @@ footer {
 
 .navbar-default .navbar-nav>li>a:hover {
   color: #0F97B7;
+  /*border-bottom: 2px solid #0F97B7;*/
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+  color: #27C3ED;
+  background-color: #f8f8f8;
+  border-bottom: 2px solid #27C3ED;
 }
 
 .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
   color: #0F97B7;
-  background-color: #e7e7e7;
+  background-color: #f8f8f8;
+  border-bottom: 2px solid #0F97B7;
 }
 
 .dropdown-menu>li>a {
@@ -224,10 +233,6 @@ h3 {
 label {
   color: #555;
   font-size: 12px;
-}
-
-.panel-title {
-  color: #EEE82D;
 }
 
 div.required .control-label:not(span):before, td.required:before {

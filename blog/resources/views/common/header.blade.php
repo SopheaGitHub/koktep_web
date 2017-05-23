@@ -12,18 +12,34 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="<?php echo url('/'); ?>">
-              <img src="<?php echo url('/images/logo_koktep.png'); ?>" width="90%" style="margin-top:-9px;">
+              <img src="<?php echo url('/images/logo_koktep.png'); ?>" width="90%" style="margin-top:-7px;">
             </a>
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
+            <?php
+                $route_category_id = '0';
+                $route_name = \Route::getCurrentRoute()->getPath();
+                if(empty($route_name) || $route_name =='/') {
+                    $route_category_id = 'home';
+                }else {
+                    if(\Request::has('category_id')) {
+                        $route_category_id = explode('-', \Request::get('category_id'))['0'];
+                    }
+
+                    $array_user_auth_menu = ['overview-account', 'posts', 'account', 'about-account', 'contact-account'];
+                    if(in_array(explode('/', $route_name)['0'], $array_user_auth_menu)) {
+                       $route_category_id = 'user_auth_menu';
+                    }
+                }
+            ?>
             <ul class="nav navbar-nav">
-                <li><a href="<?php echo url('/'); ?>"><i class="fa fa-btn fa-home"></i> Home</a></li>
-                <li><a href="<?php echo url('/category?category_id=1-art'); ?>"><i class="fa fa-btn fa-diamond"></i> Art</a></li>
-                <li><a href="<?php echo url('/category?category_id=2-graphic-design'); ?>"><i class="fa fa-btn fa-desktop"></i> Graphic Design</a></li>
-                <li><a href="<?php echo url('/category?category_id=3-architectural'); ?>"><i class="fa fa-btn fa-building"></i> Architectural</a></li>
-                <li><a href="<?php echo url('/category?category_id=4-photography'); ?>"><i class="fa fa-btn fa-camera"></i> Photography</a></li>
+                <li <?php echo (($route_category_id=='home')? 'class="active"':''); ?>><a href="<?php echo url('/'); ?>"><i class="fa fa-btn fa-home"></i> Home</a></li>
+                <li <?php echo (($route_category_id=='1')? 'class="active"':''); ?>><a href="<?php echo url('/category?category_id=1-art'); ?>"><i class="fa fa-btn fa-diamond"></i> Art</a></li>
+                <li <?php echo (($route_category_id=='2')? 'class="active"':''); ?>><a href="<?php echo url('/category?category_id=2-graphic-design'); ?>"><i class="fa fa-btn fa-desktop"></i> Graphic Design</a></li>
+                <li <?php echo (($route_category_id=='3')? 'class="active"':''); ?>><a href="<?php echo url('/category?category_id=3-architectural'); ?>"><i class="fa fa-btn fa-building"></i> Architectural</a></li>
+                <li <?php echo (($route_category_id=='4')? 'class="active"':''); ?>><a href="<?php echo url('/category?category_id=4-photography'); ?>"><i class="fa fa-btn fa-camera"></i> Photography</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -33,7 +49,7 @@
                     <li><a href="<?php echo url('/login'); ?>"><i class="fa fa-btn fa-sign-in"></i>Login</a></li>
                     <li><a href="<?php echo url('/register'); ?>"><i class="fa fa-btn fa-pencil-square-o"></i>Register</a></li>
                 @else
-                    <li class="dropdown">
+                    <li class="dropdown <?php echo (($route_category_id=='user_auth_menu')? 'active':''); ?>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <i class="fa fa-btn fa-user"></i> <?php echo Auth::user()->name; ?> <span class="caret"></span>
                         </a>
@@ -44,7 +60,7 @@
 border-radius: 50%;
 border: 5px solid rgba(255,255,255,0.5);" alt="Avatar"> My Profile </a></li>
                             <li><a href="<?php echo url('/posts?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-tasks"></i>Posts Management</a></li>
-                            <li><a href="<?php echo url('/posts/posts-groups?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-object-group"></i>Posts Groups</a></li>
+                            <li><a href="<?php echo url('/posts/posts-groups?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-object-group"></i>Posts Groups Management</a></li>
                             <li><a href="<?php echo url('/account/settings?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-cogs"></i>Account Settings</a></li>
                             <li><a href="<?php echo url('/logout'); ?>"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                         </ul>

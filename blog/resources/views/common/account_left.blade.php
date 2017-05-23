@@ -41,11 +41,6 @@
             <li <?php echo (($route_name=='posts-groups-account')? 'class="active"':''); ?> >
                 <a href="<?php echo url('/posts-groups?account_id=1'); ?>" onclick="return false;" target="_blank">
                 <i class="fa fa-btn fa-object-group"></i>Posts Groups </a>
-                <ul>
-                    <li><a href="#"><i class="fa fa-btn fa-angle-double-right"></i>Image</a></li>
-                    <li><a href="#"><i class="fa fa-btn fa-angle-double-right"></i>Photo</a></li>
-                    <li><a href="#"><i class="fa fa-btn fa-angle-double-right"></i>Picture</a></li>
-                </ul>
             </li>
         </ul>
     </div>
