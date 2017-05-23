@@ -28,6 +28,14 @@
                         $route_category_id = explode('-', \Request::get('category_id'))['0'];
                     }
 
+                    if($route_name=='login') {
+                        $route_category_id = 'login';
+                    }
+
+                    if($route_name=='register') {
+                        $route_category_id = 'register';
+                    }
+
                     $array_user_auth_menu = ['overview-account', 'posts', 'account', 'about-account', 'contact-account'];
                     if(in_array(explode('/', $route_name)['0'], $array_user_auth_menu)) {
                        $route_category_id = 'user_auth_menu';
@@ -46,8 +54,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                    <li><a href="<?php echo url('/login'); ?>"><i class="fa fa-btn fa-sign-in"></i>Login</a></li>
-                    <li><a href="<?php echo url('/register'); ?>"><i class="fa fa-btn fa-pencil-square-o"></i>Register</a></li>
+                    <li <?php echo (($route_category_id=='login')? 'class="active"':''); ?>><a href="<?php echo url('/login'); ?>"><i class="fa fa-btn fa-sign-in"></i>Login</a></li>
+                    <li <?php echo (($route_category_id=='register')? 'class="active"':''); ?>><a href="<?php echo url('/register'); ?>"><i class="fa fa-btn fa-pencil-square-o"></i>Register</a></li>
                 @else
                     <li class="dropdown <?php echo (($route_category_id=='user_auth_menu')? 'active':''); ?>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

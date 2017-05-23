@@ -163,9 +163,8 @@ function requestSubmitForm(buttonId, formId, formAction) {
 	          		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
 	          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
 	          		msg += '</div>';
-	          		if(data.action!='edit') {
-	            		$("form#"+formId)[0].reset();
-	            		$('.text_summernote').code('');
+	          		if(data.action=='create') {
+	            		loadingForm (data.load_form);
 	          		}
 	        	}
 
@@ -188,18 +187,36 @@ function loadingList (requestAction) {
 	  	url: requestAction,
 	  	beforeSend:function() {
 	  		console.log('beforeSend');
-	    	// $('#display-table').html('Loading ...').show();
-	    	$('#block-loader').show();
 	  	},
 	  	complete:function() {
 	    	console.log('complete');
-	    	$('#block-loader').hide();
 	  	},
 	  	success:function(html) {
-	    	$('#display-table').html(html).show();
+	    	$('#display-list').html(html).show();
 	  	},
 	  	error:function(err) {
-	    	$('#display-table').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	    	$('#display-list').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	  	}
+	});
+	return false;
+}
+
+// loading list data
+function loadingForm (requestAction) {
+	$.ajax({
+	  	type: "GET",
+	  	url: requestAction,
+	  	beforeSend:function() {
+	  		console.log('beforeSend');
+	  	},
+	  	complete:function() {
+	    	console.log('complete');
+	  	},
+	  	success:function(html) {
+	    	$('#load-form').html(html).show();
+	  	},
+	  	error:function(err) {
+	    	$('#load-form').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
 	  	}
 	});
 	return false;
@@ -218,18 +235,15 @@ function paginateListAction (mainPaginateId, requestAction) {
 	        	url: url,
 	        	beforeSend:function() {
 	    			console.log('beforeSend');
-	      			// $('#display-table').html('Loading ...').show();
-	      			$('#block-loader').show();
 	    		},
 	    		complete:function() {
 	      			console.log('complete');
-	      			$('#block-loader').hide();
 	    		},
 	    		success:function(html) {
-	      			$('#display-table').html(html).show();
+	      			$('#display-list').html(html).show();
 	    		},
 	    		error:function(err) {
-	      			$('#display-table').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	      			$('#display-list').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
 	    		}
 	      	});
 	      	return false;

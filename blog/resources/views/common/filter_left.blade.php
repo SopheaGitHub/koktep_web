@@ -44,10 +44,9 @@
             <td>BROWSE</td>
             <td>
                 <select class="form-control">
-                    <option>Featured</option>
+                    <option>Feature</option>
                     <option>Most Viewed</option>
                     <option>Most Discussed</option>
-                    <option>Most Recent</option>
                     <option>Most Like</option>
                     <option>Most Unlike</option>
                 </select>
@@ -57,7 +56,7 @@
             <td>TIME</td>
             <td>
                 <select class="form-control">
-                    <option>All Time</option>
+                    <option>Recent</option>
                     <option>Today</option>
                     <option>This Week</option>
                     <option>This Month</option>
@@ -68,14 +67,43 @@
         <tr>
             <td>ALPHA</td>
             <td>
+                <?php
+                    $array_alpha = [
+                        'A',
+                        'B',
+                        'C',
+                        'D',
+                        'E',
+                        'F',
+                        'G',
+                        'H',
+                        'I',
+                        'J',
+                        'K',
+                        'L',
+                        'M',
+                        'N',
+                        'O',
+                        'P',
+                        'Q',
+                        'R',
+                        'S',
+                        'T',
+                        'U',
+                        'V',
+                        'W',
+                        'X',
+                        'Y',
+                        'Z'
+                    ];
+                ?>
                 <select class="form-control">
                     <option>All Alpha</option>
-                    <option>A</option>
-                    <option>B</option>
-                    <option>C</option>
-                    <option>D</option>
-                    <option>E</option>
-                    <option>F</option>
+                    <?php
+                        foreach ($array_alpha as $alpha) {
+                            echo '<option>'.$alpha.'</option>';
+                        }
+                    ?>
                 </select>
             </td>
         </tr>

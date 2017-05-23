@@ -33,7 +33,7 @@ class PostsController extends Controller
         $this->filemanager = new FilemanagerController();
         $this->config = new ConfigController();
         $this->data->web_title = 'Posts';
-
+        $this->data->auth_id = ((Auth::check())? Auth::user()->id:'0');
         $this->data->dir_image = $this->config->dir_image;
     }
 
@@ -44,7 +44,78 @@ class PostsController extends Controller
      */
     public function getIndex()
     {
-        return view('post.index');
+        $this->data->action_list = url('/posts/list');
+        $this->data->add_post = url('/posts/create');
+        return view('post.index', ['data'=>$this->data]);
+    }
+
+    public function getList() {
+        $request = \Request::all();
+        $this->data->edit_post = url('/posts/edit');
+        $this->data->action_delete = url('/posts/delete');
+
+        // define data filter
+        if (isset($request['sort'])) {
+            $sort = $request['sort'];
+        } else {
+            $sort = 'created_at';
+        }
+
+        if (isset($request['order'])) {
+            $order = $request['order'];
+        } else {
+            $order = 'desc';
+        }
+
+        // define filter data
+        $filter_data = array(
+            'sort'  => $sort,
+            'order' => $order
+        );
+
+        // define paginate url
+        $paginate_url = ['account_id'=>$this->data->auth_id];
+        if (isset($request['sort'])) {
+            $paginate_url['sort'] = $request['sort'];
+        }
+
+        if (isset($request['order'])) {
+            $paginate_url['order'] = $request['order'];
+        }
+
+        $this->data->posts = $this->post->getPosts($filter_data)->paginate(10)->setPath(url('/posts'))->appends($paginate_url);
+
+        if(count($this->data->posts) > 0) {
+            foreach ($this->data->posts as $post) {
+                if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {
+                    $this->data->thumb[$post->post_id] = $this->filemanager->resize($post->image, 600, 400);
+                } else {
+                    $this->data->thumb[$post->post_id] = $this->filemanager->resize('no_image.png', 600, 400);
+                }
+            }
+        }
+
+        // define data
+        $this->data->sort = $sort;
+        $this->data->order = $order;
+
+        // define column sort
+        $url = '';
+        if ($order == 'asc') {
+            $url .= '&order=desc';
+        } else {
+            $url .= '&order=asc';
+        }
+
+        if (isset($request['page'])) {
+            $url .= '&page='.$request['page'];
+        }
+
+        $this->data->status = $this->config->status;
+
+        $this->data->text_empty = 'There is no data!';
+
+        return view('post.list', ['data' => $this->data]);
     }
 
     /**
@@ -54,6 +125,11 @@ class PostsController extends Controller
      */
     public function getCreate()
     {
+        $this->data->action_form = url('/posts/create-load-form');
+        return view('post.create', ['data'=>$this->data]);
+    }
+
+    public function getCreateLoadForm() {
         $datas = [
             'action' => url('/posts/store'),
             'titlelist' => 'Add New Post'
@@ -74,7 +150,7 @@ class PostsController extends Controller
             try {
 
                 $request = \Request::all();
-                $author_id = ((Auth::check())? Auth::user()->id:'0');
+                $this->data->action_form = url('/posts/create-load-form');
 
                 $validationError = $this->post->validationForm(['request'=>$request]);
                 if($validationError) {
@@ -83,7 +159,7 @@ class PostsController extends Controller
 
                 // insert post
                 $postDatas = [
-                    'author_id'     => $author_id,
+                    'author_id'     => $this->data->auth_id,
                     'image'         => $request['image'],
                     'status'        => $request['status']
                 ];
@@ -131,14 +207,14 @@ class PostsController extends Controller
                 // insert post image
                 $post_relatedDatas = [
                     'post_id'       => $post->id,
-                    'posts_related'   => $request['post_related']
+                    'posts_related' => ((isset($request['post_related']))? $request['post_related']:[])
                 ];
 
                 $post_category = $this->post->insertPostRelated($post_relatedDatas);
                 // End
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>'Success : save post successfully!', 'post'=>$request];
+                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>'Success : save post successfully!', 'load_form'=>$this->data->action_form];
                 return \Response::json($return);
             } catch (Exception $e) {
                 DB::rollback();

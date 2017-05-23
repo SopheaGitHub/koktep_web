@@ -9,7 +9,7 @@
         <div class="col-md-9">
             <div class="profile-content">
                 <div class="row">
-                    <div class="col-md-6"><h4><i class="fa fa-btn fa-object-group"></i>Posts Groups</h4></div>
+                    <div class="col-md-6"><h4><i class="fa fa-btn fa-object-group"></i>Posts Groups Management</h4></div>
                     <div class="col-md-6">
                         <span class="pull-right">
                         <a href="<?php echo url('/posts/posts-groups-create'); ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-plus"></i> Add New Post Group</a>
