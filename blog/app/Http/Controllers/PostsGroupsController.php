@@ -199,11 +199,56 @@ class PostsGroupsController extends Controller
         exit();
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function getEdit($post_group_id)
+    {
+        $this->data->go_back = url('/posts-groups');
+        $this->data->action_form = url('/posts-groups/edit-load-form/'.$post_group_id);
+        return view('post_group.edit', ['data'=>$this->data]);
+    }
+
+    public function getEditLoadForm($post_group_id) {
+        $this->data->post_group = $this->post_group->getPostGroup($post_group_id);
+
+        $data['post_relateds'] = [];
+        if(count($this->data->post_group) > 0) {
+
+            $array_post_group_value = json_decode($this->data->post_group->value, true);
+
+            // get post group item
+            $post_relateds = $this->post->getPosts(['sort'=>'created_at', 'order'=>'desc'])->get();
+            if(count($post_relateds) > 0) {
+                foreach ($post_relateds as $related_info) {
+                    $data['post_relateds'][] = [
+                        'post_id' => $related_info->post_id,
+                        'title'   => $related_info->title
+                    ];
+                }
+            }
+        
+        }        
+
+        $datas = [
+            'icon' => 'icon_edit',
+            'action' => url('/posts-groups/update/'.$post_group_id),
+            'titlelist' => 'Edit Post Group',
+            'post_group' => $this->data->post_group,
+            'post_relateds'  => $data['post_relateds']
+        ];
+
+        echo $this->getPostGroupForm($datas);
+        exit();
+    }
+
     public function getPostGroupForm($datas=[]) {
         $this->data->go_post_autocomplete = url('/posts/autocomplete');
         $this->data->languages = $this->language->getLanguages(['sort'=>'name', 'order'=>'asc'])->get();
         $this->data->status = $this->config->status;
-        $this->data->post_relateds = [];
 
         // define tap
         $this->data->tab_general = 'General';
@@ -223,40 +268,23 @@ class PostsGroupsController extends Controller
         $this->data->button_remove = 'Remove';
         $this->data->button_image_add = 'Add Image';
 
-        if(isset($datas['post'])) {
-            $this->data->image = $datas['post']->image;
-            $this->data->sort_order = $datas['post']->sort_order;
-            $this->data->post_status = $datas['post']->status;
-            $this->data->keyword = $datas['post']->keyword;
+        if(isset($datas['post_group'])) {
+            $this->data->sort_order = $datas['post_group']->sort_order;
+            $this->data->post_status = $datas['post_group']->status;
         }else {
-            $this->data->image = '';
             $this->data->sort_order = '0';
             $this->data->post_status = '1';
-            $this->data->keyword = '';
         }
 
-        if(isset($datas['post_descriptions'])) {
-            foreach ($datas['post_descriptions'] as $description) {
-                $this->data->post_description[$description->language_id]['name'] = $description->name;
-                $this->data->post_description[$description->language_id]['description'] = $description->description;
-                $this->data->post_description[$description->language_id]['meta_title'] = $description->meta_title;
-                $this->data->post_description[$description->language_id]['meta_description'] = $description->meta_description;
-                $this->data->post_description[$description->language_id]['meta_keyword'] = $description->meta_keyword;
-                $this->data->post_description[$description->language_id]['tag'] = $description->tag;
-            }
+        if(isset($datas['post_relateds'])) {
+            $this->data->post_relateds = $datas['post_relateds'];
         }else {
-            foreach ($this->data->languages as $language) {
-                $this->data->post_description[$language->language_id]['name'] = '';
-                $this->data->post_description[$language->language_id]['description'] = '';
-                $this->data->post_description[$language->language_id]['meta_title'] = '';
-                $this->data->post_description[$language->language_id]['meta_description'] = '';
-                $this->data->post_description[$language->language_id]['meta_keyword'] = '';
-                $this->data->post_description[$language->language_id]['tag'] = '';
-            }
+            $this->data->post_relateds = [];
         }
 
         $this->data->action = (($datas['action'])? $datas['action']:'');
         $this->data->titlelist = (($datas['titlelist'])? $datas['titlelist']:'');
+        $this->data->icon = (($datas['icon'])? $datas['icon']:'');
 
         return view('post_group.form', ['data' => $this->data]);
     }

@@ -8,7 +8,19 @@ use DB;
 class PostGroup extends Model
 {
     protected $table = 'post_group';
-	protected $fillable = ['value', 'status'];
+	protected $fillable = ['value', 'sort_order', 'status'];
+
+	public function getPostGroup($post_group_id) {
+		$result = DB::table(DB::raw('
+				(SELECT
+				DISTINCT *, (SELECT name FROM post_group_description AS pgd WHERE pgd.post_group_id = "'.$post_group_id.'" AND pgd.language_id=\'1\') AS name
+				FROM
+					post_group
+				WHERE
+					post_group_id = "'.$post_group_id.'") AS post_group
+			'))->first();
+		return $result;
+	}
 
 	public function getPostsGroups($filter_data=[]) {
 		$db = DB::table(DB::raw('
@@ -63,7 +75,7 @@ class PostGroup extends Model
 
 		$validator = \Validator::make($datas['request'], $rules, $messages);
 		if ($validator->fails()) {
-			$error = ['error'=>'1','success'=>'0','msg'=>'Warning : save post unsuccessfully!','validatormsg'=>$validator->messages()];
+			$error = ['error'=>'1','success'=>'0','msg'=>'Warning : '.$datas['message'].' post group unsuccessfully!','validatormsg'=>$validator->messages()];
         }
 		return $error;
 	}

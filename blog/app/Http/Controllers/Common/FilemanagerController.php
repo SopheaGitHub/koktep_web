@@ -114,7 +114,7 @@ class FilemanagerController extends Controller {
 				$server = $this->data->http_best_path;
 
 				$data['images'][] = array(
-					'thumb' => $this->resize(substr($image, strlen($this->data->dir_image)), 100, 100),
+					'thumb' => $this->resize(substr($image, strlen($this->data->dir_image)), 120, 80),
 					'name'  => implode(' ', $name),
 					'type'  => 'image',
 					'path'  => substr($image, strlen($this->data->dir_image)),

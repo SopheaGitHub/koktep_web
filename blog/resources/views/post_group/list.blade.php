@@ -2,11 +2,16 @@
   if(count($data->posts_groups) > 0) {
     foreach ($data->posts_groups as $post_group) { ?>
       <div class="row">
-        <div class="col-md-9"><h5><a hre="#"><?php echo $post_group->name; ?> <?php echo $post_group->status; ?></a></h5></div>
+        <div class="col-md-7"><h5><a href="#"><?php echo $post_group->name; ?></a></h5></div>
         <div class="col-md-3">
             <span class="pull-right">
               <a href="<?php echo url('/posts-groups/edit/1'); ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> Edit</a>
               <a href="<?php echo url('/posts-groups/delete/1'); ?>" class="btn btn-sm btn-danger"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
+            </span>
+        </div>
+        <div class="col-md-2">
+            <span class="pull-right">
+              <i class="fa fa-btn <?php echo (($post_group->status=='1')? 'fa-check':'fa-times') ?>"></i> <?php echo ((isset($data->status[$post_group->status]))? $data->status[$post_group->status]:$post_group->status) ?>
             </span>
         </div>
       </div>

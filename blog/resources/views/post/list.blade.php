@@ -15,8 +15,8 @@
           <hr />
           <div class="row">
             <div class="col-md-6">
-              <a href="<?php echo url('/posts/edit/1'); ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> Edit</a>
-              <a href="<?php echo url('/posts/delete/1'); ?>" class="btn btn-sm btn-danger"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
+              <a href="<?php echo url('/posts/edit/'.$post->post_id); ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> Edit</a>
+              <a href="<?php echo url('/posts/delete/'.$post->post_id); ?>" class="btn btn-sm btn-danger"><i class="fa fa-btn fa-trash-o"></i> Delete</a>
             </div>
             <div class="col-md-6">
               <span class="pull-right">

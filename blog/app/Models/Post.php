@@ -78,6 +78,20 @@ class Post extends Model {
 		return $result;
 	}
 
+	public function getPostRelated($post_id) {
+		$post_related_data = [];
+		$post_relateds = DB::table('post_related')->where('post_id', '=', $post_id)->get();
+		foreach ($post_relateds as $result) {
+			$post_related_data[] = $result->related_id;
+		}
+		return $post_related_data;
+	}
+
+	public function getPostImages($post_id) {
+		$result = DB::table('post_image')->where('post_id', '=', $post_id)->orderBy('sort_order', 'ASC')->get();
+		return $result;
+	}
+
 	public function getAutocompletePosts($filter_data=[]) {
 		$db = DB::table(DB::raw('
 				(
@@ -170,6 +184,15 @@ class Post extends Model {
 		DB::table('post_to_category')->where('post_id', '=', $post_id)->delete();
 	}
 
+	public function deletedPostImage($post_id) {
+		DB::table('post_image')->where('post_id', '=', $post_id)->delete();
+	}
+
+	public function deletedPostRelated($post_id) {
+		DB::table('post_related')->where('post_id', '=', $post_id)->delete();
+		DB::table('post_related')->where('related_id', '=', $post_id)->delete();
+	}
+
 	public function destroyPosts($array_id) {
 		DB::table('post')->whereIn('post_id', $array_id)->delete();
 		DB::table('post_to_category')->whereIn('post_id', $array_id)->delete();
@@ -215,7 +238,7 @@ class Post extends Model {
 
 		$validator = \Validator::make($datas['request'], $rules, $messages);
 		if ($validator->fails()) {
-			$error = ['error'=>'1','success'=>'0','msg'=>'Warning : save post unsuccessfully!','validatormsg'=>$validator->messages()];
+			$error = ['error'=>'1','success'=>'0','msg'=>'Warning : '.$datas['message'].' post unsuccessfully!','validatormsg'=>$validator->messages()];
         }
 		return $error;
 	}

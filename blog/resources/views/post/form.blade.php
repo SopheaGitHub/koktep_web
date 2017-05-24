@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><b><i class="fa fa-btn fa-plus"></i><?php echo $data->titlelist; ?></b></h3>
+      <h3 class="panel-title"><b><i class="fa fa-btn <?php echo (($data->icon=='icon_create')? 'fa-plus':'fa-pencil') ?>"></i><?php echo $data->titlelist; ?></b></h3>
     </div>
     <div class="panel-body">
 
@@ -80,7 +80,7 @@
                 <input type="text" name="related" value="" placeholder="<?php echo $data->entry_related; ?>" id="input-related" class="form-control" />
                 <div id="post-related" class="well well-sm" style="height: 150px; overflow: auto;">
                   <?php foreach ($data->post_relateds as $post_related) { ?>
-                  <div id="post-related<?php echo $post_related['post_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $post_related['name']; ?>
+                  <div id="post-related<?php echo $post_related['post_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $post_related['title']; ?>
                     <input type="hidden" name="post_related[]" value="<?php echo $post_related['post_id']; ?>" />
                   </div>
                   <?php } ?>

@@ -132,6 +132,7 @@ class PostsController extends Controller
 
     public function getCreateLoadForm() {
         $datas = [
+            'icon' => 'icon_create',
             'action' => url('/posts/store'),
             'titlelist' => 'Add New Post'
         ];
@@ -153,7 +154,7 @@ class PostsController extends Controller
                 $request = \Request::all();
                 $this->data->action_form = url('/posts/create-load-form');
 
-                $validationError = $this->post->validationForm(['request'=>$request]);
+                $validationError = $this->post->validationForm(['request'=>$request, 'message'=>'save']);
                 if($validationError) {
                     return \Response::json($validationError);
                 }
@@ -224,17 +225,183 @@ class PostsController extends Controller
             }
         }
         exit();
+    }    
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function getEdit($post_id)
+    {
+        $this->data->go_back = url('/posts');
+        $this->data->action_form = url('/posts/edit-load-form/'.$post_id);
+        return view('post.edit', ['data'=>$this->data]);
+    }
+
+    public function getEditLoadForm($post_id) {
+        $this->data->post = $this->post->getPost($post_id);
+        $this->data->post_descriptions = $this->post->getPostDescriptions($post_id);
+
+        $post_to_categories = $this->post->getPostCategories($post_id);
+        $data['post_categories'] = [];
+
+        foreach ($post_to_categories as $post_to_category) {
+            $category_info = $this->category->getCategory($post_to_category->category_id);
+
+            if ($category_info) {
+                $data['post_categories'][] = [
+                    'category_id' => $category_info->category_id,
+                    'name' => ($category_info->path) ? $category_info->path . ' &gt; ' . $category_info->name : $category_info->name
+                ];
+            }
+        }
+
+        $post_relateds = $this->post->getPostRelated($post_id);
+        $data['post_relateds'] = [];
+        foreach ($post_relateds as $value_post_id) {
+            $related_info = $this->post->getPost($value_post_id);
+
+            if ($related_info) {
+                $data['post_relateds'][] = [
+                    'post_id' => $related_info->post_id,
+                    'title'       => $related_info->title
+                ];
+            }
+        }
+
+        $post_images = $this->post->getPostImages($post_id);
+        $data['post_images'] = [];
+
+        foreach ($post_images as $post_image) {
+            if (is_file($this->data->dir_image . $post_image->image)) {
+                $image = $post_image->image;
+                $thumb = $post_image->image;
+            } else {
+                $image = '';
+                $thumb = 'no_image.png';
+            }
+
+            $data['post_images'][] = [
+                'image'      => $image,
+                'thumb'      => $this->filemanager->resize($thumb, 120, 80),
+                'sort_order' => $post_image->sort_order
+            ];
+        }
+
+        $datas = [
+            'icon' => 'icon_edit',
+            'action' => url('/posts/update/'.$post_id),
+            'titlelist' => 'Edit Post',
+            'post' => $this->data->post,
+            'post_descriptions' => $this->data->post_descriptions,
+            'post_to_categories' => $data['post_categories'],
+            'post_relateds' => $data['post_relateds'],
+            'post_images'    => $data['post_images']
+        ];
+
+        echo $this->getPostForm($datas);
+        exit();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function postUpdate($post_id)
+    {
+        if(\Request::ajax()) {
+            DB::beginTransaction();
+            try {
+
+                $request = \Request::all();
+
+                $validationError = $this->post->validationForm(['request'=>$request, 'message'=>'save change']);
+                if($validationError) {
+                    return \Response::json($validationError);
+                }
+
+                // update post
+                $postDatas = [
+                    'updated_by_author_id'  => $this->data->auth_id,
+                    'image'         => $request['image'],
+                    'status'        => $request['status']
+                ];
+                $post = $this->post->where('post_id', '=', $post_id)->update($postDatas);
+                // End
+
+                // update post description
+                $clear_post_description = $this->post->deletedPostDescription($post_id);
+                $post_descriptionDatas = [
+                    'post_id'       => $post_id,
+                    'post_description_datas'    => $request['post_description']
+                ];
+
+                $post_description = $this->post->insertPostDescription($post_descriptionDatas);
+                // End
+
+                // update post to layout
+                $clear_post_to_layout = $this->post->deletedPostToLayout($post_id);
+                $post_to_layoutDatas['post_to_layout_datas'][] = [
+                    'post_id'       => $post_id,
+                    'website_id'    => '1',
+                    'layout_id'     => '0'
+                ];
+
+                $post_to_layout = $this->post->insertPostToLayout($post_to_layoutDatas);
+                // End
+
+                // update post to categories
+                $clear_post_to_category = $this->post->deletedPostToCategory($post_id);
+                $post_to_categoryDatas = [
+                    'post_id'       => $post_id,
+                    'post_category_datas'   => $request['post_category']
+                ];
+
+                $post_category = $this->post->insertPostCategory($post_to_categoryDatas);
+                // End
+
+                // update post image
+                $clear_post_image = $this->post->deletedPostImage($post_id);
+                $post_imageDatas = [
+                    'post_id'       => $post_id,
+                    'post_images'   => $request['post_image']
+                ];
+
+                $post_category = $this->post->insertPostImage($post_imageDatas);
+                // End
+
+                // update post related
+                $clear_post_related = $this->post->deletedPostRelated($post_id);
+                $post_relatedDatas = [
+                    'post_id'       => $post_id,
+                    'posts_related' => ((isset($request['post_related']))? $request['post_related']:[])
+                ];
+
+                $post_category = $this->post->insertPostRelated($post_relatedDatas);
+                // End
+
+                DB::commit();
+                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=>'Success : save change post successfully!', 'load_form'=>'none'];
+                return \Response::json($return);
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+                exit();
+            }
+        }
+        exit();
     }
 
     public function getPostForm($datas=[]) {
-        
         $this->data->go_category_autocomplete = url('/category/autocomplete');
         $this->data->go_related_autocomplete = url('/posts/autocomplete');
         $this->data->languages = $this->language->getLanguages(['sort'=>'name', 'order'=>'asc'])->get();
         $this->data->layouts = $this->layout->orderBy('name', 'asc')->lists('name', 'layout_id');
         $this->data->status = $this->config->status;
-        $this->data->post_images = [];
-        $this->data->post_relateds = [];
 
         // define tap
         $this->data->tab_general = 'General';
@@ -288,26 +455,14 @@ class PostsController extends Controller
             foreach ($datas['post_descriptions'] as $description) {
                 $this->data->post_description[$description->language_id]['title'] = $description->title;
                 $this->data->post_description[$description->language_id]['description'] = $description->description;
-                $this->data->post_description[$description->language_id]['meta_title'] = $description->meta_title;
-                $this->data->post_description[$description->language_id]['meta_description'] = $description->meta_description;
-                $this->data->post_description[$description->language_id]['meta_keyword'] = $description->meta_keyword;
                 $this->data->post_description[$description->language_id]['tag'] = $description->tag;
             }
         }else {
             foreach ($this->data->languages as $language) {
                 $this->data->post_description[$language->language_id]['title'] = '';
                 $this->data->post_description[$language->language_id]['description'] = '';
-                $this->data->post_description[$language->language_id]['meta_title'] = '';
-                $this->data->post_description[$language->language_id]['meta_description'] = '';
-                $this->data->post_description[$language->language_id]['meta_keyword'] = '';
                 $this->data->post_description[$language->language_id]['tag'] = '';
             }
-        }
-
-        if(isset($datas['post_to_layouts'])) {
-            $this->data->post_layout = $datas['post_to_layouts'];
-        }else {
-            $this->data->post_layout = [];
         }
 
         if(isset($datas['post_to_categories'])) {
@@ -316,16 +471,29 @@ class PostsController extends Controller
             $this->data->post_categories = [];
         }
 
-        if ($this->data->image && is_file($this->data->dir_image . $this->data->image)) {
-            $this->data->thumb = $this->filemanager->resize($this->data->image, 100, 100);
-        } else {
-            $this->data->thumb = $this->filemanager->resize('no_image.png', 100, 100);
+        if(isset($datas['post_relateds'])) {
+            $this->data->post_relateds = $datas['post_relateds'];
+        }else {
+            $this->data->post_relateds = [];
         }
 
-        $this->data->placeholder = $this->filemanager->resize('no_image.png', 100, 100);
+        if(isset($datas['post_images'])) {
+            $this->data->post_images = $datas['post_images'];
+        }else {
+            $this->data->post_images = [];
+        }        
+
+        if ($this->data->image && is_file($this->data->dir_image . $this->data->image)) {
+            $this->data->thumb = $this->filemanager->resize($this->data->image, 120, 80);
+        } else {
+            $this->data->thumb = $this->filemanager->resize('no_image.png', 120, 80);
+        }
+
+        $this->data->placeholder = $this->filemanager->resize('no_image.png', 120, 80);
 
         $this->data->action = (($datas['action'])? $datas['action']:'');
         $this->data->titlelist = (($datas['titlelist'])? $datas['titlelist']:'');
+        $this->data->icon = (($datas['icon'])? $datas['icon']:'');
 
         return view('post.form', ['data' => $this->data]);
     }
