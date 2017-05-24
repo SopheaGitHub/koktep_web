@@ -26,5 +26,6 @@ Route::controllers([
 	'/about-account'	=> 'AboutAccountController',
 	'/contact-account'	=> 'ContactAccountController',
 	'/overview-account'	=> 'OverviewAccountController',
-	'/posts'	=> 'PostsController'
+	'/posts'	=> 'PostsController',
+	'/posts-groups'	=> 'PostsGroupsController'
 ]);

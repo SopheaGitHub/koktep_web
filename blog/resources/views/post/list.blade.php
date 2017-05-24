@@ -3,7 +3,7 @@
     foreach ($data->posts as $post) { ?>
       <div class="row">
       <div class="col-sm-6 col-md-6">
-          <img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="no filter" style="width:100%" class="w3-hover-opacity">
+          <img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" style="width:100%">
       </div>
       <div class="col-sm-6 col-md-6">
           <div class="w3-container w3-white">

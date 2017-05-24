@@ -36,7 +36,7 @@
                         $route_category_id = 'register';
                     }
 
-                    $array_user_auth_menu = ['overview-account', 'posts', 'account', 'about-account', 'contact-account'];
+                    $array_user_auth_menu = ['overview-account', 'posts', 'posts-groups', 'account', 'about-account', 'contact-account'];
                     if(in_array(explode('/', $route_name)['0'], $array_user_auth_menu)) {
                        $route_category_id = 'user_auth_menu';
                     }
@@ -68,7 +68,7 @@
 border-radius: 50%;
 border: 5px solid rgba(255,255,255,0.5);" alt="Avatar"> My Profile </a></li>
                             <li><a href="<?php echo url('/posts?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-tasks"></i>Posts Management</a></li>
-                            <li><a href="<?php echo url('/posts/posts-groups?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-object-group"></i>Posts Groups Management</a></li>
+                            <li><a href="<?php echo url('/posts-groups?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-object-group"></i>Posts Groups Management</a></li>
                             <li><a href="<?php echo url('/account/settings?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-cogs"></i>Account Settings</a></li>
                             <li><a href="<?php echo url('/logout'); ?>"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                         </ul>

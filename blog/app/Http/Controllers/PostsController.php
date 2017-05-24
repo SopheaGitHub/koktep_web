@@ -38,7 +38,7 @@ class PostsController extends Controller
     }
 
     /**
-     * Show the application account profile.
+     * Show the application.
      *
      * @return \Illuminate\Http\Response
      */
@@ -125,6 +125,7 @@ class PostsController extends Controller
      */
     public function getCreate()
     {
+        $this->data->go_back = url('/posts');
         $this->data->action_form = url('/posts/create-load-form');
         return view('post.create', ['data'=>$this->data]);
     }
@@ -225,25 +226,10 @@ class PostsController extends Controller
         exit();
     }
 
-    /**
-     * Show the form for creating a new post.
-     *
-     * @return Response
-     */
-    public function getPostsGroups()
-    {
-        return view('post.posts_groups');
-    }
-
-    public function getPostsGroupsCreate() {
-        return view('post.posts_groups_form'); 
-    }
-
     public function getPostForm($datas=[]) {
         
         $this->data->go_category_autocomplete = url('/category/autocomplete');
         $this->data->go_related_autocomplete = url('/posts/autocomplete');
-        $this->data->go_back = url('/posts');
         $this->data->languages = $this->language->getLanguages(['sort'=>'name', 'order'=>'asc'])->get();
         $this->data->layouts = $this->layout->orderBy('name', 'asc')->lists('name', 'layout_id');
         $this->data->status = $this->config->status;
