@@ -47,8 +47,8 @@
                     <option>Feature</option>
                     <option>Most Viewed</option>
                     <option>Most Discussed</option>
-                    <option>Most Like</option>
-                    <option>Most Unlike</option>
+                    <!-- <option>Most Like</option>
+                    <option>Most Unlike</option> -->
                 </select>
             </td>
         </tr>

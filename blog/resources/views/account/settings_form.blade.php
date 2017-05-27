@@ -38,20 +38,20 @@
 
           <div class="tab-pane" id="tab-image">
             <div class="form-group">
-              <label class="col-sm-2 control-label">Profile</label>
-              <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb_image; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a>
+              <label class="col-sm-3 control-label">Profile <br /> Scale: 100px, 100px</label>
+              <div class="col-sm-9"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb_image; ?>" alt="" title="" data-placeholder="<?php echo $data->image_placeholder; ?>" /></a>
                 <input type="hidden" name="image" value="<?php echo ((isset($data->image))? $data->image:''); ?>" id="input-image" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label">First Cover</label>
-              <div class="col-sm-10"><a href="" id="thumb-first-cover" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb_first_cover; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a>
+              <label class="col-sm-3 control-label">First Cover <br /> Scale: 600px, 400px</label>
+              <div class="col-sm-9"><a href="" id="thumb-first-cover" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb_first_cover; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a>
                 <input type="hidden" name="first_cover" value="<?php echo ((isset($data->first_cover))? $data->first_cover:''); ?>" id="input-first-cover" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label">Second Cover</label>
-              <div class="col-sm-10"><a href="" id="thumb-second-cover" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb_second_cover; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a>
+              <label class="col-sm-3 control-label">Second Cover <br /> Scale: 600px, 400px</label>
+              <div class="col-sm-9"><a href="" id="thumb-second-cover" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb_second_cover; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a>
                 <input type="hidden" name="second_cover" value="<?php echo ((isset($data->second_cover))? $data->second_cover:''); ?>" id="input-second-cover" />
               </div>
             </div>

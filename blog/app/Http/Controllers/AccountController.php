@@ -54,7 +54,7 @@ class AccountController extends Controller
             $this->data->action_form = url('/account/settings-load-form');
             return view('account.settings', ['data'=>$this->data]);
         }else {
-            return view('errors.504', ['data'=>$this->data]);
+            return view('errors.504');
         }
     }
 
@@ -236,9 +236,9 @@ class AccountController extends Controller
 
         // load image library
         if ($this->data->image && is_file($this->data->dir_image . $this->data->image)) {
-            $this->data->thumb_image = $this->filemanager->resize($this->data->image, 120, 80);
+            $this->data->thumb_image = $this->filemanager->resize($this->data->image, 100, 100);
         } else {
-            $this->data->thumb_image = $this->filemanager->resize('no_image.png', 120, 80);
+            $this->data->thumb_image = $this->filemanager->resize('no_image.png', 100, 100);
         }
 
         if ($this->data->first_cover && is_file($this->data->dir_image . $this->data->first_cover)) {
@@ -254,6 +254,7 @@ class AccountController extends Controller
         }
 
         $this->data->placeholder = $this->filemanager->resize('no_image.png', 120, 80);
+        $this->data->image_placeholder = $this->filemanager->resize('no_image.png', 100, 100);
         // End
 
         $this->data->load_zone_action = url('geo-zones/zone');
@@ -276,7 +277,7 @@ class AccountController extends Controller
             echo $this->getAccountChangePasswordForm($datas);
             exit();
         }else {
-            return view('errors.504', ['data'=>$this->data]);
+            return view('errors.504');
         }
     }
 

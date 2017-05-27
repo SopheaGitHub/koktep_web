@@ -37,9 +37,19 @@ class OverviewAccountController extends Controller
     public function getIndex()
     {
         $request = \Request::all();
-        $this->data->action_list = url('/overview-account/list?account_id='.$request['account_id']);
-        $this->data->action_paginate_list = url('/overview-account/list');
-        return view('overview_account.index', ['data'=>$this->data]);
+        if(isset($request['account_id'])) {
+            $this->data->action_list = url('/overview-account/list?account_id='.$request['account_id']);
+            $this->data->action_paginate_list = url('/overview-account/list');
+            return view('overview_account.index', ['data'=>$this->data]);
+        }else {
+            if(isset($request['login'])&&$request['login']=='success') {
+                $this->data->action_list = url('/overview-account/list?account_id='.((Auth::check())? Auth::user()->id:'0'));
+                $this->data->action_paginate_list = url('/overview-account/list');
+                return view('overview_account.index', ['data'=>$this->data]);
+            }else {
+                return view('errors.503');
+            }
+        }
     }
 
     public function getList() {
@@ -83,7 +93,7 @@ class OverviewAccountController extends Controller
             $paginate_url['order'] = $request['order'];
         }
 
-        $this->data->posts = $this->post->getPostsByAccountID($filter_data)->paginate(10)->setPath(url('/posts'))->appends($paginate_url);
+        $this->data->posts = $this->post->getPosts($filter_data)->paginate(10)->setPath(url('/overview-account'))->appends($paginate_url);
 
         if(count($this->data->posts) > 0) {
             foreach ($this->data->posts as $post) {

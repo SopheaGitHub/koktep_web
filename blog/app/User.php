@@ -31,17 +31,17 @@ class User extends Authenticatable
     }
 
     public function getTechnicalByUserId($user_id) {
-        $result = DB::table('user_technical')->where('user_id', '=', $user_id)->get();
+        $result = DB::table('user_technical')->where('user_id', '=', $user_id)->orderBy('sort_order', 'asc')->get();
         return $result;
     }
 
     public function getAddressByUserId($user_id) {
-        $result = DB::table('user_address')->where('user_id', '=', $user_id)->get();
+        $result = DB::table('user_address')->where('user_id', '=', $user_id)->orderBy('sort_order', 'asc')->get();
         return $result;
     }
 
     public function getSocialMediaByUserId($user_id) {
-        $result = DB::table('user_to_social_media')->where('user_id', '=', $user_id)->get();
+        $result = DB::table('user_to_social_media')->where('user_id', '=', $user_id)->orderBy('sort_order', 'asc')->get();
         return $result;
     }
 

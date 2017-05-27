@@ -69,6 +69,7 @@ class PostsController extends Controller
 
         // define filter data
         $filter_data = array(
+            'author_id' => $this->data->auth_id,
             'sort'  => $sort,
             'order' => $order
         );
@@ -172,7 +173,7 @@ class PostsController extends Controller
                 // insert post description
                 $post_descriptionDatas = [
                     'post_id'       => $post->id,
-                    'post_description_datas'    => $request['post_description']
+                    'post_description_datas'    => ((isset($request['post_description']))? $request['post_description']:[])
                 ];
 
                 $post_description = $this->post->insertPostDescription($post_descriptionDatas);
@@ -191,7 +192,7 @@ class PostsController extends Controller
                 // insert post to categories
                 $post_to_categoryDatas = [
                     'post_id'       => $post->id,
-                    'post_category_datas'   => $request['post_category']
+                    'post_category_datas'   => ((isset($request['post_category']))? $request['post_category']:[])
                 ];
 
                 $post_category = $this->post->insertPostCategory($post_to_categoryDatas);
@@ -200,7 +201,7 @@ class PostsController extends Controller
                 // insert post image
                 $post_imageDatas = [
                     'post_id'       => $post->id,
-                    'post_images'   => $request['post_image']
+                    'post_images'   => ((isset($request['post_image']))? $request['post_image']:[])
                 ];
 
                 $post_category = $this->post->insertPostImage($post_imageDatas);
@@ -337,7 +338,7 @@ class PostsController extends Controller
                 $clear_post_description = $this->post->deletedPostDescription($post_id);
                 $post_descriptionDatas = [
                     'post_id'       => $post_id,
-                    'post_description_datas'    => $request['post_description']
+                    'post_description_datas'    => ((isset($request['post_description']))? $request['post_description']:[])
                 ];
 
                 $post_description = $this->post->insertPostDescription($post_descriptionDatas);

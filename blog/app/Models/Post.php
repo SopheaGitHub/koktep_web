@@ -54,26 +54,6 @@ class Post extends Model {
 	}
 
 	public function getPosts($filter_data=[]) {
-		$db = DB::table(DB::raw('
-                        (
-							SELECT
-								p.post_id AS post_id,
-								p.image AS image,
-								p.created_at AS created_at,
-								pd.title AS title,
-								pd.description AS description,
-								u.name AS author_name,
-								p.status AS status
-							FROM
-								post AS p
-							INNER JOIN users AS u ON u.id = p.author_id
-							LEFT JOIN post_description AS pd ON p.post_id = pd.post_id AND pd.language_id = \'1\'
-						) AS posts
-                    '))->orderBy($filter_data['sort'], $filter_data['order']);
-		return $db;
-	}
-
-	public function getPostsByAccountID($filter_data=[]) {
 		$db = DB::table('post as p')
 		->select(DB::raw('p.post_id as post_id,
 								p.image as image,
@@ -87,10 +67,21 @@ class Post extends Model {
 		->leftJoin('post_description as pd', function($join) {
 		  $join->on('p.post_id', '=', 'pd.post_id');
 		  $join->on('pd.language_id', '=', DB::raw('1'));
-		})
-		->where('p.author_id', $filter_data['author_id'])
-		->orderBy($filter_data['sort'], $filter_data['order']);
+		});
 
+		if(isset($filter_data['category_id'])) {
+			$category_id = $filter_data['category_id'];
+			$db->join('post_to_category as ptc', function($join) use ($category_id) {
+			  $join->on('p.post_id', '=', 'ptc.post_id');
+			  $join->on('ptc.category_id', '=', DB::raw(''.$category_id.''));
+			});
+		}
+
+		if(isset($filter_data['author_id'])) {
+			$db->where('p.author_id', $filter_data['author_id']);
+		}
+		
+		$db->orderBy($filter_data['sort'], $filter_data['order']);
 		return $db;
 	}
 
