@@ -15,6 +15,8 @@ class CreatePostGroupTable extends Migration
         Schema::create('post_group', function (Blueprint $table) {
             $table->increments('post_group_id');
             $table->text('value');
+            $table->integer('author_id');
+            $table->integer('updated_by_author_id');
             $table->integer('sort_order')->default(0);
             $table->integer('status')->default(0);
             $table->timestamps();

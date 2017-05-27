@@ -154,7 +154,7 @@ class PostsController extends Controller
                 $request = \Request::all();
                 $this->data->action_form = url('/posts/create-load-form');
 
-                $validationError = $this->post->validationForm(['request'=>$request, 'message'=>'save']);
+                $validationError = $this->post->validationForm(['request'=>$request, 'action'=>'create']);
                 if($validationError) {
                     return \Response::json($validationError);
                 }
@@ -319,7 +319,7 @@ class PostsController extends Controller
 
                 $request = \Request::all();
 
-                $validationError = $this->post->validationForm(['request'=>$request, 'message'=>'save change']);
+                $validationError = $this->post->validationForm(['request'=>$request, 'action'=>'edit']);
                 if($validationError) {
                     return \Response::json($validationError);
                 }
@@ -358,7 +358,7 @@ class PostsController extends Controller
                 $clear_post_to_category = $this->post->deletedPostToCategory($post_id);
                 $post_to_categoryDatas = [
                     'post_id'       => $post_id,
-                    'post_category_datas'   => $request['post_category']
+                    'post_category_datas'   => ((isset($request['post_category']))? $request['post_category']:[])
                 ];
 
                 $post_category = $this->post->insertPostCategory($post_to_categoryDatas);
@@ -368,7 +368,7 @@ class PostsController extends Controller
                 $clear_post_image = $this->post->deletedPostImage($post_id);
                 $post_imageDatas = [
                     'post_id'       => $post_id,
-                    'post_images'   => $request['post_image']
+                    'post_images'   => ((isset($request['post_image']))? $request['post_image']:[])
                 ];
 
                 $post_category = $this->post->insertPostImage($post_imageDatas);

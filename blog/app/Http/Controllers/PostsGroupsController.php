@@ -86,7 +86,7 @@ class PostsGroupsController extends Controller
         		$array_post_group_value = json_decode($posts_groups_info->value, true);
 
         		// get post group item
-        		$post_group_items = $this->post->getPosts(['sort'=>'created_at', 'order'=>'desc'])->get();
+        		$post_group_items = $this->post->getPostsByPostGroup(['array_post_group_id'=>$array_post_group_value])->get();
         		if(count($post_group_items) > 0) {
         			foreach ($post_group_items as $post_group_items_info) {
 
@@ -143,6 +143,7 @@ class PostsGroupsController extends Controller
 
     public function getCreateLoadForm() {
         $datas = [
+            'icon' => 'icon_create',
             'action' => url('/posts-groups/store'),
             'titlelist' => 'Add New Post Group'
         ];
@@ -164,18 +165,19 @@ class PostsGroupsController extends Controller
                 $request = \Request::all();
                 $this->data->action_form = url('/posts-groups/create-load-form');
 
-                $validationError = $this->post_group->validationForm(['request'=>$request]);
+                $validationError = $this->post_group->validationForm(['request'=>$request, 'action'=>'create']);
                 if($validationError) {
                     return \Response::json($validationError);
                 }
 
                 // insert post group
-                $postDatas = [
+                $postGroupDatas = [
+                    'author_id'     => $this->data->auth_id,
                     'value'     => json_encode(((isset($request['post_related']))? $request['post_related']:[])),
                     'status'	=> $request['status']
                 ];
 
-                $post_group = $this->post_group->create($postDatas);
+                $post_group = $this->post_group->create($postGroupDatas);
                 // End
 
                 // insert post group description
@@ -188,7 +190,7 @@ class PostsGroupsController extends Controller
                 // End
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>'Success : save post successfully!', 'load_form'=>$this->data->action_form];
+                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>'Success : save post group successfully!', 'load_form'=>$this->data->action_form];
                 return \Response::json($return);
             } catch (Exception $e) {
                 DB::rollback();
@@ -214,6 +216,7 @@ class PostsGroupsController extends Controller
 
     public function getEditLoadForm($post_group_id) {
         $this->data->post_group = $this->post_group->getPostGroup($post_group_id);
+        $this->data->post_group_descriptions = $this->post_group->getPostGroupDescriptions($post_group_id);
 
         $data['post_relateds'] = [];
         if(count($this->data->post_group) > 0) {
@@ -221,7 +224,7 @@ class PostsGroupsController extends Controller
             $array_post_group_value = json_decode($this->data->post_group->value, true);
 
             // get post group item
-            $post_relateds = $this->post->getPosts(['sort'=>'created_at', 'order'=>'desc'])->get();
+            $post_relateds = $this->post->getPostsByPostGroup(['array_post_group_id'=>$array_post_group_value])->get();
             if(count($post_relateds) > 0) {
                 foreach ($post_relateds as $related_info) {
                     $data['post_relateds'][] = [
@@ -238,10 +241,62 @@ class PostsGroupsController extends Controller
             'action' => url('/posts-groups/update/'.$post_group_id),
             'titlelist' => 'Edit Post Group',
             'post_group' => $this->data->post_group,
+            'post_group_descriptions' => $this->data->post_group_descriptions,
             'post_relateds'  => $data['post_relateds']
         ];
 
         echo $this->getPostGroupForm($datas);
+        exit();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function postUpdate($post_group_id)
+    {
+        if(\Request::ajax()) {
+            DB::beginTransaction();
+            try {
+
+                $request = \Request::all();
+
+                $validationError = $this->post_group->validationForm(['request'=>$request, 'action'=>'edit']);
+                if($validationError) {
+                    return \Response::json($validationError);
+                }
+
+                // update post group
+                $postGroupDatas = [
+                    'updated_by_author_id'  => $this->data->auth_id,
+                    'value'     => json_encode(((isset($request['post_related']))? $request['post_related']:[])),
+                    'status'    => $request['status']
+                ];
+
+                $post_group = $this->post_group->where('post_group_id', '=', $post_group_id)->update($postGroupDatas);
+                // End
+
+                // update post group description
+                $clear_post_group_description = $this->post_group->deletedPostGroupDescription($post_group_id);
+                $post_group_descriptionDatas = [
+                    'post_group_id'       => $post_group_id,
+                    'post_group_description_datas'    => $request['post_group_description']
+                ];
+
+                $post_group_description = $this->post_group->insertPostGroupDescription($post_group_descriptionDatas);
+                // End
+
+                DB::commit();
+                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=>'Success : save change post group successfully!', 'load_form'=>'none'];
+                return \Response::json($return);
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+                exit();
+            }
+        }
         exit();
     }
 
@@ -274,6 +329,16 @@ class PostsGroupsController extends Controller
         }else {
             $this->data->sort_order = '0';
             $this->data->post_status = '1';
+        }
+
+        if(isset($datas['post_group_descriptions'])) {
+            foreach ($datas['post_group_descriptions'] as $description) {
+                $this->data->post_group_description[$description->language_id]['name'] = $description->name;
+            }
+        }else {
+            foreach ($this->data->languages as $language) {
+                $this->data->post_group_description[$language->language_id]['name'] = '';
+            }
         }
 
         if(isset($datas['post_relateds'])) {

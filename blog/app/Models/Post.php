@@ -73,6 +73,47 @@ class Post extends Model {
 		return $db;
 	}
 
+	public function getPostsByAccountID($filter_data=[]) {
+		$db = DB::table('post as p')
+		->select(DB::raw('p.post_id as post_id,
+								p.image as image,
+								p.created_at as created_at,
+								pd.title as title,
+								pd.description as description,
+								u.id as author_id,
+								u.name as author_name,
+								p.status as status'))
+		->join('users as u', 'u.id', '=', 'p.author_id')
+		->leftJoin('post_description as pd', function($join) {
+		  $join->on('p.post_id', '=', 'pd.post_id');
+		  $join->on('pd.language_id', '=', DB::raw('1'));
+		})
+		->where('p.author_id', $filter_data['author_id'])
+		->orderBy($filter_data['sort'], $filter_data['order']);
+
+		return $db;
+	}
+
+	public function getPostsByPostGroup($filter_data=[]) {
+		$db = DB::table('post as p')
+		->select(DB::raw('p.post_id as post_id,
+								p.image as image,
+								p.created_at as created_at,
+								pd.title as title,
+								pd.description as description,
+								u.name as author_name,
+								p.status as status'))
+		->join('users as u', 'u.id', '=', 'p.author_id')
+		->leftJoin('post_description as pd', function($join) {
+		  $join->on('p.post_id', '=', 'pd.post_id');
+		  $join->on('pd.language_id', '=', DB::raw('1'));
+		})
+		->whereIn('p.post_id', $filter_data['array_post_group_id'])
+		->orderByRaw(\DB::raw("FIELD(p.post_id, ".implode(",",$filter_data['array_post_group_id']).")"));
+
+		return $db;
+	}
+
 	public function getPostCategories($post_id) {
 		$result = DB::table('post_to_category')->where('post_id', '=', $post_id)->get();
 		return $result;
@@ -238,7 +279,7 @@ class Post extends Model {
 
 		$validator = \Validator::make($datas['request'], $rules, $messages);
 		if ($validator->fails()) {
-			$error = ['error'=>'1','success'=>'0','msg'=>'Warning : '.$datas['message'].' post unsuccessfully!','validatormsg'=>$validator->messages()];
+			$error = ['error'=>'1','success'=>'0','msg'=>'Warning : '.(($datas['action']=='create')? 'save':'save change').' post unsuccessfully!','validatormsg'=>$validator->messages()];
         }
 		return $error;
 	}

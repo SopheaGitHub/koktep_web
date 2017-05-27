@@ -8,7 +8,7 @@ use DB;
 class PostGroup extends Model
 {
     protected $table = 'post_group';
-	protected $fillable = ['value', 'sort_order', 'status'];
+	protected $fillable = ['value', 'author_id', 'updated_by_author_id', 'sort_order', 'status'];
 
 	public function getPostGroup($post_group_id) {
 		$result = DB::table(DB::raw('
@@ -40,6 +40,18 @@ class PostGroup extends Model
 		return $db;
 	}
 
+	public function getPostGroupDescriptions($post_group_id) {
+		$result = DB::table(DB::raw('
+				(SELECT
+					pgd.*
+				FROM
+					post_group AS pg
+				LEFT JOIN post_group_description AS pgd ON pgd.post_group_id = pg.post_group_id
+				WHERE pg.post_group_id = "'.$post_group_id.'") AS post_group_description
+			'))->get();
+		return $result;
+	}
+
 	public function insertPostGroupDescription($datas=[]) {
 		$sql = '';
 		if(isset($datas['post_group_description_datas']) && count($datas['post_group_description_datas']) > 0) {
@@ -48,6 +60,10 @@ class PostGroup extends Model
 			}
 			DB::connection()->getPdo()->exec($sql);
 		}
+	}
+
+	public function deletedPostGroupDescription($post_group_id) {
+		DB::table('post_group_description')->where('post_group_id', '=', $post_group_id)->delete();
 	}
 
 	public function validationForm($datas=[]) {
@@ -75,7 +91,7 @@ class PostGroup extends Model
 
 		$validator = \Validator::make($datas['request'], $rules, $messages);
 		if ($validator->fails()) {
-			$error = ['error'=>'1','success'=>'0','msg'=>'Warning : '.$datas['message'].' post group unsuccessfully!','validatormsg'=>$validator->messages()];
+			$error = ['error'=>'1','success'=>'0','msg'=>'Warning : '.(($datas['action']=='create')? 'save':'save change').' post group unsuccessfully!','validatormsg'=>$validator->messages()];
         }
 		return $error;
 	}

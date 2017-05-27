@@ -201,7 +201,7 @@ function loadingList (requestAction) {
 	return false;
 }
 
-// loading list data
+// loading form data
 function loadingForm (requestAction) {
 	$.ajax({
 	  	type: "GET",

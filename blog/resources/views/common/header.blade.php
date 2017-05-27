@@ -70,6 +70,7 @@ border: 5px solid rgba(255,255,255,0.5);" alt="Avatar"> My Profile </a></li>
                             <li><a href="<?php echo url('/posts?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-tasks"></i>Posts Management</a></li>
                             <li><a href="<?php echo url('/posts-groups?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-object-group"></i>Posts Groups Management</a></li>
                             <li><a href="<?php echo url('/account/settings?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-cogs"></i>Account Settings</a></li>
+                            <li><a href="<?php echo url('/account/change-password?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-exchange"></i>Account Change Password</a></li>
                             <li><a href="<?php echo url('/logout'); ?>"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                         </ul>
                     </li>
