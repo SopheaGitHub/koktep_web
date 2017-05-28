@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    protected $data = null;
+
     public function __construct()
     {
         // $this->middleware('auth');
+
+        $this->data = new \stdClass();
+        $this->data->web_title = 'Home';
     }
 
     /**
@@ -24,6 +24,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $request = \Request::all();
+
+        $this->data->action_list = url('/post-account/list');
+        return view('home', ['data'=>$this->data]);
     }
 }

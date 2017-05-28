@@ -18,7 +18,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     loadingList("<?php echo $data->action_list; ?>");
-    paginateListAction('render-overview', "<?php echo $data->action_list; ?>");
+    paginateListAction('render-overview', "<?php echo $data->action_paginate_list; ?>");
 });
 </script>
 @endsection

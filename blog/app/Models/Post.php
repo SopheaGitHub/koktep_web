@@ -60,25 +60,42 @@ class Post extends Model {
 								p.created_at as created_at,
 								pd.title as title,
 								pd.description as description,
+								pd.tag AS tag,
 								u.id as author_id,
 								u.name as author_name,
-								p.status as status'))
+								p.status as status,
+								cd.category_id as category_id,
+								cd.name as category_name'))
 		->join('users as u', 'u.id', '=', 'p.author_id')
 		->leftJoin('post_description as pd', function($join) {
 		  $join->on('p.post_id', '=', 'pd.post_id');
 		  $join->on('pd.language_id', '=', DB::raw('1'));
 		});
 
-		if(isset($filter_data['category_id'])) {
+		// category condition join
+		if($filter_data['category_id']!='') {
 			$category_id = $filter_data['category_id'];
 			$db->join('post_to_category as ptc', function($join) use ($category_id) {
 			  $join->on('p.post_id', '=', 'ptc.post_id');
 			  $join->on('ptc.category_id', '=', DB::raw(''.$category_id.''));
 			});
+		}else {
+			$db->leftJoin('post_to_category as ptc', function($join) {
+			  $join->on('p.post_id', '=', 'ptc.post_id');
+			});
+		}
+		$db->leftJoin('category_description as cd', function($join) {
+		  	$join->on('cd.category_id', '=', 'ptc.category_id');
+		  	$join->on('cd.language_id', '=', DB::raw('1'));
+		});
+		// End category condition join
+
+		if($filter_data['author_id']!='') {
+			$db->where('p.author_id', $filter_data['author_id']);
 		}
 
-		if(isset($filter_data['author_id'])) {
-			$db->where('p.author_id', $filter_data['author_id']);
+		if($filter_data['search']!='') {
+			$db->whereRaw("( pd.title LIKE '%".$filter_data['search']."%' OR pd.description LIKE '%".$filter_data['search']."%' OR pd.tag LIKE '%".$filter_data['search']."%') ");
 		}
 		
 		$db->orderBy($filter_data['sort'], $filter_data['order']);

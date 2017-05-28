@@ -1,4 +1,3 @@
-$('#block-loader').hide();
 function getURLVar(key) {
 	var value = [];
 
@@ -135,12 +134,9 @@ function requestSubmitForm(buttonId, formId, formAction) {
 	      	async: false,
 	      	beforeSend: function() {
 	        	console.log('beforeSend');
-	        	// $('#message').html('Loading ...').show();
-	        	$('#block-loader').show();
 	      	},
 	      	complete: function() {
 	        	console.log('completed');
-	        	$('#block-loader').hide();
 	      	},
 	      	success: function(data) {
 	        	var msg = '';

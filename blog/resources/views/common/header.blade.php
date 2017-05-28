@@ -37,7 +37,7 @@
             <?php
                 $route_category_id = '0';
                 $route_name = \Route::getCurrentRoute()->getPath();
-                if(empty($route_name) || $route_name =='/') {
+                if(empty($route_name) || $route_name =='/' || \Request::get('category_id')=='0') {
                     $route_category_id = 'home';
                 }else {
                     if(\Request::has('category_id')) {

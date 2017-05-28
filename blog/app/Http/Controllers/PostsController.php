@@ -55,6 +55,22 @@ class PostsController extends Controller
         $this->data->action_delete = url('/posts/delete');
 
         // define data filter
+
+        // defind category id
+        if(isset($request['category_id'])) {
+            $category_id = $request['category_id'];
+        }else {
+            $category_id = null;
+        }
+
+        // defind search title, description, tag
+        if(isset($request['search'])) {
+            $search = $request['search'];
+        }else {
+            $search = null;
+        }
+
+        // defind sort order
         if (isset($request['sort'])) {
             $sort = $request['sort'];
         } else {
@@ -67,9 +83,13 @@ class PostsController extends Controller
             $order = 'desc';
         }
 
+        // End
+
         // define filter data
         $filter_data = array(
             'author_id' => $this->data->auth_id,
+            'category_id' => $category_id,
+            'search'    => $search,
             'sort'  => $sort,
             'order' => $order
         );
@@ -84,7 +104,7 @@ class PostsController extends Controller
             $paginate_url['order'] = $request['order'];
         }
 
-        $this->data->posts = $this->post->getPosts($filter_data)->paginate(10)->setPath(url('/posts'))->appends($paginate_url);
+        $this->data->posts = $this->post->getPosts($filter_data)->paginate(1)->setPath(url('/posts'))->appends($paginate_url);
 
         if(count($this->data->posts) > 0) {
             foreach ($this->data->posts as $post) {

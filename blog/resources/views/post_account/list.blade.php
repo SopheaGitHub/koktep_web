@@ -1,17 +1,20 @@
 <div class="row">
     <?php
     if (count($data->posts) > 0) {
-            foreach ($data->posts as $post) { ?>
+            foreach ($data->posts as $post) {
+                    $post_category = (($post->category_id)? $post->category_id.'-'.str_replace(' ', '-', strtolower($post->category_name)):'0');
+                    $view_detail = $data->post_detail.'?account_id='.$post->author_id.'&post_id='.$post->post_id.'&category_id='.$post_category;
+                ?>
                 <div class="col-sm-6 col-md-6">
-                    <a href="<?php echo $data->post_detail.'?post_id='.$post->post_id; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" style="width:100%"></a>
-                    <div><b><a href="<?php echo $data->post_detail.'?post_id='.$post->post_id; ?>"><?php echo $post->title; ?></a></b></div>
+                    <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" style="width:100%"></a>
+                    <div><b><a href="<?php echo $view_detail; ?>"><?php echo $post->title; ?></a></b></div>
                     <p><?php echo $post->description; ?></p>
                     <div class="row">
                         <div class="col-md-8"><b><a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><?php echo $post->author_name; ?></a></b></div>
                         <div class="col-md-4">
                             <span class="pull-right" style="font-size:11px;">
                                 <i class="fa fa-btn fa-eye"></i> 0121 &nbsp;&nbsp;&nbsp;
-                                <a href="<?php echo $data->post_detail.'?post_id='.$post->post_id; ?>"><i class="fa fa-btn fa-picture-o"></i></a> 2
+                                <a href="<?php echo $view_detail; ?>"><i class="fa fa-btn fa-picture-o"></i></a> 2
                             </span>
                         </div>
                     </div>
