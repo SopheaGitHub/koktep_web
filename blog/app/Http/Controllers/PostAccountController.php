@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Category;
 use App\Http\Controllers\Common\FilemanagerController;
 use App\Http\Controllers\ConfigController;
 
@@ -17,10 +18,11 @@ class PostAccountController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
 
         $this->data = new \stdClass();
         $this->post = New Post();
+        $this->category = new Category();
         $this->filemanager = new FilemanagerController();
         $this->config = new ConfigController();
         $this->data->web_title = 'Overview';
@@ -30,8 +32,62 @@ class PostAccountController extends Controller
 
     public function getDetail() {
         $request = \Request::all();
-        $this->data->go_back = \URL::previous();
+        $this->data->action_detail_form = url('/post-account/post-detail-form?post_id='.$request['post_id']);
         return view('post_account.detail', ['data' => $this->data]);
+    }
+
+    public function getPostDetailForm() {
+        $request = \Request::all();
+
+        if(isset($request['post_id'])) {
+            $post_id = $request['post_id'];
+        }else {
+            $post_id = 0;
+        }
+
+        $post = $this->post->getPost($post_id);
+        $post_description = $this->post->getPostDescription($post_id);
+
+        if($post) {
+            if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {
+                $this->data->image = $this->filemanager->resize($post->image, 600, 400);
+            } else {
+                $this->data->image = $this->filemanager->resize('no_image.png', 600, 400);
+            }
+            $this->data->title = $post->title;
+        }else {
+            $this->data->image = $this->filemanager->resize('no_image.png', 600, 400);
+            $this->data->title = '';
+        }
+
+        if($post_description) {
+            $this->data->description = $post_description->description;
+        }else {
+            $this->data->description = '';
+        }
+
+        $post_images = $this->post->getPostImages($post_id);
+        $this->data->post_images = [];
+
+        if(count($post_images) > 0) {
+            foreach ($post_images as $post_image) {
+                if (is_file($this->data->dir_image . $post_image->image)) {
+                    $image = $post_image->image;
+                    $thumb = $post_image->image;
+                } else {
+                    $image = '';
+                    $thumb = 'no_image.png';
+                }
+
+                $this->data->post_images[] = [
+                    'image'      => $image,
+                    'thumb'      => $this->filemanager->resize($thumb, 600, 400),
+                    'sort_order' => $post_image->sort_order
+                ];
+            }
+        }
+        
+        return view('post_account.detail_form', ['data' => $this->data]);
     }
 
     public function getList() {

@@ -14,7 +14,7 @@ class OverviewAccountController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
 
         $this->data = new \stdClass();
         $this->data->web_title = 'Overview';

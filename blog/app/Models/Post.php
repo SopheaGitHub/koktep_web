@@ -41,6 +41,18 @@ class Post extends Model {
 		return $result;
 	}
 
+	public function getPostDescription($post_id) {
+		$result = DB::table(DB::raw('
+				(SELECT
+					pd.*
+				FROM
+					post AS p
+				LEFT JOIN post_description AS pd ON pd.post_id = p.post_id AND pd.language_id = \'1\'
+				WHERE p.post_id = "'.$post_id.'") AS post_description
+			'))->first();
+		return $result;
+	}
+
 	public function getPostToLayouts($post_id) {
 		$result = DB::table(DB::raw('
 				(SELECT

@@ -16,7 +16,7 @@ class AboutAccountController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
 
         $this->data = new \stdClass();
         $this->user = New User();
