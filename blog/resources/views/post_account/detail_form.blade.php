@@ -99,6 +99,9 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
+    $(document).on('submit', '#form-comment', function() {
+        return false;
+    });
     loadingForm("<?php echo $data->action_comment_form; ?>");
     requestSubmitForm('submit-comment', 'form-comment', "<?php echo $data->action; ?>");
 });
