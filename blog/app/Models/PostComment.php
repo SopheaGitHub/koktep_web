@@ -23,7 +23,7 @@ class PostComment extends Model
 					post_comment AS pc
 				INNER JOIN users AS u ON u.id = pc.user_id
 				WHERE pc.post_id = "'.$post_id.'") AS post_comment
-			'))->get();
+			'))->orderBy('post_comment_id', 'desc')->get();
 		return $result;
 
 	}
