@@ -314,7 +314,7 @@ div.required .control-label:not(span):before, td.required:before {
 .commentList {
     padding:0;
     list-style:none;
-    min-height:200px;
+    min-height:auto;
 }
 .commentList li {
     margin:0;
