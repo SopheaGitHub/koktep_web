@@ -17,7 +17,15 @@
 @section('script')
 <script type="text/javascript">
 $(document).ready(function() {
-    loadingList("<?php echo $data->action_list; ?>");
+    var url = '';
+    if($('#search').val()!='') {
+        var postDatas = $('#form-filter').serializeArray();
+        url = "?filter=yes";
+        $.each(postDatas, function(i, field) {
+            url += '&'+field.name+'='+encodeURIComponent(field.value);
+        });
+    }
+    loadingList("<?php echo $data->action_list; ?>"+url+" ");
     paginateListAction('render-overview', "<?php echo $data->action_list; ?>");
 });
 </script>

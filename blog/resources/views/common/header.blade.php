@@ -61,10 +61,39 @@
             ?>
             <ul class="nav navbar-nav">
                 <li <?php echo (($route_category_id=='home')? 'class="active"':''); ?>><a href="<?php echo url('/'); ?>"><i class="fa fa-btn fa-home"></i> Home</a></li>
-                <li <?php echo (($route_category_id=='1')? 'class="active"':''); ?>><a href="<?php echo url('/category?category_id=1-art'); ?>"><i class="fa fa-btn fa-diamond"></i> Art</a></li>
-                <li <?php echo (($route_category_id=='2')? 'class="active"':''); ?>><a href="<?php echo url('/category?category_id=2-graphic-design'); ?>"><i class="fa fa-btn fa-desktop"></i> Graphic Design</a></li>
-                <li <?php echo (($route_category_id=='3')? 'class="active"':''); ?>><a href="<?php echo url('/category?category_id=3-architectural'); ?>"><i class="fa fa-btn fa-building"></i> Architectural</a></li>
-                <li <?php echo (($route_category_id=='4')? 'class="active"':''); ?>><a href="<?php echo url('/category?category_id=4-photography'); ?>"><i class="fa fa-btn fa-camera"></i> Photography</a></li>
+                <li class="dropdown <?php echo (($route_category_id=='1')? 'active':''); ?>">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-diamond"></i> Art <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<?php echo url('/category?category_id=1-art'); ?>"><i class="fa fa-btn fa-angle-double-right"></i>Drawing &amp; Painting</a></li>
+                    <li style="border-top:1px solid #eee;"><a href="#">Other Art ...</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown <?php echo (($route_category_id=='2')? 'active':''); ?>">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-desktop"></i> Design <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<?php echo url('/category?category_id=2-graphic-design'); ?>"><i class="fa fa-btn fa-angle-double-right"></i>Graphic Design</a></li>
+                    <li><a href="#"><i class="fa fa-btn fa-angle-double-right"></i>Illustrator</a></li>
+                    <li style="border-top:1px solid #eee;"><a href="#">Other Design ...</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown <?php echo (($route_category_id=='3')? 'active':''); ?>">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-building"></i> Architectural <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<?php echo url('/category?category_id=3-architectural'); ?>"><i class="fa fa-btn fa-angle-double-right"></i>Interior Design</a></li>
+                    <li><a href="#"><i class="fa fa-btn fa-angle-double-right"></i>Exterior Design</a></li>
+                    <li style="border-top:1px solid #eee;"><a href="#">Other Architectural ...</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown <?php echo (($route_category_id=='4')? 'active':''); ?>">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-camera"></i> Photography <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<?php echo url('/category?category_id=4-photography'); ?>"><i class="fa fa-btn fa-angle-double-right"></i>Outdoor</a></li>
+                    <li><a href="#"><i class="fa fa-btn fa-angle-double-right"></i>Free Weeding</a></li>
+                    <li><a href="<?php echo url('/category?category_id=4-photography'); ?>"><i class="fa fa-btn fa-angle-double-right"></i>Natural Image</a></li>
+                    <li><a href="#"><i class="fa fa-btn fa-angle-double-right"></i>Funny Photo</a></li>
+                    <li style="border-top:1px solid #eee;"><a href="#">Other Photography ...</a></li>
+                  </ul>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->

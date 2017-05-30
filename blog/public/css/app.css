@@ -325,7 +325,7 @@ div.required .control-label:not(span):before, td.required:before {
     display:table-cell;
 }
 .commenterImage {
-    width:30px;
+    width:40px;
     margin-right:5px;
     height:100%;
     float:left;

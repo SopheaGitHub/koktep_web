@@ -17,6 +17,13 @@
     $array_alpha = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
     $countries = $objCountry->getCountries(['sort'=>'name','order'=>'asc'])->lists('name', 'country_id');
+
+    // define tag
+    if(\Request::has('tag')) {
+        $tag = \Request::get('tag');
+    }else {
+        $tag = '';
+    }
 ?>
 <div class="" style="padding: 10px; background: #fff;">
     <form action="#" method="GET" enctype="multipart/form-data" id="form-filter" class="form-horizontal">
@@ -31,7 +38,7 @@
                 <tbody>
                     <tr>
                         <td>
-                            <input type="text" name="search" id="search" value="" placeholder="Search ..." class="form-control" />
+                            <input type="text" name="search" id="search" value="<?php echo $tag; ?>" placeholder="Search ..." class="form-control" />
                         </td>
                     </tr>
                 </tbody>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\PostComment;
 use App\Models\Language;
 use App\Models\Layout;
 use App\Models\UrlAlias;
@@ -26,6 +27,7 @@ class PostsController extends Controller
 
         $this->data = new \stdClass();
         $this->post = New Post();
+        $this->post_comment = new PostComment();
         $this->language = new Language();
         $this->layout = new Layout();
         $this->url_alias = new UrlAlias();
@@ -517,6 +519,38 @@ class PostsController extends Controller
         $this->data->icon = (($datas['icon'])? $datas['icon']:'');
 
         return view('post.form', ['data' => $this->data]);
+    }
+
+    public function postComment() {
+        if(\Request::ajax()) {
+            DB::beginTransaction();
+            try {
+
+                $request = \Request::all();
+                $this->data->action_form = url('/post-account/comment-form?post_id='.$request['post_id']);
+                if(\Request::has('comment')) {
+                    // insert post comment
+                    $postCommentDatas = [
+                        'user_id'     => $this->data->auth_id,
+                        'post_id'     => $request['post_id'],
+                        'comment'     => $request['comment'],
+                        'parent_id'   => '0'
+                    ];
+
+                    $post_comment = $this->post_comment->create($postCommentDatas);
+                    // End
+                }
+
+                DB::commit();
+                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>'Success : save post comment successfully!', 'load_form'=>$this->data->action_form];
+                return \Response::json($return);
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+                exit();
+            }
+        }
+        exit();
     }
 
     public function getAutocomplete() {

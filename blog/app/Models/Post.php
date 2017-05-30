@@ -114,6 +114,36 @@ class Post extends Model {
 		return $db;
 	}
 
+	public function getPostsByArrayPostID($array_post_id) {
+		$db = DB::table('post as p')
+		->select(DB::raw('p.post_id as post_id,
+								p.image as image,
+								p.created_at as created_at,
+								pd.title as title,
+								pd.description as description,
+								pd.tag AS tag,
+								u.id as author_id,
+								u.name as author_name,
+								p.status as status,
+								cd.category_id as category_id,
+								cd.name as category_name'))
+		->join('users as u', 'u.id', '=', 'p.author_id')
+		->leftJoin('post_description as pd', function($join) {
+		  $join->on('p.post_id', '=', 'pd.post_id');
+		  $join->on('pd.language_id', '=', DB::raw('1'));
+		});
+		$db->leftJoin('post_to_category as ptc', function($join) {
+			  $join->on('p.post_id', '=', 'ptc.post_id');
+			});
+		$db->leftJoin('category_description as cd', function($join) {
+		  	$join->on('cd.category_id', '=', 'ptc.category_id');
+		  	$join->on('cd.language_id', '=', DB::raw('1'));
+		});
+		$db->whereIn('p.post_id', $array_post_id)->orderByRaw(\DB::raw("FIELD(p.post_id, ".implode(",",$array_post_id).")"));
+		$result = $db->get();
+		return $result;
+	}
+
 	public function getPostsByPostGroup($filter_data=[]) {
 		$db = DB::table('post as p')
 		->select(DB::raw('p.post_id as post_id,
