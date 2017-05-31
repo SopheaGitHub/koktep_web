@@ -221,4 +221,8 @@ $(document).on('mouseover', '#submit-post', function(e) {
 $(document).ready(function() {
   requestSubmitForm('submit-post', 'form-post', "<?php echo $data->action; ?>");
 });
+
+// Override summernotes image manager
+$('button[data-original-title=\'Picture\']').attr('data-toggle', 'image').removeAttr('data-event');
+// End
 </script>

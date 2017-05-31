@@ -85,7 +85,10 @@ class PostAccountController extends Controller
         }
 
         $post_relateds = $this->post->getPostRelated($post_id);
-        $this->data->post_relateds = $this->post->getPostsByArrayPostID($post_relateds);
+        $this->data->post_relateds = [];
+        if(count($post_relateds) > 0) {
+            $this->data->post_relateds = $this->post->getPostsByArrayPostID($post_relateds);
+        }
 
         if(count($this->data->post_relateds) > 0) {
             foreach ($this->data->post_relateds as $post) {
@@ -125,6 +128,7 @@ class PostAccountController extends Controller
         $this->data->text_empty = 'There is no data!';
         $this->data->action = url('/posts/comment');
         $this->data->action_comment_form = url('/post-account/comment-form?post_id='.$post_id);
+        $this->data->authorized = ((\Auth::check())? true:false);
         
         return view('post_account.detail_form', ['data' => $this->data]);
     }

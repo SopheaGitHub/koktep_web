@@ -15,23 +15,27 @@
             </span>
         </div>
       </div>
-      <div style="border:1px solid #ddd;">
-        <div id="main" role="main">
-          <section class="slider">
-            <div class="flexslider carousel">
-              <ul class="slides">
-                <?php
-                  if(isset($data->post_group_items[$post_group->post_group_id])) {
-                    foreach ($data->post_group_items[$post_group->post_group_id] as $post_group_items) { ?>
-                      <li>
-                        <a href="#"><img src="<?php echo $post_group_items['thumb']; ?>" alt="" /></a>
-                      </li>
-                <?php }
-                  }
-                ?>
-              </ul>
-            </div>
-          </section>
+
+      <div class="row">
+        <div class="col-md-12">
+          <?php
+            if(isset($data->post_group_items[$post_group->post_group_id])) { ?>
+              <div class="slider1">
+            <?php  foreach ($data->post_group_items[$post_group->post_group_id] as $post_group_items) { ?>
+                <div class="slide"><a href="#"><img src="<?php echo $post_group_items['thumb']; ?>" alt=""></a></div>
+                <div class="slide"><a href="#"><img src="<?php echo $post_group_items['thumb']; ?>" alt=""></a></div>
+                <div class="slide"><a href="#"><img src="<?php echo $post_group_items['thumb']; ?>" alt=""></a></div>
+                <div class="slide"><a href="#"><img src="<?php echo $post_group_items['thumb']; ?>" alt=""></a></div>
+                <div class="slide"><a href="#"><img src="<?php echo $post_group_items['thumb']; ?>" alt=""></a></div>
+                <div class="slide"><a href="#"><img src="<?php echo $post_group_items['thumb']; ?>" alt=""></a></div>
+                <div class="slide"><a href="#"><img src="<?php echo $post_group_items['thumb']; ?>" alt=""></a></div>
+                <div class="slide"><a href="#"><img src="<?php echo $post_group_items['thumb']; ?>" alt=""></a></div>
+                <div class="slide"><a href="#"><img src="<?php echo $post_group_items['thumb']; ?>" alt=""></a></div>
+                <div class="slide"><a href="#"><img src="<?php echo $post_group_items['thumb']; ?>" alt=""></a></div>
+          <?php } ?>
+              </div>
+          <?php  }
+          ?>
         </div>
       </div>
       <br />
@@ -56,3 +60,13 @@
       Showing <?php echo $start; ?> to <?php echo $stop; ?> of <?php echo $data->posts_groups->total(); ?> &nbsp;&nbsp; (<?php echo $data->posts_groups->currentPage(); ?> Pages)
 	</div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+      $('.slider1').bxSlider({
+        slideWidth: 120,
+        minSlides: 2,
+        maxSlides: 10,
+        slideMargin: 5
+      });
+    });
+</script>

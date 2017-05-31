@@ -1,5 +1,8 @@
 @extends('layouts.app')
-
+@section('bxslider')
+    <link href="<?php echo asset('/javascript/bxslider/jquery.bxslider.css'); ?>" rel="stylesheet" />
+    <script type="text/javascript" src="<?php echo asset('/javascript/bxslider/jquery.bxslider.js'); ?>"></script>
+@endsection
 @section('content')
 <div class="container">
     <div class="row profile">
@@ -33,18 +36,4 @@ $(document).ready(function() {
     paginateListAction('render-post-group', "<?php echo $data->action_list; ?>");
 });
 </script>
-<script type="text/javascript">
-    $(window).load(function(){
-      $('.flexslider').flexslider({
-        animation: "slide",
-        animationLoop: false,
-        itemWidth: 130,
-        itemMargin: 5,
-        pausePlay: false,
-        start: function(slider){
-          $('body').removeClass('loading');
-        }
-      });
-    });
-  </script>
 @endsection

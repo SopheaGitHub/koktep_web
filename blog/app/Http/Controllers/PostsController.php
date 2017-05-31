@@ -177,66 +177,66 @@ class PostsController extends Controller
                 $request = \Request::all();
                 $this->data->action_form = url('/posts/create-load-form');
 
-                $validationError = $this->post->validationForm(['request'=>$request, 'action'=>'create']);
-                if($validationError) {
-                    return \Response::json($validationError);
-                }
+                // $validationError = $this->post->validationForm(['request'=>$request, 'action'=>'create']);
+                // if($validationError) {
+                //     return \Response::json($validationError);
+                // }
 
-                // insert post
-                $postDatas = [
-                    'author_id'     => $this->data->auth_id,
-                    'image'         => $request['image'],
-                    'status'        => $request['status']
-                ];
+                // // insert post
+                // $postDatas = [
+                //     'author_id'     => $this->data->auth_id,
+                //     'image'         => $request['image'],
+                //     'status'        => $request['status']
+                // ];
 
-                $post = $this->post->create($postDatas);
-                // End
+                // $post = $this->post->create($postDatas);
+                // // End
 
-                // insert post description
-                $post_descriptionDatas = [
-                    'post_id'       => $post->id,
-                    'post_description_datas'    => ((isset($request['post_description']))? $request['post_description']:[])
-                ];
+                // // insert post description
+                // $post_descriptionDatas = [
+                //     'post_id'       => $post->id,
+                //     'post_description_datas'    => ((isset($request['post_description']))? $request['post_description']:[])
+                // ];
 
-                $post_description = $this->post->insertPostDescription($post_descriptionDatas);
-                // End
+                // $post_description = $this->post->insertPostDescription($post_descriptionDatas);
+                // // End
 
-                // insert post to layout
-                $post_to_layoutDatas['post_to_layout_datas'][] = [
-                    'post_id'       => $post->id,
-                    'website_id'    => '1',
-                    'layout_id'     => '0'
-                ];
+                // // insert post to layout
+                // $post_to_layoutDatas['post_to_layout_datas'][] = [
+                //     'post_id'       => $post->id,
+                //     'website_id'    => '1',
+                //     'layout_id'     => '0'
+                // ];
 
-                $post_to_layout = $this->post->insertPostToLayout($post_to_layoutDatas);
-                // End
+                // $post_to_layout = $this->post->insertPostToLayout($post_to_layoutDatas);
+                // // End
 
-                // insert post to categories
-                $post_to_categoryDatas = [
-                    'post_id'       => $post->id,
-                    'post_category_datas'   => ((isset($request['post_category']))? $request['post_category']:[])
-                ];
+                // // insert post to categories
+                // $post_to_categoryDatas = [
+                //     'post_id'       => $post->id,
+                //     'post_category_datas'   => ((isset($request['post_category']))? $request['post_category']:[])
+                // ];
 
-                $post_category = $this->post->insertPostCategory($post_to_categoryDatas);
-                // End
+                // $post_category = $this->post->insertPostCategory($post_to_categoryDatas);
+                // // End
 
-                // insert post image
-                $post_imageDatas = [
-                    'post_id'       => $post->id,
-                    'post_images'   => ((isset($request['post_image']))? $request['post_image']:[])
-                ];
+                // // insert post image
+                // $post_imageDatas = [
+                //     'post_id'       => $post->id,
+                //     'post_images'   => ((isset($request['post_image']))? $request['post_image']:[])
+                // ];
 
-                $post_category = $this->post->insertPostImage($post_imageDatas);
-                // End
+                // $post_category = $this->post->insertPostImage($post_imageDatas);
+                // // End
 
-                // insert post image
-                $post_relatedDatas = [
-                    'post_id'       => $post->id,
-                    'posts_related' => ((isset($request['post_related']))? $request['post_related']:[])
-                ];
+                // // insert post image
+                // $post_relatedDatas = [
+                //     'post_id'       => $post->id,
+                //     'posts_related' => ((isset($request['post_related']))? $request['post_related']:[])
+                // ];
 
-                $post_category = $this->post->insertPostRelated($post_relatedDatas);
-                // End
+                // $post_category = $this->post->insertPostRelated($post_relatedDatas);
+                // // End
 
                 DB::commit();
                 $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>'Success : save post successfully!', 'load_form'=>$this->data->action_form];
