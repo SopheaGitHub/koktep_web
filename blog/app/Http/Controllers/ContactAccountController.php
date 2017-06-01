@@ -60,6 +60,8 @@ class ContactAccountController extends Controller
 
         $this->data->user_address = $this->user->getAddressByUserId($user_id);
 
+        $this->data->text_empty = '...';
+
         return view('contact_account.list', ['data' => $this->data]);
     }
 }

@@ -27,7 +27,8 @@ Route::controllers([
 	'/contact-account'	=> 'ContactAccountController',
 	'/overview-account'	=> 'OverviewAccountController',
 	'/post-account'		=> 'PostAccountController',
-	'/posts'	=> 'PostsController',
+	'/posts'			=> 'PostsController',
+	'/posts-groups-account'	=> 'PostsGroupsAccountController',
 	'/posts-groups'	=> 'PostsGroupsController',
 	'/geo-zones' 	=> 'GeoZonesController'
 ]);

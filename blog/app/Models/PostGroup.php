@@ -26,6 +26,7 @@ class PostGroup extends Model
 		$db = DB::table(DB::raw('
                         (
 							SELECT
+								pg.author_id AS author_id,
 								pg.post_group_id AS post_group_id,
 								pg.value AS value,
 								pg.status AS status,
@@ -36,7 +37,14 @@ class PostGroup extends Model
 							LEFT JOIN post_group_description AS pgd ON pgd.post_group_id = pg.post_group_id
 							AND pgd.language_id = \'1\'
 						) AS posts_groups
-                    '))->orderBy($filter_data['sort'], $filter_data['order']);
+                    '));
+
+				if($filter_data['account_id']!='') {
+					$db->where('author_id', '=', $filter_data['account_id']);
+				}
+
+				$db->orderBy($filter_data['sort'], $filter_data['order']);
+
 		return $db;
 	}
 
@@ -95,4 +103,27 @@ class PostGroup extends Model
         }
 		return $error;
 	}
+
+	public function validationDeleteForm($datas=[]) {
+		$error = false;
+		$rules = [];
+		$messages = [];
+
+		$rules['post_group_invalid'] = 'required';
+		$messages['post_group_invalid.required'] = 'This <b>Post Group</b> is invalid.';
+
+		$rules['post_group_id'] = 'required';
+		$messages['post_group_id.required'] = 'The <b>Post Group</b> field is required.';
+
+		$rules['author_id'] = 'required|in:'.$datas['request']['post_group_author_id'];
+		$messages['author_id.required'] = 'The <b>Author</b> field is required.';
+		$messages['author_id.in'] = 'The <b>Author</b> is invalid to delete this post_group.';
+
+        $validator = \Validator::make($datas['request'], $rules, $messages);
+        if ($validator->fails()) {
+            $error = ['error'=>'1','success'=>'0','msg'=>'Warning : delete post group unsuccessfully!','validatormsg'=>$validator->messages()];
+        }
+        return $error;
+	}
+
 }

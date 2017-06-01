@@ -58,7 +58,9 @@
           </fieldset>
           <hr />
         <?php  }
-        }
+        } else { ?>
+          <em><?php echo $data->text_empty; ?></em>
+        <?php }
       ?>
     </form>
   </div>

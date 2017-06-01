@@ -3,15 +3,14 @@
         <div class="col-md-3">
             <div style="padding:20px; background: #fff;">
                 <b><?php echo $data->title; ?></b>
-                <br />
+                <hr />
+                <div><span><img style="width:40px; 5px solid rgba(255,255,255,0.5); border-radius:50%;" src="<?php echo ((isset($data->thumb_author))? $data->thumb_author:''); ?>"></span> &nbsp; <a href="<?php echo $data->overview_account.'?account_id='.$data->author_id; ?>"> <b><?php echo $data->author_name; ?></b></a></div>
+                <p></p>
                 <div>
-                    <i class="fa fa-btn fa-user"></i><a href="#">Chan Sophea</a>
+                    <i data-toggle="tooltip" title="View" class="fa fa-btn fa-eye"></i><?php echo $data->post_viewed; ?>
                 </div>
                 <div>
-                    <i class="fa fa-btn fa-eye"></i>12311
-                </div>
-                <div>
-                    <i class="fa fa-btn fa-calendar"></i>on May 03th, 2017
+                    <i data-toggle="tooltip" title="Date" class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y', strtotime($data->post_created_at)); ?>
                 </div>
                 <br />
                 <div class="row">
@@ -45,7 +44,7 @@
                 </div>
                 <hr />
                 <div>
-                    <span class="pull-right">
+                    <span class="pull-left">
                         <!-- AddThis Button BEGIN -->
                             <div class="addthis_toolbox addthis_default_style"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_counter addthis_pill_style"></a></div>
                             <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script>
@@ -100,16 +99,16 @@
                                     $post_category = (($post->category_id)? $post->category_id.'-'.str_replace(' ', '-', strtolower($post->category_name)):'0');
                                     $view_detail = $data->post_detail.'?account_id='.$post->author_id.'&post_id='.$post->post_id.'&category_id='.$post_category;
                                 ?>
-                                <div class="col-sm-3 col-md-3">
+                                <div class="col-sm-4 col-md-4">
                                     <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" style="width:100%"></a>
                                     <div><b><a href="<?php echo $view_detail; ?>"><?php echo $post->title; ?></a></b></div>
                                     <p><?php echo $post->description; ?></p>
                                     <div class="row">
-                                        <div class="col-md-8"><b><a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><?php echo $post->author_name; ?></a></b></div>
+                                        <div class="col-md-8"><div><span><img style="width:40px; 5px solid rgba(255,255,255,0.5); border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"></span> &nbsp; <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"> <b><?php echo $post->author_name; ?></b></a></div></div>
                                         <div class="col-md-4">
                                             <span class="pull-right" style="font-size:11px;">
-                                                <i class="fa fa-btn fa-eye"></i> 0121 &nbsp;&nbsp;&nbsp;
-                                                <a href="<?php echo $view_detail; ?>"><i class="fa fa-btn fa-picture-o"></i></a> 2
+                                                <i class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
+                                                <a href="<?php echo $view_detail; ?>"><i class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
                                             </span>
                                         </div>
                                     </div>

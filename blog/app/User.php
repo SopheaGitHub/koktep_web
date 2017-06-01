@@ -41,7 +41,10 @@ class User extends Authenticatable
     }
 
     public function getSocialMediaByUserId($user_id) {
-        $result = DB::table('user_to_social_media')->where('user_id', '=', $user_id)->orderBy('sort_order', 'asc')->get();
+        $result = DB::table('user_to_social_media AS utsm')
+        ->select('utsm.*', 'sm.name AS social_media_name', 'sm.icon AS social_media_icon')
+        ->join('social_media AS sm', 'sm.social_media_id', '=', 'utsm.social_media_id')
+        ->where('utsm.user_id', '=', $user_id)->orderBy('utsm.sort_order', 'asc')->get();
         return $result;
     }
 

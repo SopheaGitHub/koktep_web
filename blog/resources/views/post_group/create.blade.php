@@ -9,7 +9,7 @@
         <div class="col-md-9">
             <div class="profile-content">
                 <div class="row">
-                    <div class="col-md-6"><h4><i class="fa fa-btn fa-object-group"></i>Posts Groups Management</h4></div>
+                    <div class="col-md-6"><h4><i class="fa fa-btn fa-object-group"></i>Posted's Groups Management</h4></div>
                     <div class="col-md-6">
                         <span class="pull-right">
                             <a href="<?php echo $data->go_back.'?account_id='.$data->auth_id; ?>" class="btn btn-sm btn-default"><i class="fa fa-btn fa-undo"></i> Cancel</a>
@@ -32,6 +32,9 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-loadingForm("<?php echo $data->action_form; ?>");
+$(document).ready(function() {
+    loadingForm("<?php echo $data->action_form; ?>");
+    requestSubmitForm('submit-post-group', 'form-post-group', "<?php echo $data->action; ?>");
+});
 </script>
 @endsection

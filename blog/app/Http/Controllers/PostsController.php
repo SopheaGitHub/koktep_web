@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\PostComment;
+use App\Models\PostDeleted;
 use App\Models\Language;
 use App\Models\Layout;
 use App\Models\UrlAlias;
@@ -28,6 +29,7 @@ class PostsController extends Controller
         $this->data = new \stdClass();
         $this->post = New Post();
         $this->post_comment = new PostComment();
+        $this->post_deleted = new PostDeleted();
         $this->language = new Language();
         $this->layout = new Layout();
         $this->url_alias = new UrlAlias();
@@ -46,15 +48,19 @@ class PostsController extends Controller
      */
     public function getIndex()
     {
+        if(\Request::get('account_id')!=$this->data->auth_id) {
+            return view('errors.504');
+        }
+        
         $this->data->action_list = url('/posts/list');
         $this->data->add_post = url('/posts/create');
+        $this->data->action_delete = url('/posts/delete');
         return view('post.index', ['data'=>$this->data]);
     }
 
     public function getList() {
         $request = \Request::all();
         $this->data->edit_post = url('/posts/edit');
-        $this->data->action_delete = url('/posts/delete');
 
         // define data filter
 
@@ -106,7 +112,7 @@ class PostsController extends Controller
             $paginate_url['order'] = $request['order'];
         }
 
-        $this->data->posts = $this->post->getPosts($filter_data)->paginate(1)->setPath(url('/posts'))->appends($paginate_url);
+        $this->data->posts = $this->post->getPosts($filter_data)->paginate(10)->setPath(url('/posts'))->appends($paginate_url);
 
         if(count($this->data->posts) > 0) {
             foreach ($this->data->posts as $post) {
@@ -135,8 +141,8 @@ class PostsController extends Controller
         }
 
         $this->data->status = $this->config->status;
-
-        $this->data->text_empty = 'There is no data!';
+        $this->data->post_detail = url('/post-account/detail');
+        $this->data->text_empty = '...';
 
         return view('post.list', ['data' => $this->data]);
     }
@@ -149,6 +155,7 @@ class PostsController extends Controller
     public function getCreate()
     {
         $this->data->go_back = url('/posts');
+        $this->data->action = url('/posts/store');
         $this->data->action_form = url('/posts/create-load-form');
         return view('post.create', ['data'=>$this->data]);
     }
@@ -156,7 +163,6 @@ class PostsController extends Controller
     public function getCreateLoadForm() {
         $datas = [
             'icon' => 'icon_create',
-            'action' => url('/posts/store'),
             'titlelist' => 'Add New Post'
         ];
         echo $this->getPostForm($datas);
@@ -177,66 +183,66 @@ class PostsController extends Controller
                 $request = \Request::all();
                 $this->data->action_form = url('/posts/create-load-form');
 
-                // $validationError = $this->post->validationForm(['request'=>$request, 'action'=>'create']);
-                // if($validationError) {
-                //     return \Response::json($validationError);
-                // }
+                $validationError = $this->post->validationForm(['request'=>$request, 'action'=>'create']);
+                if($validationError) {
+                    return \Response::json($validationError);
+                }
 
-                // // insert post
-                // $postDatas = [
-                //     'author_id'     => $this->data->auth_id,
-                //     'image'         => $request['image'],
-                //     'status'        => $request['status']
-                // ];
+                // insert post
+                $postDatas = [
+                    'author_id'     => $this->data->auth_id,
+                    'image'         => $request['image'],
+                    'status'        => $request['status']
+                ];
 
-                // $post = $this->post->create($postDatas);
-                // // End
+                $post = $this->post->create($postDatas);
+                // End
 
-                // // insert post description
-                // $post_descriptionDatas = [
-                //     'post_id'       => $post->id,
-                //     'post_description_datas'    => ((isset($request['post_description']))? $request['post_description']:[])
-                // ];
+                // insert post description
+                $post_descriptionDatas = [
+                    'post_id'       => $post->id,
+                    'post_description_datas'    => ((isset($request['post_description']))? $request['post_description']:[])
+                ];
 
-                // $post_description = $this->post->insertPostDescription($post_descriptionDatas);
-                // // End
+                $post_description = $this->post->insertPostDescription($post_descriptionDatas);
+                // End
 
-                // // insert post to layout
-                // $post_to_layoutDatas['post_to_layout_datas'][] = [
-                //     'post_id'       => $post->id,
-                //     'website_id'    => '1',
-                //     'layout_id'     => '0'
-                // ];
+                // insert post to layout
+                $post_to_layoutDatas['post_to_layout_datas'][] = [
+                    'post_id'       => $post->id,
+                    'website_id'    => '1',
+                    'layout_id'     => '0'
+                ];
 
-                // $post_to_layout = $this->post->insertPostToLayout($post_to_layoutDatas);
-                // // End
+                $post_to_layout = $this->post->insertPostToLayout($post_to_layoutDatas);
+                // End
 
-                // // insert post to categories
-                // $post_to_categoryDatas = [
-                //     'post_id'       => $post->id,
-                //     'post_category_datas'   => ((isset($request['post_category']))? $request['post_category']:[])
-                // ];
+                // insert post to categories
+                $post_to_categoryDatas = [
+                    'post_id'       => $post->id,
+                    'post_category_datas'   => ((isset($request['post_category']))? $request['post_category']:[])
+                ];
 
-                // $post_category = $this->post->insertPostCategory($post_to_categoryDatas);
-                // // End
+                $post_category = $this->post->insertPostCategory($post_to_categoryDatas);
+                // End
 
-                // // insert post image
-                // $post_imageDatas = [
-                //     'post_id'       => $post->id,
-                //     'post_images'   => ((isset($request['post_image']))? $request['post_image']:[])
-                // ];
+                // insert post image
+                $post_imageDatas = [
+                    'post_id'       => $post->id,
+                    'post_images'   => ((isset($request['post_image']))? $request['post_image']:[])
+                ];
 
-                // $post_category = $this->post->insertPostImage($post_imageDatas);
-                // // End
+                $post_category = $this->post->insertPostImage($post_imageDatas);
+                // End
 
-                // // insert post image
-                // $post_relatedDatas = [
-                //     'post_id'       => $post->id,
-                //     'posts_related' => ((isset($request['post_related']))? $request['post_related']:[])
-                // ];
+                // insert post image
+                $post_relatedDatas = [
+                    'post_id'       => $post->id,
+                    'posts_related' => ((isset($request['post_related']))? $request['post_related']:[])
+                ];
 
-                // $post_category = $this->post->insertPostRelated($post_relatedDatas);
-                // // End
+                $post_category = $this->post->insertPostRelated($post_relatedDatas);
+                // End
 
                 DB::commit();
                 $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>'Success : save post successfully!', 'load_form'=>$this->data->action_form];
@@ -259,6 +265,7 @@ class PostsController extends Controller
     public function getEdit($post_id)
     {
         $this->data->go_back = url('/posts');
+        $this->data->action  = url('/posts/update/'.$post_id);
         $this->data->action_form = url('/posts/edit-load-form/'.$post_id);
         return view('post.edit', ['data'=>$this->data]);
     }
@@ -315,7 +322,6 @@ class PostsController extends Controller
 
         $datas = [
             'icon' => 'icon_edit',
-            'action' => url('/posts/update/'.$post_id),
             'titlelist' => 'Edit Post',
             'post' => $this->data->post,
             'post_descriptions' => $this->data->post_descriptions,
@@ -514,11 +520,60 @@ class PostsController extends Controller
 
         $this->data->placeholder = $this->filemanager->resize('no_image.png', 120, 80);
 
-        $this->data->action = (($datas['action'])? $datas['action']:'');
         $this->data->titlelist = (($datas['titlelist'])? $datas['titlelist']:'');
         $this->data->icon = (($datas['icon'])? $datas['icon']:'');
 
         return view('post.form', ['data' => $this->data]);
+    }
+
+    public function postDelete() {
+        if(\Request::ajax()) {
+            DB::beginTransaction();
+            try {
+
+                $request = \Request::all();
+
+                $post = $this->post->where('post_id', '=', $request['post_id'])->first();
+                if($post) {
+                    $request['post_invalid'] = 'true';
+                    $request['post_author_id'] = $post->author_id;
+                }else {
+                    $request['post_invalid'] = '';
+                    $request['post_author_id'] = '0';
+                }
+                
+                $request['author_id'] = $this->data->auth_id;
+                $this->data->action_list = url('/posts/list');
+
+                $validationError = $this->post->validationDeleteForm(['request'=>$request, 'action'=>'delete']);
+                if($validationError) {
+                    return \Response::json($validationError);
+                }
+
+                // insert post deleted
+                $postDeletedDatas = [
+                    'deleted_by_author_id' => $this->data->auth_id,
+                    'data'     => json_encode($post),
+                ];
+
+                $post_deleted = $this->post_deleted->create($postDeletedDatas);
+                // End
+
+                // delete old post
+                $this->post->where('post_id', '=', $request['post_id'])->delete();
+                // End
+
+                DB::commit();
+                $return = ['error'=>'0','success'=>'1','action'=>'delete','msg'=>'Success : delete post successfully!', 'load_form'=>$this->data->action_list];
+                return \Response::json($return);
+
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+                exit();
+            }
+        }
+        exit();
     }
 
     public function postComment() {
@@ -555,29 +610,29 @@ class PostsController extends Controller
 
     public function getAutocomplete() {
         $request = \Request::all();
-        $json = array();
+        $json = [];
 
         if (isset($request['filter_title'])) {
 
-            $filter_data = array(
+            $filter_data = [
                 'filter_title' => $request['filter_title'],
                 'sort'        => 'title',
                 'order'       => 'ASC',
                 'start'       => 0,
                 'limit'       => 5
-            );
+            ];
 
             $results = $this->post->getAutocompletePosts($filter_data);
 
             foreach ($results as $result) {
-                $json[] = array(
+                $json[] = [
                     'post_id' => $result->post_id,
-                    'title'        => strip_tags(html_entity_decode($result->title, ENT_QUOTES, 'UTF-8'))
-                );
+                    'title'   => strip_tags(html_entity_decode($result->title, ENT_QUOTES, 'UTF-8'))
+                ];
             }
         }
 
-        $sort_order = array();
+        $sort_order = [];
 
         foreach ($json as $key => $value) {
             $sort_order[$key] = $value['title'];

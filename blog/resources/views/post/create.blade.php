@@ -32,6 +32,9 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-loadingForm("<?php echo $data->action_form; ?>");
+$(document).ready(function() {
+    loadingForm("<?php echo $data->action_form; ?>");
+    requestSubmitForm('submit-post', 'form-post', "<?php echo $data->action; ?>");
+});
 </script>
 @endsection

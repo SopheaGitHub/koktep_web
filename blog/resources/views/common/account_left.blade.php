@@ -8,6 +8,7 @@
 
     $user_info = $objUser->getUser($user_id);
     $user_technical_info = $objUser->getTechnicalByUserId($user_id);
+    $user_to_social_media = $objUser->getSocialMediaByUserId($user_id);
 
     // load image library
     if($user_info) {
@@ -59,6 +60,10 @@
                 <a href="<?php echo url('/overview-account?account_id='.$user_id); ?>">
                 <i class="fa fa-btn fa-home"></i>Overview </a>
             </li>
+            <li <?php echo (($route_name=='posts-groups-account')? 'class="active"':''); ?> >
+                <a href="<?php echo url('/posts-groups-account?account_id='.$user_id); ?>">
+                <i class="fa fa-btn fa-object-group"></i>Posted's Groups </a>
+            </li>
             <li <?php echo (($route_name=='about-account')? 'class="active"':''); ?> >
                 <a href="<?php echo url('/about-account?account_id='.$user_id); ?>">
                 <i class="fa fa-btn fa-user"></i>About </a>
@@ -67,29 +72,22 @@
                 <a href="<?php echo url('/contact-account?account_id='.$user_id); ?>">
                 <i class="fa fa-btn fa-phone"></i>Contact </a>
             </li>
-            <li <?php echo (($route_name=='posts-groups-account')? 'class="active"':''); ?> >
-                <a href="<?php echo url('/posts-groups?account_id='.$user_id); ?>" onclick="return false;" target="_blank">
-                <i class="fa fa-btn fa-object-group"></i>Posts Groups </a>
-            </li>
         </ul>
     </div>
     <!-- END MENU -->
     <div class="social">
         <div class="bottom">
-            <a class="btn btn-primary btn-twitter btn-sm" href="https://twitter.com/webmaniac">
-                <i class="fa fa-twitter"></i>
-            </a>
-            <a class="btn btn-danger btn-sm" rel="publisher"
-               href="https://plus.google.com/+ahmshahnuralam">
-                <i class="fa fa-google-plus"></i>
-            </a>
-            <a class="btn btn-primary btn-sm" rel="publisher"
-               href="https://plus.google.com/shahnuralam">
-                <i class="fa fa-facebook"></i>
-            </a>
-            <a class="btn btn-warning btn-sm" rel="publisher" href="https://plus.google.com/shahnuralam">
-                <i class="fa fa-behance"></i>
-            </a>
+            <?php
+                if(count($user_to_social_media) > 0) {
+                    foreach ($user_to_social_media as $social_media) { ?>
+                        <a class="btn btn-default btn-twitter btn-sm" href="<?php echo $social_media->link; ?>" target="_blank">
+                            <i data-toggle="tooltip" title="<?php echo $social_media->social_media_name; ?>" class="fa <?php echo $social_media->social_media_icon; ?>"></i>
+                        </a>
+                <?php    }
+                }else {
+                    echo '...';
+                }
+            ?>
         </div>
     </div>
     

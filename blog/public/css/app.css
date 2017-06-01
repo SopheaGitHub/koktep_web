@@ -136,12 +136,13 @@ body {
     text-align: center;
 }
 
-.social .btn{ border-radius: 50%; width:32px; height:32px; line-height:18px;  }
+.social .btn{ border-radius: 50%; border: 1px solid #0F97B7; color: #0F97B7; width:32px; height:32px; line-height:18px;  }
 
 footer {
   margin-top: 30px;
   height: 300px;
   background: #fff;
+  border-bottom: 5px solid #0F97B7;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -344,4 +345,12 @@ div.required .control-label:not(span):before, td.required:before {
 .actionBox {
     border-top:1px dotted #bbb;
     padding:10px;
+}
+
+.tooltip-inner {
+  background: #eee;
+  padding: 5px 5px;
+  z-index: 20;
+  opacity: 1;
+  color: #333;
 }

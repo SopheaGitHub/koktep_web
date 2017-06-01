@@ -7,6 +7,7 @@
             @include('common.filter_left') 
         </div>
         <div class="col-md-9">
+            <!-- HTML to write -->
             <div class="profile-content" id="display-list">
                 
             </div>
@@ -29,4 +30,5 @@ $(document).ready(function() {
     paginateListAction('render-overview', "<?php echo $data->action_list; ?>");
 });
 </script>
+
 @endsection

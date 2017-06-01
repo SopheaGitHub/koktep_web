@@ -39,15 +39,19 @@ class PostsGroupsController extends Controller
      */
     public function getIndex()
     {
+        if(\Request::get('account_id')!=$this->data->auth_id) {
+            return view('errors.504');
+        }
+
     	$this->data->action_list = url('/posts-groups/list');
+        $this->data->action_delete = url('/posts-groups/delete');
         $this->data->add_post_group = url('/posts-groups/create');
         return view('post_group.index', ['data'=>$this->data]);
     }
 
     public function getList() {
         $request = \Request::all();
-        $this->data->edit_post = url('/posts/edit');
-        $this->data->action_delete = url('/posts/delete');
+        $this->data->edit_post = url('/posts-groups/edit');
 
         // define data filter
         if (isset($request['sort'])) {
@@ -64,6 +68,7 @@ class PostsGroupsController extends Controller
 
         // define filter data
         $filter_data = array(
+            'account_id'=>$this->data->auth_id,
             'sort'  => $sort,
             'order' => $order
         );
@@ -97,7 +102,10 @@ class PostsGroupsController extends Controller
 		                }
 
         				$this->data->post_group_items[$posts_groups_info->post_group_id][] = [
-        					'post_id'	=> $post_group_items_info->post_id,
+                            'author_id' => $post_group_items_info->author_id,
+                            'post_id'   => $post_group_items_info->post_id,
+                            'category_id' => $post_group_items_info->category_id,
+                            'category_name' => $post_group_items_info->category_name,
         					'thumb'		=> $thumb
         				];
         			}
@@ -123,8 +131,8 @@ class PostsGroupsController extends Controller
         }
 
         $this->data->status = $this->config->status;
-
-        $this->data->text_empty = 'There is no data!';
+        $this->data->post_detail = url('/post-account/detail');
+        $this->data->text_empty = '...';
 
         return view('post_group.list', ['data' => $this->data]);
     }
@@ -137,6 +145,7 @@ class PostsGroupsController extends Controller
     public function getCreate()
     {
     	$this->data->go_back = url('/posts-groups');
+        $this->data->action = url('/posts-groups/store');
         $this->data->action_form = url('/posts-groups/create-load-form');
         return view('post_group.create', ['data'=>$this->data]);
     }
@@ -144,7 +153,6 @@ class PostsGroupsController extends Controller
     public function getCreateLoadForm() {
         $datas = [
             'icon' => 'icon_create',
-            'action' => url('/posts-groups/store'),
             'titlelist' => 'Add New Post Group'
         ];
         echo $this->getPostGroupForm($datas);
@@ -210,6 +218,7 @@ class PostsGroupsController extends Controller
     public function getEdit($post_group_id)
     {
         $this->data->go_back = url('/posts-groups');
+        $this->data->action = url('/posts-groups/update/'.$post_group_id);
         $this->data->action_form = url('/posts-groups/edit-load-form/'.$post_group_id);
         return view('post_group.edit', ['data'=>$this->data]);
     }
@@ -238,7 +247,6 @@ class PostsGroupsController extends Controller
 
         $datas = [
             'icon' => 'icon_edit',
-            'action' => url('/posts-groups/update/'.$post_group_id),
             'titlelist' => 'Edit Post Group',
             'post_group' => $this->data->post_group,
             'post_group_descriptions' => $this->data->post_group_descriptions,
@@ -346,11 +354,52 @@ class PostsGroupsController extends Controller
         }else {
             $this->data->post_relateds = [];
         }
-
-        $this->data->action = (($datas['action'])? $datas['action']:'');
+        
         $this->data->titlelist = (($datas['titlelist'])? $datas['titlelist']:'');
         $this->data->icon = (($datas['icon'])? $datas['icon']:'');
 
         return view('post_group.form', ['data' => $this->data]);
     }
+
+    public function postDelete() {
+        if(\Request::ajax()) {
+            DB::beginTransaction();
+            try {
+
+                $request = \Request::all();
+
+                $post_group = $this->post_group->where('post_group_id', '=', $request['post_group_id'])->first();
+                if($post_group) {
+                    $request['post_group_invalid'] = 'true';
+                    $request['post_group_author_id'] = $post_group->author_id;
+                }else {
+                    $request['post_group_invalid'] = '';
+                    $request['post_group_author_id'] = '0';
+                }
+                
+                $request['author_id'] = $this->data->auth_id;
+                $this->data->action_list = url('/posts-groups/list');
+
+                $validationError = $this->post_group->validationDeleteForm(['request'=>$request, 'action'=>'delete']);
+                if($validationError) {
+                    return \Response::json($validationError);
+                }
+
+                // delete old post
+                $this->post_group->where('post_group_id', '=', $request['post_group_id'])->delete();
+                // End
+
+                DB::commit();
+                $return = ['error'=>'0','success'=>'1','action'=>'delete','msg'=>'Success : delete post group successfully!', 'load_form'=>$this->data->action_list];
+                return \Response::json($return);
+
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+                exit();
+            }
+        }
+        exit();
+    }
+
 }

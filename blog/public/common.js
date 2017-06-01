@@ -160,7 +160,7 @@ function requestSubmitForm(buttonId, formId, formAction) {
 	          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
 	          		msg += '</div>';
 	          		if(data.action=='create') {
-	            		loadingForm (data.load_form);
+	            		loadingForm(data.load_form);
 	          		}
 	        	}
 
@@ -173,6 +173,62 @@ function requestSubmitForm(buttonId, formId, formAction) {
 	      	contentType: false,
 	      	processData: false
 	    });
+  	});
+}
+
+// submit delete data
+function requestSubmitDeleteForm(buttonId, formId, formAction) {
+	$(document).on('click', '#'+buttonId, function(e) {
+	    e.preventDefault();
+	    var postDatas = new FormData($("form#"+formId)[0]);
+	    $.ajax({
+	      	url: formAction,
+	      	type: "POST",
+	      	data: postDatas,
+	      	dataType: "json",
+	      	async: false,
+	      	beforeSend: function() {
+	        	console.log('beforeSend');
+	      	},
+	      	complete: function() {
+	        	console.log('completed');
+	      	},
+	      	success: function(data) {
+	        	var msg = '';
+	        	// if vaildate error
+	        	if(data.error==1) {
+	          		msg += '<div class="alert alert-warning" id="warning">';
+	         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+	          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' :</b><br />';
+	          		if(data.validatormsg) {
+	            		$.each(data.validatormsg, function(index, value) {
+	              			msg += '- '+value+'<br />';
+	            		});
+	          		}
+	          		msg += '</div>';
+	        	}
+
+	        	// if success
+	        	if(data.success==1) {
+	          		msg += '<div class="alert alert-success" id="success">';
+	          		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+	          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
+	          		msg += '</div>';
+	          		if(data.action=='delete') {
+	            		loadingList(data.load_form);
+	          		}
+	        	}
+
+	        	$('#message').html(msg).show();
+	      	},
+	      	error: function(error) {
+	        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	      	},
+	      	cache: false,
+	      	contentType: false,
+	      	processData: false
+	    });
+		return false;
   	});
 }
 

@@ -12,19 +12,21 @@ class Post extends Model {
 	public function getPost($post_id) {
 		$result = DB::table(DB::raw('
 				(SELECT
-				DISTINCT *, (
+				DISTINCT p.*, u.name as author_name, u.image AS author_image,
+					(
 						SELECT
 							keyword
 						FROM
 							url_alias
 						WHERE
-							QUERY = \'post_id=\'"'.$post_id.'"
+							QUERY = \'p.post_id=\'"'.$post_id.'"
 					) AS keyword
 					, (SELECT title FROM post_description AS pd WHERE pd.post_id = "'.$post_id.'" AND pd.language_id=\'1\') AS title
 				FROM
-					post
+					post AS p
+				INNER JOIN users as u ON u.id = p.author_id
 				WHERE
-					post_id = "'.$post_id.'") AS post
+					p.post_id = "'.$post_id.'") AS post
 			'))->first();
 		return $result;
 	}
@@ -68,6 +70,8 @@ class Post extends Model {
 	public function getPosts($filter_data=[]) {
 		$db = DB::table('post as p')
 		->select(DB::raw('p.post_id as post_id,
+								p.viewed as viewed,
+								(SELECT COUNT(1) FROM post_image WHERE post_id = p.post_id) AS total_post_image,
 								p.image as image,
 								p.created_at as created_at,
 								pd.title as title,
@@ -75,6 +79,7 @@ class Post extends Model {
 								pd.tag AS tag,
 								u.id as author_id,
 								u.name as author_name,
+								u.image AS author_image,
 								p.status as status,
 								cd.category_id as category_id,
 								cd.name as category_name'))
@@ -117,6 +122,8 @@ class Post extends Model {
 	public function getPostsByArrayPostID($array_post_id) {
 		$db = DB::table('post as p')
 		->select(DB::raw('p.post_id as post_id,
+								p.viewed as viewed,
+								(SELECT COUNT(1) FROM post_image WHERE post_id = p.post_id) AS total_post_image,
 								p.image as image,
 								p.created_at as created_at,
 								pd.title as title,
@@ -124,6 +131,7 @@ class Post extends Model {
 								pd.tag AS tag,
 								u.id as author_id,
 								u.name as author_name,
+								u.image AS author_image,
 								p.status as status,
 								cd.category_id as category_id,
 								cd.name as category_name'))
@@ -151,12 +159,22 @@ class Post extends Model {
 								p.created_at as created_at,
 								pd.title as title,
 								pd.description as description,
+								u.id as author_id,
 								u.name as author_name,
-								p.status as status'))
+								p.status as status,
+								cd.category_id as category_id,
+								cd.name as category_name'))
 		->join('users as u', 'u.id', '=', 'p.author_id')
 		->leftJoin('post_description as pd', function($join) {
 		  $join->on('p.post_id', '=', 'pd.post_id');
 		  $join->on('pd.language_id', '=', DB::raw('1'));
+		})
+		->leftJoin('post_to_category as ptc', function($join) {
+			  $join->on('p.post_id', '=', 'ptc.post_id');
+			})
+		->leftJoin('category_description as cd', function($join) {
+		  	$join->on('cd.category_id', '=', 'ptc.category_id');
+		  	$join->on('cd.language_id', '=', DB::raw('1'));
 		})
 		->whereIn('p.post_id', $filter_data['array_post_group_id'])
 		->orderByRaw(\DB::raw("FIELD(p.post_id, ".implode(",",$filter_data['array_post_group_id']).")"));
@@ -332,6 +350,28 @@ class Post extends Model {
 			$error = ['error'=>'1','success'=>'0','msg'=>'Warning : '.(($datas['action']=='create')? 'save':'save change').' post unsuccessfully!','validatormsg'=>$validator->messages()];
         }
 		return $error;
+	}
+
+	public function validationDeleteForm($datas=[]) {
+		$error = false;
+		$rules = [];
+		$messages = [];
+
+		$rules['post_invalid'] = 'required';
+		$messages['post_invalid.required'] = 'This <b>Post</b> is invalid.';
+
+		$rules['post_id'] = 'required';
+		$messages['post_id.required'] = 'The <b>Post</b> field is required.';
+
+		$rules['author_id'] = 'required|in:'.$datas['request']['post_author_id'];
+		$messages['author_id.required'] = 'The <b>Author</b> field is required.';
+		$messages['author_id.in'] = 'The <b>Author</b> is invalid to delete this post.';
+
+        $validator = \Validator::make($datas['request'], $rules, $messages);
+        if ($validator->fails()) {
+            $error = ['error'=>'1','success'=>'0','msg'=>'Warning : delete post unsuccessfully!','validatormsg'=>$validator->messages()];
+        }
+        return $error;
 	}
 
 }

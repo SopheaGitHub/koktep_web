@@ -93,8 +93,3 @@ $('#post-related').delegate('.fa-minus-circle', 'click', function() {
 <script type="text/javascript">
 $('#language a:first').tab('show');
 </script>
-<script type="text/javascript">
-$(document).ready(function() {
-  requestSubmitForm('submit-post-group', 'form-post-group', "<?php echo $data->action; ?>");
-});
-</script>

@@ -51,14 +51,31 @@ class PostAccountController extends Controller
         $post_description = $this->post->getPostDescription($post_id);
 
         if($post) {
+            // update post view
+            $this->post->where('post_id', '=', $post_id)->update(['viewed'=>($post->viewed+1)]);
+            // End
+
             if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {
                 $this->data->image = $this->filemanager->resize($post->image, 600, 400);
             } else {
                 $this->data->image = $this->filemanager->resize('no_image.png', 600, 400);
             }
+            if (!empty($post->author_image) && is_file($this->data->dir_image . $post->author_image)) {
+                $this->data->thumb_author = $this->filemanager->resize($post->author_image, 100, 100);
+            } else {
+                $this->data->thumb_author = $this->filemanager->resize('no_image.png', 100, 100);
+            }
+            $this->data->author_name = $post->author_name;
+            $this->data->author_id = $post->author_id;
+            $this->data->post_viewed = ($post->viewed+1);
+            $this->data->post_created_at = $post->created_at;
             $this->data->title = $post->title;
         }else {
             $this->data->image = $this->filemanager->resize('no_image.png', 600, 400);
+            $this->data->author_name = $this->filemanager->resize('no_image.png', 100, 100);
+            $this->data->author_id = '0';
+            $this->data->post_viewed = '';
+            $this->data->post_created_at = '';
             $this->data->title = '';
         }
 
@@ -97,6 +114,11 @@ class PostAccountController extends Controller
                 } else {
                     $this->data->thumb[$post->post_id] = $this->filemanager->resize('no_image.png', 600, 400);
                 }
+                if (!empty($post->author_image) && is_file($this->data->dir_image . $post->author_image)) {
+                    $this->data->thumb_user[$post->post_id] = $this->filemanager->resize($post->author_image, 100, 100);
+                } else {
+                    $this->data->thumb_user[$post->post_id] = $this->filemanager->resize('no_image.png', 100, 100);
+                }
             }
         }
 
@@ -125,7 +147,7 @@ class PostAccountController extends Controller
         $this->data->url_category = url('/category?category_id=');
         $this->data->overview_account = url('/overview-account');
         $this->data->post_detail = url('/post-account/detail');
-        $this->data->text_empty = 'There is no data!';
+        $this->data->text_empty = '...';
         $this->data->action = url('/posts/comment');
         $this->data->action_comment_form = url('/post-account/comment-form?post_id='.$post_id);
         $this->data->authorized = ((\Auth::check())? true:false);
@@ -217,7 +239,7 @@ class PostAccountController extends Controller
             $paginate_url['order'] = $request['order'];
         }
 
-        $this->data->posts = $this->post->getPosts($filter_data)->paginate(1)->setPath(url('/post-account'))->appends($paginate_url);
+        $this->data->posts = $this->post->getPosts($filter_data)->paginate(10)->setPath(url('/post-account'))->appends($paginate_url);
 
         if(count($this->data->posts) > 0) {
             foreach ($this->data->posts as $post) {
@@ -225,6 +247,11 @@ class PostAccountController extends Controller
                     $this->data->thumb[$post->post_id] = $this->filemanager->resize($post->image, 600, 400);
                 } else {
                     $this->data->thumb[$post->post_id] = $this->filemanager->resize('no_image.png', 600, 400);
+                }
+                if (!empty($post->author_image) && is_file($this->data->dir_image . $post->author_image)) {
+                    $this->data->thumb_user[$post->post_id] = $this->filemanager->resize($post->author_image, 100, 100);
+                } else {
+                    $this->data->thumb_user[$post->post_id] = $this->filemanager->resize('no_image.png', 100, 100);
                 }
             }
         }
@@ -247,7 +274,7 @@ class PostAccountController extends Controller
 
         $this->data->status = $this->config->status;
 
-        $this->data->text_empty = 'There is no data!';
+        $this->data->text_empty = '...';
 
         return view('post_account.list', ['data' => $this->data]);
     }

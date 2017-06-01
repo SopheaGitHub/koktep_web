@@ -10,11 +10,13 @@
                     <div><b><a href="<?php echo $view_detail; ?>"><?php echo $post->title; ?></a></b></div>
                     <p><?php echo $post->description; ?></p>
                     <div class="row">
-                        <div class="col-md-8"><b><a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><?php echo $post->author_name; ?></a></b></div>
+                        <div class="col-md-8">
+                            <div><span><img style="width:40px; 5px solid rgba(255,255,255,0.5); border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"></span> &nbsp; <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"> <b><?php echo $post->author_name; ?></b></a></div>
+                        </div>
                         <div class="col-md-4">
                             <span class="pull-right" style="font-size:11px;">
-                                <i class="fa fa-btn fa-eye"></i> 0121 &nbsp;&nbsp;&nbsp;
-                                <a href="<?php echo $view_detail; ?>"><i class="fa fa-btn fa-picture-o"></i></a> 2
+                                <i class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
+                                <a href="<?php echo $view_detail; ?>"><i class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
                             </span>
                         </div>
                     </div>

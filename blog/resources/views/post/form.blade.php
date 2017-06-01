@@ -218,9 +218,6 @@ $(document).on('mouseover', '#submit-post', function(e) {
     $('#input-description<?php echo $language->language_id; ?>').val($('#input-description<?php echo $language->language_id; ?>').code());
   <?php } ?>
 });
-$(document).ready(function() {
-  requestSubmitForm('submit-post', 'form-post', "<?php echo $data->action; ?>");
-});
 
 // Override summernotes image manager
 $('button[data-original-title=\'Picture\']').attr('data-toggle', 'image').removeAttr('data-event');

@@ -17,6 +17,7 @@
                     </div>
                 </div>
                 <hr />
+                <p id="message"></p>
                 <div id="display-list">
 
                 </div>
@@ -30,6 +31,7 @@
 $(document).ready(function() {
     loadingList("<?php echo $data->action_list; ?>");
     paginateListAction('render-post', "<?php echo $data->action_list; ?>");
+    requestSubmitDeleteForm('submit-delete-post', 'form-delete-post', "<?php echo $data->action_delete; ?>");
 });
 </script>
 @endsection
