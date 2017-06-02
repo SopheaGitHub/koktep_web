@@ -40,7 +40,6 @@ class PostAccountController extends Controller
 
     public function getPostDetailForm() {
         $request = \Request::all();
-
         if(isset($request['post_id'])) {
             $post_id = $request['post_id'];
         }else {

@@ -43,6 +43,7 @@ class AccountController extends Controller
      */
     public function getIndex()
     {
+        $request = \Request::all();
         return view('account.index');
     }
 
@@ -59,6 +60,7 @@ class AccountController extends Controller
     }
 
     public function getSettingsLoadForm() {
+        $request = \Request::all();
         $user = $this->user->getUser($this->data->auth_id);
         $user_technical = $this->user->getTechnicalByUserId($this->data->auth_id);
         $user_address = $this->user->getAddressByUserId($this->data->auth_id);
@@ -85,11 +87,10 @@ class AccountController extends Controller
      */
     public function postSettingsUpdate($user_id)
     {
+        $request = \Request::all();
         if(\Request::ajax()) {
             DB::beginTransaction();
             try {
-
-                $request = \Request::all();
 
                 $validationError = $this->user->validationSettingForm(['request'=>$request, 'action'=>'edit']);
                 if($validationError) {
@@ -266,8 +267,8 @@ class AccountController extends Controller
     }
 
     public function getChangePassword() {
-        // check if auth != get account id
         $request = \Request::all();
+        // check if auth != get account id
         if($request['account_id']==$this->data->auth_id) {
             $this->data->go_back = url('/overview-account?account_id='.$this->data->auth_id);
             $datas = [

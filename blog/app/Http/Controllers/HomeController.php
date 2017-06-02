@@ -25,7 +25,6 @@ class HomeController extends Controller
     public function index()
     {
         $request = \Request::all();
-
         $this->data->action_list = url('/post-account/list');
         return view('home', ['data'=>$this->data]);
     }

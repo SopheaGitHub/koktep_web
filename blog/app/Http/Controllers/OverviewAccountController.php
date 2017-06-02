@@ -27,14 +27,19 @@ class OverviewAccountController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getIndex()
-    {
+    {       
         $request = \Request::all();
         if(isset($request['account_id'])) {
             $this->data->action_list = url('/post-account/list?account_id='.$request['account_id']);
             $this->data->action_paginate_list = url('/post-account/list');
             return view('overview_account.index', ['data'=>$this->data]);
         }else {
-            if(isset($request['login'])&&$request['login']=='success') {
+            if(isset($request['login'])&&$request['login']=='success'&&Auth::check()) {
+
+                // login log
+                $this->systemLogs('login', 'auth', $request);
+                // End
+
                 $this->data->action_list = url('/post-account/list?account_id='.((Auth::check())? Auth::user()->id:'0'));
                 $this->data->action_paginate_list = url('/post-account/list');
                 return view('overview_account.index', ['data'=>$this->data]);
