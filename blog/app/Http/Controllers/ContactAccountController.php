@@ -39,6 +39,9 @@ class ContactAccountController extends Controller
     public function getIndex()
     {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'contact-account', $request);
+        // End
         if(isset($request['account_id'])) {
             $this->data->action_list = url('/contact-account/list?account_id='.$request['account_id']);
             return view('contact_account.index', ['data'=>$this->data]);
@@ -49,6 +52,9 @@ class ContactAccountController extends Controller
 
     public function getList() {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_list', 'contact-account', $request);
+        // End
         if(isset($request['account_id'])) {
             $user_id = $request['account_id'];
         }else {

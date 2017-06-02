@@ -48,6 +48,10 @@ class PostsController extends Controller
      */
     public function getIndex()
     {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'posts', $request);
+        // End
         if(\Request::get('account_id')!=$this->data->auth_id) {
             return view('errors.504');
         }
@@ -60,6 +64,9 @@ class PostsController extends Controller
 
     public function getList() {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_list', 'posts', $request);
+        // End
         $this->data->edit_post = url('/posts/edit');
 
         // define data filter
@@ -154,6 +161,10 @@ class PostsController extends Controller
      */
     public function getCreate()
     {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('create', 'posts', $request);
+        // End
         $this->data->go_back = url('/posts');
         $this->data->action = url('/posts/store');
         $this->data->action_form = url('/posts/create-load-form');
@@ -161,6 +172,10 @@ class PostsController extends Controller
     }
 
     public function getCreateLoadForm() {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_form', 'posts', $request);
+        // End
         $datas = [
             'icon' => 'icon_create',
             'titlelist' => 'Add New Post'
@@ -176,11 +191,14 @@ class PostsController extends Controller
      */
     public function postStore()
     {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'posts', $request);
+        // End
         if(\Request::ajax()) {
             DB::beginTransaction();
             try {
 
-                $request = \Request::all();
                 $this->data->action_form = url('/posts/create-load-form');
 
                 $validationError = $this->post->validationForm(['request'=>$request, 'action'=>'create']);
@@ -264,6 +282,10 @@ class PostsController extends Controller
      */
     public function getEdit($post_id)
     {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('edit', 'posts', $request);
+        // End
         $this->data->go_back = url('/posts');
         $this->data->action  = url('/posts/update/'.$post_id);
         $this->data->action_form = url('/posts/edit-load-form/'.$post_id);
@@ -271,6 +293,10 @@ class PostsController extends Controller
     }
 
     public function getEditLoadForm($post_id) {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_form', 'posts', $request);
+        // End
         $this->data->post = $this->post->getPost($post_id);
         $this->data->post_descriptions = $this->post->getPostDescriptions($post_id);
 
@@ -342,11 +368,13 @@ class PostsController extends Controller
      */
     public function postUpdate($post_id)
     {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'posts', $request);
+        // End
         if(\Request::ajax()) {
             DB::beginTransaction();
             try {
-
-                $request = \Request::all();
 
                 $validationError = $this->post->validationForm(['request'=>$request, 'action'=>'edit']);
                 if($validationError) {
@@ -527,11 +555,13 @@ class PostsController extends Controller
     }
 
     public function postDelete() {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('delete', 'posts', $request);
+        // End
         if(\Request::ajax()) {
             DB::beginTransaction();
             try {
-
-                $request = \Request::all();
 
                 $post = $this->post->where('post_id', '=', $request['post_id'])->first();
                 if($post) {
@@ -577,11 +607,14 @@ class PostsController extends Controller
     }
 
     public function postComment() {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'posts', $request);
+        // End
         if(\Request::ajax()) {
             DB::beginTransaction();
             try {
-
-                $request = \Request::all();
+                            
                 $this->data->action_form = url('/post-account/comment-form?post_id='.$request['post_id']);
                 if(\Request::has('comment')) {
                     // insert post comment

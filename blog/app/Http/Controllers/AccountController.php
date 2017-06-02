@@ -44,12 +44,18 @@ class AccountController extends Controller
     public function getIndex()
     {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'account', $request);
+        // End
         return view('account.index');
     }
 
     public function getSettings() {
-        // check if auth != get account id
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'account', $request);
+        // End
+        // check if auth != get account id
         if($request['account_id']==$this->data->auth_id) {
             $this->data->go_back = url('/overview-account?account_id='.$this->data->auth_id);
             $this->data->action_form = url('/account/settings-load-form');
@@ -61,6 +67,9 @@ class AccountController extends Controller
 
     public function getSettingsLoadForm() {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_form', 'account', $request);
+        // End
         $user = $this->user->getUser($this->data->auth_id);
         $user_technical = $this->user->getTechnicalByUserId($this->data->auth_id);
         $user_address = $this->user->getAddressByUserId($this->data->auth_id);
@@ -88,6 +97,9 @@ class AccountController extends Controller
     public function postSettingsUpdate($user_id)
     {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'account', $request);
+        // End
         if(\Request::ajax()) {
             DB::beginTransaction();
             try {
@@ -268,6 +280,9 @@ class AccountController extends Controller
 
     public function getChangePassword() {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_form', 'account', $request);
+        // End
         // check if auth != get account id
         if($request['account_id']==$this->data->auth_id) {
             $this->data->go_back = url('/overview-account?account_id='.$this->data->auth_id);
@@ -286,6 +301,9 @@ class AccountController extends Controller
     {
         $request = \Request::all();
         $request['user_id'] = $user_id;
+        // add system log
+        $this->systemLogs('submit_form', 'account', $request);
+        // End
         $validationError = $this->user->validationChangePasswordForm(['request'=>$request]);
         if($validationError) {
             return \Response::json($validationError);

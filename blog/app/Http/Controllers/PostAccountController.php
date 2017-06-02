@@ -34,12 +34,18 @@ class PostAccountController extends Controller
 
     public function getDetail() {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'post-account', $request);
+        // End
         $this->data->action_detail_form = url('/post-account/post-detail-form?post_id='.$request['post_id']);
         return view('post_account.detail', ['data' => $this->data]);
     }
 
     public function getPostDetailForm() {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_form', 'post-account', $request);
+        // End
         if(isset($request['post_id'])) {
             $post_id = $request['post_id'];
         }else {
@@ -156,7 +162,9 @@ class PostAccountController extends Controller
 
     public function getCommentForm() {
         $request = \Request::all();
-
+        // add system log
+        $this->systemLogs('load_form', 'post-account', $request);
+        // End
         if(isset($request['post_id'])) {
             $post_id = $request['post_id'];
         }else {
@@ -182,6 +190,9 @@ class PostAccountController extends Controller
 
     public function getList() {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_list', 'post-account', $request);
+        // End
         // define account id
         if(isset($request['account_id'])) {
             $user_id = $request['account_id'];

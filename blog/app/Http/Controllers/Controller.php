@@ -27,12 +27,12 @@ class Controller extends BaseController
             }
 
             $url = \Request::url();
-            $ipinfo = json_decode(file_get_contents("https://ipinfo.io/".$ip), true);
+            // $ipinfo = json_decode(file_get_contents("https://ipinfo.io/".$ip), true);
 
             $arrayDatas = [
                 'url' => $url,
                 'request' => $all_resuest,
-                'ip_info' => $ipinfo
+                'ip_info' => ((isset($ipinfo))? $ipinfo:['ip'=>$ip])
             ];
 
             $systemLogDatas = [
@@ -40,18 +40,50 @@ class Controller extends BaseController
                 'ip' => $ip,
                 'action' => $action,
                 'key' => $key,
-                'value' => json_encode($arrayDatas),
+                'value' => $arrayDatas,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ];
 
-            \DB::table('system_log')->insert($systemLogDatas);
-            // End
+            $my_file = '../storage/logs/system.log';
+            $handle = fopen($my_file, 'a') or die('Cannot open file:  '.$my_file);
+            $new_data = json_encode($systemLogDatas)."\n";
+            fwrite($handle, $new_data);
+            fclose($handle);
 
+            return true;
         } catch (Exception $e) {
             echo $e->getMessage();
             exit();
         }
+    }
+
+    protected function readJsonFile($File){
+        // open the file to with the R flag,
+        $Path = fopen($File,"r") or die('Cannot open file:  '.$File);
+
+        // if file found,
+        if ($Path) {
+            $print = '';
+
+                // for each line
+                while (($line = fgets($Path)) !== false) {
+                    $Output = json_decode($line);
+                    $print .= "Action: ".$Output->Action."<br/>";
+                    $print .= "User: ".$Output->User."<br/>";
+                    $print .= "When: ".$Output->Timestamp."<br/>";
+                    $print .= "Location: ".$Output->URL."<hr>";
+                }
+
+                // close file
+            fclose($Path);
+        } else {
+            $print = 'Error, File not found';
+        }
+        return $print;
+
+        // how to use it
+        // echo readJsonFile("AccessLog.txt");
     }
 
 }

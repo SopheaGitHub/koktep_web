@@ -35,6 +35,9 @@ class AboutAccountController extends Controller
     public function getIndex()
     {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'about-account', $request);
+        // End
         if(isset($request['account_id'])) {
             $this->data->action_list = url('/about-account/list?account_id='.$request['account_id']);
             return view('about_account.index', ['data'=>$this->data]);
@@ -45,6 +48,9 @@ class AboutAccountController extends Controller
 
     public function getList() {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_list', 'about-account', $request);
+        // End
         if(isset($request['account_id'])) {
             $user_id = $request['account_id'];
         }else {

@@ -25,6 +25,9 @@ class HomeController extends Controller
     public function index()
     {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'home', $request);
+        // End
         $this->data->action_list = url('/post-account/list');
         return view('home', ['data'=>$this->data]);
     }

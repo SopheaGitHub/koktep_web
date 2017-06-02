@@ -37,6 +37,12 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+        $route_name = \Route::getCurrentRoute()->getPath();
+        if($route_name=='logout') {
+            // add system log
+            $this->systemLogs('logout', 'auth', []);
+            // End
+        }
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 

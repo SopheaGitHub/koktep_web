@@ -39,6 +39,10 @@ class PostsGroupsController extends Controller
      */
     public function getIndex()
     {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'posts-groups', $request);
+        // End
         if(\Request::get('account_id')!=$this->data->auth_id) {
             return view('errors.504');
         }
@@ -51,6 +55,9 @@ class PostsGroupsController extends Controller
 
     public function getList() {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_list', 'posts-groups', $request);
+        // End
         $this->data->edit_post = url('/posts-groups/edit');
 
         // define data filter
@@ -144,6 +151,10 @@ class PostsGroupsController extends Controller
      */
     public function getCreate()
     {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('create', 'posts-groups', $request);
+        // End
     	$this->data->go_back = url('/posts-groups');
         $this->data->action = url('/posts-groups/store');
         $this->data->action_form = url('/posts-groups/create-load-form');
@@ -151,6 +162,10 @@ class PostsGroupsController extends Controller
     }
 
     public function getCreateLoadForm() {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_form', 'posts-groups', $request);
+        // End
         $datas = [
             'icon' => 'icon_create',
             'titlelist' => 'Add New Post Group'
@@ -166,11 +181,14 @@ class PostsGroupsController extends Controller
      */
     public function postStore()
     {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'posts-groups', $request);
+        // End
         if(\Request::ajax()) {
             DB::beginTransaction();
             try {
 
-                $request = \Request::all();
                 $this->data->action_form = url('/posts-groups/create-load-form');
 
                 $validationError = $this->post_group->validationForm(['request'=>$request, 'action'=>'create']);
@@ -217,6 +235,10 @@ class PostsGroupsController extends Controller
      */
     public function getEdit($post_group_id)
     {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('edit', 'posts-groups', $request);
+        // End
         $this->data->go_back = url('/posts-groups');
         $this->data->action = url('/posts-groups/update/'.$post_group_id);
         $this->data->action_form = url('/posts-groups/edit-load-form/'.$post_group_id);
@@ -224,6 +246,10 @@ class PostsGroupsController extends Controller
     }
 
     public function getEditLoadForm($post_group_id) {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_form', 'posts-groups', $request);
+        // End
         $this->data->post_group = $this->post_group->getPostGroup($post_group_id);
         $this->data->post_group_descriptions = $this->post_group->getPostGroupDescriptions($post_group_id);
 
@@ -265,11 +291,13 @@ class PostsGroupsController extends Controller
      */
     public function postUpdate($post_group_id)
     {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'posts-groups', $request);
+        // End
         if(\Request::ajax()) {
             DB::beginTransaction();
             try {
-
-                $request = \Request::all();
 
                 $validationError = $this->post_group->validationForm(['request'=>$request, 'action'=>'edit']);
                 if($validationError) {
@@ -362,11 +390,13 @@ class PostsGroupsController extends Controller
     }
 
     public function postDelete() {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('delete', 'posts-groups', $request);
+        // End
         if(\Request::ajax()) {
             DB::beginTransaction();
             try {
-
-                $request = \Request::all();
 
                 $post_group = $this->post_group->where('post_group_id', '=', $request['post_group_id'])->first();
                 if($post_group) {

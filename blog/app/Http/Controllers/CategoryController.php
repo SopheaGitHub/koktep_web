@@ -27,6 +27,9 @@ class CategoryController extends Controller
     public function getIndex()
     {
     	$request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'category', $request);
+        // End
     	$request_category = explode('-', $request['category_id']);
         $this->data->category_id = $request_category['0'];
         $this->data->category_name = ((isset($request_category['1']))? $request_category['1']:'');

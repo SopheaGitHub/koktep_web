@@ -40,6 +40,9 @@ class PostsGroupsAccountController extends Controller
     public function getIndex()
     {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'posts-groups-account', $request);
+        // End
         if(isset($request['account_id'])) {
             $this->data->action_list = url('/posts-groups-account/list?account_id='.$request['account_id']);
             $this->data->action_paginate_list = url('/posts-groups-account/list');
@@ -51,6 +54,9 @@ class PostsGroupsAccountController extends Controller
 
     public function getList() {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_list', 'posts-groups-account', $request);
+        // End
         $this->data->edit_post = url('/posts/edit');
         $this->data->action_delete = url('/posts/delete');
 
