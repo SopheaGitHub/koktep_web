@@ -30,6 +30,82 @@ class User extends Authenticatable
         return $result;
     }
 
+    public function getUsers($filter_data=[]) {
+        $db = DB::table('users as u')
+        ->select(DB::raw('u.id AS people_id,
+                        u.name AS people_name,
+                        u.image AS image,
+                        (SELECT SUM(viewed) FROM post WHERE author_id = u.id) AS viewed,
+                        (SELECT COUNT(p.post_id) FROM post AS p INNER JOIN post_comment AS pc ON pc.post_id = p.post_id WHERE p.author_id = u.id) AS commented
+                        '));
+
+        // category condition join
+        if($filter_data['category_id']!='') {
+            $db->join(DB::raw("( SELECT uptc.category_id, up.post_id, up.author_id FROM post AS up INNER JOIN post_to_category AS uptc ON uptc.post_id = up.post_id WHERE uptc.category_id = '".$filter_data['category_id']."' ORDER BY uptc.post_id DESC LIMIT 1 ) AS category"), 'category.author_id', '=', 'u.id');
+        }
+
+        if($filter_data['search']!='') {
+            $db->whereRaw(" u.name LIKE '%".$filter_data['search']."%' ");
+        }
+
+        if($filter_data['time']!='') {
+            switch ($filter_data['time']) {
+                case 'today':
+                    $db->whereRaw(" DATE(u.created_at) = '" . date('Y-m-d') . "' ");
+                    break;
+                case 'this_week':
+                    $db->whereRaw(" DATE(u.created_at) BETWEEN '".date('Y-m-d', strtotime('monday this week'))."' AND '".date('Y-m-d', strtotime('sunday this week'))."' ");
+                    break;
+                case 'this_month':
+                    $db->whereRaw(" DATE(u.created_at) BETWEEN '".date('Y-m-d', strtotime('first day of this month'))."' AND '".date('Y-m-d', strtotime('last day of this month'))."' ");
+                    break;
+                case 'this_year':
+                    $db->whereRaw(" DATE(u.created_at) BETWEEN '".date('Y-m-d', strtotime('first day of January '.date('Y') ))."' AND '".date('Y-m-d', strtotime('last day of December '.date('Y') ))."' ");
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+        }
+
+        if($filter_data['alpha']!='') {
+            $db->whereRaw(" u.name LIKE '".$filter_data['alpha']."%' ");
+        }
+
+        if($filter_data['country_id']!='') {
+            $db->join(DB::raw("(SELECT uac.country_id, uac.user_id FROM user_address AS uac WHERE uac.country_id = '".$filter_data['country_id']."' ORDER BY uac.user_address_id DESC LIMIT 1) AS country"), 'country.user_id', '=', 'u.id');
+        }
+
+        if($filter_data['zone_id']!='') {
+            $db->join(DB::raw("(SELECT uaz.zone_id, uaz.user_id FROM user_address AS uaz WHERE uaz.zone_id = '".$filter_data['zone_id']."' ORDER BY uaz.user_address_id DESC LIMIT 1) AS zone"), 'zone.user_id', '=', 'u.id');
+        }
+        
+        if($filter_data['browse']!='') {
+            $db->orderBy($filter_data['browse'], $filter_data['order']);
+        }
+
+        $db->orderBy($filter_data['sort'], $filter_data['order']);
+        return $db;
+    }
+
+    public function getAutocompleteUsers($filter_data=[]) {
+        $db = DB::table(DB::raw('
+                (
+                    SELECT
+                        u.id AS user_id,
+                        u.name AS name
+                    FROM
+                        users AS u
+                ) AS users
+            '));
+        if ($filter_data['filter_title']!='') {
+            $db->where('name', 'like', '%'.$filter_data['filter_title'].'%');
+        }
+        $db->orderBy($filter_data['sort'], $filter_data['order'])->take($filter_data['limit']);
+        $result = $db->get();
+        return $result;
+    }
+
     public function getTechnicalByUserId($user_id) {
         $result = DB::table('user_technical')->where('user_id', '=', $user_id)->orderBy('sort_order', 'asc')->get();
         return $result;

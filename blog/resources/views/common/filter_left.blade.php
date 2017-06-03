@@ -11,9 +11,10 @@
     $load_zone_action = url('geo-zones/zone');
 
     // defind array
-    $array_view = ['posted'=>'Posted', 'people'=>'People', 'teams'=>'Teams', 'collection'=>'Collection'];
-    $array_browse = ['feature'=>'Feature', 'most_viewed'=>'Most Viewed', 'most_comment'=>'Most Comment'];
-    $array_time = ['recent'=>'Recent', 'today'=>'Today', 'this_week'=>'This Week', 'this_month'=>'This Month', 'this_year'=>'This Year'];
+    // $array_view = ['posted'=>'Posted', 'people'=>'People', 'teams'=>'Teams', 'collection'=>'Collection'];
+    $array_view = ['posted'=>'Posted', 'people'=>'People'];
+    $array_browse = [''=>'Feature', 'viewed'=>'Most Viewed', 'commented'=>'Most Comment'];
+    $array_time = [''=>'Recent', 'today'=>'Today', 'this_week'=>'This Week', 'this_month'=>'This Month', 'this_year'=>'This Year'];
     $array_alpha = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
     $countries = $objCountry->getCountries(['sort'=>'name','order'=>'asc'])->lists('name', 'country_id');
@@ -109,7 +110,7 @@
                     <td colspan="2">
                         LOCATION
                         <select name="country_id" id="country" onchange="$('#zone').load('<?php echo $load_zone_action; ?>/' + this.value + '/0');" class="form-control select-filter">
-                            <option value="">-- Select Country --</option>
+                            <option value="0">-- Select Country --</option>
                             <?php foreach ($countries as $country_id => $country_name) { ?>
                               <option value="<?php echo $country_id; ?>"><?php echo $country_name; ?></option>
                             <?php } ?>
@@ -149,7 +150,7 @@ $(document).ready(function() {
     $('input[name=\'search\']').autocomplete({
       'source': function(request, response) {
         $.ajax({
-          url: "<?php echo url('/posts/autocomplete');?>?filter_title=" +  encodeURIComponent(request),
+          url: "<?php echo url('/posts/autocomplete');?>?filter_title=" +  encodeURIComponent(request) +"&filter_view="+encodeURIComponent($('#view').val()),
           dataType: 'json',
           success: function(json) {
             response($.map(json, function(item) {

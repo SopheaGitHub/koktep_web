@@ -12,7 +12,7 @@ class Post extends Model {
 	public function getPost($post_id) {
 		$result = DB::table(DB::raw('
 				(SELECT
-				DISTINCT p.*, u.name as author_name, u.image AS author_image,
+				DISTINCT p.*,(SELECT COUNT(1) FROM post_comment WHERE post_id = p.post_id) AS commented, u.name as author_name, u.image AS author_image,
 					(
 						SELECT
 							keyword
@@ -71,6 +71,7 @@ class Post extends Model {
 		$db = DB::table('post as p')
 		->select(DB::raw('p.post_id as post_id,
 								p.viewed as viewed,
+								(SELECT COUNT(1) FROM post_comment WHERE post_id = p.post_id) AS commented,
 								(SELECT COUNT(1) FROM post_image WHERE post_id = p.post_id) AS total_post_image,
 								p.image as image,
 								p.created_at as created_at,
@@ -113,6 +114,42 @@ class Post extends Model {
 
 		if($filter_data['search']!='') {
 			$db->whereRaw("( pd.title LIKE '%".$filter_data['search']."%' OR pd.description LIKE '%".$filter_data['search']."%' OR pd.tag LIKE '%".$filter_data['search']."%') ");
+		}
+
+		if($filter_data['time']!='') {
+			switch ($filter_data['time']) {
+				case 'today':
+					$db->whereRaw(" DATE(p.created_at) = '" . date('Y-m-d') . "' ");
+					break;
+				case 'this_week':
+					$db->whereRaw(" DATE(p.created_at) BETWEEN '".date('Y-m-d', strtotime('monday this week'))."' AND '".date('Y-m-d', strtotime('sunday this week'))."' ");
+					break;
+				case 'this_month':
+					$db->whereRaw(" DATE(p.created_at) BETWEEN '".date('Y-m-d', strtotime('first day of this month'))."' AND '".date('Y-m-d', strtotime('last day of this month'))."' ");
+					break;
+				case 'this_year':
+					$db->whereRaw(" DATE(p.created_at) BETWEEN '".date('Y-m-d', strtotime('first day of January '.date('Y') ))."' AND '".date('Y-m-d', strtotime('last day of December '.date('Y') ))."' ");
+					break;
+				default:
+					# code...
+					break;
+			}
+		}
+
+		if($filter_data['alpha']!='') {
+			$db->whereRaw(" pd.title LIKE '".$filter_data['alpha']."%' ");
+		}
+
+		if($filter_data['country_id']!='') {
+			$db->join(DB::raw("(SELECT uac.country_id, uac.user_id FROM user_address AS uac WHERE uac.country_id = '".$filter_data['country_id']."' ORDER BY uac.user_address_id DESC LIMIT 1) AS country"), 'country.user_id', '=', 'u.id');
+		}
+
+		if($filter_data['zone_id']!='') {
+			$db->join(DB::raw("(SELECT uaz.zone_id, uaz.user_id FROM user_address AS uaz WHERE uaz.zone_id = '".$filter_data['zone_id']."' ORDER BY uaz.user_address_id DESC LIMIT 1) AS zone"), 'zone.user_id', '=', 'u.id');
+		}
+		
+		if($filter_data['browse']!='') {
+			$db->orderBy($filter_data['browse'], $filter_data['order']);
 		}
 		
 		$db->orderBy($filter_data['sort'], $filter_data['order']);
@@ -222,6 +259,15 @@ class Post extends Model {
 		$db->orderBy($filter_data['sort'], $filter_data['order'])->take($filter_data['limit']);
 		$result = $db->get();
 		return $result;
+	}
+
+	public function getPostsToUser($author_id) {
+		$post_data = [];
+		$posts_to_user = Post::where('author_id', '=', $author_id)->orderBy('created_at', 'DESC')->take(5)->get();
+		foreach ($posts_to_user as $result) {
+			$post_data[] = $result->post_id;
+		}
+		return $post_data;
 	}
 
 	public function insertPostDescription($datas=[]) {

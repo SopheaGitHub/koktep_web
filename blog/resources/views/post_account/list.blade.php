@@ -15,8 +15,9 @@
                         </div>
                         <div class="col-md-4">
                             <span class="pull-right" style="font-size:11px;">
-                                <i class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
-                                <a href="<?php echo $view_detail; ?>"><i class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
+                                <i data-toggle="tooltip" title="View" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
+                                <i data-toggle="tooltip" title="Comment" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
+                                <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="Image" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
                             </span>
                         </div>
                     </div>

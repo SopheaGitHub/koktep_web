@@ -10,6 +10,7 @@ use App\Models\Language;
 use App\Models\Layout;
 use App\Models\UrlAlias;
 use App\Models\Category;
+use App\User;
 use App\Http\Controllers\Common\FilemanagerController;
 use App\Http\Controllers\ConfigController;
 
@@ -34,6 +35,7 @@ class PostsController extends Controller
         $this->layout = new Layout();
         $this->url_alias = new UrlAlias();
         $this->category = new Category();
+        $this->user = New User();
         $this->filemanager = new FilemanagerController();
         $this->config = new ConfigController();
         $this->data->web_title = 'Posts';
@@ -72,7 +74,7 @@ class PostsController extends Controller
         // define data filter
 
         // defind category id
-        if(isset($request['category_id'])) {
+        if(isset($request['category_id']) && $request['country_id']!='0') {
             $category_id = $request['category_id'];
         }else {
             $category_id = null;
@@ -83,6 +85,48 @@ class PostsController extends Controller
             $search = $request['search'];
         }else {
             $search = null;
+        }
+
+        // defind view loading people or posted
+        if(isset($request['view'])) {
+            $view = $request['view'];
+        }else {
+            $view = null;
+        }
+
+        // defind browse
+        if(isset($request['browse'])) {
+            $browse = $request['browse'];
+        }else {
+            $browse = null;
+        }
+
+        // defind time
+        if(isset($request['time'])) {
+            $time = $request['time'];
+        }else {
+            $time = null;
+        }
+
+        // defind alpha
+        if(isset($request['alpha'])) {
+            $alpha = $request['alpha'];
+        }else {
+            $alpha = null;
+        }
+
+        // defind country id
+        if(isset($request['country_id'])) {
+            $country_id = $request['country_id'];
+        }else {
+            $country_id = null;
+        }
+
+        // defind zone id
+        if(isset($request['zone_id'])) {
+            $zone_id = $request['zone_id'];
+        }else {
+            $zone_id = null;
         }
 
         // defind sort order
@@ -105,12 +149,27 @@ class PostsController extends Controller
             'author_id' => $this->data->auth_id,
             'category_id' => $category_id,
             'search'    => $search,
+            'browse' => $browse,
+            'time' => $time,
+            'alpha' => $alpha,
+            'country_id' => $country_id,
+            'zone_id' => $zone_id,
             'sort'  => $sort,
             'order' => $order
         );
 
         // define paginate url
-        $paginate_url = ['account_id'=>$this->data->auth_id];
+        $paginate_url = [
+            'account_id'=>$this->data->auth_id,
+            'category_id'=>$category_id,
+            'search' => $search,
+            'view' => $view,
+            'browse' => $browse,
+            'time' => $time,
+            'alpha' => $alpha,
+            'country_id' => $country_id,
+            'zone_id' => $zone_id
+        ];
         if (isset($request['sort'])) {
             $paginate_url['sort'] = $request['sort'];
         }
@@ -647,21 +706,40 @@ class PostsController extends Controller
 
         if (isset($request['filter_title'])) {
 
-            $filter_data = [
-                'filter_title' => $request['filter_title'],
-                'sort'        => 'title',
-                'order'       => 'ASC',
-                'start'       => 0,
-                'limit'       => 5
-            ];
-
-            $results = $this->post->getAutocompletePosts($filter_data);
-
-            foreach ($results as $result) {
-                $json[] = [
-                    'post_id' => $result->post_id,
-                    'title'   => strip_tags(html_entity_decode($result->title, ENT_QUOTES, 'UTF-8'))
+            if(isset($request['filter_view'])&&$request['filter_view']=='people') {
+                $filter_data = [
+                    'filter_title' => $request['filter_title'],
+                    'sort'        => 'name',
+                    'order'       => 'ASC',
+                    'start'       => 0,
+                    'limit'       => 5
                 ];
+
+                $results = $this->user->getAutocompleteUsers($filter_data);
+                foreach ($results as $result) {
+                    $json[] = [
+                        'user_id' => $result->user_id,
+                        'title'   => strip_tags(html_entity_decode($result->name, ENT_QUOTES, 'UTF-8'))
+                    ];
+                }
+
+            }else {
+                $filter_data = [
+                    'filter_title' => $request['filter_title'],
+                    'sort'        => 'title',
+                    'order'       => 'ASC',
+                    'start'       => 0,
+                    'limit'       => 5
+                ];
+
+                $results = $this->post->getAutocompletePosts($filter_data);
+
+                foreach ($results as $result) {
+                    $json[] = [
+                        'post_id' => $result->post_id,
+                        'title'   => strip_tags(html_entity_decode($result->title, ENT_QUOTES, 'UTF-8'))
+                    ];
+                }
             }
         }
 

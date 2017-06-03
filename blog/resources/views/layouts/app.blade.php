@@ -25,7 +25,8 @@
     <script type="text/javascript" src="<?php echo asset('/javascript/summernote/summernote.js'); ?>"></script>
 
     <!-- Bxslider -->
-    @yield('bxslider')
+    <link href="<?php echo asset('/javascript/bxslider/jquery.bxslider.css'); ?>" rel="stylesheet" />
+    <script type="text/javascript" src="<?php echo asset('/javascript/bxslider/jquery.bxslider.js'); ?>"></script>
 
 </head>
 <body id="app-layout">

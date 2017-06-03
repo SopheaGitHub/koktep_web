@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\PostComment;
 use App\Models\Category;
+use App\User;
 use App\Http\Controllers\Common\FilemanagerController;
 use App\Http\Controllers\ConfigController;
 
@@ -25,6 +26,7 @@ class PostAccountController extends Controller
         $this->post = New Post();
         $this->post_comment = new PostComment();
         $this->category = new Category();
+        $this->user = New User();
         $this->filemanager = new FilemanagerController();
         $this->config = new ConfigController();
         $this->data->web_title = 'Overview';
@@ -73,13 +75,15 @@ class PostAccountController extends Controller
             $this->data->author_name = $post->author_name;
             $this->data->author_id = $post->author_id;
             $this->data->post_viewed = ($post->viewed+1);
+            $this->data->post_commented = $post->commented;
             $this->data->post_created_at = $post->created_at;
             $this->data->title = $post->title;
         }else {
             $this->data->image = $this->filemanager->resize('no_image.png', 600, 400);
             $this->data->author_name = $this->filemanager->resize('no_image.png', 100, 100);
             $this->data->author_id = '0';
-            $this->data->post_viewed = '';
+            $this->data->post_viewed = '0';
+            $this->data->post_commented = '0';
             $this->data->post_created_at = '';
             $this->data->title = '';
         }
@@ -214,6 +218,48 @@ class PostAccountController extends Controller
             $search = null;
         }
 
+        // defind view loading people or posted
+        if(isset($request['view'])) {
+            $view = $request['view'];
+        }else {
+            $view = null;
+        }
+
+        // defind browse
+        if(isset($request['browse'])) {
+            $browse = $request['browse'];
+        }else {
+            $browse = null;
+        }
+
+        // defind time
+        if(isset($request['time'])) {
+            $time = $request['time'];
+        }else {
+            $time = null;
+        }
+
+        // defind alpha
+        if(isset($request['alpha'])) {
+            $alpha = $request['alpha'];
+        }else {
+            $alpha = null;
+        }
+
+        // defind country id
+        if(isset($request['country_id']) && $request['country_id']!='0') {
+            $country_id = $request['country_id'];
+        }else {
+            $country_id = null;
+        }
+
+        // defind zone id
+        if(isset($request['zone_id'])) {
+            $zone_id = $request['zone_id'];
+        }else {
+            $zone_id = null;
+        }
+
         $this->data->overview_account = url('/overview-account');
         $this->data->post_detail = url('/post-account/detail');
 
@@ -234,13 +280,29 @@ class PostAccountController extends Controller
         $filter_data = array(
             'author_id' => $user_id,
             'category_id' => $category_id,
-            'search'    => $search,
+            'search' => $search,
+            'browse' => $browse,
+            'time' => $time,
+            'alpha' => $alpha,
+            'country_id' => $country_id,
+            'zone_id' => $zone_id,
             'sort'  => $sort,
             'order' => $order
         );
 
         // define paginate url
-        $paginate_url = ['account_id'=>$user_id, 'category_id'=>$category_id];
+        $paginate_url = [
+            'account_id'=>$user_id, 
+            'category_id'=>$category_id,
+            'search' => $search,
+            'view' => $view,
+            'browse' => $browse,
+            'time' => $time,
+            'alpha' => $alpha,
+            'country_id' => $country_id,
+            'zone_id' => $zone_id
+        ];
+
         if (isset($request['sort'])) {
             $paginate_url['sort'] = $request['sort'];
         }
@@ -249,7 +311,50 @@ class PostAccountController extends Controller
             $paginate_url['order'] = $request['order'];
         }
 
-        $this->data->posts = $this->post->getPosts($filter_data)->paginate(10)->setPath(url('/post-account'))->appends($paginate_url);
+        $this->data->posts = [];
+        $this->data->users = [];
+        switch ($view) {
+            case 'people':
+                $this->data->users = $this->user->getUsers($filter_data)->paginate(10)->setPath(url('/post-account'))->appends($paginate_url);
+                break;
+            
+            default:
+                $this->data->posts = $this->post->getPosts($filter_data)->paginate(10)->setPath(url('/post-account'))->appends($paginate_url);
+                break;
+        }
+
+        $this->data->post_group_items = [];
+        if(count($this->data->users) > 0) {
+            foreach ($this->data->users as $user) {
+                if (!empty($user->image) && is_file($this->data->dir_image . $user->image)) {
+                    $this->data->thumb_user[$user->people_id] = $this->filemanager->resize($user->image, 100, 100);
+                } else {
+                    $this->data->thumb_user[$user->people_id] = $this->filemanager->resize('no_image.png', 100, 100);
+                }
+
+                $posts_to_user = $this->post->getPostsToUser($user->people_id);
+                $post_group_items = $this->post->getPostsByPostGroup(['array_post_group_id'=>$posts_to_user])->get();
+                if(count($post_group_items) > 0) {
+                    foreach ($post_group_items as $post_group_items_info) {
+
+                        if (!empty($post_group_items_info->image) && is_file($this->data->dir_image . $post_group_items_info->image)) {
+                            $thumb_post = $this->filemanager->resize($post_group_items_info->image, 120, 80);
+                        } else {
+                            $thumb_post = $this->filemanager->resize('no_image.png', 120, 80);
+                        }
+
+                        $this->data->post_group_items[$user->people_id][] = [
+                            'author_id' => $post_group_items_info->author_id,
+                            'post_id'   => $post_group_items_info->post_id,
+                            'category_id' => $post_group_items_info->category_id,
+                            'category_name' => $post_group_items_info->category_name,
+                            'thumb_post'     => $thumb_post
+                        ];
+                    }
+                }
+
+            }
+        }
 
         if(count($this->data->posts) > 0) {
             foreach ($this->data->posts as $post) {
@@ -286,6 +391,15 @@ class PostAccountController extends Controller
 
         $this->data->text_empty = '...';
 
-        return view('post_account.list', ['data' => $this->data]);
+        switch ($view) {
+            case 'people':
+                return view('post_account.people', ['data' => $this->data]);
+                break;
+            
+            default:
+                return view('post_account.list', ['data' => $this->data]);
+                break;
+        }
+        exit();
     }
 }

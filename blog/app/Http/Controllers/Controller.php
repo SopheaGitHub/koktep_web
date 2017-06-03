@@ -45,11 +45,11 @@ class Controller extends BaseController
                 'updated_at' => date('Y-m-d H:i:s')
             ];
 
-            $my_file = '../storage/logs/system.log';
-            $handle = fopen($my_file, 'a') or die('Cannot open file:  '.$my_file);
-            $new_data = json_encode($systemLogDatas)."\n";
-            fwrite($handle, $new_data);
-            fclose($handle);
+            // $my_file = '../storage/logs/system.log';
+            // $handle = fopen($my_file, 'a') or die('Cannot open file:  '.$my_file);
+            // $new_data = json_encode($systemLogDatas)."\n";
+            // fwrite($handle, $new_data);
+            // fclose($handle);
 
             return true;
         } catch (Exception $e) {

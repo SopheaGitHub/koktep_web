@@ -19,6 +19,9 @@
               <i data-toggle="tooltip" title="View" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?>
             </div>
             <div>
+              <i data-toggle="tooltip" title="Comment" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?>
+            </div>
+            <div>
               <i data-toggle="tooltip" title="Date" class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y', strtotime($post->created_at)); ?>
             </div>
           <hr />

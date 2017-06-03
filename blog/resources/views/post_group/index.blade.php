@@ -1,8 +1,4 @@
 @extends('layouts.app')
-@section('bxslider')
-    <link href="<?php echo asset('/javascript/bxslider/jquery.bxslider.css'); ?>" rel="stylesheet" />
-    <script type="text/javascript" src="<?php echo asset('/javascript/bxslider/jquery.bxslider.js'); ?>"></script>
-@endsection
 @section('content')
 <div class="container">
     <div class="row profile">
