@@ -37,12 +37,45 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+        $request = \Request::all();
         $route_name = \Route::getCurrentRoute()->getPath();
+        
+        // log register
+        if($route_name=='register') {
+            if(\Request::isMethod('post')) {
+                // add system log
+                $this->systemLogs('submit_form', 'auth', $request);
+                // End
+            }else{
+                // add system log
+                $this->systemLogs('register', 'auth', $request);
+                // End
+            }
+        }
+        // End
+
+        // log login
+        if($route_name=='login') {
+            if(\Request::isMethod('post')) {
+                // add system log
+                $this->systemLogs('submit_form', 'auth', $request);
+                // End
+            }else{
+                // add system log
+                $this->systemLogs('login', 'auth', $request);
+                // End
+            }
+        }
+        // End
+
+        // log logout
         if($route_name=='logout') {
             // add system log
-            $this->systemLogs('logout', 'auth', []);
+            $this->systemLogs('logout', 'auth', $request);
             // End
         }
+        // End
+        
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
