@@ -18,6 +18,10 @@
 Route::auth();
 
 Route::get('/', 'HomeController@index');
+Route::get('/language', [
+		'Middleware' => 'LanguageSwitcher',
+		'uses'=>'LanguageController@switcher'
+	]);
 
 Route::controllers([
 	'/filemanager' 	=> 'Common\FilemanagerController',

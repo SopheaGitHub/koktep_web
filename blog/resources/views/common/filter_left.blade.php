@@ -33,13 +33,13 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th style="margin:0px; padding:0px 0px 10px 0px;"><h4><i class="fa fa-btn fa-search"></i>Search ...</h4></th>
+                        <th style="margin:0px; padding:0px 0px 10px 0px;"><h4><i class="fa fa-btn fa-search"></i><?php echo trans('text.search'); ?> ...</h4></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>
-                            <input type="text" name="search" id="search" value="<?php echo $tag; ?>" placeholder="Search ..." class="form-control" />
+                            <input type="text" name="search" id="search" value="<?php echo $tag; ?>" placeholder="<?php echo trans('text.search'); ?> ..." class="form-control" />
                         </td>
                     </tr>
                 </tbody>
@@ -51,12 +51,12 @@
                 <table class="table">
                 <thead>
                     <tr>
-                        <th colspan="2" style="margin:0px; padding:0px 0px 10px 0px;"><h4><i class="fa fa-btn fa-search-plus"></i>Filter Options</h4></th>
+                        <th colspan="2" style="margin:0px; padding:0px 0px 10px 0px;"><h4><i class="fa fa-btn fa-search-plus"></i><?php echo trans('text.filter_option'); ?></h4></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                    <td width="20%">VIEW</td>
+                    <td width="20%"><?php echo trans('text.view'); ?></td>
                     <td>
                         <select name="view" id="view" class="form-control select-filter">
                             <?php
@@ -68,7 +68,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>BROWSE</td>
+                    <td><?php echo trans('text.browse'); ?></td>
                     <td>
                         <select name="browse" id="browse" class="form-control select-filter">
                             <?php
@@ -82,7 +82,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>TIME</td>
+                    <td><?php echo trans('text.time'); ?></td>
                     <td>
                         <select name="time" id="time" class="form-control select-filter">
                             <?php
@@ -94,7 +94,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>ALPHA</td>
+                    <td><?php echo trans('text.alpha'); ?></td>
                     <td>
                         <select name="alpha" id="alpha" class="form-control select-filter">
                             <option value="">All Alpha</option>
@@ -108,9 +108,9 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        LOCATION
+                        <?php echo trans('text.location'); ?>
                         <select name="country_id" id="country" onchange="$('#zone').load('<?php echo $load_zone_action; ?>/' + this.value + '/0');" class="form-control select-filter">
-                            <option value="0">-- Select Country --</option>
+                            <option value="0"><?php echo trans('text.select_country'); ?></option>
                             <?php foreach ($countries as $country_id => $country_name) { ?>
                               <option value="<?php echo $country_id; ?>"><?php echo $country_name; ?></option>
                             <?php } ?>

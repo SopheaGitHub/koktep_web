@@ -1,4 +1,4 @@
-<option value="">All Zones</option>
+<option value=""><?php echo trans('text.all_zone'); ?></option>
 <?php
 	if(count($data->country_zones) > 0) {
 		foreach ($data->country_zones as $zone_id => $zone_name) { ?>

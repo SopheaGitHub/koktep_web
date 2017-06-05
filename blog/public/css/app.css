@@ -140,9 +140,9 @@ body {
 
 footer {
   margin-top: 30px;
-  height: 300px;
   background: #fff;
-  border-bottom: 5px solid #0F97B7;
+  /*font-size: 12px;*/
+  /*border-bottom: 3px solid #0F97B7;*/
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -353,4 +353,8 @@ div.required .control-label:not(span):before, td.required:before {
   z-index: 20;
   opacity: 1;
   color: #333;
+}
+
+.nav-pills > li > a {
+    border-radius: 0px;
 }
