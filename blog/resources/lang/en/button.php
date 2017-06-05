@@ -14,5 +14,9 @@ return [
     */
 
     'save' => 'Save',
+    'save_change' => 'Save Change',
+    'add_post' => 'Add Post',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
 
 ];

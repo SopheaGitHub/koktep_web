@@ -100,8 +100,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                    <li <?php echo (($route_category_id=='login')? 'class="active"':''); ?>><a href="<?php echo url('/login'); ?>"><i class="fa fa-btn fa-sign-in"></i>Login</a></li>
-                    <li <?php echo (($route_category_id=='register')? 'class="active"':''); ?>><a href="<?php echo url('/register'); ?>"><i class="fa fa-btn fa-pencil-square-o"></i>Register</a></li>
+                    <li <?php echo (($route_category_id=='login')? 'class="active"':''); ?>><a href="<?php echo url('/login'); ?>"><i class="fa fa-btn fa-sign-in"></i><?php echo trans('text.login'); ?></a></li>
+                    <li <?php echo (($route_category_id=='register')? 'class="active"':''); ?>><a href="<?php echo url('/register'); ?>"><i class="fa fa-btn fa-pencil-square-o"></i><?php echo trans('text.register'); ?></a></li>
                 @else
                     <li class="dropdown <?php echo (($route_category_id=='user_auth_menu')? 'active':''); ?>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -112,12 +112,12 @@
                             <li><a href="<?php echo url('/overview-account?account_id='.Auth::user()->id); ?>"><img src="<?php echo $thumb_profile; ?>" style="height:50px; width:50px;-webkit-border-radius: 50%;
 -moz-border-radius: 50%;
 border-radius: 50%;
-border: 5px solid rgba(255,255,255,0.5);" alt="Avatar"> My Profile </a></li>
-                            <li><a href="<?php echo url('/posts?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-tasks"></i>Posts Management</a></li>
-                            <li><a href="<?php echo url('/posts-groups?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-object-group"></i>Posted's Groups Management</a></li>
-                            <li><a href="<?php echo url('/account/settings?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-cogs"></i>Account Settings</a></li>
-                            <li><a href="<?php echo url('/account/change-password?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-exchange"></i>Account Change Password</a></li>
-                            <li><a href="<?php echo url('/logout'); ?>"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+border: 5px solid rgba(255,255,255,0.5);" alt="Avatar"> <?php echo trans('text.my_profile'); ?> </a></li>
+                            <li><a href="<?php echo url('/posts?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-tasks"></i><?php echo trans('text.posts_management'); ?></a></li>
+                            <li><a href="<?php echo url('/posts-groups?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-object-group"></i><?php echo trans('text.posted_groups_management'); ?></a></li>
+                            <li><a href="<?php echo url('/account/settings?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-cogs"></i><?php echo trans('text.account_settings'); ?></a></li>
+                            <li><a href="<?php echo url('/account/change-password?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-exchange"></i><?php echo trans('text.account_change_password'); ?></a></li>
+                            <li><a href="<?php echo url('/logout'); ?>"><i class="fa fa-btn fa-sign-out"></i><?php echo trans('text.logout'); ?></a></li>
                         </ul>
                     </li>
                 @endif

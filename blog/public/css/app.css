@@ -11,6 +11,10 @@ body {
     padding: 30px;
 }
 
+.padding-fixed-footer {
+  padding: 50px;
+}
+
 /* Profile container */
 .profile {
   margin: 20px 0;
@@ -139,8 +143,11 @@ body {
 .social .btn{ border-radius: 50%; border: 1px solid #0F97B7; color: #0F97B7; width:32px; height:32px; line-height:18px;  }
 
 footer {
-  margin-top: 30px;
+  /*margin-top: 30px;*/
   background: #fff;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
   /*font-size: 12px;*/
   /*border-bottom: 3px solid #0F97B7;*/
 }
@@ -193,6 +200,9 @@ footer {
   }
   .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
     color: #0F97B7;
+  }
+  .padding-fixed-footer {
+    padding: 120px;
   }
 }
 

@@ -333,26 +333,27 @@ class PostAccountController extends Controller
                 }
 
                 $posts_to_user = $this->post->getPostsToUser($user->people_id);
-                $post_group_items = $this->post->getPostsByPostGroup(['array_post_group_id'=>$posts_to_user])->get();
-                if(count($post_group_items) > 0) {
-                    foreach ($post_group_items as $post_group_items_info) {
+                if(count($posts_to_user) > 0) {
+                    $post_group_items = $this->post->getPostsByPostGroup(['array_post_group_id'=>$posts_to_user])->get();
+                    if(count($post_group_items) > 0) {
+                        foreach ($post_group_items as $post_group_items_info) {
 
-                        if (!empty($post_group_items_info->image) && is_file($this->data->dir_image . $post_group_items_info->image)) {
-                            $thumb_post = $this->filemanager->resize($post_group_items_info->image, 120, 80);
-                        } else {
-                            $thumb_post = $this->filemanager->resize('no_image.png', 120, 80);
+                            if (!empty($post_group_items_info->image) && is_file($this->data->dir_image . $post_group_items_info->image)) {
+                                $thumb_post = $this->filemanager->resize($post_group_items_info->image, 120, 80);
+                            } else {
+                                $thumb_post = $this->filemanager->resize('no_image.png', 120, 80);
+                            }
+
+                            $this->data->post_group_items[$user->people_id][] = [
+                                'author_id' => $post_group_items_info->author_id,
+                                'post_id'   => $post_group_items_info->post_id,
+                                'category_id' => $post_group_items_info->category_id,
+                                'category_name' => $post_group_items_info->category_name,
+                                'thumb_post'     => $thumb_post
+                            ];
                         }
-
-                        $this->data->post_group_items[$user->people_id][] = [
-                            'author_id' => $post_group_items_info->author_id,
-                            'post_id'   => $post_group_items_info->post_id,
-                            'category_id' => $post_group_items_info->category_id,
-                            'category_name' => $post_group_items_info->category_name,
-                            'thumb_post'     => $thumb_post
-                        ];
                     }
                 }
-
             }
         }
 

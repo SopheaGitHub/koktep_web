@@ -40,7 +40,8 @@
     <section>
       @yield('content')
     </section>
-    
+
+    <div class="padding-fixed-footer"></div>
     <footer>
       <!-- include footer -->
       @include('common.footer')

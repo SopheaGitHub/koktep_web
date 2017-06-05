@@ -58,19 +58,19 @@
         <ul class="nav">
             <li <?php echo (($route_name=='overview-account')? 'class="active"':''); ?> >
                 <a href="<?php echo url('/overview-account?account_id='.$user_id); ?>">
-                <i class="fa fa-btn fa-home"></i>Overview </a>
+                <i class="fa fa-btn fa-home"></i><?php echo trans('text.overview'); ?> </a>
             </li>
             <li <?php echo (($route_name=='posts-groups-account')? 'class="active"':''); ?> >
                 <a href="<?php echo url('/posts-groups-account?account_id='.$user_id); ?>">
-                <i class="fa fa-btn fa-object-group"></i>Posted's Groups </a>
+                <i class="fa fa-btn fa-object-group"></i><?php echo trans('text.posted_groups'); ?> </a>
             </li>
             <li <?php echo (($route_name=='about-account')? 'class="active"':''); ?> >
                 <a href="<?php echo url('/about-account?account_id='.$user_id); ?>">
-                <i class="fa fa-btn fa-user"></i>About </a>
+                <i class="fa fa-btn fa-user"></i><?php echo trans('text.about'); ?> </a>
             </li>
             <li <?php echo (($route_name=='contact-account')? 'class="active"':''); ?> >
                 <a href="<?php echo url('/contact-account?account_id='.$user_id); ?>">
-                <i class="fa fa-btn fa-phone"></i>Contact </a>
+                <i class="fa fa-btn fa-phone"></i><?php echo trans('text.contact'); ?> </a>
             </li>
         </ul>
     </div>

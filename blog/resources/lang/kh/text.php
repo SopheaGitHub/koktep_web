@@ -12,7 +12,9 @@ return [
     | you want to customize your views to better match your application.
     |
     */
-
+    'register' => 'ចុះឈ្មោះ',
+    'login' => 'ចូល',
+    'logout' => 'ចាកចេញ',
     'search' => 'ស្វែងរក',
     'filter_option' => 'ជម្រើសចម្រោះទិន្នន័យ',
     'view' => 'ទិដ្ឋភាព',
@@ -22,5 +24,24 @@ return [
     'location' => 'ទីតាំង',
     'select_country' => '-- ជ្រើសរើស​ប្រទេស --',
     'all_zone' => '-- គ្រប់តំបន់ --',
-
+    'posted' => 'រូបភាព',
+    'people' => 'អ្នកបង្កើតរូបភាព',
+    'feature' => 'លក្ខណៈពិសេស',
+    'viewed' => 'មើលច្រើនបំផុត',
+    'commented' => 'អធិប្បាយច្រើនបំផុត',
+    'recent' => 'ថ្មី',
+    'today' => 'ថ្ងៃនេះ',
+    'this_week' => 'ស​ប្តា​ហ៍​នេះ',
+    'this_month' => 'ខែ​នេះ',
+    'this_year' => 'ឆ្នាំ​នេះ',
+    'all_alpha' => 'គ្រប់អក្ខរក្រម',
+    'overview' => 'ទិដ្ឋភាពទូទៅ',
+    'posted_groups' => 'ក្រុមរូបភាព',
+    'about' => 'អំពី',
+    'contact' => 'ទំនក់ទំនង',
+    'my_profile' => 'ប្រវត្តិរូបខ្ញុំ',
+    'posts_management' => 'គ្រប់គ្រងរូបភាព',
+    'posted_groups_management' => 'គ្រប់គ្រងក្រុមរូបភាព',
+    'account_settings' => 'ការកំណត់​គណនី',
+    'account_change_password' => 'ផ្លាស់ប្តូរពាក្យសម្ងាត់គណនី'
 ];

@@ -487,6 +487,28 @@ $(document).ready(function() {
 	$('[data-toggle=\'tooltip\']').on('remove', function() {
 		$(this).tooltip('destroy');
 	});
+
+	// 
+	$(document).delegate('a[data-toggle=\'information\']', 'click', function() {
+		$('#modal-information').remove();
+		$.ajax({
+			url: 'information/detail',
+			dataType: 'html',
+			beforeSend: function() {
+				// before send
+			},
+			complete: function() {
+				// completed
+			},
+			success: function(html) {
+				$('body').append('<div id="modal-information" class="modal">' + html + '</div>');
+
+				$('#modal-information').modal('show');
+			}
+		});
+		return false;
+	});
+
 });
 
 // Autocomplete */
