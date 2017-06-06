@@ -144,7 +144,7 @@ function requestSubmitForm(buttonId, formId, formAction) {
 	        	if(data.error==1) {
 	          		msg += '<div class="alert alert-warning" id="warning">';
 	         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
-	          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' :</b><br />';
+	          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' </b><br />';
 	          		if(data.validatormsg) {
 	            		$.each(data.validatormsg, function(index, value) {
 	              			msg += '- '+value+'<br />';
@@ -199,7 +199,7 @@ function requestSubmitDeleteForm(buttonId, formId, formAction) {
 	        	if(data.error==1) {
 	          		msg += '<div class="alert alert-warning" id="warning">';
 	         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
-	          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' :</b><br />';
+	          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' </b><br />';
 	          		if(data.validatormsg) {
 	            		$.each(data.validatormsg, function(index, value) {
 	              			msg += '- '+value+'<br />';

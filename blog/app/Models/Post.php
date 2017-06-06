@@ -373,9 +373,9 @@ class Post extends Model {
 		$rules['image'] = 'required';
 
 		foreach ($languages as $language) {
-			$messages['post_description.'.$language->language_id.'.title.required'] = 'The <b>Post Title</b> field is required.';
-			$messages['post_description.'.$language->language_id.'.description.required'] = 'The <b>Description</b> field is required.';
-			$messages['description_len'.$language->language_id.'.required'] = 'The <b>Description</b> must be at least 5 characters.';
+			$messages['post_description.'.$language->language_id.'.title.required'] = trans('text.title_required');
+			$messages['post_description.'.$language->language_id.'.description.required'] = trans('text.description_required');
+			$messages['description_len'.$language->language_id.'.required'] = trans('text.description_min_len');
 		}
 
 		if(isset($datas['request']['post_image'])) {
@@ -383,17 +383,17 @@ class Post extends Model {
         	foreach($datas['request']['post_image'] as $key => $val) {
         		$rules['post_image.'.$key.'.image'] = 'required';
 				$rules['post_image.'.$key.'.sort_order'] = 'integer';
-				$messages['post_image.'.$key.'.image.required'] = 'The <b>Add Image ('.$i.') Image</b> field is required.';
-				$messages['post_image.'.$key.'.sort_order.integer'] = 'The <b>Add Image ('.$i.') Sort Order </b> must be an integer.';
+				$messages['post_image.'.$key.'.image.required'] = trans('text.before_add_image_required').' ('.$i.') '.trans('text.after_add_image_required');
+				$messages['post_image.'.$key.'.sort_order.integer'] = trans('text.before_sort_order_integer').' ('.$i.') '.trans('text.after_sort_order_integer');
 				$i++;
 			}
         }
 
-        $messages['image.required'] = 'The <b>Image</b> field is required.';
+        $messages['image.required'] = trans('text.image_required');
 
 		$validator = \Validator::make($datas['request'], $rules, $messages);
 		if ($validator->fails()) {
-			$error = ['error'=>'1','success'=>'0','msg'=>'Warning : '.(($datas['action']=='create')? 'save':'save change').' post unsuccessfully!','validatormsg'=>$validator->messages()];
+			$error = ['error'=>'1','success'=>'0','msg'=> trans('text.warning').' : '.(($datas['action']=='create')? trans('text.save'):trans('text.save_change')).' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
         }
 		return $error;
 	}
@@ -404,18 +404,18 @@ class Post extends Model {
 		$messages = [];
 
 		$rules['post_invalid'] = 'required';
-		$messages['post_invalid.required'] = 'This <b>Post</b> is invalid.';
+		$messages['post_invalid.required'] = trans('text.post_invalid');
 
 		$rules['post_id'] = 'required';
-		$messages['post_id.required'] = 'The <b>Post</b> field is required.';
+		$messages['post_id.required'] = trans('text.post_id_required');
 
 		$rules['author_id'] = 'required|in:'.$datas['request']['post_author_id'];
-		$messages['author_id.required'] = 'The <b>Author</b> field is required.';
-		$messages['author_id.in'] = 'The <b>Author</b> is invalid to delete this post.';
+		$messages['author_id.required'] = trans('text.author_id_required');
+		$messages['author_id.in'] = trans('text.author_id_invalid');
 
         $validator = \Validator::make($datas['request'], $rules, $messages);
         if ($validator->fails()) {
-            $error = ['error'=>'1','success'=>'0','msg'=>'Warning : delete post unsuccessfully!','validatormsg'=>$validator->messages()];
+            $error = ['error'=>'1','success'=>'0','msg'=>trans('text.warning').' : '.trans('text.delete').' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
         }
         return $error;
 	}

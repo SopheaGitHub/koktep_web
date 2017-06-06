@@ -57,6 +57,11 @@ class AccountController extends Controller
         // End
         // check if auth != get account id
         if($request['account_id']==$this->data->auth_id) {
+
+            $this->data->text_title = trans('text.account_settings');
+            $this->data->button_cancel = trans('button.cancel');
+            $this->data->button_save_change = trans('button.save_change');
+
             $this->data->go_back = url('/overview-account?account_id='.$this->data->auth_id);
             $this->data->action_form = url('/account/settings-load-form');
             return view('account.settings', ['data'=>$this->data]);
@@ -78,7 +83,7 @@ class AccountController extends Controller
         $datas = [
             'icon' => 'icon_edit',
             'action' => url('/account/settings-update/'.$this->data->auth_id),
-            'titlelist' => 'Setting',
+            'titlelist' => trans('button.edit'),
             'user'      => $user,
             'user_technical' => $user_technical,
             'user_address'  => $user_address,
@@ -168,50 +173,49 @@ class AccountController extends Controller
         $this->data->social_medias = $this->social_media->orderBy('name', 'asc')->lists('name', 'social_media_id');
 
         // define tap
-        $this->data->tab_general = 'General';
-        $this->data->tab_image = 'Images';
-        $this->data->tab_skill_charge = 'Technical Skills &amp; Charge';
-        $this->data->tab_contact = 'Contacts';
-        $this->data->tab_social_media = 'Social Media';
+        $this->data->tab_general = trans('text.tab_general');
+        $this->data->tab_image = trans('text.tab_image');
+        $this->data->tab_skill_charge = trans('text.tab_skill_charge');
+        $this->data->tab_contact = trans('text.tab_contact');
+        $this->data->tab_social_media = trans('text.tab_social_media');
 
         // define entry
-        $this->data->entry_name = 'Name';
-        $this->data->entry_email = 'E-Mail Address';
-        $this->data->entry_description = 'Description';
+        $this->data->entry_name = trans('text.entry_name');
+        $this->data->entry_email = trans('text.entry_email');
+        $this->data->entry_description = trans('text.entry_description');
 
-        $this->data->entry_skill = 'Skill';
-        $this->data->entry_percent = 'Skill Percent';
-        $this->data->entry_min_charge = 'Min Charge (USD)';
-        $this->data->entry_max_charge = 'Max Charge (USD)';
-        $this->data->entry_sort_order = 'Sort Order';
+        $this->data->entry_skill = trans('text.entry_skill');
+        $this->data->entry_percent = trans('text.entry_percent');
+        $this->data->entry_min_charge = trans('text.entry_min_charge');
+        $this->data->entry_max_charge = trans('text.entry_max_charge');
+        $this->data->entry_sort_order = trans('text.entry_sort_order');
 
-        $this->data->entry_firstname = 'First Name';
-        $this->data->entry_lastname = 'Last Name';
-        $this->data->entry_company = 'Company';
-        $this->data->entry_phone = 'Phone';
-        $this->data->entry_fax = 'Fax';
-        $this->data->entry_email = 'Email';
-        $this->data->entry_website = 'Website';
-        $this->data->entry_address = 'Address';
-        $this->data->entry_city = 'City';
-        $this->data->entry_postcode = 'Post Code';
-        $this->data->entry_country = 'Country';
-        $this->data->entry_zone = 'Region / State';
+        $this->data->entry_firstname = trans('text.entry_firstname');
+        $this->data->entry_lastname = trans('text.entry_lastname');
+        $this->data->entry_company = trans('text.entry_company');
+        $this->data->entry_phone = trans('text.entry_phone');
+        $this->data->entry_fax = trans('text.entry_fax');
+        $this->data->entry_website = trans('text.entry_website');
+        $this->data->entry_address = trans('text.entry_address');
+        $this->data->entry_city = trans('text.entry_city');
+        $this->data->entry_postcode = trans('text.entry_postcode');
+        $this->data->entry_country = trans('text.entry_country');
+        $this->data->entry_zone = trans('text.entry_zone');
 
-        $this->data->entry_detail = 'Detail';
+        $this->data->entry_detail = trans('text.entry_address');
 
-        $this->data->entry_social_media = 'Social Media';
-        $this->data->entry_link = 'Link';
+        $this->data->entry_social_media = trans('text.entry_social_media');
+        $this->data->entry_link = trans('text.entry_link');
 
         // define input title
-        $this->data->button_remove = 'Remove';
-        $this->data->button_technical_add = 'Add Technical';
-        $this->data->button_contact_add = 'Add Contact';
-        $this->data->button_social_media_add = 'Add Social Media';
+        $this->data->button_remove = trans('button.remove');
+        $this->data->button_technical_add = trans('button.add');
+        $this->data->button_contact_add = trans('button.add');
+        $this->data->button_social_media_add = trans('button.add');
 
         // define text
-        $this->data->text_select = '-- Please Select --';
-        $this->data->text_title_email = 'Use For Login';
+        $this->data->text_select = trans('text.text_select');
+        $this->data->text_title_email = trans('text.title_email_login');
 
         if(isset($datas['user'])) {
             $this->data->name = $datas['user']->name;

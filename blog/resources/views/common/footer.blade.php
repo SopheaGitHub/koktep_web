@@ -5,10 +5,10 @@
 		    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 		      
 		      <?php
-		      	if(\Session::get('locale')=='en') { ?>
-		      		<img style="margin-top:-3px;" src="<?php echo url('/images/flags/gb.png') ?>"> &nbsp; English
-		      	<?php }else { ?>
+		      	if(\Session::get('locale')=='kh') { ?>
 		      		<img style="margin-top:-3px;" src="<?php echo url('/images/flags/kh.png') ?>"> &nbsp; Khmer
+		      	<?php }else { ?>
+		      		<img style="margin-top:-3px;" src="<?php echo url('/images/flags/gb.png') ?>"> &nbsp; English
 		      	<?php }
 		      ?>
 		      

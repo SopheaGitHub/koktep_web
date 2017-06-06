@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><i class="fa fa-cog"></i> <b><?php echo $data->titlelist; ?></b></h3>
+      <h3 class="panel-title"><i class="fa fa-pencil"></i> <b><?php echo $data->titlelist; ?></b></h3>
     </div>
     <div class="panel-body">
 

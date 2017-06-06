@@ -83,23 +83,23 @@ class PostGroup extends Model
 
 		foreach ($languages as $language) {
 			$rules['post_group_description.'.$language->language_id.'.name'] = 'required';
-			$messages['post_group_description.'.$language->language_id.'.name.required'] = 'The <b>Post Group Name</b> field is required.';
+			$messages['post_group_description.'.$language->language_id.'.name.required'] = trans('text.name_required');
 		}
 
 		if(isset($datas['request']['post_related'])) {
 			if(count($datas['request']['post_related']) < 2) {
 				$rules['post_min_2'] = 'required';
-				$messages['post_min_2.required'] = 'The <b>Posts</b> must be at least 2 item';
+				$messages['post_min_2.required'] = trans('text.relate_post_min2');
 			}
 		}else {
 			$rules['post_required'] = 'required';
-			$messages['post_required.required'] = 'The <b>Posts</b> field is required.';
+			$messages['post_required.required'] = trans('text.relate_post_min2');
 		}
 		
 
 		$validator = \Validator::make($datas['request'], $rules, $messages);
 		if ($validator->fails()) {
-			$error = ['error'=>'1','success'=>'0','msg'=>'Warning : '.(($datas['action']=='create')? 'save':'save change').' post group unsuccessfully!','validatormsg'=>$validator->messages()];
+			$error = ['error'=>'1','success'=>'0','msg'=>trans('text.warning').' : '.(($datas['action']=='create')? trans('text.save'):trans('text.save_change')).' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
         }
 		return $error;
 	}
@@ -110,18 +110,18 @@ class PostGroup extends Model
 		$messages = [];
 
 		$rules['post_group_invalid'] = 'required';
-		$messages['post_group_invalid.required'] = 'This <b>Post Group</b> is invalid.';
+		$messages['post_group_invalid.required'] = trans('text.post_group_invalid');
 
 		$rules['post_group_id'] = 'required';
-		$messages['post_group_id.required'] = 'The <b>Post Group</b> field is required.';
+		$messages['post_group_id.required'] = trans('text.post_group_id_required');
 
 		$rules['author_id'] = 'required|in:'.$datas['request']['post_group_author_id'];
-		$messages['author_id.required'] = 'The <b>Author</b> field is required.';
-		$messages['author_id.in'] = 'The <b>Author</b> is invalid to delete this post_group.';
+		$messages['author_id.required'] = trans('text.author_id_required');
+		$messages['author_id.in'] = trans('text.author_id_invalid');
 
         $validator = \Validator::make($datas['request'], $rules, $messages);
         if ($validator->fails()) {
-            $error = ['error'=>'1','success'=>'0','msg'=>'Warning : delete post group unsuccessfully!','validatormsg'=>$validator->messages()];
+            $error = ['error'=>'1','success'=>'0','msg'=>trans('text.warning').' : '.trans('text.delete').' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
         }
         return $error;
 	}
