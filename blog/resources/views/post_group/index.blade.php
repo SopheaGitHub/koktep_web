@@ -8,10 +8,10 @@
         <div class="col-md-9">
             <div class="profile-content">
                 <div class="row">
-                    <div class="col-md-6"><h4><i class="fa fa-btn fa-object-group"></i>Posted's Groups Management</h4></div>
+                    <div class="col-md-6"><h4><i class="fa fa-btn fa-object-group"></i><?php echo $data->text_title; ?></h4></div>
                     <div class="col-md-6">
                         <span class="pull-right">
-                        <a href="<?php echo $data->add_post_group; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-plus"></i> Add New Post Group</a>
+                        <a href="<?php echo $data->add_post_group; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-plus"></i> <?php echo $data->button_add; ?></a>
                         </span>
                     </div>
                 </div>

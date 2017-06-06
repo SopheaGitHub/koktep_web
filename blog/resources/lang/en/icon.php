@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Button Language Lines
+    | Icon Language Lines
     |--------------------------------------------------------------------------
     |
     | The following language lines are used by the paginator library to build
@@ -13,14 +13,8 @@ return [
     |
     */
 
-    'save' => 'Save',
-    'save_change' => 'Save Change',
-    'add' => 'Add',
-    'edit' => 'Edit',
-    'delete' => 'Delete',
-    'cancel' => 'Cancel',
-    'remove' => 'Remove',
-    'image_add' => 'Add Image',
-    'yes' => 'Yes',
-    'no' => 'No',
+    'view' => 'View',
+    'comment' => 'Comment',
+    'date' => 'Date',
+
 ];

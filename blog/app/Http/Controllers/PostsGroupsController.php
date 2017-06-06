@@ -47,6 +47,9 @@ class PostsGroupsController extends Controller
             return view('errors.504');
         }
 
+        $this->data->text_title = trans('text.posted_groups_management');
+        $this->data->button_add = trans('button.add');
+
     	$this->data->action_list = url('/posts-groups/list');
         $this->data->action_delete = url('/posts-groups/delete');
         $this->data->add_post_group = url('/posts-groups/create');
@@ -137,7 +140,19 @@ class PostsGroupsController extends Controller
             $url .= '&page='.$request['page'];
         }
 
-        $this->data->status = $this->config->status;
+        $this->data->delete_confirmation = trans('text.delete_confirmation');
+        $this->data->delete_confirmation_message = trans('text.delete_confirmation_message');
+        $this->data->show = trans('text.show');
+        $this->data->to = trans('text.to');
+        $this->data->of = trans('text.of');
+        $this->data->page = trans('text.page');
+
+        $this->data->button_edit = trans('button.edit');
+        $this->data->button_delete = trans('button.delete');
+        $this->data->button_yes = trans('button.yes');
+        $this->data->button_no = trans('button.no');
+
+        $this->data->status = $this->config->status();
         $this->data->post_detail = url('/post-account/detail');
         $this->data->text_empty = '...';
 
@@ -155,6 +170,12 @@ class PostsGroupsController extends Controller
         // add system log
         $this->systemLogs('create', 'posts-groups', $request);
         // End
+
+        $this->data->text_title = trans('text.posted_groups_management');
+
+        $this->data->button_cancel = trans('button.cancel');
+        $this->data->button_save = trans('button.save');
+
     	$this->data->go_back = url('/posts-groups');
         $this->data->action = url('/posts-groups/store');
         $this->data->action_form = url('/posts-groups/create-load-form');
@@ -168,7 +189,7 @@ class PostsGroupsController extends Controller
         // End
         $datas = [
             'icon' => 'icon_create',
-            'titlelist' => 'Add New Post Group'
+            'titlelist' => trans('button.add')
         ];
         echo $this->getPostGroupForm($datas);
         exit();
@@ -239,6 +260,12 @@ class PostsGroupsController extends Controller
         // add system log
         $this->systemLogs('edit', 'posts-groups', $request);
         // End
+
+        $this->data->text_title = trans('text.posted_groups_management');
+
+        $this->data->button_cancel = trans('button.cancel');
+        $this->data->button_save_change = trans('button.save_change');
+
         $this->data->go_back = url('/posts-groups');
         $this->data->action = url('/posts-groups/update/'.$post_group_id);
         $this->data->action_form = url('/posts-groups/edit-load-form/'.$post_group_id);
@@ -273,7 +300,7 @@ class PostsGroupsController extends Controller
 
         $datas = [
             'icon' => 'icon_edit',
-            'titlelist' => 'Edit Post Group',
+            'titlelist' => trans('button.edit'),
             'post_group' => $this->data->post_group,
             'post_group_descriptions' => $this->data->post_group_descriptions,
             'post_relateds'  => $data['post_relateds']
@@ -339,25 +366,25 @@ class PostsGroupsController extends Controller
     public function getPostGroupForm($datas=[]) {
         $this->data->go_post_autocomplete = url('/posts/autocomplete');
         $this->data->languages = $this->language->getLanguages(['sort'=>'name', 'order'=>'asc'])->get();
-        $this->data->status = $this->config->status;
+        $this->data->status = $this->config->status();
 
         // define tap
-        $this->data->tab_general = 'General';
-        $this->data->tab_data = 'Data';
+        $this->data->tab_general = trans('text.tab_general');
+        $this->data->tab_data = trans('text.tab_data');
 
         // define entry
-        $this->data->entry_name = 'Post Group Name';
-        $this->data->entry_image = 'Image';
-        $this->data->entry_status = 'Status';
-        $this->data->entry_sort_order = 'Sort Order';
+        $this->data->entry_name = trans('text.entry_name');
+        $this->data->entry_image = trans('text.entry_image');
+        $this->data->entry_status = trans('text.entry_status');
+        $this->data->entry_sort_order = trans('text.entry_sort_order');
 
-        $this->data->entry_related = 'Posts';
+        $this->data->entry_related = trans('text.entry_related');
 
         // define input title
-        $this->data->title_related = '(Autocomplete)';
+        $this->data->title_related = trans('text.autocomplete');
 
-        $this->data->button_remove = 'Remove';
-        $this->data->button_image_add = 'Add Image';
+        $this->data->button_remove = trans('text.button_remove');
+        $this->data->button_image_add = trans('text.button_image_add');
 
         if(isset($datas['post_group'])) {
             $this->data->sort_order = $datas['post_group']->sort_order;

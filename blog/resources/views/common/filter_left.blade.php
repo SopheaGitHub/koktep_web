@@ -150,7 +150,7 @@ $(document).ready(function() {
     $('input[name=\'search\']').autocomplete({
       'source': function(request, response) {
         $.ajax({
-          url: "<?php echo url('/posts/autocomplete');?>?filter_title=" +  encodeURIComponent(request) +"&filter_view="+encodeURIComponent($('#view').val()),
+          url: "<?php echo url('/post-account/autocomplete');?>?filter_title=" +  encodeURIComponent(request) +"&filter_view="+encodeURIComponent($('#view').val()),
           dataType: 'json',
           success: function(json) {
             response($.map(json, function(item) {

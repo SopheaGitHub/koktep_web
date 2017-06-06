@@ -388,7 +388,7 @@ class PostAccountController extends Controller
             $url .= '&page='.$request['page'];
         }
 
-        $this->data->status = $this->config->status;
+        $this->data->status = $this->config->status();
 
         $this->data->text_empty = '...';
 
@@ -403,4 +403,59 @@ class PostAccountController extends Controller
         }
         exit();
     }
+
+    public function getAutocomplete() {
+        $request = \Request::all();
+        $json = [];
+
+        if (isset($request['filter_title'])) {
+
+            if(isset($request['filter_view'])&&$request['filter_view']=='people') {
+                $filter_data = [
+                    'filter_title' => $request['filter_title'],
+                    'sort'        => 'name',
+                    'order'       => 'ASC',
+                    'start'       => 0,
+                    'limit'       => 5
+                ];
+
+                $results = $this->user->getAutocompleteUsers($filter_data);
+                foreach ($results as $result) {
+                    $json[] = [
+                        'user_id' => $result->user_id,
+                        'title'   => strip_tags(html_entity_decode($result->name, ENT_QUOTES, 'UTF-8'))
+                    ];
+                }
+
+            }else {
+                $filter_data = [
+                    'filter_title' => $request['filter_title'],
+                    'sort'        => 'title',
+                    'order'       => 'ASC',
+                    'start'       => 0,
+                    'limit'       => 5
+                ];
+
+                $results = $this->post->getAutocompletePosts($filter_data);
+
+                foreach ($results as $result) {
+                    $json[] = [
+                        'post_id' => $result->post_id,
+                        'title'   => strip_tags(html_entity_decode($result->title, ENT_QUOTES, 'UTF-8'))
+                    ];
+                }
+            }
+        }
+
+        $sort_order = [];
+
+        foreach ($json as $key => $value) {
+            $sort_order[$key] = $value['title'];
+        }
+
+        array_multisort($sort_order, SORT_ASC, $json);
+
+        return json_encode($json);
+    }
+    
 }

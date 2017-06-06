@@ -5,7 +5,7 @@
 		    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
 		      
 		      <?php
-		      	if(\Lang::locale()=='en') { ?>
+		      	if(\Session::get('locale')=='en') { ?>
 		      		<img style="margin-top:-3px;" src="<?php echo url('/images/flags/gb.png') ?>"> &nbsp; English
 		      	<?php }else { ?>
 		      		<img style="margin-top:-3px;" src="<?php echo url('/images/flags/kh.png') ?>"> &nbsp; Khmer

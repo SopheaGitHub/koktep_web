@@ -9,10 +9,10 @@
         <div class="col-md-9">
             <div class="profile-content">
                 <div class="row">
-                    <div class="col-md-6"><h4><i class="fa fa-btn fa-tasks"></i><?php echo trans('text.posts_management'); ?></h4></div>
+                    <div class="col-md-6"><h4><i class="fa fa-btn fa-tasks"></i><?php echo $data->text_title; ?></h4></div>
                     <div class="col-md-6">
                         <span class="pull-right">
-                        <a href="<?php echo $data->add_post; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-plus"></i> <?php echo trans('button.add_post'); ?> </a>
+                        <a href="<?php echo $data->add_post; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-plus"></i> <?php echo $data->button_add; ?> </a>
                         </span>
                     </div>
                 </div>

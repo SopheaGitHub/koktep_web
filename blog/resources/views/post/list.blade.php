@@ -16,19 +16,19 @@
           <hr />
             <!-- <i class="fa fa-btn fa-eye"></i> View : 0121 | <i class="fa fa-btn fa-hand-peace-o"></i> Like : 23 | <i class="fa fa-btn fa-hand-rock-o"></i> Unlike : 212 -->
             <div>
-              <i data-toggle="tooltip" title="View" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?>
+              <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?>
             </div>
             <div>
-              <i data-toggle="tooltip" title="Comment" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?>
+              <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?>
             </div>
             <div>
-              <i data-toggle="tooltip" title="Date" class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y', strtotime($post->created_at)); ?>
+              <i data-toggle="tooltip" title="<?php echo $data->icon_date; ?>" class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y', strtotime($post->created_at)); ?>
             </div>
           <hr />
           <div class="row">
             <div class="col-md-6">
-              <a href="<?php echo $data->edit_post.'/'.$post->post_id; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> <?php echo trans('button.edit'); ?></a>
-              <a href="#" class="btn btn-sm btn-danger" id="<?php echo $post->post_id; ?>" data-toggle="modal" data-target="#modal-delete-post"><i class="fa fa-btn fa-trash-o"></i> <?php echo trans('button.delete'); ?></a>
+              <a href="<?php echo $data->edit_post.'/'.$post->post_id; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> <?php echo $data->button_edit; ?></a>
+              <a href="#" class="btn btn-sm btn-danger" id="<?php echo $post->post_id; ?>" data-toggle="modal" data-target="#modal-delete-post"><i class="fa fa-btn fa-trash-o"></i> <?php echo $data->button_delete; ?></a>
             </div>
             <div class="col-md-6">
               <span class="pull-right">
@@ -57,7 +57,7 @@
           $start = 0;
         }
       ?>
-      Showing <?php echo $start; ?> to <?php echo $stop; ?> of <?php echo $data->posts->total(); ?> &nbsp;&nbsp; (<?php echo $data->posts->currentPage(); ?> Pages)
+      <?php echo $data->show; ?> <?php echo $start; ?> <?php echo $data->to; ?> <?php echo $stop; ?> <?php echo $data->of; ?> <?php echo $data->posts->total(); ?> &nbsp;&nbsp; (<?php echo $data->page; ?> <?php echo $data->posts->currentPage(); ?>)
 	</div>
 </div>
 <!-- Small modal -->
@@ -65,18 +65,18 @@
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="myModalLabel"><i class="fa fa-btn fa-trash"></i>Delete Confirmation</h5>
+        <h5 class="modal-title" id="myModalLabel"><i class="fa fa-btn fa-trash"></i><?php echo $data->delete_confirmation; ?></h5>
       </div>
       <div class="modal-body">
         <form action="#" method="post" enctype="multipart/form-data" id="form-delete-post" class="form-horizontal">
           <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
           <input type="hidden" value="" name="post_id" class="post_id" />
         </form>
-        Are you sure?
+        <?php echo $data->delete_confirmation_message; ?>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i>No</button>
-        <button type="botton" class="btn btn-primary btn-sm" data-dismiss="modal" id="submit-delete-post"><i class="fa fa-btn fa-check"></i>Yes</button>
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i><?php echo $data->button_no; ?></button>
+        <button type="botton" class="btn btn-primary btn-sm" data-dismiss="modal" id="submit-delete-post"><i class="fa fa-btn fa-check"></i><?php echo $data->button_yes; ?></button>
       </div>
     </div>
   </div>

@@ -58,6 +58,8 @@ class PostsController extends Controller
             return view('errors.504');
         }
         
+        $this->data->text_title = trans('text.posts_management');
+        $this->data->button_add = trans('button.add');
         $this->data->action_list = url('/posts/list');
         $this->data->add_post = url('/posts/create');
         $this->data->action_delete = url('/posts/delete');
@@ -206,7 +208,23 @@ class PostsController extends Controller
             $url .= '&page='.$request['page'];
         }
 
-        $this->data->status = $this->config->status;
+        $this->data->delete_confirmation = trans('text.delete_confirmation');
+        $this->data->delete_confirmation_message = trans('text.delete_confirmation_message');
+        $this->data->show = trans('text.show');
+        $this->data->to = trans('text.to');
+        $this->data->of = trans('text.of');
+        $this->data->page = trans('text.page');
+
+        $this->data->icon_view = trans('icon.view');
+        $this->data->icon_comment = trans('icon.comment');
+        $this->data->icon_date = trans('icon.date');
+
+        $this->data->button_edit = trans('button.edit');
+        $this->data->button_delete = trans('button.delete');
+        $this->data->button_yes = trans('button.yes');
+        $this->data->button_no = trans('button.no');
+
+        $this->data->status = $this->config->status();
         $this->data->post_detail = url('/post-account/detail');
         $this->data->text_empty = '...';
 
@@ -224,6 +242,11 @@ class PostsController extends Controller
         // add system log
         $this->systemLogs('create', 'posts', $request);
         // End
+        $this->data->text_title = trans('text.posts_management');
+
+        $this->data->button_cancel = trans('button.cancel');
+        $this->data->button_save = trans('button.save');
+
         $this->data->go_back = url('/posts');
         $this->data->action = url('/posts/store');
         $this->data->action_form = url('/posts/create-load-form');
@@ -237,7 +260,7 @@ class PostsController extends Controller
         // End
         $datas = [
             'icon' => 'icon_create',
-            'titlelist' => 'Add New Post'
+            'titlelist' => trans('button.add')
         ];
         echo $this->getPostForm($datas);
         exit();
@@ -345,6 +368,12 @@ class PostsController extends Controller
         // add system log
         $this->systemLogs('edit', 'posts', $request);
         // End
+
+        $this->data->text_title = trans('text.posts_management');
+
+        $this->data->button_cancel = trans('button.cancel');
+        $this->data->button_save_change = trans('button.save_change');
+
         $this->data->go_back = url('/posts');
         $this->data->action  = url('/posts/update/'.$post_id);
         $this->data->action_form = url('/posts/edit-load-form/'.$post_id);
@@ -407,7 +436,7 @@ class PostsController extends Controller
 
         $datas = [
             'icon' => 'icon_edit',
-            'titlelist' => 'Edit Post',
+            'titlelist' => trans('button.edit'),
             'post' => $this->data->post,
             'post_descriptions' => $this->data->post_descriptions,
             'post_to_categories' => $data['post_categories'],
@@ -517,43 +546,44 @@ class PostsController extends Controller
         $this->data->go_related_autocomplete = url('/posts/autocomplete');
         $this->data->languages = $this->language->getLanguages(['sort'=>'name', 'order'=>'asc'])->get();
         $this->data->layouts = $this->layout->orderBy('name', 'asc')->lists('name', 'layout_id');
-        $this->data->status = $this->config->status;
+        $this->data->status = $this->config->status();
 
         // define tap
-        $this->data->tab_general = 'General';
-        $this->data->tab_data = 'Data';
-        $this->data->tab_links = 'Links';
-        $this->data->tab_design = 'Design';
-        $this->data->tab_image = 'Image';
+        $this->data->tab_general = trans('text.tab_general');
+        $this->data->tab_data = trans('text.tab_data');
+        $this->data->tab_links = trans('text.tab_links');
+        $this->data->tab_design = trans('text.tab_design');
+        $this->data->tab_image = trans('text.tab_image');
 
         // define entry
-        $this->data->entry_title = 'Post Title';
-        $this->data->entry_description = 'Description';
-        $this->data->entry_meta_title = 'Meta Tag Title';
-        $this->data->entry_meta_description = 'Meta Tag Description';
-        $this->data->entry_meta_keyword = 'Meta Tag Keywords';
-        $this->data->entry_tag = 'Post Tags';
+        $this->data->entry_title = trans('text.entry_title');
+        $this->data->entry_description = trans('text.entry_description');
+        $this->data->entry_meta_title = trans('text.entry_meta_title');
+        $this->data->entry_meta_description = trans('text.entry_meta_description');
+        $this->data->entry_meta_keyword = trans('text.entry_meta_keyword');
+        $this->data->entry_tag = trans('text.entry_tag');
 
 
-        $this->data->entry_keyword = 'SEO URL';
-        $this->data->entry_image = 'Image';
-        $this->data->entry_status = 'Status';
-        $this->data->entry_sort_order = 'Sort Order';
+        $this->data->entry_keyword = trans('text.entry_keyword');
+        $this->data->entry_image = trans('text.entry_image');
+        $this->data->entry_status = trans('text.entry_status');
+        $this->data->entry_sort_order = trans('text.entry_sort_order');
 
-        $this->data->entry_category = 'Categories';
-        $this->data->entry_related = 'Related Posts';
+        $this->data->entry_category = trans('text.entry_category');
+        $this->data->entry_related = trans('text.entry_related');
 
-        $this->data->entry_layout = 'Layout';
+        $this->data->entry_layout = trans('text.entry_layout');
 
         // define input title
-        $this->data->title_keyword = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
-        $this->data->title_category = '(Autocomplete)';
-        $this->data->title_related = '(Autocomplete)';
+        $this->data->title_tags = trans('text.title_tags');
+        $this->data->title_keyword = trans('text.title_keyword');
+        $this->data->title_category = trans('text.autocomplete');
+        $this->data->title_related = trans('text.autocomplete');
 
-        $this->data->text_none = '-- None --';
+        $this->data->text_none = trans('text.none');
 
-        $this->data->button_remove = 'Remove';
-        $this->data->button_image_add = 'Add Image';
+        $this->data->button_remove = trans('button.remove');
+        $this->data->button_image_add = trans('button.image_add');
 
         if(isset($datas['post'])) {
             $this->data->image = $datas['post']->image;

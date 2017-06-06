@@ -24,6 +24,8 @@ class ConfigController extends Controller {
 	// public $https_best_path = "http://localhost:81/my_projects/koktep_web/blog/public/";
 
 	// system status
-	public $status = ['1' => 'Enabled', '0'	=> 'Disabled'];
+	public function status() {
+		return $status = ['1' => trans('text.enabled'), '0'	=> trans('text.disabled')];
+	}
 
 }
