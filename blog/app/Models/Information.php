@@ -40,6 +40,20 @@ class Information extends Model {
 		return $result;
 	}
 
+	public function getInformationDescriptionByCode($filter_data=[]) {
+		$db = DB::table(DB::raw('
+				(SELECT
+					id.*
+				FROM
+					information AS i
+				LEFT JOIN information_description AS id ON id.information_id = i.information_id AND id.language_id = \''.$filter_data['language_id'].'\'
+				WHERE i.information_id = "'.$filter_data['information_id'].'") AS information_description
+			'));
+
+		$result = $db->first();
+		return $result;
+	}
+
 	public function getInformationToLayouts($information_id) {
 		$result = DB::table(DB::raw('
 				(SELECT
@@ -64,6 +78,25 @@ class Information extends Model {
 						information AS i
 					LEFT JOIN information_description AS id ON id.information_id = i.information_id
 					AND id.language_id = \'1\'
+				) AS information
+			'))
+		->orderBy($filter_data['sort'], $filter_data['order']);
+		return $db;
+	}
+
+	public function getInformations($filter_data=[]) {
+		$db = DB::table(DB::raw('
+				(
+					SELECT
+						i.information_id AS information_id,
+						i.created_at AS created_at,
+						i.sort_order AS sort_order,
+						i.icon AS icon,
+						id.title AS title
+					FROM
+						information AS i
+					LEFT JOIN information_description AS id ON id.information_id = i.information_id
+					AND id.language_id = \''.$filter_data['language_id'].'\'
 				) AS information
 			'))
 		->orderBy($filter_data['sort'], $filter_data['order']);

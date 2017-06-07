@@ -491,8 +491,10 @@ $(document).ready(function() {
 	// 
 	$(document).delegate('a[data-toggle=\'information\']', 'click', function() {
 		$('#modal-information').remove();
+		var information_id = $(this).data("id");
+		var language_id = $(this).data("languageid");
 		$.ajax({
-			url: 'information/detail',
+			url: 'information/detail?information_id='+encodeURIComponent(information_id)+'&language_id='+encodeURIComponent(language_id),
 			dataType: 'html',
 			beforeSend: function() {
 				// before send

@@ -12,6 +12,10 @@ return [
     | you want to customize your views to better match your application.
     |
     */
+    'home' => 'Home',
+    'khmer' => 'Khmer',
+    'english' => 'English',
+    'other' => 'Other',
     'register' => 'Register',
     'login' => 'Login',
     'logout' => 'Logout',

@@ -12,6 +12,10 @@ return [
     | you want to customize your views to better match your application.
     |
     */
+    'home' => 'ទំព័រដើម',
+    'khmer' => 'ភាសាខ្មែរ',
+    'english' => 'ភាសាអង់គ្លេស',
+    'other' => 'ផ្សេងទៀត',
     'register' => 'ចុះឈ្មោះ',
     'login' => 'ចូល',
     'logout' => 'ចាកចេញ',

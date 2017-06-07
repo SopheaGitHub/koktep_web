@@ -12,6 +12,11 @@ class Language extends Model {
 		return $result;
 	}
 
+    public function getLanguageByCode($language_code) {
+        $result = Language::where('code', '=', $language_code)->first();
+        return $result;
+    }
+
 	public function getLanguages($filter_data=[]) {
 		$db = Language::where('status', '=', '1')->orderBy($filter_data['sort'], $filter_data['order']);
 		return $db;

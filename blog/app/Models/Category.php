@@ -101,6 +101,17 @@ class Category extends Model {
 		return $db;
 	}
 
+	public function getCategoriesByLanguage($filter_data=[]) {
+		$db = DB::table(DB::raw('
+				(
+					SELECT c.*, cd.name AS name FROM category c
+					LEFT JOIN category_description cd ON (c.category_id = cd.category_id AND cd.language_id = \''.$filter_data['language_id'].'\')
+					WHERE c.parent_id = \''.$filter_data['parent_id'].'\'
+				) AS category
+			'))->orderBy($filter_data['sort'], $filter_data['order']);
+		return $db;
+	}
+
 	public function getAutocompleteCategories($filter_data=[]) {
 		$db = DB::table(DB::raw('
 				(
