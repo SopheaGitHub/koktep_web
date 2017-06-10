@@ -87,11 +87,28 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $rules = [];
+        $messages = [];
+
+        $rules = [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
-        ]);
+        ];
+
+        $messages = [
+            'name.required' => trans('auth.name_required'),
+            'name.max' => trans('auth.name_max_255'),
+            'email.required' => trans('auth.email_required'),
+            'email.email' => trans('auth.email_email'),
+            'email.max' => trans('auth.email_max_255'),
+            'email.unique' => trans('auth.email_unique'),
+            'password.required' => trans('auth.password_required'),
+            'password.min' => trans('auth.password_min_6'),
+            'password.confirmed' => trans('auth.password_in_confirmed')
+        ];
+
+        return Validator::make($data, $rules, $messages);
     }
 
     /**

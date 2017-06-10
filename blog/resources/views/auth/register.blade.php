@@ -5,62 +5,49 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <hr />
+            <?php
+                if(count($errors->all()) > 0) { ?>
+                    <div class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <b><i class="fa fa-info-circle"></i> <?php echo trans('auth.error'); ?> : <?php echo trans('auth.register_unsuccessful'); ?> </b><br />
+
+                    <?php foreach ($errors->all() as $key => $value) {
+                        echo '- '.$value.'<br />';
+                    }?>
+                    </div>
+            <?php   } ?>
             <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                 {{ csrf_field() }}
 
-                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                <div class="form-group">
                     <label for="name" class="col-md-4 control-label"><?php echo trans('auth.name'); ?></label>
 
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control" name="name" placeholder="<?php echo trans('auth.name'); ?>" value="{{ old('name') }}">
-
-                        @if ($errors->has('name'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('name') }}</strong>
-                            </span>
-                        @endif
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                <div class="form-group">
                     <label for="email" class="col-md-4 control-label"><?php echo trans('auth.email'); ?></label>
 
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control" name="email" placeholder="<?php echo trans('auth.email'); ?>" value="{{ old('email') }}">
-
-                        @if ($errors->has('email'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('email') }}</strong>
-                            </span>
-                        @endif
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                <div class="form-group">
                     <label for="password" class="col-md-4 control-label"><?php echo trans('auth.password'); ?></label>
 
                     <div class="col-md-6">
                         <input id="password" type="password" class="form-control" name="password" placeholder="<?php echo trans('auth.password'); ?>">
-
-                        @if ($errors->has('password'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('password') }}</strong>
-                            </span>
-                        @endif
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                <div class="form-group">
                     <label for="password-confirm" class="col-md-4 control-label"><?php echo trans('auth.confirm_password'); ?></label>
 
                     <div class="col-md-6">
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="<?php echo trans('auth.confirm_password'); ?>">
-
-                        @if ($errors->has('password_confirmation'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('password_confirmation') }}</strong>
-                            </span>
-                        @endif
                     </div>
                 </div>
 

@@ -5,34 +5,38 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <hr />
+
+            <?php
+                if(count($errors->all()) > 0) { ?>
+                    <div class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <b><i class="fa fa-info-circle"></i> <?php echo trans('auth.error'); ?> : <?php echo trans('auth.login_unsuccessful'); ?> </b><br />
+
+                    <?php foreach ($errors->all() as $key => $value) {
+                        $search  = ['The email field is required.', 'The password field is required.'];
+                        $replace = [trans('auth.email_required'), trans('auth.password_required')];
+                        echo '- '.str_replace($search, $replace, $value).'<br />';
+                    }?>
+                    </div>
+            <?php   } ?>
+
+            
             <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group">
                             <label for="email" class="col-md-4 control-label"><?php echo trans('auth.email'); ?></label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" placeholder="<?php echo trans('auth.email'); ?>" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group">
                             <label for="password" class="col-md-4 control-label"><?php echo trans('auth.password'); ?></label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" placeholder="<?php echo trans('auth.password'); ?>" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
                             </div>
                         </div>
 
@@ -52,7 +56,7 @@
                                     <i class="fa fa-btn fa-sign-in"></i> <?php echo trans('auth.login'); ?>
                                 </button>
 
-                                <a class="btn btn-sm btn-link" href="{{ url('/password/reset') }}"><?php echo trans('auth.forgot_password'); ?></a>
+                                <a class="btn btn-sm" href="{{ url('/password/reset') }}"><?php echo trans('auth.forgot_password'); ?></a>
                             </div>
                         </div>
                     </form>

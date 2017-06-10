@@ -14,7 +14,10 @@ return [
     */
 
     // 'failed' => 'These credentials do not match our records.',
-    'failed' => 'These email-address or password do not match.',
+    'error' => 'Error',
+    'login_unsuccessful' => 'login unsuccessful',
+    'register_unsuccessful' => 'register unsuccessful',
+    'failed' => 'These <b>E-Mail Address</b> or <b>Password</b> do not match.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'email' => 'E-Mail Address',
     'password' => 'Password',
@@ -25,6 +28,15 @@ return [
     'confirm_password' => 'Confirm Password',
     'register' => 'Register',
     'reset_password' => 'Reset Password',
-    'send_password_reset_link' => 'Send Password Reset Link'
+    'send_password_reset_link' => 'Send Password Reset Link',
+    'name_required' => 'The <b>Name</b> field is required.',
+    'name_max_255' => 'The <b>Name</b> may not be greater than 255 characters.',
+    'email_required' => 'The <b>E-Mail Address</b> field is required.',
+    'email_email' => 'The <b>E-Mail Address</b> must be a valid email address.',
+    'email_max_255' => 'The <b>E-Mail Address</b> may not be greater than 255 characters.',
+    'email_unique' => 'The <b>E-Mail Address</b> has already been taken.',
+    'password_required' => 'The <b>Password</b> field is required.',
+    'password_min_6' => 'The <b>Password</b> must be at least 6 characters',
+    'password_in_confirmed' => 'The <b>Password Confirmation</b> does not match.'
 
 ];
