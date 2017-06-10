@@ -9,11 +9,11 @@
         <div class="col-md-9">
             <div class="profile-content">
                 <div class="row">
-                    <div class="col-md-6"><h4><i class="fa fa-btn fa-exchange"></i>Account Change Password</h4></div>
+                    <div class="col-md-6"><h4><i class="fa fa-btn fa-exchange"></i><?php echo $data->titlelist; ?></h4></div>
                     <div class="col-md-6">
                         <span class="pull-right">
-                            <a href="<?php echo $data->go_back; ?>" class="btn btn-sm btn-default"><i class="fa fa-btn fa-undo"></i> Cancel</a>
-                            <button type="button" id="submit-user-password" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> Save Change</button>
+                            <a href="<?php echo $data->go_back; ?>" class="btn btn-sm btn-default"><i class="fa fa-btn fa-undo"></i> <?php echo $data->button_cancel; ?></a>
+                            <button type="button" id="submit-user-password" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save_change; ?></button>
                         </span>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                   <div class="container-fluid">
                     <div class="panel panel-default">
                       <div class="panel-heading">
-                        <h3 class="panel-title"><b><i class="fa fa-btn fa-exchange"></i><?php echo $data->titlelist; ?></b></h3>
+                        <h3 class="panel-title"><b><i class="fa fa-btn fa-pencil"></i><?php echo $data->entry_title_form; ?></b></h3>
                       </div>
                       <div class="panel-body">
 

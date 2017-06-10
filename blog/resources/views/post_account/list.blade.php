@@ -15,9 +15,9 @@
                         </div>
                         <div class="col-md-4">
                             <span class="pull-right" style="font-size:11px;">
-                                <i data-toggle="tooltip" title="View" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
-                                <i data-toggle="tooltip" title="Comment" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
-                                <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="Image" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
+                                <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
+                                <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
+                                <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="<?php echo $data->icon_image; ?>" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
                             </span>
                         </div>
                     </div>
@@ -42,6 +42,6 @@
           $start = 0;
         }
       ?>
-      Showing <?php echo $start; ?> to <?php echo $stop; ?> of <?php echo $data->posts->total(); ?> &nbsp;&nbsp; (<?php echo $data->posts->currentPage(); ?> Pages)
+      <?php echo $data->show; ?> <?php echo $start; ?> <?php echo $data->to; ?> <?php echo $stop; ?> <?php echo $data->of; ?> <?php echo $data->posts->total(); ?> &nbsp;&nbsp; (<?php echo $data->page; ?> <?php echo $data->posts->currentPage(); ?> )
     </div>
 </div>

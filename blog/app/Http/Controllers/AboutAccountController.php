@@ -57,7 +57,8 @@ class AboutAccountController extends Controller
             $user_id = 0;
         }
 
-        $this->data->go_contact = url('/contact-account?account_id='.$user_id);
+        // $this->data->go_contact = url('/contact-account?account_id='.$user_id);
+        $this->data->go_to_contact_account = sprintf(trans('text.go_to_contact_account'), url('/contact-account?account_id='.$user_id), '', '');
 
         $this->data->user = $this->user->getUser($user_id);
         $this->data->user_technicals = $this->user->getTechnicalByUserId($user_id);
@@ -79,6 +80,9 @@ class AboutAccountController extends Controller
         } else {
             $this->data->thumb_second_cover = $this->filemanager->resize('no_image.png', 600, 400);
         }
+
+        $this->data->text_about = trans('text.about');
+        $this->data->text_technical_skills = trans('text.technical_skills');
 
         return view('about_account.list', ['data' => $this->data]);
         

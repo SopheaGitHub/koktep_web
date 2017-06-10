@@ -390,6 +390,15 @@ class PostAccountController extends Controller
 
         $this->data->status = $this->config->status();
 
+        $this->data->show = trans('text.show');
+        $this->data->to = trans('text.to');
+        $this->data->of = trans('text.of');
+        $this->data->page = trans('text.page');
+
+        $this->data->icon_view = trans('icon.view');
+        $this->data->icon_comment = trans('icon.comment');
+        $this->data->icon_image = trans('icon.image');
+
         $this->data->text_empty = '...';
 
         switch ($view) {

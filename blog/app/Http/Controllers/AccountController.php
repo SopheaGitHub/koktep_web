@@ -157,7 +157,7 @@ class AccountController extends Controller
                 // End
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=>'Success : save change account setting successfully!', 'load_form'=>'none', 'post'=>$request];
+                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=>trans('text.success').' : '.trans('text.save_change').' '.trans('text.successfully').'!', 'load_form'=>'none'];
                 return \Response::json($return);
             } catch (Exception $e) {
                 DB::rollback();
@@ -183,6 +183,11 @@ class AccountController extends Controller
         $this->data->entry_name = trans('text.entry_name');
         $this->data->entry_email = trans('text.entry_email');
         $this->data->entry_description = trans('text.entry_description');
+
+        $this->data->entry_profile = trans('text.entry_profile');
+        $this->data->entry_first_cover = trans('text.entry_first_cover');
+        $this->data->entry_second_cover = trans('text.entry_second_cover');
+        $this->data->entry_scale = trans('text.entry_scale');
 
         $this->data->entry_skill = trans('text.entry_skill');
         $this->data->entry_percent = trans('text.entry_percent');
@@ -290,9 +295,11 @@ class AccountController extends Controller
         // check if auth != get account id
         if($request['account_id']==$this->data->auth_id) {
             $this->data->go_back = url('/overview-account?account_id='.$this->data->auth_id);
+            $this->data->button_cancel = trans('button.cancel');
+            $this->data->button_save_change = trans('button.save_change');
             $datas = [
                 'action' => url('/account/update-change-password/'.$this->data->auth_id),
-                'titlelist' => 'Change Password',
+                'titlelist' => trans('text.account_change_password'),
             ];
             echo $this->getAccountChangePasswordForm($datas);
             exit();
@@ -320,7 +327,7 @@ class AccountController extends Controller
             ];
             $user = $this->user->where('id', '=', $user_id)->update($userDatas);
             DB::commit();
-            $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=>'Success : change password user successfully!'];
+            $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=>trans('text.success').' : '.trans('text.save_change').' '.trans('text.successfully').'!'];
             return \Response::json($return);
         } catch (Exception $e) {
             DB::rollback();
@@ -331,12 +338,15 @@ class AccountController extends Controller
     }
 
     public function getAccountChangePasswordForm($datas=[]) {
-        $this->data->entry_current_password = 'Current Password';
-        $this->data->entry_new_password = 'New Password';
-        $this->data->entry_confirm_new_password = 'Confirm New Password';
+        $this->data->entry_title_form = trans('button.edit');
+        
+
+        $this->data->entry_current_password = trans('text.entry_current_password');
+        $this->data->entry_new_password = trans('text.entry_new_password');
+        $this->data->entry_confirm_new_password = trans('text.entry_confirm_new_password');
 
         // define input title
-        $this->data->title_password = 'Must be enter at least 6 characters,<br /> You have to enter as Ex:@As!02';
+        $this->data->title_password = trans('text.title_password');
 
         $this->data->action = (($datas['action'])? $datas['action']:'');
         $this->data->titlelist = (($datas['titlelist'])? $datas['titlelist']:'');

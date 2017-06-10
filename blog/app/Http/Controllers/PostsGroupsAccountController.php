@@ -144,6 +144,11 @@ class PostsGroupsAccountController extends Controller
             $url .= '&page='.$request['page'];
         }
 
+        $this->data->show = trans('text.show');
+        $this->data->to = trans('text.to');
+        $this->data->of = trans('text.of');
+        $this->data->page = trans('text.page');
+
         $this->data->status = $this->config->status();
         $this->data->post_detail = url('/post-account/detail');
         $this->data->text_empty = '...';

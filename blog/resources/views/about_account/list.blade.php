@@ -9,11 +9,11 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-12">
-        <h4><b>About</b></h4>
+        <h4><b><?php echo $data->text_about; ?></b></h4>
         <p><?php echo $data->description; ?></p>
         <hr />
         
-        <h4>Technical Skills</h4>
+        <h4><b><?php echo $data->text_technical_skills; ?></b></h4>
         <!-- Progress bars / Skills -->
         <?php
         	if(count($data->user_technicals) > 0) {
@@ -36,6 +36,6 @@
         ?>
 
         <hr />
-        If my skill related to your searching or you are fall into my skill also, You can <a href="<?php echo $data->go_contact; ?>"><b><em>contact</em></b></a> to me.
+        <?php echo $data->go_to_contact_account; ?>
     </div>
 </div>

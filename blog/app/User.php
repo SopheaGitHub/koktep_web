@@ -174,12 +174,12 @@ class User extends Authenticatable
         $rules['name'] = 'required|max:255';
         $rules['email'] = 'required|max:255|email';
 
-        $messages['name.required'] = 'The <b>Name</b> field is required.';
-        $messages['name.max'] = 'The <b>Name</b> may not be greater than 255 characters.';
+        $messages['name.required'] = trans('text.name_required');
+        $messages['name.max'] = trans('text.name_max255');
         
-        $messages['email.required'] = 'The <b>Email</b> field is required.';
-        $messages['email.max'] = 'The <b>Email</b> may not be greater than 255 characters.';
-        $messages['email.email'] = 'The <b>Email</b> must be a valid email address.';
+        $messages['email.required'] = trans('text.email_required');
+        $messages['email.max'] = trans('text.email_max255');
+        $messages['email.email'] = trans('text.email_valid');
         
         
 
@@ -191,16 +191,13 @@ class User extends Authenticatable
                 $rules['user_technical.'.$key.'.min_charge'] = 'integer';
                 $rules['user_technical.'.$key.'.max_charge'] = 'integer';
                 $rules['user_technical.'.$key.'.sort_order'] = 'integer';
-                $messages['user_technical.'.$key.'.skill.required'] = 'The <b>Technical ('.$i.') Skill</b> field is required.';
-                $messages['user_technical.'.$key.'.skill.max'] = 'The <b>Technical ('.$i.') Skill</b> may not be greater than 255 characters.';
+                $messages['user_technical.'.$key.'.skill.required'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_skill_required') ;
+                $messages['user_technical.'.$key.'.skill.max'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_skill_max') ;
                 
-                $messages['user_technical.'.$key.'.percent.integer'] = 'The <b>Technical ('.$i.') Percent </b> must be an integer.';
-                
-                $messages['user_technical.'.$key.'.min_charge.integer'] = 'The <b>Technical ('.$i.') Min Charge </b> must be an integer.';
-                
-                $messages['user_technical.'.$key.'.max_charge.integer'] = 'The <b>Technical ('.$i.') Max Charge </b> must be an integer.';
-                
-                $messages['user_technical.'.$key.'.sort_order.integer'] = 'The <b>Technical ('.$i.') Sort Order </b> must be an integer.';
+                $messages['user_technical.'.$key.'.percent.integer'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_percent_integer') ;
+                $messages['user_technical.'.$key.'.min_charge.integer'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_min_charge_integer') ;
+                $messages['user_technical.'.$key.'.max_charge.integer'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_max_charge_integer') ;
+                $messages['user_technical.'.$key.'.sort_order.integer'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_sort_order_integer') ;
                 $i++;
             }
         }
@@ -216,27 +213,27 @@ class User extends Authenticatable
                 $rules['user_address.'.$key.'.country_id'] = 'required|integer';
                 $rules['user_address.'.$key.'.zone_id'] = 'required|integer';
                 $rules['user_address.'.$key.'.sort_order'] = 'integer';
-                $messages['user_address.'.$key.'.firstname.required'] = 'The <b>Contact ('.$i.') First Name</b> field is required.';
-                $messages['user_address.'.$key.'.firstname.max'] = 'The <b>Contact ('.$i.') First Name</b> may not be greater than 32 characters.';
+                $messages['user_address.'.$key.'.firstname.required'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_firstname_required') ;
+                $messages['user_address.'.$key.'.firstname.max'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_firstname_max') ;
 
-                $messages['user_address.'.$key.'.lastname.required'] = 'The <b>Contact ('.$i.') Last Name</b> field is required.';
-                $messages['user_address.'.$key.'.lastname.max'] = 'The <b>Contact ('.$i.') Last Name</b> may not be greater than 32 characters.';
+                $messages['user_address.'.$key.'.lastname.required'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_lastname_required') ;
+                $messages['user_address.'.$key.'.lastname.max'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_lastname_max') ;
 
-                $messages['user_address.'.$key.'.email.required'] = 'The <b>Contact ('.$i.') Email</b> field is required.';
-                $messages['user_address.'.$key.'.email.email'] = 'The <b>Contact ('.$i.') Email</b> must be a valid email address.';
-                $messages['user_address.'.$key.'.email.max'] = 'The <b>Contact ('.$i.') Email</b> may not be greater than 100 characters.';
+                $messages['user_address.'.$key.'.email.required'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_email_required') ;
+                $messages['user_address.'.$key.'.email.email'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_email_email') ;
+                $messages['user_address.'.$key.'.email.max'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_email_max') ;
 
-                $messages['user_address.'.$key.'.address.required'] = 'The <b>Contact ('.$i.') Address</b> field is required.';
-                $messages['user_address.'.$key.'.address.max'] = 'The <b>Contact ('.$i.') Address</b> may not be greater than 255 characters.';
+                $messages['user_address.'.$key.'.address.required'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_address_required') ;
+                $messages['user_address.'.$key.'.address.max'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_address_max') ;
 
-                $messages['user_address.'.$key.'.city.required'] = 'The <b>Contact ('.$i.') City</b> field is required.';
-                $messages['user_address.'.$key.'.city.max'] = 'The <b>Contact ('.$i.') City</b> may not be greater than 100 characters.';
+                $messages['user_address.'.$key.'.city.required'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_city_required') ;
+                $messages['user_address.'.$key.'.city.max'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_city_max') ;
 
-                $messages['user_address.'.$key.'.country_id.required'] = 'The <b>Contact ('.$i.') Country</b> field is required.';
-                $messages['user_address.'.$key.'.country_id.integer'] = 'The <b>Contact ('.$i.') Country</b> must be an integer.';
-                $messages['user_address.'.$key.'.zone_id.required'] = 'The <b>Contact ('.$i.') Region / State</b> field is required.';
-                $messages['user_address.'.$key.'.zone_id.integer'] = 'The <b>Contact ('.$i.') Region / State</b> must be an integer.';
-                $messages['user_address.'.$key.'.sort_order.integer'] = 'The <b>Contact ('.$i.') Sort Order </b> must be an integer.';
+                $messages['user_address.'.$key.'.country_id.required'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_country_id_required') ;
+                $messages['user_address.'.$key.'.country_id.integer'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_country_id_integer') ;
+                $messages['user_address.'.$key.'.zone_id.required'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_zone_id_required') ;
+                $messages['user_address.'.$key.'.zone_id.integer'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_zone_id_integer') ;
+                $messages['user_address.'.$key.'.sort_order.integer'] = trans('text.before_add_address').' ('.$i.') '. trans('text.address_sort_order_integer') ;
                 $i++;
             }
         }
@@ -247,10 +244,10 @@ class User extends Authenticatable
                 $rules['user_social_media.'.$key.'.social_media_id'] = 'required|integer';
                 $rules['user_social_media.'.$key.'.sort_order'] = 'integer';
                 $rules['user_social_media.'.$key.'.link'] = 'max:100';
-                $messages['user_social_media.'.$key.'.social_media_id.required'] = 'The <b>Social Media ('.$i.') Social Media</b> field is required.';
-                $messages['user_social_media.'.$key.'.social_media_id.integer'] = 'The <b>Social Media ('.$i.') Social Media </b> must be an integer.';
-                $messages['user_social_media.'.$key.'.sort_order.integer'] = 'The <b>Social Media ('.$i.') Sort Order </b> must be an integer.';
-                $messages['user_social_media.'.$key.'.link.max'] = 'The <b>Social Media ('.$i.') Link </b> may not be greater than 100 characters.';
+                $messages['user_social_media.'.$key.'.social_media_id.required'] = trans('text.before_add_social').' ('.$i.') '. trans('text.social_social_media_id_required') ;
+                $messages['user_social_media.'.$key.'.social_media_id.integer'] = trans('text.before_add_social').' ('.$i.') '. trans('text.social_social_media_id_integer') ;
+                $messages['user_social_media.'.$key.'.sort_order.integer'] = trans('text.before_add_social').' ('.$i.') '. trans('text.social_sort_order_integer') ;
+                $messages['user_social_media.'.$key.'.link.max'] = trans('text.before_add_social').' ('.$i.') '. trans('text.social_link_max') ;
                 $i++;
             }
         }
@@ -258,7 +255,7 @@ class User extends Authenticatable
 
         $validator = \Validator::make($datas['request'], $rules, $messages);
         if ($validator->fails()) {
-            $error = ['error'=>'1','success'=>'0','msg'=>'Warning : '.(($datas['action']=='create')? 'save':'save change').' post unsuccessfully!','validatormsg'=>$validator->messages()];
+            $error = ['error'=>'1','success'=>'0','msg'=> trans('text.warning').' : '.(($datas['action']=='create')? trans('text.save'):trans('text.save_change')).' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
         }
         return $error;
     }
@@ -272,21 +269,21 @@ class User extends Authenticatable
         ];
 
         $messages = [
-            'current_password.required' => 'The <b>Current Password</b> field is required.',
-            'new_password.required' => 'The <b>New Password</b> field is required.',
-            'new_password.min' => 'The <b>New Password</b> must be at least 6 characters.',
-            'new_password_confirmation.required' => 'The <b>Confirm New Password</b> field is required.',
-            'new_password_confirmation.in' => 'The selected <b>Confirm New Password</b> is invalid.'
+            'current_password.required' => trans('text.current_password_required'),
+            'new_password.required' => trans('text.new_password_required'),
+            'new_password.min' => trans('text.new_password_min'),
+            'new_password_confirmation.required' => trans('text.new_password_confirmation_required'),
+            'new_password_confirmation.in' => trans('text.new_password_confirmation_in')
         ];
 
         if(!\Hash::check($datas['request']['current_password'], \Auth::user()->password)) {
             $rules['invalidpassword'] = 'required';
-            $messages['invalidpassword.required'] = 'The <b>Current Password</b> is invalid.';
+            $messages['invalidpassword.required'] = trans('text.current_password_in');
         }
 
         $validator = \Validator::make($datas['request'], $rules, $messages);
         if ($validator->fails()) {
-            $error = ['error'=>'1','success'=>'0','msg'=>'Warning : change password user unsuccessfully!','validatormsg'=>$validator->messages()];
+            $error = ['error'=>'1','success'=>'0','msg'=> trans('text.warning').' : '.trans('text.save_change').' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
         }
         return $error;
     }

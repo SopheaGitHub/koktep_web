@@ -36,7 +36,7 @@
           $start = 0;
         }
       ?>
-      Showing <?php echo $start; ?> to <?php echo $stop; ?> of <?php echo $data->posts_groups->total(); ?> &nbsp;&nbsp; (<?php echo $data->posts_groups->currentPage(); ?> Pages)
+      <?php echo $data->show; ?> <?php echo $start; ?> <?php echo $data->to; ?> <?php echo $stop; ?> <?php echo $data->of; ?> <?php echo $data->posts_groups->total(); ?> &nbsp;&nbsp; (<?php echo $data->page; ?> <?php echo $data->posts_groups->currentPage(); ?> )
 	</div>
 </div>
 <script type="text/javascript">

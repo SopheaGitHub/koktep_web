@@ -16,5 +16,6 @@ return [
     'view' => 'View',
     'comment' => 'Comment',
     'date' => 'Date',
+    'image' => 'Image',
 
 ];
