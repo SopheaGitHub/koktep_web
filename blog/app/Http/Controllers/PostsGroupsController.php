@@ -444,6 +444,7 @@ class PostsGroupsController extends Controller
 
                 // delete old post
                 $this->post_group->where('post_group_id', '=', $request['post_group_id'])->delete();
+                $this->post_group->deletedPostGroupDescription($request['post_group_id']);
                 // End
 
                 DB::commit();

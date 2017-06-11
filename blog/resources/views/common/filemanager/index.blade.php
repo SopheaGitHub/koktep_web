@@ -2,24 +2,36 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title"><?php echo $data['heading_title']; ?></h4>
+      <h4 class="modal-title"><i class="fa fa-btn fa-image"></i> <?php echo $data['heading_title']; ?></h4>
+      <ol class="breadcrumb" style="margin:0px; margin-top:10px; padding:0px; background: none;">
+        <li data-toggle="tooltip" title="<?php echo $data['text_diractory_image']; ?>" ><i class="fa fa-btn fa-folder"></i></li>
+        <?php
+          if (count($data['diractories']) > 0) {
+            foreach ($data['diractories'] as $diractory) { ?>
+              <li><?php echo $diractory ?></li>
+          <?php  }
+          }
+        ?>
+      </ol>
     </div>
     <div class="modal-body">
       <div class="row">
-        <div class="col-sm-5"><a href="<?php echo $data['parent']; ?>" data-toggle="tooltip" title="<?php echo $data['button_parent']; ?>" id="button-parent" class="btn btn-default"><i class="fa fa-level-up"></i></a> <a href="<?php echo $data['refresh']; ?>" data-toggle="tooltip" title="<?php echo $data['button_refresh']; ?>" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i></a>
-          <button type="button" data-toggle="tooltip" title="<?php echo $data['button_upload']; ?>" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i></button>
-          <button type="button" data-toggle="tooltip" title="<?php echo $data['button_folder']; ?>" id="button-folder" class="btn btn-default"><i class="fa fa-folder"></i></button>
-          <button type="button" data-toggle="tooltip" title="<?php echo $data['button_delete']; ?>" id="button-delete" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+        <div class="col-sm-5"><a href="<?php echo $data['parent']; ?>" data-toggle="tooltip" title="<?php echo $data['button_parent']; ?>" id="button-parent" class="btn btn-default btntooltip"><i class="fa fa-level-up"></i></a> 
+          <a href="<?php echo $data['refresh']; ?>" data-toggle="tooltip" title="<?php echo $data['button_refresh']; ?>" id="button-refresh" class="btn btn-default btntooltip"><i class="fa fa-refresh"></i></a>
+          <button type="button" data-toggle="tooltip" title="<?php echo $data['button_upload']; ?>" id="button-upload" class="btn btn-primary btntooltip"><i class="fa fa-upload"></i></button>
+          <button type="button" data-toggle="tooltip" title="<?php echo $data['button_folder']; ?>" id="button-folder" class="btn btn-default btntooltip"><i class="fa fa-folder"></i></button>
+          <button type="button" data-toggle="tooltip" title="<?php echo $data['button_delete']; ?>" id="button-delete" class="btn btn-danger btntooltip"><i class="fa fa-trash-o"></i></button>
         </div>
         <div class="col-sm-7">
           <div class="input-group">
             <input type="text" name="search" value="<?php echo $data['filter_name']; ?>" placeholder="<?php echo $data['entry_search']; ?>" class="form-control">
             <span class="input-group-btn">
-            <button type="button" data-toggle="tooltip" title="<?php echo $data['button_search']; ?>" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            <button type="button" data-toggle="tooltip" title="<?php echo $data['button_search']; ?>" id="button-search" class="btn btn-primary btntooltip"><i class="fa fa-search"></i></button>
             </span></div>
         </div>
       </div>
       <hr />
+      <?php echo ((count($data['images'])<1)? $data['text_no_results']:''); ?>
       <?php foreach (array_chunk($data['images'], 6) as $image) { ?>
       <div class="row">
         <?php foreach ($image as $image) { ?>
@@ -116,7 +128,7 @@ $('input[name=\'search\']').on('keydown', function(e) {
 });
 
 $('#button-search').on('click', function(e) {
-  var url = '/filemanager';
+  var url = "<?php echo url('/filemanager?_token="+CSRF_TOKEN+"&directory='.$data['directory']); ?>";
 
   var filter_name = $('input[name=\'search\']').val();
 
@@ -263,3 +275,10 @@ $('#modal-image #button-delete').on('click', function(e) {
   }
 });
 //--></script>
+<script type="text/javascript">
+
+$(document).on('click', '.btntooltip', function() {
+  $(this).tooltip('hide');
+});
+
+</script>

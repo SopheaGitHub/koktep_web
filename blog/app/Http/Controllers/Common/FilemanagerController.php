@@ -7,6 +7,7 @@ use App\Models\Pagination;
 use App\Http\Controllers\ConfigController;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class FilemanagerController extends Controller {
 
@@ -27,6 +28,7 @@ class FilemanagerController extends Controller {
 		$this->data->dir_image = $this->config->dir_image;
 		$this->data->http_best_path = $this->config->http_best_path;
 		$this->data->https_best_path = $this->config->https_best_path;
+		$this->data->auth_id = ((Auth::check())? Auth::user()->id:'0');
 	}
 
 	/**
@@ -37,7 +39,12 @@ class FilemanagerController extends Controller {
 	public function getIndex()
 	{
 		$request = \Request::all();
+		// add system log
+        $this->systemLogs('view', 'filemanager', $request);
+        // End
+
 		$data = [];
+		$data['diractories'] = [];
 
 		if (isset($request['filter_name'])) {
 			$filter_name = rtrim(str_replace(array('../', '..\\', '..', '*'), '', $request['filter_name']), '/');
@@ -47,9 +54,18 @@ class FilemanagerController extends Controller {
 
 		// Make sure we have the correct directory
 		if (isset($request['directory'])) {
-			$directory = rtrim($this->data->dir_image . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $request['directory']), '/');
+			$directory = rtrim($this->data->dir_image . 'catalog/'.$this->data->auth_id.'/' . str_replace(array('../', '..\\', '..'), '', $request['directory']), '/');
+			
+			// define array diractories
+			$data['diractories'] = explode('/', $request['directory']);
 		} else {
-			$directory = $this->data->dir_image . 'catalog';
+			$directory = $this->data->dir_image . 'catalog/'.$this->data->auth_id;
+		}
+
+		// create user diractory
+		if(!is_dir($directory)) {
+			mkdir($directory, 0777, true);
+			chmod($directory, 0777);
 		}
 
 		if (isset($request['page'])) {
@@ -102,7 +118,7 @@ class FilemanagerController extends Controller {
 					'name'  => implode(' ', $name),
 					'type'  => 'directory',
 					'path'  => substr($image, strlen($this->data->dir_image)),
-					'href'  => url('filemanager?directory=' . urlencode(substr($image, strlen($this->data->dir_image . 'catalog/'))).$url)
+					'href'  => url('filemanager?directory=' . urlencode(substr($image, strlen($this->data->dir_image . 'catalog/'.$this->data->auth_id.'/'))).$url)
 				);
 			} elseif (is_file($image)) {
 				// Find which protocol to use to pass the full image link back
@@ -123,20 +139,21 @@ class FilemanagerController extends Controller {
 			}
 		}
 
-		$data['heading_title'] = 'Image Manager';
+		$data['heading_title'] = trans('filemanager.title');
+		$data['text_diractory_image'] = trans('filemanager.diractory_image');
 
-		$data['text_no_results'] = 'No results!';
-		$data['text_confirm'] = 'Are you sure?';
+		$data['text_no_results'] = trans('filemanager.no_file');
+		$data['text_confirm'] = trans('filemanager.confirm_delete');
 
-		$data['entry_search'] = 'Search..';
-		$data['entry_folder'] = 'Folder Name';
+		$data['entry_search'] = trans('filemanager.search').' ...';
+		$data['entry_folder'] = trans('filemanager.folder_name');
 
-		$data['button_parent'] = 'Parent';
-		$data['button_refresh'] = 'Refresh';
-		$data['button_upload'] = 'Upload';
-		$data['button_folder'] = 'New Folder';
-		$data['button_delete'] = 'Delete';
-		$data['button_search'] = 'Search';
+		$data['button_parent'] = trans('filemanager.parent');
+		$data['button_refresh'] = trans('filemanager.refresh');
+		$data['button_upload'] = trans('filemanager.upload');
+		$data['button_folder'] = trans('filemanager.new_folder');
+		$data['button_delete'] = trans('filemanager.delete');
+		$data['button_search'] = trans('filemanager.search');
 
 		if (isset($request['directory'])) {
 			$data['directory'] = urlencode($request['directory']);
@@ -233,13 +250,16 @@ class FilemanagerController extends Controller {
 
 	public function postUpload() {
 		$request = \Request::all();
+		// add system log
+        $this->systemLogs('upload', 'filemanager', $request);
+        // End
 		$json = array();
 
 		// Make sure we have the correct directory
 		if (isset($request['directory'])) {
-			$directory = rtrim($this->data->dir_image . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $request['directory']), '/');
+			$directory = rtrim($this->data->dir_image . 'catalog/'.$this->data->auth_id.'/' . str_replace(array('../', '..\\', '..'), '', $request['directory']), '/');
 		} else {
-			$directory = $this->data->dir_image . 'catalog';
+			$directory = $this->data->dir_image . 'catalog/'.$this->data->auth_id;
 		}
 
 		// Check its a directory
@@ -309,13 +329,16 @@ class FilemanagerController extends Controller {
 
 	public function postFolder() {
 		$request = \Request::all();
+		// add system log
+        $this->systemLogs('create_folder', 'filemanager', $request);
+        // End
 		$json = [];
 
 		// Make sure we have the correct directory
 		if (isset($request['directory'])) {
-			$directory = rtrim($this->data->dir_image . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $request['directory']), '/');
+			$directory = rtrim($this->data->dir_image . 'catalog/'.$this->data->auth_id.'/' . str_replace(array('../', '..\\', '..'), '', $request['directory']), '/');
 		} else {
-			$directory = $this->data->dir_image . 'catalog';
+			$directory = $this->data->dir_image . 'catalog/'.$this->data->auth_id;
 		}
 
 		// Check its a directory
@@ -350,6 +373,9 @@ class FilemanagerController extends Controller {
 
 	public function postDelete() {
 		$request = \Request::all();
+		// add system log
+        $this->systemLogs('delete', 'filemanager', $request);
+        // End
 		$json = [];
 
 		if (isset($request['path'])) {

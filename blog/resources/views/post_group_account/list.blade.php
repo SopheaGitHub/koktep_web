@@ -43,9 +43,9 @@
     $(document).ready(function(){
       $('.slider1').bxSlider({
         slideWidth: 120,
-        minSlides: 2,
+        minSlides: 10,
         maxSlides: 10,
-        slideMargin: 5
+        slideMargin: 10
       });
     });
 </script>
