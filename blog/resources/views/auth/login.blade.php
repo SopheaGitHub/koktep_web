@@ -3,9 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <hr />
-
+        <div class="col-md-12">
             <?php
                 if(count($errors->all()) > 0) { ?>
                     <div class="alert alert-danger" role="alert">
@@ -20,14 +18,20 @@
                     </div>
             <?php   } ?>
 
-            
-            <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+            <div class="row">
+                <div class="col-md-6">
+                    <hr />
+                    Some Text
+                </div>
+                <div class="col-md-6">
+                    <hr />
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group">
                             <label for="email" class="col-md-4 control-label"><?php echo trans('auth.email'); ?></label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="email" type="email" class="form-control" name="email" placeholder="<?php echo trans('auth.email'); ?>" value="{{ old('email') }}">
                             </div>
                         </div>
@@ -35,13 +39,13 @@
                         <div class="form-group">
                             <label for="password" class="col-md-4 control-label"><?php echo trans('auth.password'); ?></label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="password" type="password" class="form-control" placeholder="<?php echo trans('auth.password'); ?>" name="password">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div class="col-md-8 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="remember"> <?php echo trans('auth.remember_me'); ?>
@@ -51,7 +55,7 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn btn-sm btn-primary">
                                     <i class="fa fa-btn fa-sign-in"></i> <?php echo trans('auth.login'); ?>
                                 </button>
@@ -60,6 +64,8 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
             <hr />
         </div>
     </div>

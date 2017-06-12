@@ -26,6 +26,8 @@ Route::get('/language', [
 Route::controllers([
 	'/filemanager' 	=> 'Common\FilemanagerController',
 	'/information' => 'InformationController',
+	'/contact-us' => 'ContactUsController',
+	'/send-feedback' => 'SendFeedbackController',
 	'/account' 	=> 'AccountController',
 	'/category'	=> 'CategoryController',
 	'/about-account'	=> 'AboutAccountController',

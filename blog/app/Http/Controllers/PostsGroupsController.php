@@ -237,7 +237,7 @@ class PostsGroupsController extends Controller
                 // End
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>trans('text.success').' : '.trans('text.save').' '.trans('text.successfully').'!', 'load_form'=>$this->data->action_form];
+                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=> trans('text.save').' '.trans('text.successfully').'!', 'load_form'=>$this->data->action_form];
                 return \Response::json($return);
             } catch (Exception $e) {
                 DB::rollback();
@@ -352,7 +352,7 @@ class PostsGroupsController extends Controller
                 // End
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=>trans('text.success').' : '.trans('text.save_change').' '.trans('text.successfully').'!', 'load_form'=>'none'];
+                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=> trans('text.save_change').' '.trans('text.successfully').'!', 'load_form'=>'none'];
                 return \Response::json($return);
             } catch (Exception $e) {
                 DB::rollback();
@@ -448,7 +448,7 @@ class PostsGroupsController extends Controller
                 // End
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'delete','msg'=>trans('text.success').' : '.trans('text.delete').' '.trans('text.successfully').'!', 'load_form'=>$this->data->action_list];
+                $return = ['error'=>'0','success'=>'1','action'=>'delete','msg'=> trans('text.delete').' '.trans('text.successfully').'!', 'load_form'=>$this->data->action_list];
                 return \Response::json($return);
 
             } catch (Exception $e) {

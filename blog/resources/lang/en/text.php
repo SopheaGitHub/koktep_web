@@ -13,6 +13,8 @@ return [
     |
     */
     'home' => 'Home',
+    'contact_us' => 'Contact Us',
+    'send_feedback' => 'Send Feedback',
     'khmer' => 'Khmer',
     'english' => 'English',
     'other' => 'Other',
@@ -76,9 +78,9 @@ return [
     'name_max255' => 'The <b>Name</b> may not be greater than 255 characters.',
     'relate_post_min2' => 'The <b>Posts</b> must be at least 2 item.',
 
-    'email_required' => 'The <b>E-Mail Address</b> field is required.',
-    'email_max255' => 'The <b>E-Mail Address</b> may not be greater than 255 characters.',
-    'email_valid' => 'The <b>E-Mail Address</b> must be a valid email address.',
+    'email_required' => 'The <b>Address</b> field is required.',
+    'email_max255' => 'The <b>Address</b> may not be greater than 255 characters.',
+    'email_valid' => 'The <b>Address</b> must be a valid email address.',
 
     'before_add_skill' => 'The <b>Technical',
     'technical_skill_required' => 'Skill</b> field is required.',
@@ -163,7 +165,7 @@ return [
     'entry_layout' => 'Layout',
     'entry_name' => 'Name',
     'entry_contact_name' => 'Contact Name',
-    'entry_email' => 'E-Mail Address',
+    'entry_email' => 'Address',
     'entry_skill' => 'Skill',
     'entry_percent' => 'Skill Percent',
     'entry_min_charge' => 'Min Charge (USD)',

@@ -157,7 +157,7 @@ class AccountController extends Controller
                 // End
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=>trans('text.success').' : '.trans('text.save_change').' '.trans('text.successfully').'!', 'load_form'=>'none'];
+                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=> trans('text.save_change').' '.trans('text.successfully').'!', 'load_form'=>'none'];
                 return \Response::json($return);
             } catch (Exception $e) {
                 DB::rollback();
@@ -327,7 +327,7 @@ class AccountController extends Controller
             ];
             $user = $this->user->where('id', '=', $user_id)->update($userDatas);
             DB::commit();
-            $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=>trans('text.success').' : '.trans('text.save_change').' '.trans('text.successfully').'!'];
+            $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=> trans('text.save_change').' '.trans('text.successfully').'!'];
             return \Response::json($return);
         } catch (Exception $e) {
             DB::rollback();

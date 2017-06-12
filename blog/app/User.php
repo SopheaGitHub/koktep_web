@@ -255,7 +255,7 @@ class User extends Authenticatable
 
         $validator = \Validator::make($datas['request'], $rules, $messages);
         if ($validator->fails()) {
-            $error = ['error'=>'1','success'=>'0','msg'=> trans('text.warning').' : '.(($datas['action']=='create')? trans('text.save'):trans('text.save_change')).' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
+            $error = ['error'=>'1','success'=>'0','msg'=> (($datas['action']=='create')? trans('text.save'):trans('text.save_change')).' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
         }
         return $error;
     }
@@ -283,7 +283,7 @@ class User extends Authenticatable
 
         $validator = \Validator::make($datas['request'], $rules, $messages);
         if ($validator->fails()) {
-            $error = ['error'=>'1','success'=>'0','msg'=> trans('text.warning').' : '.trans('text.save_change').' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
+            $error = ['error'=>'1','success'=>'0','msg'=> trans('text.save_change').' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
         }
         return $error;
     }

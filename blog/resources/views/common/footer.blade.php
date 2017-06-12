@@ -8,7 +8,10 @@
 		$locale = 'en';
 	}
 	$language = $objLanguage->getLanguageByCode( $locale );
-	$informations = $objInformation->getInformations(['sort'=>'sort_order', 'order'=>'asc', 'language_id'=>$language->language_id])->get();
+	$informations = [];
+	if($language) {
+		$informations = $objInformation->getInformations(['sort'=>'sort_order', 'order'=>'asc', 'language_id'=>$language->language_id])->get();
+	}
 
 ?>
 <div class="container">
@@ -43,9 +46,14 @@
 		  		}
 		  	?>
 
+		  	<li role="presentation" class="dropdown information">
+			    <a href="<?php echo url('/contact-us'); ?>" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-phone"></i><?php echo trans('text.contact_us'); ?></a>
+			</li>
+
+			<li role="presentation" class="dropdown information">
+			    <a href="<?php echo url('/send-feedback'); ?>" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-comment"></i><?php echo trans('text.send_feedback'); ?> </a>
+			</li>
+
 		</ul>
 	</div>
 </div>
-<script type="text/javascript">
-
-</script>

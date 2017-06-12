@@ -11,7 +11,10 @@
     }
 
     $language = $objLanguage->getLanguageByCode( $locale );
-    $categories = $objCategory->getCategoriesByLanguage(['sort'=>'sort_order', 'order'=>'asc', 'parent_id'=>'0', 'language_id'=>$language->language_id])->get();
+    $categories = [];
+    if($language) {
+        $categories = $objCategory->getCategoriesByLanguage(['sort'=>'sort_order', 'order'=>'asc', 'parent_id'=>'0', 'language_id'=>$language->language_id])->get();
+    }
 
     // load image library
     if(Auth::check()) {
