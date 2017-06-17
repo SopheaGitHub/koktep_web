@@ -21,7 +21,7 @@
 
     // define tag
     if(\Request::has('tag')) {
-        $tag = \Request::get('tag');
+        $tag = htmlspecialchars(\Request::get('tag'));
     }else {
         $tag = '';
     }

@@ -134,9 +134,11 @@ function requestSubmitForm(buttonId, formId, formAction) {
 	      	async: false,
 	      	beforeSend: function() {
 	        	console.log('beforeSend');
+	        	$('#'+buttonId).prop('disabled', true);
 	      	},
 	      	complete: function() {
 	        	console.log('completed');
+	        	$('#'+buttonId).prop('disabled', false);
 	      	},
 	      	success: function(data) {
 	        	var msg = '';
@@ -189,9 +191,11 @@ function requestSubmitDeleteForm(buttonId, formId, formAction) {
 	      	async: false,
 	      	beforeSend: function() {
 	        	console.log('beforeSend');
+	        	$('#'+buttonId).prop('disabled', true);
 	      	},
 	      	complete: function() {
 	        	console.log('completed');
+	        	$('#'+buttonId).prop('disabled', false);
 	      	},
 	      	success: function(data) {
 	        	var msg = '';

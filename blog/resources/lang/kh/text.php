@@ -139,6 +139,9 @@ return [
     'new_password_confirmation_required' => '<b>បញ្ជាក់ពាក្យសម្ងាត់​ថ្មី</b> តម្រូវឱ្យបញ្ចូល។',
     'new_password_confirmation_in' => '<b>បញ្ជាក់ពាក្យសម្ងាត់​ថ្មី</b> មិនត្រឹមត្រូវ។',
 
+    'tab_tags' => 'ស្លាក',
+    'tab_categories' => 'ប្រភេទ',
+
     'tab_general' => 'ទូទៅ',
     'tab_data' => 'ទិន្នន័យ',
     'tab_links' => 'តំណភ្ជាប់',
@@ -147,6 +150,9 @@ return [
     'tab_skill_charge' => 'ជំនាញបច្ចេកទេស និង ការការ​គិតថ្លៃ',
     'tab_contact' => 'ទំនាក់ទំនង',
     'tab_social_media' => 'ប្រព័ន្ធ​ផ្សព្វផ្សាយ​សង្គម',
+
+    'entry_comment' => 'សេចក្តីអធិប្បាយ',
+    'entry_related_post' => 'រូបភាពដែលទាក់ទង',
 
     'entry_title' => 'ចំណងជើង',
     'entry_description' => 'បរិយាយ',

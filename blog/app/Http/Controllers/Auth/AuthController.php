@@ -120,8 +120,8 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name' => htmlspecialchars($data['name']),
+            'email' => htmlspecialchars($data['email']),
             'password' => bcrypt($data['password']),
         ]);
     }

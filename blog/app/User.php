@@ -128,7 +128,7 @@ class User extends Authenticatable
         $sql = '';
         if (isset($datas['user_technicals']) && count($datas['user_technicals']) > 0) {
             foreach ($datas['user_technicals'] as $user_technical) {
-                $sql .= "INSERT INTO user_technical SET user_id = '" . $datas['user_id'] . "', skill = '" . $user_technical['skill'] . "', percent = '" . $user_technical['percent'] . "', min_charge = '" . $user_technical['min_charge'] . "', max_charge = '" . $user_technical['max_charge'] . "', sort_order = '" . $user_technical['sort_order'] . "'; ";
+                $sql .= "INSERT INTO user_technical SET user_id = '" . $datas['user_id'] . "', skill = '" . htmlspecialchars($user_technical['skill']) . "', percent = '" . htmlspecialchars($user_technical['percent']) . "', min_charge = '" . htmlspecialchars($user_technical['min_charge']) . "', max_charge = '" . htmlspecialchars($user_technical['max_charge']) . "', sort_order = '" . htmlspecialchars($user_technical['sort_order']) . "'; ";
             }
             DB::connection()->getPdo()->exec($sql);
         }
@@ -138,7 +138,7 @@ class User extends Authenticatable
         $sql = '';
         if (isset($datas['user_address']) && count($datas['user_address']) > 0) {
             foreach ($datas['user_address'] as $address) {
-                $sql .= "INSERT INTO user_address SET user_id = '" . $datas['user_id'] . "', firstname = '" . $address['firstname'] . "', lastname = '" . $address['lastname'] . "', company = '" . $address['company'] . "', phone = '" . $address['phone'] . "', fax = '" . $address['fax'] . "', email = '" . $address['email'] . "', website = '" . $address['website'] . "', address = '" . $address['address'] . "', city = '" . $address['city'] . "', postcode = '" . $address['postcode'] . "', country_id = '" . $address['country_id'] . "', zone_id = '" . $address['zone_id'] . "', sort_order = '" . $address['sort_order'] . "'; ";
+                $sql .= "INSERT INTO user_address SET user_id = '" . $datas['user_id'] . "', firstname = '" . htmlspecialchars($address['firstname']) . "', lastname = '" . htmlspecialchars($address['lastname']) . "', company = '" . htmlspecialchars($address['company']) . "', phone = '" . htmlspecialchars($address['phone']) . "', fax = '" . htmlspecialchars($address['fax']) . "', email = '" . htmlspecialchars($address['email']) . "', website = '" . htmlspecialchars($address['website']) . "', address = '" . htmlspecialchars($address['address']) . "', city = '" . htmlspecialchars($address['city']) . "', postcode = '" . htmlspecialchars($address['postcode']) . "', country_id = '" . htmlspecialchars($address['country_id']) . "', zone_id = '" . htmlspecialchars($address['zone_id']) . "', sort_order = '" . htmlspecialchars($address['sort_order']) . "'; ";
             }
             DB::connection()->getPdo()->exec($sql);
         }
@@ -148,7 +148,7 @@ class User extends Authenticatable
         $sql = '';
         if (isset($datas['user_social_medias']) && count($datas['user_social_medias']) > 0) {
             foreach ($datas['user_social_medias'] as $social_media) {
-                $sql .= "INSERT INTO user_to_social_media SET user_id = '" . $datas['user_id'] . "', social_media_id = '" . $social_media['social_media_id'] . "', link = '" . $social_media['link'] . "', sort_order = '" . $social_media['sort_order'] . "'; ";
+                $sql .= "INSERT INTO user_to_social_media SET user_id = '" . $datas['user_id'] . "', social_media_id = '" . htmlspecialchars($social_media['social_media_id']) . "', link = '" . htmlspecialchars($social_media['link']) . "', sort_order = '" . htmlspecialchars($social_media['sort_order']) . "'; ";
             }
             DB::connection()->getPdo()->exec($sql);
         }

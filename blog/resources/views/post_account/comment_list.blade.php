@@ -2,10 +2,10 @@
     <div class="row">
         <div class="col-md-10">
             <input type="hidden" name="post_id" value="<?php echo $data->post_id; ?>" />
-            <input name="comment" class="form-control" type="text" placeholder="Your comments" />
+            <input name="comment" class="form-control" type="text" placeholder="<?php echo $data->entry_comment; ?>" />
         </div>
         <div class="col-md-2">
-            <button type="button" class="btn btn-primary btn-sm" id="submit-comment"><i class="fa fa-btn fa-check"></i>Submit</button>
+            <button type="button" class="btn btn-primary btn-sm" id="submit-comment"><i class="fa fa-btn fa-check"></i><?php echo $data->button_submit; ?></button>
         </div>
     </div>
 </div>

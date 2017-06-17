@@ -23,4 +23,5 @@ return [
     'image_add' => 'Add Image',
     'yes' => 'Yes',
     'no' => 'No',
+    'submit' => 'Submit',
 ];

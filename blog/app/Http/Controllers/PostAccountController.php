@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\PostComment;
 use App\Models\Category;
+use App\Models\Language;
 use App\User;
 use App\Http\Controllers\Common\FilemanagerController;
 use App\Http\Controllers\ConfigController;
@@ -27,6 +28,7 @@ class PostAccountController extends Controller
         $this->post_comment = new PostComment();
         $this->category = new Category();
         $this->user = New User();
+        $this->language = new Language();
         $this->filemanager = new FilemanagerController();
         $this->config = new ConfigController();
         $this->data->web_title = 'Overview';
@@ -48,16 +50,31 @@ class PostAccountController extends Controller
         // add system log
         $this->systemLogs('load_form', 'post-account', $request);
         // End
+
+        if(\Session::has('locale')) {
+            $locale = \Session::get('locale');
+        }else {
+            $locale = 'en';
+        }
+        $language_id = '1';
+        $language = $this->language->getLanguageByCode( $locale );
+
+        if($language) {
+            $language_id = $language->language_id;
+        }
+
         if(isset($request['post_id'])) {
             $post_id = $request['post_id'];
         }else {
             $post_id = 0;
         }
 
+        $this->data->check_post = false;
         $post = $this->post->getPost($post_id);
         $post_description = $this->post->getPostDescription($post_id);
 
         if($post) {
+            $this->data->check_post = true;
             // update post view
             $this->post->where('post_id', '=', $post_id)->update(['viewed'=>($post->viewed+1)]);
             // End
@@ -100,7 +117,7 @@ class PostAccountController extends Controller
         $this->data->post_categories = [];
 
         foreach ($post_to_categories as $post_to_category) {
-            $category_info = $this->category->getCategory($post_to_category->category_id);
+            $category_info = $this->category->getCategory($post_to_category->category_id, $language_id);
 
             if ($category_info) {
                 $this->data->post_categories[] = [
@@ -152,6 +169,16 @@ class PostAccountController extends Controller
             }
         }
 
+        $this->data->icon_view = trans('icon.view');
+        $this->data->icon_comment = trans('icon.comment');
+        $this->data->icon_date = trans('icon.date');
+
+        $this->data->tab_tags = trans('text.tab_tags');
+        $this->data->tab_categories = trans('text.tab_categories');
+
+        $this->data->entry_comment = trans('text.entry_comment');
+        $this->data->entry_related_post = trans('text.entry_related_post');
+
         $this->data->url_tag = url('/?tag=');
         $this->data->url_category = url('/category?category_id=');
         $this->data->overview_account = url('/overview-account');
@@ -186,6 +213,9 @@ class PostAccountController extends Controller
                 }
             }
         }
+
+        $this->data->entry_comment = trans('text.entry_comment');
+        $this->data->button_submit = trans('button.submit');
 
         $this->data->overview_account = url('/overview-account');
         $this->data->post_id = $post_id;

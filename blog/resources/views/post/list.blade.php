@@ -11,7 +11,7 @@
       <div class="col-sm-6 col-md-6">
           <div class="w3-container w3-white">
               <p><b><?php echo $post->title; ?></b></p>
-              <p><?php echo $post->description; ?></p>
+              <p><?php echo htmlspecialchars_decode($post->description); ?></p>
           </div>
           <hr />
             <!-- <i class="fa fa-btn fa-eye"></i> View : 0121 | <i class="fa fa-btn fa-hand-peace-o"></i> Like : 23 | <i class="fa fa-btn fa-hand-rock-o"></i> Unlike : 212 -->

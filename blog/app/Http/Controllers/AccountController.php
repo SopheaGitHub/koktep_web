@@ -116,12 +116,12 @@ class AccountController extends Controller
 
                 // update user
                 $userDatas = [
-                    'name'          => $request['name'],
-                    'email'         => $request['email'],
-                    'description'   => $request['description'],
-                    'image'         => $request['image'],
-                    'first_cover'   => $request['first_cover'],
-                    'second_cover'  => $request['second_cover']
+                    'name'          => htmlspecialchars($request['name']),
+                    'email'         => htmlspecialchars($request['email']),
+                    'description'   => htmlspecialchars($request['description']),
+                    'image'         => htmlspecialchars($request['image']),
+                    'first_cover'   => htmlspecialchars($request['first_cover']),
+                    'second_cover'  => htmlspecialchars($request['second_cover'])
                 ];
                 $post = $this->user->where('id', '=', $user_id)->update($userDatas);
                 // End

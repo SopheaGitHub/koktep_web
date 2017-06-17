@@ -78,9 +78,9 @@ return [
     'name_max255' => 'The <b>Name</b> may not be greater than 255 characters.',
     'relate_post_min2' => 'The <b>Posts</b> must be at least 2 item.',
 
-    'email_required' => 'The <b>Address</b> field is required.',
-    'email_max255' => 'The <b>Address</b> may not be greater than 255 characters.',
-    'email_valid' => 'The <b>Address</b> must be a valid email address.',
+    'email_required' => 'The <b>Email</b> field is required.',
+    'email_max255' => 'The <b>Email</b> may not be greater than 255 characters.',
+    'email_valid' => 'The <b>Email</b> must be a valid email address.',
 
     'before_add_skill' => 'The <b>Technical',
     'technical_skill_required' => 'Skill</b> field is required.',
@@ -139,6 +139,9 @@ return [
     'new_password_confirmation_required' => 'The <b>Confirm New Password</b> field is required.',
     'new_password_confirmation_in' => 'The selected <b>Confirm New Password</b> is invalid.',
 
+    'tab_tags' => 'Tags',
+    'tab_categories' => 'Categories',
+
     'tab_general' => 'General',
     'tab_data' => 'Data',
     'tab_links' => 'Links',
@@ -148,6 +151,8 @@ return [
     'tab_contact' => 'Contacts',
     'tab_social_media' => 'Social Media',
 
+    'entry_comment' => 'Comment',
+    'entry_related_post' => 'Related Images',
 
     'entry_title' => 'Title',
     'entry_description' => 'Description',
@@ -165,7 +170,7 @@ return [
     'entry_layout' => 'Layout',
     'entry_name' => 'Name',
     'entry_contact_name' => 'Contact Name',
-    'entry_email' => 'Address',
+    'entry_email' => 'Email',
     'entry_skill' => 'Skill',
     'entry_percent' => 'Skill Percent',
     'entry_min_charge' => 'Min Charge (USD)',

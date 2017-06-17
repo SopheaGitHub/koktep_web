@@ -9,7 +9,7 @@ class Category extends Model {
 	protected $table = 'category';
 	protected $fillable = ['image', 'parent_id', 'top', 'column', 'sort_order', 'status'];
 
-	public function getCategory($category_id) {
+	public function getCategory($category_id, $language_id = false) {
 		$db = DB::table(DB::raw('
 				(SELECT DISTINCT
 					c.*, cd2.name, (
@@ -23,7 +23,7 @@ class Category extends Model {
 							category_path cp
 						LEFT JOIN category_description cd1 ON (
 							cp.path_id = cd1.category_id
-							AND cp.category_id != cp.path_id AND cd1.language_id = \'1\'
+							AND cp.category_id != cp.path_id AND cd1.language_id = \''.(($language_id)? $language_id:'1').'\'
 						)
 						WHERE
 							cp.category_id = c.category_id
@@ -41,11 +41,12 @@ class Category extends Model {
 				FROM
 					category c
 				LEFT JOIN category_description cd2 ON (
-					c.category_id = cd2.category_id AND cd2.language_id = \'1\'
+					c.category_id = cd2.category_id AND cd2.language_id = \''.(($language_id)? $language_id:'1').'\'
 				)
 				WHERE
 					c.category_id = \''.$category_id.'\') AS category
 			'));
+
 		$result = $db->first();
 		return $result;
 	}
@@ -130,8 +131,8 @@ class Category extends Model {
 						cp.category_id = c1.category_id
 					)
 					LEFT JOIN category c2 ON (cp.path_id = c2.category_id)
-					LEFT JOIN category_description cd1 ON (cp.path_id = cd1.category_id AND cd1.language_id = \'1\')
-					LEFT JOIN category_description cd2 ON (cp.category_id = cd2.category_id AND cd2.language_id = \'1\')
+					LEFT JOIN category_description cd1 ON (cp.path_id = cd1.category_id AND cd1.language_id = \''.$filter_data['language_id'].'\')
+					LEFT JOIN category_description cd2 ON (cp.category_id = cd2.category_id AND cd2.language_id = \''.$filter_data['language_id'].'\')
 					GROUP BY
 						cp.category_id
 				) AS category

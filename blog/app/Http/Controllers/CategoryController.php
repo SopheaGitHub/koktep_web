@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Language;
 
 use App\Http\Requests;
 
@@ -16,6 +17,7 @@ class CategoryController extends Controller
         // $this->middleware('auth');
         $this->data = new \stdClass();
         $this->category = new Category();
+        $this->language = new Language();
         $this->data->web_title = 'Category';
     }
 
@@ -43,10 +45,23 @@ class CategoryController extends Controller
         $request = \Request::all();
         $json = [];
 
+        if(\Session::has('locale')) {
+            $locale = \Session::get('locale');
+        }else {
+            $locale = 'en';
+        }
+        $language_id = '1';
+        $language = $this->language->getLanguageByCode( $locale );
+
+        if($language) {
+            $language_id = $language->language_id;
+        }
+
         if (isset($request['filter_name'])) {
 
             $filter_data = [
                 'filter_name' => $request['filter_name'],
+                'language_id' => $language_id,
                 'sort'        => 'name',
                 'order'       => 'ASC',
                 'start'       => 0,

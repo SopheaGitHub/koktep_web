@@ -26,7 +26,8 @@ class Post extends Model {
 					post AS p
 				INNER JOIN users as u ON u.id = p.author_id
 				WHERE
-					p.post_id = "'.$post_id.'") AS post
+					p.post_id = "'.$post_id.'" AND p.status IN (\'0\', \'1\')
+				) AS post
 			'))->first();
 		return $result;
 	}
@@ -152,7 +153,7 @@ class Post extends Model {
 			$db->orderBy($filter_data['browse'], $filter_data['order']);
 		}
 		
-		$db->orderBy($filter_data['sort'], $filter_data['order']);
+		$db->whereIn('p.status', ['0','1'])->orderBy($filter_data['sort'], $filter_data['order']);
 		return $db;
 	}
 
@@ -274,7 +275,7 @@ class Post extends Model {
 		$sql = '';
 		if(isset($datas['post_description_datas']) && count($datas['post_description_datas']) > 0) {
 			foreach ($datas['post_description_datas'] as $language_id => $post_description) {
-				$sql .= " INSERT INTO `post_description`(`post_id`, `language_id`, `title`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) VALUES ('".$datas['post_id']."', '".$language_id."', '".$post_description['title']."', '".$post_description['description']."', '".$post_description['tag']."', '".$post_description['title']."', '".$post_description['title']."', '".$post_description['title']."'); ";
+				$sql .= " INSERT INTO `post_description`(`post_id`, `language_id`, `title`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) VALUES ('".$datas['post_id']."', '".$language_id."', '".htmlspecialchars($post_description['title'])."', '".htmlspecialchars($post_description['description'])."', '".htmlspecialchars($post_description['tag'])."', '".htmlspecialchars($post_description['title'])."', '".htmlspecialchars($post_description['title'])."', '".htmlspecialchars($post_description['title'])."'); ";
 			}
 			DB::connection()->getPdo()->exec($sql);
 		}

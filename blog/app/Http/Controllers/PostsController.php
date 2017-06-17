@@ -291,8 +291,8 @@ class PostsController extends Controller
                 // insert post
                 $postDatas = [
                     'author_id'     => $this->data->auth_id,
-                    'image'         => $request['image'],
-                    'status'        => $request['status']
+                    'image'         => htmlspecialchars($request['image']),
+                    'status'        => htmlspecialchars($request['status'])
                 ];
 
                 $post = $this->post->create($postDatas);
@@ -385,6 +385,19 @@ class PostsController extends Controller
         // add system log
         $this->systemLogs('load_form', 'posts', $request);
         // End
+
+        if(\Session::has('locale')) {
+            $locale = \Session::get('locale');
+        }else {
+            $locale = 'en';
+        }
+        $language_id = '1';
+        $language = $this->language->getLanguageByCode( $locale );
+
+        if($language) {
+            $language_id = $language->language_id;
+        }
+
         $this->data->post = $this->post->getPost($post_id);
         $this->data->post_descriptions = $this->post->getPostDescriptions($post_id);
 
@@ -392,7 +405,7 @@ class PostsController extends Controller
         $data['post_categories'] = [];
 
         foreach ($post_to_categories as $post_to_category) {
-            $category_info = $this->category->getCategory($post_to_category->category_id);
+            $category_info = $this->category->getCategory($post_to_category->category_id, $language_id);
 
             if ($category_info) {
                 $data['post_categories'][] = [
@@ -472,8 +485,8 @@ class PostsController extends Controller
                 // update post
                 $postDatas = [
                     'updated_by_author_id'  => $this->data->auth_id,
-                    'image'         => $request['image'],
-                    'status'        => $request['status']
+                    'image'         => htmlspecialchars($request['image']),
+                    'status'        => htmlspecialchars($request['status'])
                 ];
                 $post = $this->post->where('post_id', '=', $post_id)->update($postDatas);
                 // End
@@ -669,17 +682,8 @@ class PostsController extends Controller
                     return \Response::json($validationError);
                 }
 
-                // insert post deleted
-                $postDeletedDatas = [
-                    'deleted_by_author_id' => $this->data->auth_id,
-                    'data'     => json_encode($post),
-                ];
-
-                $post_deleted = $this->post_deleted->create($postDeletedDatas);
-                // End
-
-                // delete old post
-                $this->post->where('post_id', '=', $request['post_id'])->delete();
+                // delete old post by update status to 300
+                $this->post->where('post_id', '=', $request['post_id'])->update(['status'=>'300']);
                 // End
 
                 DB::commit();
@@ -710,7 +714,7 @@ class PostsController extends Controller
                     $postCommentDatas = [
                         'user_id'     => $this->data->auth_id,
                         'post_id'     => $request['post_id'],
-                        'comment'     => $request['comment'],
+                        'comment'     => htmlspecialchars($request['comment']),
                         'parent_id'   => '0'
                     ];
 
