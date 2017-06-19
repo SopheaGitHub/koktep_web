@@ -124,6 +124,12 @@ class User extends Authenticatable
         return $result;
     }
 
+    public function getWatermarkByUserId($user_id) {
+        $result = DB::table('user_watermark')
+        ->where('user_id', '=', $user_id)->first();
+        return $result;
+    }
+
     public function insertUserTechnical($datas=[]) {
         $sql = '';
         if (isset($datas['user_technicals']) && count($datas['user_technicals']) > 0) {
@@ -154,6 +160,14 @@ class User extends Authenticatable
         }
     }
 
+    public function insertUserWatermark($datas=[]) {
+        $sql = '';
+        if (isset($datas['user_watermarks']) && count($datas['user_watermarks']) > 0) {
+            $sql .= "INSERT INTO user_watermark SET user_id = '" . $datas['user_id'] . "', image = '" . htmlspecialchars($datas['user_watermarks']['image']) . "', position = '" . htmlspecialchars($datas['user_watermarks']['position']) . "', status = '" . htmlspecialchars($datas['user_watermarks']['status']) . "'; ";
+            DB::connection()->getPdo()->exec($sql);
+        }
+    }
+
     public function deletedUserTechnical($user_id) {
         DB::table('user_technical')->where('user_id', '=', $user_id)->delete();
     }
@@ -164,6 +178,10 @@ class User extends Authenticatable
 
     public function deletedUserSocialMedia($user_id) {
         DB::table('user_to_social_media')->where('user_id', '=', $user_id)->delete();
+    }
+
+    public function deletedWatermark($user_id) {
+        DB::table('user_watermark')->where('user_id', '=', $user_id)->delete();
     }
 
     public function validationSettingForm($datas=[]) {

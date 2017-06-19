@@ -148,6 +148,7 @@ class PostsController extends Controller
 
         // define filter data
         $filter_data = array(
+            'status' => ['0', '1'],
             'author_id' => $this->data->auth_id,
             'category_id' => $category_id,
             'search'    => $search,
@@ -162,6 +163,7 @@ class PostsController extends Controller
 
         // define paginate url
         $paginate_url = [
+            'status' => ['0', '1'],
             'account_id'=>$this->data->auth_id,
             'category_id'=>$category_id,
             'search' => $search,
@@ -185,7 +187,14 @@ class PostsController extends Controller
         if(count($this->data->posts) > 0) {
             foreach ($this->data->posts as $post) {
                 if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {
-                    $this->data->thumb[$post->post_id] = $this->filemanager->resize($post->image, 600, 400);
+
+                    if($post->watermark_status=='1') {
+                        $user_watermark = $this->user->getWatermarkByUserId($this->data->auth_id);
+                        $this->data->thumb[$post->post_id] = $this->filemanager->resizeWithWatermark($post->image, 600, 400, ((isset($user_watermark->image))? $user_watermark->image:'watermark_koktep.png'), ((isset($user_watermark->position))? $user_watermark->position:'center'));
+                    }else {
+                        $this->data->thumb[$post->post_id] = $this->filemanager->resize($post->image, 600, 400);
+                    }
+                    
                 } else {
                     $this->data->thumb[$post->post_id] = $this->filemanager->resize('no_image.png', 600, 400);
                 }
@@ -292,6 +301,7 @@ class PostsController extends Controller
                 $postDatas = [
                     'author_id'     => $this->data->auth_id,
                     'image'         => htmlspecialchars($request['image']),
+                    'watermark_status' => htmlspecialchars(((isset($request['watermark']))? $request['watermark']:'0')),
                     'status'        => htmlspecialchars($request['status'])
                 ];
 
@@ -443,6 +453,7 @@ class PostsController extends Controller
             $data['post_images'][] = [
                 'image'      => $image,
                 'thumb'      => $this->filemanager->resize($thumb, 120, 80),
+                'watermark_status' => $post_image->watermark_status,
                 'sort_order' => $post_image->sort_order
             ];
         }
@@ -470,6 +481,7 @@ class PostsController extends Controller
     public function postUpdate($post_id)
     {
         $request = \Request::all();
+
         // add system log
         $this->systemLogs('submit_form', 'posts', $request);
         // End
@@ -486,6 +498,7 @@ class PostsController extends Controller
                 $postDatas = [
                     'updated_by_author_id'  => $this->data->auth_id,
                     'image'         => htmlspecialchars($request['image']),
+                    'watermark_status' => htmlspecialchars(((isset($request['watermark']))? $request['watermark']:'0')),
                     'status'        => htmlspecialchars($request['status'])
                 ];
                 $post = $this->post->where('post_id', '=', $post_id)->update($postDatas);
@@ -542,6 +555,34 @@ class PostsController extends Controller
                 $post_category = $this->post->insertPostRelated($post_relatedDatas);
                 // End
 
+                // remove image from diractory
+                $old_image = $request['image'];
+                $extension = pathinfo($old_image, PATHINFO_EXTENSION);
+                $new_image = 'cache/' . substr($old_image, 0, strrpos($old_image, '.')) . '-' . 600 . 'x' . 400 . '.' . $extension;
+                $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', htmlspecialchars($new_image)), '/');
+
+                // If path is just a file delete it
+                if (is_file($pathImage)) {
+                    unlink($pathImage);
+                }
+
+                if(isset($request['post_image'])) {
+                    foreach ($request['post_image'] as $post_image) {
+                        // remove image from diractory
+                        $old_image = $post_image['image'];
+                        $extension = pathinfo($old_image, PATHINFO_EXTENSION);
+                        $new_image = 'cache/' . substr($old_image, 0, strrpos($old_image, '.')) . '-' . 600 . 'x' . 400 . '.' . $extension;
+                        $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', htmlspecialchars($new_image)), '/');
+
+                        // If path is just a file delete it
+                        if (is_file($pathImage)) {
+                            unlink($pathImage);
+                        }
+                    }
+                }
+
+                // End
+
                 DB::commit();
                 $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=> trans('text.save_change').' '.trans('text.successfully').'!', 'load_form'=>'none'];
                 return \Response::json($return);
@@ -558,8 +599,21 @@ class PostsController extends Controller
         $this->data->go_category_autocomplete = url('/category/autocomplete');
         $this->data->go_related_autocomplete = url('/posts/autocomplete');
         $this->data->languages = $this->language->getLanguages(['sort'=>'name', 'order'=>'asc'])->get();
+        $this->data->watermark = $this->user->getWatermarkByUserId($this->data->auth_id);
         $this->data->layouts = $this->layout->orderBy('name', 'asc')->lists('name', 'layout_id');
         $this->data->status = $this->config->status();
+
+        if($this->data->watermark) {
+
+            if(isset($datas['post'])) {
+                $this->data->watermark_status = $datas['post']->watermark_status;
+            } else {
+                $this->data->watermark_status = $this->data->watermark->status;
+            }
+
+        }else {
+            $this->data->watermark_status = '0';
+        }
 
         // define tap
         $this->data->tab_general = trans('text.tab_general');
@@ -579,6 +633,7 @@ class PostsController extends Controller
 
         $this->data->entry_keyword = trans('text.entry_keyword');
         $this->data->entry_image = trans('text.entry_image');
+        $this->data->entry_watermark = trans('text.entry_watermark');
         $this->data->entry_status = trans('text.entry_status');
         $this->data->entry_sort_order = trans('text.entry_sort_order');
 
@@ -640,7 +695,7 @@ class PostsController extends Controller
             $this->data->post_images = $datas['post_images'];
         }else {
             $this->data->post_images = [];
-        }        
+        } 
 
         if ($this->data->image && is_file($this->data->dir_image . $this->data->image)) {
             $this->data->thumb = $this->filemanager->resize($this->data->image, 120, 80);

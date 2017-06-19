@@ -51,6 +51,15 @@ return [
 
     'title_email_login' => 'Use For Login',
     'text_select' => '-- Please Select --',
+    'top_left'       => 'Top Left', 
+    'top_right'      => 'Top Right',
+    'center_left'    => 'Center Left',
+    'center_rigth'   => 'Center Rigth',
+    'center'        => 'Center',
+    'center_top'     => 'Center Top',
+    'center_bottom'  => 'Center Bottom',
+    'bottom_left'    => 'Bottom Left', 
+    'bottom_right'   => 'Bottom Right',
 
     'success' => 'Success',
     'successfully' => 'successfully',
@@ -150,6 +159,7 @@ return [
     'tab_skill_charge' => 'Technical Skills &amp; Charge',
     'tab_contact' => 'Contacts',
     'tab_social_media' => 'Social Media',
+    'tab_watermark' => 'Watermark',
 
     'entry_comment' => 'Comment',
     'entry_related_post' => 'Related Images',
@@ -195,6 +205,10 @@ return [
     'entry_current_password' => 'Current Password',
     'entry_new_password' => 'New Password',
     'entry_confirm_new_password' => 'Confirm New Password',
+    'entry_position' => 'Position',
+    'entry_image' => 'Image',
+    'entry_watermark' => 'Watermark',
+    'entry_default_status' => 'Default Status',
  
     'title_tags' => 'comma separated',
     'title_keyword' => 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.',

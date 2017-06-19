@@ -7,7 +7,7 @@ use DB;
 class Post extends Model {
 
 	protected $table = 'post';
-	protected $fillable = ['post_type_id', 'author_id', 'updated_by_author_id', 'image', 'sort_order', 'status', 'viewed'];
+	protected $fillable = ['post_type_id', 'author_id', 'updated_by_author_id', 'image', 'watermark_status', 'sort_order', 'status', 'viewed'];
 
 	public function getPost($post_id) {
 		$result = DB::table(DB::raw('
@@ -76,6 +76,7 @@ class Post extends Model {
 								(SELECT COUNT(1) FROM post_image WHERE post_id = p.post_id) AS total_post_image,
 								p.image as image,
 								p.created_at as created_at,
+								p.watermark_status as watermark_status,
 								pd.title as title,
 								pd.description as description,
 								pd.tag AS tag,
@@ -153,7 +154,7 @@ class Post extends Model {
 			$db->orderBy($filter_data['browse'], $filter_data['order']);
 		}
 		
-		$db->whereIn('p.status', ['0','1'])->orderBy($filter_data['sort'], $filter_data['order']);
+		$db->whereIn('p.status', $filter_data['status'])->orderBy($filter_data['sort'], $filter_data['order']);
 		return $db;
 	}
 
@@ -185,7 +186,7 @@ class Post extends Model {
 		  	$join->on('cd.category_id', '=', 'ptc.category_id');
 		  	$join->on('cd.language_id', '=', DB::raw('1'));
 		});
-		$db->whereIn('p.post_id', $array_post_id)->orderByRaw(\DB::raw("FIELD(p.post_id, ".implode(",",$array_post_id).")"));
+		$db->whereIn('p.post_id', $array_post_id)->where('p.status', '=', '1')->orderByRaw(\DB::raw("FIELD(p.post_id, ".implode(",",$array_post_id).")"));
 		$result = $db->get();
 		return $result;
 	}
@@ -215,6 +216,7 @@ class Post extends Model {
 		  	$join->on('cd.language_id', '=', DB::raw('1'));
 		})
 		->whereIn('p.post_id', $filter_data['array_post_group_id'])
+		->where('p.status', '=', '1')
 		->orderByRaw(\DB::raw("FIELD(p.post_id, ".implode(",",$filter_data['array_post_group_id']).")"));
 
 		return $db;
@@ -257,6 +259,7 @@ class Post extends Model {
 		if ($filter_data['filter_title']!='') {
 			$db->where('title', 'like', '%'.$filter_data['filter_title'].'%');
 		}
+		$db->where('status', '=', '1');
 		$db->orderBy($filter_data['sort'], $filter_data['order'])->take($filter_data['limit']);
 		$result = $db->get();
 		return $result;
@@ -305,7 +308,7 @@ class Post extends Model {
 		$sql = '';
 		if (isset($datas['post_images']) && count($datas['post_images']) > 0) {
 			foreach ($datas['post_images'] as $post_image) {
-				$sql .= "INSERT INTO post_image SET post_id = '" . $datas['post_id'] . "', image = '" . $post_image['image'] . "', sort_order = '" . $post_image['sort_order'] . "'; ";
+				$sql .= "INSERT INTO post_image SET post_id = '" . $datas['post_id'] . "', image = '" . htmlspecialchars($post_image['image']) . "', watermark_status = '" . htmlspecialchars( ((isset($post_image['watermark']))? $post_image['watermark']:'0') ) . "', sort_order = '" . htmlspecialchars($post_image['sort_order']) . "'; ";
 			}
 			DB::connection()->getPdo()->exec($sql);
 		}

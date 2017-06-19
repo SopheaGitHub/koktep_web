@@ -79,6 +79,7 @@ class AccountController extends Controller
         $user_technical = $this->user->getTechnicalByUserId($this->data->auth_id);
         $user_address = $this->user->getAddressByUserId($this->data->auth_id);
         $user_social_medias = $this->user->getSocialMediaByUserId($this->data->auth_id);
+        $user_watermark = $this->user->getWatermarkByUserId($this->data->auth_id);
 
         $datas = [
             'icon' => 'icon_edit',
@@ -87,7 +88,8 @@ class AccountController extends Controller
             'user'      => $user,
             'user_technical' => $user_technical,
             'user_address'  => $user_address,
-            'user_social_medias'  => $user_social_medias
+            'user_social_medias'  => $user_social_medias,
+            'user_watermark' => $user_watermark
         ];
         echo $this->getSettingForm($datas);
         exit();
@@ -156,6 +158,16 @@ class AccountController extends Controller
                 $user_address = $this->user->insertUserSocialMedia($user_social_mediaDatas);
                 // End
 
+                // update user watermark
+                $clear_user_watermark = $this->user->deletedWatermark($user_id);
+                $user_watermarkDatas = [
+                    'user_id'           => $user_id,
+                    'user_watermarks'   => ((isset($request['user_watermark']))? $request['user_watermark']:[])
+                ];
+
+                $user_watermark = $this->user->insertUserWatermark($user_watermarkDatas);
+                // End
+
                 DB::commit();
                 $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=> trans('text.save_change').' '.trans('text.successfully').'!', 'load_form'=>'none'];
                 return \Response::json($return);
@@ -178,6 +190,7 @@ class AccountController extends Controller
         $this->data->tab_skill_charge = trans('text.tab_skill_charge');
         $this->data->tab_contact = trans('text.tab_contact');
         $this->data->tab_social_media = trans('text.tab_social_media');
+        $this->data->tab_watermark = trans('text.tab_watermark');
 
         // define entry
         $this->data->entry_name = trans('text.entry_name');
@@ -211,6 +224,10 @@ class AccountController extends Controller
 
         $this->data->entry_social_media = trans('text.entry_social_media');
         $this->data->entry_link = trans('text.entry_link');
+
+        $this->data->entry_watermark_status = trans('text.entry_default_status');
+        $this->data->entry_position = trans('text.entry_position');
+        $this->data->entry_image = trans('text.entry_image');
 
         // define input title
         $this->data->button_remove = trans('button.remove');
@@ -256,6 +273,16 @@ class AccountController extends Controller
             $this->data->user_social_medias = [];
         }
 
+        if(isset($datas['user_watermark'])) {
+            $this->data->watermark_image = $datas['user_watermark']->image;
+            $this->data->watermark_position = $datas['user_watermark']->position;
+            $this->data->watermark_status = $datas['user_watermark']->status;
+        }else {
+            $this->data->watermark_image = '';
+            $this->data->watermark_position = 'center';
+            $this->data->watermark_status = '0';
+        }
+
         // load image library
         if ($this->data->image && is_file($this->data->dir_image . $this->data->image)) {
             $this->data->thumb_image = $this->filemanager->resize($this->data->image, 100, 100);
@@ -275,12 +302,19 @@ class AccountController extends Controller
             $this->data->thumb_second_cover = $this->filemanager->resize('no_image.png', 120, 80);
         }
 
+        if ($this->data->watermark_image && is_file($this->data->dir_image . $this->data->watermark_image)) {
+            $this->data->watermark_thumb = $this->filemanager->resize($this->data->watermark_image, 120, 80);
+        } else {
+            $this->data->watermark_thumb = $this->filemanager->resize('logo_koktep.png', 120, 30);
+        }
+
         $this->data->placeholder = $this->filemanager->resize('no_image.png', 120, 80);
         $this->data->image_placeholder = $this->filemanager->resize('no_image.png', 100, 100);
         // End
 
         $this->data->load_zone_action = url('geo-zones/zone');
-
+        $this->data->status = $this->config->status();
+        $this->data->watermark_positions = $this->config->watermark_positions();
         $this->data->action = (($datas['action'])? $datas['action']:'');
         $this->data->titlelist = (($datas['titlelist'])? $datas['titlelist']:'');
 

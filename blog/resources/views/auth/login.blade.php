@@ -73,9 +73,9 @@
 @section('script')
 <script type="text/javascript">
 $(document).ready(function() {
-    $(document).on('click', '#login', function() {
-        $('#login').prop('disabled', true);
-    });
+    // $(document).on('click', '#login', function() {
+    //     $('#login').prop('disabled', true);
+    // });
 });
 </script>
 @endsection

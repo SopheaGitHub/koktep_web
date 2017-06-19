@@ -51,6 +51,15 @@ return [
 
     'title_email_login' => 'ប្រើសម្រាប់ការចូល',
     'text_select' => '-- សូមជ្រើសរើស --',
+    'top_left'       => 'ផ្នែក​លើ​ខាង​ឆ្វេង', 
+    'top_right'      => 'ផ្នែក​លើ​ខាង​ស្តាំ',
+    'center_left'    => 'ផ្នែក​ក​ណ្តា​លខាង​ឆ្វេង',
+    'center_rigth'   => 'ផ្នែក​ក​ណ្តា​លខាង​ស្តាំ',
+    'center'        => 'ផ្នែក​ក​ណ្តា​ល',
+    'center_top'     => 'ផ្នែក​ក​ណ្តា​លខាង​លើ​',
+    'center_bottom'  => 'ផ្នែក​ក​ណ្តា​លខាង​ក្រោម',
+    'bottom_left'    => 'ផ្នែក​ក្រោមខាង​ឆ្វេង', 
+    'bottom_right'   => 'ផ្នែក​ក្រោមខាង​ស្តាំ',
 
     'success' => 'ជោគជ័យ',
     'successfully' => 'ដោយជោគជ័យ',
@@ -150,6 +159,7 @@ return [
     'tab_skill_charge' => 'ជំនាញបច្ចេកទេស និង ការការ​គិតថ្លៃ',
     'tab_contact' => 'ទំនាក់ទំនង',
     'tab_social_media' => 'ប្រព័ន្ធ​ផ្សព្វផ្សាយ​សង្គម',
+    'tab_watermark' => 'ការសម្គាល់',
 
     'entry_comment' => 'សេចក្តីអធិប្បាយ',
     'entry_related_post' => 'រូបភាពដែលទាក់ទង',
@@ -195,6 +205,10 @@ return [
     'entry_current_password' => 'ពាក្យសម្ងាត់បច្ចុប្បន្ន',
     'entry_new_password' => 'ពាក្យសម្ងាត់​ថ្មី',
     'entry_confirm_new_password' => 'បញ្ជាក់ពាក្យសម្ងាត់​ថ្មី',
+    'entry_position' => 'ទីតាំង',
+    'entry_image' => 'រូបភាព',
+    'entry_watermark' => 'ការសម្គាល់',
+    'entry_default_status' => 'ស្ថានភាពលំនាំដើម',
 
     'title_tags' => 'បំបែកដោយសញ្ញាក្បៀស',
     'title_keyword' => 'កុំប្រើដកឃ្លា, ជំនួសដកឃ្លាដោយមាន - និងធ្វើឱ្យប្រាកដថាពាក្យគន្លឹះគឺមានតែមួយនៅទូទាំងពិភពលោក។',

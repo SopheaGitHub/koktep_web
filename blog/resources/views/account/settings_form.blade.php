@@ -13,6 +13,7 @@
           <li><a href="#tab-skills-charge" data-toggle="tab"><?php echo $data->tab_skill_charge; ?></a></li>
           <li><a href="#tab-contact" data-toggle="tab"><?php echo $data->tab_contact; ?></a></li>
           <li><a href="#tab-social-media" data-toggle="tab"><?php echo $data->tab_social_media; ?></a></li>
+          <li><a href="#tab-watermark" data-toggle="tab"><?php echo $data->tab_watermark; ?></a></li>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
@@ -263,6 +264,45 @@
                   </tfoot>
                 </table>
               </div>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="tab-watermark">
+            <div class="tab-pane" id="tab-contact">
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $data->entry_watermark_status; ?></label>
+                <div class="col-sm-10">
+                  <select name="user_watermark[status]" id="input-status" class="form-control">
+                    <?php
+                      foreach ($data->status as $key => $status) { ?>
+                        <option <?php echo (($key == $data->watermark_status)? 'selected="selected"':''); ?> value="<?php echo $key; ?>"><?php echo $status; ?></option>
+                      <?php }
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $data->entry_position; ?></label>
+                <div class="col-sm-10">
+                  <select name="user_watermark[position]" id="input-status" class="form-control">
+                    <?php
+                      foreach ($data->watermark_positions as $key => $position) { ?>
+                        <option <?php echo (($key == $data->watermark_position)? 'selected="selected"':''); ?> value="<?php echo $key; ?>"><?php echo $position; ?></option>
+                      <?php }
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $data->entry_image; ?></label>
+                <div class="col-sm-10"><a href="" id="thumb-watermark-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->watermark_thumb; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a>
+                  <input type="hidden" name="user_watermark[image]" value="<?php echo ((isset($data->watermark_image))? $data->watermark_image:''); ?>" id="input-watermark-image" />
+                </div>
+              </div>
+
             </div>
           </div>
           

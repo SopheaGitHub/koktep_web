@@ -28,4 +28,19 @@ class ConfigController extends Controller {
 		return $status = ['1' => trans('text.enabled'), '0'	=> trans('text.disabled')];
 	}
 
+	// system watermark position
+	public function watermark_positions() {
+		return $position = [
+			'topleft' 		=> trans('text.top_left'), 
+			'topright' 		=> trans('text.top_right'),
+			'centerleft' 	=> trans('text.center_left'),
+			'centerrigth' 	=> trans('text.center_rigth'),
+			'center' 		=> trans('text.center'),
+			'centertop' 	=> trans('text.center_top'),
+			'centerbottom' 	=> trans('text.center_bottom'),
+			'bottomleft' 	=> trans('text.bottom_left'), 
+			'bottomright'	=> trans('text.bottom_right')
+		];
+	}
+
 }

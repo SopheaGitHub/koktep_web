@@ -492,4 +492,62 @@ class FilemanagerController extends Controller {
 		return $this->data->http_best_path. '/images/' . $new_image;
 	}
 
+	public function resizeWithWatermark($filename, $width, $height, $watermark, $position) {
+
+		// check if watermark has removed from original library
+		if($watermark=='' || !is_file($this->data->dir_image . $watermark)) {
+			$watermark = 'watermark_koktep.png';
+		}
+
+		if($position=='') {
+			$position = 'center';
+		}
+
+		if (!is_file($this->data->dir_image . $filename)) {
+			return;
+		}
+
+		$extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+		$old_image = $filename;
+		$new_image = 'cache/' . substr($filename, 0, strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
+
+		if (!is_file($this->data->dir_image . $new_image) || (filectime($this->data->dir_image . $old_image) > filectime($this->data->dir_image . $new_image))) {
+			$path = '';
+
+			$directories = explode('/', dirname(str_replace('../', '', $new_image)));
+
+			foreach ($directories as $directory) {
+				$path = $path . '/' . $directory;
+
+				if (!is_dir($this->data->dir_image . $path)) {
+					@mkdir($this->data->dir_image . $path, 0777);
+				}
+			}
+
+			list($width_orig, $height_orig) = getimagesize($this->data->dir_image . $old_image);
+
+			if ($width_orig != $width || $height_orig != $height) {
+				$image = new Image($this->data->dir_image . $old_image);
+				$image->resize($width, $height);
+
+				// add this two lines
+        		$imageW = new Image($this->data->dir_image . $watermark); // link to your watermark image
+        		$image->watermark($imageW, $position);  // topleft, topright, bottomleft or bottomright
+
+				$image->save($this->data->dir_image . $new_image);
+			} else {
+				copy($this->data->dir_image . $old_image, $this->data->dir_image . $new_image);
+			}
+		}
+
+		// if ($this->request->server['HTTPS']) {
+		// 	return https_best_path . 'image/' . $new_image;
+		// } else {
+		// 	return http_best_path . 'image/' . $new_image;
+		// }
+
+		return $this->data->http_best_path. '/images/' . $new_image;
+	}
+
 }

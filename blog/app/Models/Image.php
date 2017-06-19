@@ -136,6 +136,26 @@ class Image {
 				$watermark_pos_x = $this->width - $watermark->getWidth();
 				$watermark_pos_y = 0;
 				break;
+			case 'centerleft':
+				$watermark_pos_x = 0;
+				$watermark_pos_y = ( $this->height - $watermark->getHeight() ) / 2;
+				break;
+			case 'centerrigth':
+				$watermark_pos_x = $this->width - $watermark->getWidth();
+				$watermark_pos_y = ( $this->height - $watermark->getHeight() ) / 2;
+				break;
+			case 'center':
+				$watermark_pos_x = ( $this->width - $watermark->getWidth() ) / 2;
+				$watermark_pos_y = ( $this->height - $watermark->getHeight() ) / 2;
+				break;
+			case 'centertop':
+				$watermark_pos_x = ( $this->width - $watermark->getWidth() ) / 2;
+				$watermark_pos_y = 0;
+				break;
+			case 'centerbottom':
+				$watermark_pos_x = ( $this->width - $watermark->getWidth() ) / 2;
+				$watermark_pos_y = $this->height - $watermark->getHeight();
+				break;
 			case 'bottomleft':
 				$watermark_pos_x = 0;
 				$watermark_pos_y = $this->height - $watermark->getHeight();

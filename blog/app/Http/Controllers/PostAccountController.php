@@ -308,6 +308,7 @@ class PostAccountController extends Controller
 
         // define filter data
         $filter_data = array(
+            'status' => ['1'],
             'author_id' => $user_id,
             'category_id' => $category_id,
             'search' => $search,
@@ -322,6 +323,7 @@ class PostAccountController extends Controller
 
         // define paginate url
         $paginate_url = [
+            'status' => ['1'],
             'account_id'=>$user_id, 
             'category_id'=>$category_id,
             'search' => $search,
@@ -389,11 +391,21 @@ class PostAccountController extends Controller
 
         if(count($this->data->posts) > 0) {
             foreach ($this->data->posts as $post) {
+                // thumb podt image
                 if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {
-                    $this->data->thumb[$post->post_id] = $this->filemanager->resize($post->image, 600, 400);
+                    
+                    if($post->watermark_status=='1') {
+                        $user_watermark = $this->user->getWatermarkByUserId($post->author_id);
+                        $this->data->thumb[$post->post_id] = $this->filemanager->resizeWithWatermark($post->image, 600, 400, ((isset($user_watermark->image))? $user_watermark->image:'watermark_koktep.png'), ((isset($user_watermark->position))? $user_watermark->position:'center'));
+                    }else {
+                        $this->data->thumb[$post->post_id] = $this->filemanager->resize($post->image, 600, 400);
+                    }
+
                 } else {
                     $this->data->thumb[$post->post_id] = $this->filemanager->resize('no_image.png', 600, 400);
                 }
+
+                // thumb author image
                 if (!empty($post->author_image) && is_file($this->data->dir_image . $post->author_image)) {
                     $this->data->thumb_user[$post->post_id] = $this->filemanager->resize($post->author_image, 100, 100);
                 } else {

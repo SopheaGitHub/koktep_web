@@ -47,6 +47,16 @@
               </div>
             </div>
             <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-top"><?php echo $data->entry_watermark; ?></span></label>
+              <div class="col-sm-10">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="watermark" value="1" <?php echo (($data->watermark_status=='1')? 'checked="checked"':'' ); ?>/>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $data->entry_status; ?></label>
               <div class="col-sm-10">
                 <select name="status" id="input-status" class="form-control">
@@ -95,6 +105,7 @@
                 <thead>
                   <tr>
                     <td class="text-left"><?php echo $data->entry_image; ?></td>
+                    <td class="text-left"><?php echo $data->entry_watermark; ?></td>
                     <td class="text-right"><?php echo $data->entry_sort_order; ?></td>
                     <td></td>
                   </tr>
@@ -104,6 +115,7 @@
                   <?php foreach ($data->post_images as $post_image) { ?>
                   <tr id="image-row<?php echo $image_row; ?>">
                     <td class="text-left"><a href="" id="thumb-image<?php echo $image_row; ?>" data-toggle="image" class="img-thumbnail"><img src="<?php echo $post_image['thumb']; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a><input type="hidden" name="post_image[<?php echo $image_row; ?>][image]" value="<?php echo $post_image['image']; ?>" id="input-image<?php echo $image_row; ?>" /></td>
+                    <td class="text-left"><input type="checkbox" name="post_image[<?php echo $image_row; ?>][watermark]" value="1" <?php echo (($post_image['watermark_status']=='1')? 'checked="checked"':''); ?> /></td>
                     <td class="text-right"><input type="text" name="post_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $post_image['sort_order']; ?>" placeholder="<?php echo $data->entry_sort_order; ?>" class="form-control" /></td>
                     <td class="text-left"><button type="button" onclick="$('#image-row<?php echo $image_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $data->button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
@@ -112,7 +124,7 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="2"></td>
+                    <td colspan="3"></td>
                     <td class="text-left"><button type="button" onclick="addImage();" data-toggle="tooltip" title="<?php echo $data->button_image_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
@@ -150,6 +162,7 @@ var image_row = <?php echo $image_row; ?>;
 function addImage() {
   html  = '<tr id="image-row' + image_row + '">';
   html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '"data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->placeholder; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /><input type="hidden" name="post_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
+  html += '  <td class="text-left"><input type="checkbox" name="post_image[' + image_row + '][watermark]" value="1" <?php echo (($data->watermark_status=="1")? "checked=\'checked\'":"" ); ?> /></td>';
   html += '  <td class="text-right"><input type="text" name="post_image[' + image_row + '][sort_order]" value="" placeholder="<?php echo $data->entry_sort_order; ?>" class="form-control" /></td>';
   html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $data->button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
   html += '</tr>';
