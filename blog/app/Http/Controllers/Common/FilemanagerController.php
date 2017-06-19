@@ -162,7 +162,7 @@ class FilemanagerController extends Controller {
 		}
 
 		if (isset($request['filter_name'])) {
-			$data['filter_name'] = htmlspecialchars($request['filter_name']);
+			$data['filter_name'] = $this->config->escape($request['filter_name']);
 		} else {
 			$data['filter_name'] = '';
 		}
@@ -348,7 +348,7 @@ class FilemanagerController extends Controller {
 
 		if (!$json) {
 			// Sanitize the folder name
-			$folder = htmlspecialchars(str_replace(array('../', '..\\', '..'), '', basename(html_entity_decode($request['folder'], ENT_QUOTES, 'UTF-8'))));
+			$folder = $this->config->escape(str_replace(array('../', '..\\', '..'), '', basename(html_entity_decode($request['folder'], ENT_QUOTES, 'UTF-8'))));
 
 			// Validate the filename length
 			if ((strlen($folder) < 3) || (strlen($folder) > 128)) {
@@ -399,7 +399,7 @@ class FilemanagerController extends Controller {
 		if (!$json) {
 			// Loop through each path
 			foreach ($paths as $path) {
-				$path = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', htmlspecialchars($path)), '/');
+				$path = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', $this->config->escape($path)), '/');
 
 				// If path is just a file delete it
 				if (is_file($path)) {

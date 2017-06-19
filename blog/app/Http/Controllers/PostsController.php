@@ -300,9 +300,9 @@ class PostsController extends Controller
                 // insert post
                 $postDatas = [
                     'author_id'     => $this->data->auth_id,
-                    'image'         => htmlspecialchars($request['image']),
-                    'watermark_status' => htmlspecialchars(((isset($request['watermark']))? $request['watermark']:'0')),
-                    'status'        => htmlspecialchars($request['status'])
+                    'image'         => $this->config->escape($request['image']),
+                    'watermark_status' => $this->config->escape(((isset($request['watermark']))? $request['watermark']:'0')),
+                    'status'        => $this->config->escape($request['status'])
                 ];
 
                 $post = $this->post->create($postDatas);
@@ -497,9 +497,9 @@ class PostsController extends Controller
                 // update post
                 $postDatas = [
                     'updated_by_author_id'  => $this->data->auth_id,
-                    'image'         => htmlspecialchars($request['image']),
-                    'watermark_status' => htmlspecialchars(((isset($request['watermark']))? $request['watermark']:'0')),
-                    'status'        => htmlspecialchars($request['status'])
+                    'image'         => $this->config->escape($request['image']),
+                    'watermark_status' => $this->config->escape(((isset($request['watermark']))? $request['watermark']:'0')),
+                    'status'        => $this->config->escape($request['status'])
                 ];
                 $post = $this->post->where('post_id', '=', $post_id)->update($postDatas);
                 // End
@@ -559,7 +559,7 @@ class PostsController extends Controller
                 $old_image = $request['image'];
                 $extension = pathinfo($old_image, PATHINFO_EXTENSION);
                 $new_image = 'cache/' . substr($old_image, 0, strrpos($old_image, '.')) . '-' . 600 . 'x' . 400 . '.' . $extension;
-                $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', htmlspecialchars($new_image)), '/');
+                $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', $this->config->escape($new_image)), '/');
 
                 // If path is just a file delete it
                 if (is_file($pathImage)) {
@@ -572,7 +572,7 @@ class PostsController extends Controller
                         $old_image = $post_image['image'];
                         $extension = pathinfo($old_image, PATHINFO_EXTENSION);
                         $new_image = 'cache/' . substr($old_image, 0, strrpos($old_image, '.')) . '-' . 600 . 'x' . 400 . '.' . $extension;
-                        $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', htmlspecialchars($new_image)), '/');
+                        $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', $this->config->escape($new_image)), '/');
 
                         // If path is just a file delete it
                         if (is_file($pathImage)) {
@@ -647,6 +647,7 @@ class PostsController extends Controller
         $this->data->title_keyword = trans('text.title_keyword');
         $this->data->title_category = trans('text.autocomplete');
         $this->data->title_related = trans('text.autocomplete');
+        $this->data->title_watermark = trans('text.title_watermark');
 
         $this->data->text_none = trans('text.none');
 
@@ -769,7 +770,7 @@ class PostsController extends Controller
                     $postCommentDatas = [
                         'user_id'     => $this->data->auth_id,
                         'post_id'     => $request['post_id'],
-                        'comment'     => htmlspecialchars($request['comment']),
+                        'comment'     => $this->config->escape($request['comment']),
                         'parent_id'   => '0'
                     ];
 

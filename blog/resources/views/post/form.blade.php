@@ -47,7 +47,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-top"><?php echo $data->entry_watermark; ?></span></label>
+              <label class="col-sm-2 control-label" for="input-watermark"><span data-toggle="tooltip" title="" data-original-title="<?php echo $data->title_watermark; ?>"><?php echo $data->entry_watermark; ?></span></label>
               <div class="col-sm-10">
                 <div class="checkbox">
                   <label>
@@ -105,7 +105,7 @@
                 <thead>
                   <tr>
                     <td class="text-left"><?php echo $data->entry_image; ?></td>
-                    <td class="text-left"><?php echo $data->entry_watermark; ?></td>
+                    <td class="text-left"><span data-toggle="tooltip" title="" data-original-title="<?php echo $data->title_watermark; ?>"><?php echo $data->entry_watermark; ?></span></td>
                     <td class="text-right"><?php echo $data->entry_sort_order; ?></td>
                     <td></td>
                   </tr>

@@ -7,6 +7,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Http\Controllers\ConfigController;
 
 class AuthController extends Controller
 {
@@ -119,9 +120,10 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $config = new ConfigController();
         return User::create([
-            'name' => htmlspecialchars($data['name']),
-            'email' => htmlspecialchars($data['email']),
+            'name' => $config->escape($data['name']),
+            'email' => $config->escape($data['email']),
             'password' => bcrypt($data['password']),
         ]);
     }

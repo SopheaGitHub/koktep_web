@@ -243,7 +243,7 @@ class PostAccountController extends Controller
 
         // defind search title, description, tag
         if(isset($request['search'])) {
-            $search = $request['search'];
+            $search = $this->config->escape($request['search']);
         }else {
             $search = null;
         }
@@ -441,6 +441,7 @@ class PostAccountController extends Controller
         $this->data->icon_comment = trans('icon.comment');
         $this->data->icon_image = trans('icon.image');
 
+        $this->data->text_view_profile = trans('text.view_profile');
         $this->data->text_empty = '...';
 
         switch ($view) {

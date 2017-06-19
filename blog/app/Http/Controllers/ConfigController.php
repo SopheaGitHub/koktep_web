@@ -43,4 +43,8 @@ class ConfigController extends Controller {
 		];
 	}
 
+	public function escape($value) {
+		return str_replace(array("\\", "\0", "\n", "\r", "\x1a", "'", '"'), array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"'), htmlspecialchars($value));
+	}
+
 }

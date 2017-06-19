@@ -2,12 +2,13 @@
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Language;
+use App\Http\Controllers\ConfigController;
 use DB;
 
 class Post extends Model {
 
 	protected $table = 'post';
-	protected $fillable = ['post_type_id', 'author_id', 'updated_by_author_id', 'image', 'watermark_status', 'sort_order', 'status', 'viewed'];
+	protected $fillable = ['author_id', 'updated_by_author_id', 'image', 'watermark_status', 'sort_order', 'status', 'viewed'];
 
 	public function getPost($post_id) {
 		$result = DB::table(DB::raw('
@@ -267,7 +268,7 @@ class Post extends Model {
 
 	public function getPostsToUser($author_id) {
 		$post_data = [];
-		$posts_to_user = Post::where('author_id', '=', $author_id)->orderBy('created_at', 'DESC')->take(5)->get();
+		$posts_to_user = Post::where('author_id', '=', $author_id)->whereIn('status', ['1'])->orderBy('created_at', 'DESC')->take(5)->get();
 		foreach ($posts_to_user as $result) {
 			$post_data[] = $result->post_id;
 		}
@@ -275,10 +276,11 @@ class Post extends Model {
 	}
 
 	public function insertPostDescription($datas=[]) {
+		$config = new ConfigController();
 		$sql = '';
 		if(isset($datas['post_description_datas']) && count($datas['post_description_datas']) > 0) {
 			foreach ($datas['post_description_datas'] as $language_id => $post_description) {
-				$sql .= " INSERT INTO `post_description`(`post_id`, `language_id`, `title`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) VALUES ('".$datas['post_id']."', '".$language_id."', '".htmlspecialchars($post_description['title'])."', '".htmlspecialchars($post_description['description'])."', '".htmlspecialchars($post_description['tag'])."', '".htmlspecialchars($post_description['title'])."', '".htmlspecialchars($post_description['title'])."', '".htmlspecialchars($post_description['title'])."'); ";
+				$sql .= " INSERT INTO `post_description`(`post_id`, `language_id`, `title`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) VALUES ('".$datas['post_id']."', '".$language_id."', '".$config->escape($post_description['title'])."', '".$config->escape($post_description['description'])."', '".$config->escape($post_description['tag'])."', '".$config->escape($post_description['title'])."', '".$config->escape($post_description['title'])."', '".$config->escape($post_description['title'])."'); ";
 			}
 			DB::connection()->getPdo()->exec($sql);
 		}
@@ -305,10 +307,11 @@ class Post extends Model {
 	}
 
 	public function insertPostImage($datas=[]) {
+		$config = new ConfigController();
 		$sql = '';
 		if (isset($datas['post_images']) && count($datas['post_images']) > 0) {
 			foreach ($datas['post_images'] as $post_image) {
-				$sql .= "INSERT INTO post_image SET post_id = '" . $datas['post_id'] . "', image = '" . htmlspecialchars($post_image['image']) . "', watermark_status = '" . htmlspecialchars( ((isset($post_image['watermark']))? $post_image['watermark']:'0') ) . "', sort_order = '" . htmlspecialchars($post_image['sort_order']) . "'; ";
+				$sql .= "INSERT INTO post_image SET post_id = '" . $datas['post_id'] . "', image = '" . $config->escape($post_image['image']) . "', watermark_status = '" . $config->escape( ((isset($post_image['watermark']))? $post_image['watermark']:'0') ) . "', sort_order = '" . $config->escape($post_image['sort_order']) . "'; ";
 			}
 			DB::connection()->getPdo()->exec($sql);
 		}

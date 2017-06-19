@@ -28,12 +28,12 @@ if (count($data->users) > 0) {
                 <div class="media-heading">
                     <div class="col-md-8">
                         <a href="<?php echo $data->overview_account.'?account_id='.$user->people_id; ?>"><?php echo $user->people_name; ?></a> &nbsp;&nbsp;&nbsp;
-                        <i data-toggle="tooltip" title="View" class="fa fa-btn fa-eye"></i><?php echo $user->viewed; ?> &nbsp;
-                        <i data-toggle="tooltip" title="Comment" class="fa fa-btn fa-comment"></i><?php echo $user->commented; ?> &nbsp;
+                        <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $user->viewed; ?> &nbsp;
+                        <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $user->commented; ?> &nbsp;
                     </div>
                     <div class="col-md-4">
                         <span class="pull-right">
-                            <a href="<?php echo $data->overview_account.'?account_id='.$user->people_id; ?>"><i data-toggle="tooltip" title="Image" class="fa fa-btn fa-arrow-circle-right"></i>View All</a>
+                            <a href="<?php echo $data->overview_account.'?account_id='.$user->people_id; ?>"><i data-toggle="tooltip" title="Image" class="fa fa-btn fa-arrow-circle-right"></i><?php echo $data->text_view_profile; ?></a>
                         </span>
                     </div>
                 </div>

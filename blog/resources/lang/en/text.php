@@ -24,6 +24,7 @@ return [
     'search' => 'Search',
     'filter_option' => 'Filter Options',
     'view' => 'VIEW',
+    'view_profile' => 'View Profile',
     'browse' => 'BROWSE',
     'time' => 'TIME',
     'alpha' => 'ALPHA',
@@ -213,5 +214,6 @@ return [
     'title_tags' => 'comma separated',
     'title_keyword' => 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.',
     'title_password' => 'Must be enter at least 6 characters,<br /> You have to enter as Ex:@As!02',
+    'title_watermark' => 'Allow to add watermark image'
 
 ];

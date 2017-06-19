@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\ConfigController;
 use DB;
 
 class PostGroup extends Model
@@ -61,10 +62,11 @@ class PostGroup extends Model
 	}
 
 	public function insertPostGroupDescription($datas=[]) {
+		$config = new ConfigController();
 		$sql = '';
 		if(isset($datas['post_group_description_datas']) && count($datas['post_group_description_datas']) > 0) {
 			foreach ($datas['post_group_description_datas'] as $language_id => $post_group_description) {
-				$sql .= " INSERT INTO post_group_description(post_group_id, language_id, name) VALUES ('".$datas['post_group_id']."', '".$language_id."', '".htmlspecialchars($post_group_description['name'])."'); ";
+				$sql .= " INSERT INTO post_group_description(post_group_id, language_id, name) VALUES ('".$datas['post_group_id']."', '".$language_id."', '".$config->escape($post_group_description['name'])."'); ";
 			}
 			DB::connection()->getPdo()->exec($sql);
 		}
