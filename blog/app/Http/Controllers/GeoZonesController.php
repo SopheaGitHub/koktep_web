@@ -21,7 +21,7 @@ class GeoZonesController extends Controller
 	 */
 	public function __construct()
 	{
-		$this->middleware('auth');
+		// $this->middleware('auth');
 
 		$this->data = new \stdClass();
 		$this->country = new Country();

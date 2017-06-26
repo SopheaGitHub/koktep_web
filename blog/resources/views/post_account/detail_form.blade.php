@@ -61,11 +61,12 @@
                 </div>
                 <div class="col-md-9">
                     <div class="profile-content">
-                        <p><img src="<?php echo $data->image; ?>" alt="" width="100%"></p>
+                        <?php $post_image = explode('/', $data->post_image); ?>
+                        <p class="thumbnailimage"><a class="thumbnailimage" href="<?php echo $data->image; ?>" title="<?php echo ((count($post_image)>0)? end($post_image):''); ?>"><img src="<?php echo $data->image; ?>" alt="" width="100%"></a></p>
                         <?php
                             if(count($data->post_images)) {
-                                foreach ($data->post_images as $post_image) { ?>
-                                    <p><img src="<?php echo $post_image['thumb']; ?>" alt="" width="100%"></p>
+                                foreach ($data->post_images as $post_image) { $image = explode('/', $post_image['image']); ?>
+                                    <p class="thumbnailimage"><a class="thumbnailimage" href="<?php echo $post_image['thumb']; ?>" title="<?php echo ((count($image)>0)? end($image):''); ?>"><img src="<?php echo $post_image['thumb']; ?>" alt="" width="100%"></a></p>
                             <?php   }
                             }
                         ?>
@@ -146,5 +147,13 @@ $(document).ready(function() {
     });
     loadingForm("<?php echo $data->action_comment_form; ?>");
     requestSubmitForm('submit-comment', 'form-comment', "<?php echo $data->action; ?>");
+
+    $('.thumbnailimage').magnificPopup({
+        type:'image',
+        delegate: 'a',
+        gallery: {
+            enabled:true
+        }
+    });
 });
 </script>
