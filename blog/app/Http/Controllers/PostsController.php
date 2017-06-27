@@ -603,7 +603,7 @@ class PostsController extends Controller
         $this->data->layouts = $this->layout->orderBy('name', 'asc')->lists('name', 'layout_id');
         $this->data->status = $this->config->status();
 
-        if($this->data->watermark) {
+        if($this->data->watermark || isset($datas['post'])) {
 
             if(isset($datas['post'])) {
                 $this->data->watermark_status = $datas['post']->watermark_status;

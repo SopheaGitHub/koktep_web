@@ -15,6 +15,7 @@ return [
     'home' => 'Home',
     'contact_us' => 'Contact Us',
     'send_feedback' => 'Send Feedback',
+    'documentation' => 'Documentation',
     'khmer' => 'Khmer',
     'english' => 'English',
     'other' => 'Other',

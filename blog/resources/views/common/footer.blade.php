@@ -54,6 +54,10 @@
 			    <a href="<?php echo url('/send-feedback'); ?>" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-comment"></i><?php echo trans('text.send_feedback'); ?> </a>
 			</li>
 
+			<li role="presentation" class="dropdown information">
+			    <a href="<?php echo url('/documentation'); ?>" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-file"></i><?php echo trans('text.documentation'); ?> </a>
+			</li>
+
 		</ul>
 	</div>
 </div>

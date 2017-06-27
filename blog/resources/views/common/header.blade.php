@@ -108,6 +108,9 @@
                 ?>
             </ul>
 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="<?php echo url('/posts/create'); ?>" class="btn btn-primary navbar-btn btn-sm"><i class="fa fa-btn fa-plus"></i> <?php echo trans('button.add'); ?> </a>
+
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
@@ -134,6 +137,7 @@ border: 5px solid rgba(255,255,255,0.5);" alt="Avatar"> <?php echo trans('text.m
                     </li>
                 @endif
             </ul>
+            
         </div>
     </div>
 </nav>

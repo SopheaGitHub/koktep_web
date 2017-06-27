@@ -15,6 +15,7 @@ return [
     'home' => 'ទំព័រដើម',
     'contact_us' => 'ទំនក់ទំនងយើង',
     'send_feedback' => 'ផ្ញើ​មតិ​ស្ថាបនា',
+    'documentation' => 'ឯកសារ',
     'khmer' => 'ភាសាខ្មែរ',
     'english' => 'ភាសាអង់គ្លេស',
     'other' => 'ផ្សេងទៀត',
