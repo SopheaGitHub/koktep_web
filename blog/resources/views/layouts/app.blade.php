@@ -28,6 +28,10 @@
     <link href="<?php echo asset('/javascript/bxslider/jquery.bxslider.css'); ?>" rel="stylesheet" />
     <script type="text/javascript" src="<?php echo asset('/javascript/bxslider/jquery.bxslider.js'); ?>"></script>
 
+    <!-- magnific popup -->
+    <script type="text/javascript" src="<?php echo asset('/javascript/jquery/magnific/jquery.magnific-popup.min.js'); ?>"></script>
+    <link href="<?php echo asset('/javascript/jquery/magnific/magnific-popup.css'); ?>" rel="stylesheet" />
+
     @yield('stylesheet')
 
 </head>

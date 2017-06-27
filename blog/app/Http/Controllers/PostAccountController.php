@@ -89,6 +89,7 @@ class PostAccountController extends Controller
             } else {
                 $this->data->thumb_author = $this->filemanager->resize('no_image.png', 100, 100);
             }
+            $this->data->post_image = $post->image;
             $this->data->author_name = $post->author_name;
             $this->data->author_id = $post->author_id;
             $this->data->post_viewed = ($post->viewed+1);
@@ -96,6 +97,7 @@ class PostAccountController extends Controller
             $this->data->post_created_at = $post->created_at;
             $this->data->title = $post->title;
         }else {
+            $this->data->post_image = '';
             $this->data->image = $this->filemanager->resize('no_image.png', 600, 400);
             $this->data->author_name = $this->filemanager->resize('no_image.png', 100, 100);
             $this->data->author_id = '0';
@@ -215,7 +217,7 @@ class PostAccountController extends Controller
         }
 
         $this->data->entry_comment = trans('text.entry_comment');
-        $this->data->button_submit = trans('button.submit');
+        $this->data->button_send = trans('button.send');
 
         $this->data->overview_account = url('/overview-account');
         $this->data->post_id = $post_id;
