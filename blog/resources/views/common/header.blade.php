@@ -81,7 +81,6 @@
                             $category_id = (($category->category_id)? $category->category_id.'-'.str_replace(' ', '-', strtolower(htmlspecialchars($category->name))):'0');
                             $categories1 = $objCategory->getCategoriesByLanguage(['sort'=>'sort_order', 'order'=>'asc', 'parent_id'=>$category->category_id, 'language_id'=>$language->language_id])->get();
 
-
                             if(count($categories1) > 0) { 
                                 foreach ($categories1 as $key => $value) {
                                     $sub_categories[$value->category_id] = $value->parent_id;
@@ -109,7 +108,7 @@
             </ul>
 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="<?php echo url('/posts/create'); ?>" class="btn btn-primary navbar-btn btn-sm"><i class="fa fa-btn fa-plus"></i> <?php echo trans('button.add'); ?> </a>
+            <a href="<?php echo url('/posts/create'); ?>" class="btn btn-primary navbar-btn btn-xs"><i class="fa fa-btn fa-plus-square"></i> <?php echo trans('button.add'); ?> </a>
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">

@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><b><i class="fa fa-btn <?php echo (($data->icon=='icon_create')? 'fa-plus':'fa-pencil') ?>"></i><?php echo $data->titlelist; ?></b></h3>
+      <h3 class="panel-title"><b><i class="fa fa-btn <?php echo (($data->icon=='icon_create')? 'fa-plus-square':'fa-pencil-square') ?>"></i><?php echo $data->titlelist; ?></b></h3>
     </div>
     <div class="panel-body">
 

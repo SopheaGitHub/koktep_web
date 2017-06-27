@@ -27,7 +27,7 @@
           <hr />
           <div class="row">
             <div class="col-md-6">
-              <a href="<?php echo $data->edit_post.'/'.$post->post_id; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil"></i> <?php echo $data->button_edit; ?></a>
+              <a href="<?php echo $data->edit_post.'/'.$post->post_id; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil-square"></i> <?php echo $data->button_edit; ?></a>
               <a href="#" class="btn btn-sm btn-danger" id="<?php echo $post->post_id; ?>" data-toggle="modal" data-target="#modal-delete-post"><i class="fa fa-btn fa-trash-o"></i> <?php echo $data->button_delete; ?></a>
             </div>
             <div class="col-md-6">

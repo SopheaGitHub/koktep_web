@@ -29,8 +29,9 @@
     padding:0 1em;
     line-height:2em;
     color:#27C3ED;
-    font-weight:700;
-    position:relative
+    /*font-weight:700;*/
+    position:relative;
+    cursor: pointer;
 }
 .tree ul li:before {
     content:"";
@@ -69,19 +70,108 @@
 @endsection
 
 @section('content')
+<?php
+    $objLanguage = new App\Models\Language();
+    $objDocumentation = new App\Models\Documentation();
 
+    if(\Session::has('locale')) {
+        $locale = \Session::get('locale');
+    }else {
+        $locale = 'en';
+    }
+
+    $language = $objLanguage->getLanguageByCode( $locale );
+    $all_documentation = [];
+    $all_documentation1 = [];
+    $all_documentation2 = [];
+    $all_documentation3 = [];
+    if($language) {
+        $all_documentation = $objDocumentation->getAllDocumentationByLanguage(['sort'=>'sort_order', 'order'=>'asc', 'parent_id'=>'0', 'language_id'=>$language->language_id])->get();
+    }
+?>
 <div class="container">
     <div class="row profile">
         <div class="col-md-12">
             <!-- HTML to write -->
             <div class="profile-content">
                 <div class="row">
-                    <div class="col-md-4">
-                        <h4><i class="fa fa-btn fa-file"></i>Documentation</h4>
+                    <div class="col-md-3">
                         <div class="row">
                             <div class="col-sm-12">
                                 <ul id="tree3">
-                                    <li><a href="#">Header</a>
+
+                                    <?php
+                                        if(count($all_documentation) > 0) {
+                                            foreach ($all_documentation as $documentation) { ?>
+
+                                                <?php
+                                                    $all_documentation1 = $objDocumentation->getAllDocumentationByLanguage(['sort'=>'sort_order', 'order'=>'asc', 'parent_id'=>$documentation->documentation_id, 'language_id'=>$language->language_id])->get();
+
+                                                    if(count($all_documentation1) > 0) { ?>
+
+                                                        <li><a href="#"><?php echo $documentation->name; ?></a>
+
+                                                            <ul>
+                                                                <?php
+                                                                foreach ($all_documentation1 as $documentation1) { ?>
+                                                                    
+                                                                    <?php
+                                                                        $all_documentation2 = $objDocumentation->getAllDocumentationByLanguage(['sort'=>'sort_order', 'order'=>'asc', 'parent_id'=>$documentation1->documentation_id, 'language_id'=>$language->language_id])->get();
+
+                                                                        if(count($all_documentation2) > 0) { ?>
+
+                                                                            <li><a href="#"><?php echo $documentation1->name; ?></a>
+
+                                                                                <ul>
+                                                                                    <?php
+                                                                                    foreach ($all_documentation2 as $documentation2) { ?>
+                                                                                        
+                                                                                        <?php
+                                                                                            $all_documentation3 = $objDocumentation->getAllDocumentationByLanguage(['sort'=>'sort_order', 'order'=>'asc', 'parent_id'=>$documentation2->documentation_id, 'language_id'=>$language->language_id])->get();
+
+                                                                                            if(count($all_documentation3) > 0) { ?>
+
+                                                                                                <li><a href="#"><?php echo $documentation2->name; ?></a>
+
+                                                                                                    <ul>
+                                                                                                        <?php
+                                                                                                        foreach ($all_documentation3 as $documentation3) { ?>
+                                                                                                            <!-- sub menu level 3 -->
+                                                                                                        <?php   } ?>
+
+                                                                                                    </ul>
+
+                                                                                                </li>                                                       
+                                                                                                
+                                                                                        <?php } else { ?>
+                                                                                            <li><a href="#" class="getdocumentation" data-id="<?php echo $documentation2->documentation_id; ?>"><i class="fa fa-btn fa-minus-square-o"></i><?php echo $documentation2->name; ?></a></li>
+                                                                                        <?php } ?>
+
+                                                                                    <?php   } ?>
+
+                                                                                </ul>
+
+                                                                            </li>                                                       
+                                                                            
+                                                                    <?php } else { ?>
+                                                                        <li><a href="#" class="getdocumentation" data-id="<?php echo $documentation1->documentation_id; ?>"><i class="fa fa-btn fa-minus-square-o"></i><?php echo $documentation1->name; ?></a></li>
+                                                                    <?php } ?>
+
+                                                                <?php   } ?>
+
+                                                            </ul>
+
+                                                        </li>                                                       
+                                                        
+                                                <?php } else { ?>
+                                                    <li><a href="#" class="getdocumentation" data-id="<?php echo $documentation->documentation_id; ?>"><i class="fa fa-btn fa-minus-square-o"></i><?php echo $documentation->name; ?></a></li>
+                                                <?php } ?>
+
+                                        <?php   }
+                                        }
+                                    ?>
+
+                                    <!-- <li><a href="#">Header</a>
 
                                         <ul>
                                             <li>Company Maintenance</li>
@@ -99,67 +189,15 @@
                                             </li>
                                             <li>Human Resources</li>
                                         </ul>
-                                    </li>
-                                    <li>Footer
-                                        <ul>
-                                            <li>Company Maintenance</li>
-                                            <li>Employees
-                                                <ul>
-                                                    <li>Reports
-                                                        <ul>
-                                                            <li>Report1</li>
-                                                            <li>Report2</li>
-                                                            <li>Report3</li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>Employee Maint.</li>
-                                                </ul>
-                                            </li>
-                                            <li>Human Resources</li>
-                                        </ul>
-                                    </li>
-                                    <li>Fuctionalities
-                                        <ul>
-                                            <li>Company Maintenance</li>
-                                            <li>Employees
-                                                <ul>
-                                                    <li>Reports
-                                                        <ul>
-                                                            <li>Report1</li>
-                                                            <li>Report2</li>
-                                                            <li>Report3</li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>Employee Maint.</li>
-                                                </ul>
-                                            </li>
-                                            <li>Human Resources</li>
-                                        </ul>
-                                    </li>
-                                    <li>List
-                                        <ul>
-                                            <li>Company Maintenance</li>
-                                            <li>Employees
-                                                <ul>
-                                                    <li>Reports
-                                                        <ul>
-                                                            <li>Report1</li>
-                                                            <li>Report2</li>
-                                                            <li>Report3</li>
-                                                        </ul>
-                                                    </li>
-                                                    <li>Employee Maint.</li>
-                                                </ul>
-                                            </li>
-                                            <li>Human Resources</li>
-                                        </ul>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
-                       sdsd
+                    <div class="col-md-9">
+                        <div id="display-list">
+                
+                        </div>
                     </div>
                 </div>
 
@@ -174,8 +212,8 @@
 $.fn.extend({
     treed: function (o) {
       
-      var openedClass = 'glyphicon-minus-sign';
-      var closedClass = 'glyphicon-plus-sign';
+      var openedClass = 'fa fa-btn fa-minus-square-o';
+      var closedClass = 'fa fa-btn fa-plus-square-o';
       
       if (typeof o != 'undefined'){
         if (typeof o.openedClass != 'undefined'){
@@ -191,7 +229,7 @@ $.fn.extend({
         tree.addClass("tree");
         tree.find('li').has("ul").each(function () {
             var branch = $(this); //li with children ul
-            branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
+            branch.prepend("<i class='indicator " + closedClass + "'></i>");
             branch.addClass('branch');
             branch.on('click', function (e) {
                 if (this == e.target) {
@@ -227,7 +265,19 @@ $.fn.extend({
 
 //Initialization of treeviews
 
-$('#tree3').treed({openedClass:'glyphicon-chevron-right', closedClass:'glyphicon-chevron-down'});
+$('#tree3').treed({openedClass:'fa fa-btn fa-plus-square-o', closedClass:'fa fa-btn fa-plus-square-o'});
 
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    loadingList("<?php echo $data->action_list; ?>");
+
+    $(document).on('click', '.getdocumentation', function() {
+        var documentation_id = $(this).data("id");
+        loadingList("<?php echo $data->action_list.'?documentation_id='; ?>"+documentation_id);
+        return false;
+    });
+
+});
 </script>
 @endsection

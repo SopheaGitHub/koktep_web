@@ -12,7 +12,7 @@
                     <div class="col-md-6"><h4><i class="fa fa-btn fa-tasks"></i><?php echo $data->text_title; ?></h4></div>
                     <div class="col-md-6">
                         <span class="pull-right">
-                        <a href="<?php echo $data->add_post; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-plus"></i> <?php echo $data->button_add; ?> </a>
+                        <a href="<?php echo $data->add_post; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-plus-square"></i> <?php echo $data->button_add; ?> </a>
                         </span>
                     </div>
                 </div>
