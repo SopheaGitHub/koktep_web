@@ -34,8 +34,9 @@ class DocumentationController extends Controller
         $this->systemLogs('view', 'documentation', $request);
         // End
 
-        $this->data->action_list = url('/documentation/list');
-        $this->data->action_paginate_list = url('/documentation/list');
+        $this->data->doc_id = ((isset($request['doc_id']))? $request['doc_id']:1);
+        $this->data->action_documentation = url('/documentation');
+        $this->data->action_list = url('/documentation/list?doc_id='.$this->data->doc_id);
         return view('documentation.index', ['data'=>$this->data]);
     }
 
@@ -45,10 +46,10 @@ class DocumentationController extends Controller
         // add system log
         $this->systemLogs('load_list', 'documentation', $request);
         // End
-        if(isset($request['documentation_id'])) {
-            $documentation_id = $request['documentation_id'];
+        if(isset($request['doc_id'])) {
+            $doc_id = $request['doc_id'];
         }else {
-            $documentation_id = 1;
+            $doc_id = 1;
         }
 
         if(\Session::has('locale')) {
@@ -63,7 +64,7 @@ class DocumentationController extends Controller
             $language_id = $language->language_id;
         }
 
-        $documentation_descriptions = $this->documentation->getDocumentationDescriptionsByLanguage($documentation_id, $language_id);
+        $documentation_descriptions = $this->documentation->getDocumentationDescriptionsByLanguage($doc_id, $language_id);
 
         if($documentation_descriptions) {
             $this->data->documentation_descriptions_name = $documentation_descriptions->name;
