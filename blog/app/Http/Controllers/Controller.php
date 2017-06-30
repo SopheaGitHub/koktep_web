@@ -7,12 +7,14 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
+use App\Http\Controllers\ConfigController;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
 
     protected function systemLogs($action=null, $key=null, $all_resuest=[]) {
+        $configObj = new ConfigController();
         try {
             // get information for log
             if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -45,11 +47,11 @@ class Controller extends BaseController
                 'updated_at' => date('Y-m-d H:i:s')
             ];
 
-            // $my_file = '../storage/logs/system.log';
-            // $handle = fopen($my_file, 'a') or die('Cannot open file:  '.$my_file);
-            // $new_data = json_encode($systemLogDatas)."\n";
-            // fwrite($handle, $new_data);
-            // fclose($handle);
+            $my_file = $configObj->dir_logs.'system.log';
+            $handle = fopen($my_file, 'a') or die('Cannot open file:  '.$my_file);
+            $new_data = json_encode($systemLogDatas)."\n";
+            fwrite($handle, $new_data);
+            fclose($handle);
 
             return true;
         } catch (Exception $e) {
