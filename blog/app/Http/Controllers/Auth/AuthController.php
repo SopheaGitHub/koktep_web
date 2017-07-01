@@ -45,11 +45,11 @@ class AuthController extends Controller
         if($route_name=='register') {
             if(\Request::isMethod('post')) {
                 // add system log
-                $this->systemLogs('submit_form', 'auth', $request);
+                $this->systemLogs('submit_form', 'auth', \Request::except('password', 'password_confirmation'));
                 // End
             }else{
                 // add system log
-                $this->systemLogs('register', 'auth', $request);
+                $this->systemLogs('register', 'auth', \Request::except('password', 'password_confirmation'));
                 // End
             }
         }
@@ -59,11 +59,11 @@ class AuthController extends Controller
         if($route_name=='login') {
             if(\Request::isMethod('post')) {
                 // add system log
-                $this->systemLogs('submit_form', 'auth', $request);
+                $this->systemLogs('submit_form', 'auth', \Request::except('password'));
                 // End
             }else{
                 // add system log
-                $this->systemLogs('login', 'auth', $request);
+                $this->systemLogs('login', 'auth', \Request::except('password'));
                 // End
             }
         }
@@ -72,7 +72,7 @@ class AuthController extends Controller
         // log logout
         if($route_name=='logout') {
             // add system log
-            $this->systemLogs('logout', 'auth', $request);
+            $this->systemLogs('logout', 'auth', \Request::except('password'));
             // End
         }
         // End

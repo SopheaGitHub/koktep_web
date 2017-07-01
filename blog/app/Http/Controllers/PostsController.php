@@ -233,7 +233,7 @@ class PostsController extends Controller
         $this->data->button_yes = trans('button.yes');
         $this->data->button_no = trans('button.no');
 
-        $this->data->status = $this->config->status();
+        $this->data->status = $this->status();
         $this->data->post_detail = url('/post-account/detail');
         $this->data->text_empty = '...';
 
@@ -300,9 +300,9 @@ class PostsController extends Controller
                 // insert post
                 $postDatas = [
                     'author_id'     => $this->data->auth_id,
-                    'image'         => $this->config->escape($request['image']),
-                    'watermark_status' => $this->config->escape(((isset($request['watermark']))? $request['watermark']:'0')),
-                    'status'        => $this->config->escape($request['status'])
+                    'image'         => $this->escape($request['image']),
+                    'watermark_status' => $this->escape(((isset($request['watermark']))? $request['watermark']:'0')),
+                    'status'        => $this->escape($request['status'])
                 ];
 
                 $post = $this->post->create($postDatas);
@@ -497,9 +497,9 @@ class PostsController extends Controller
                 // update post
                 $postDatas = [
                     'updated_by_author_id'  => $this->data->auth_id,
-                    'image'         => $this->config->escape($request['image']),
-                    'watermark_status' => $this->config->escape(((isset($request['watermark']))? $request['watermark']:'0')),
-                    'status'        => $this->config->escape($request['status'])
+                    'image'         => $this->escape($request['image']),
+                    'watermark_status' => $this->escape(((isset($request['watermark']))? $request['watermark']:'0')),
+                    'status'        => $this->escape($request['status'])
                 ];
                 $post = $this->post->where('post_id', '=', $post_id)->update($postDatas);
                 // End
@@ -559,7 +559,7 @@ class PostsController extends Controller
                 $old_image = $request['image'];
                 $extension = pathinfo($old_image, PATHINFO_EXTENSION);
                 $new_image = 'cache/' . substr($old_image, 0, strrpos($old_image, '.')) . '-' . 600 . 'x' . 400 . '.' . $extension;
-                $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', $this->config->escape($new_image)), '/');
+                $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', $this->escape($new_image)), '/');
 
                 // If path is just a file delete it
                 if (is_file($pathImage)) {
@@ -572,7 +572,7 @@ class PostsController extends Controller
                         $old_image = $post_image['image'];
                         $extension = pathinfo($old_image, PATHINFO_EXTENSION);
                         $new_image = 'cache/' . substr($old_image, 0, strrpos($old_image, '.')) . '-' . 600 . 'x' . 400 . '.' . $extension;
-                        $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', $this->config->escape($new_image)), '/');
+                        $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', $this->escape($new_image)), '/');
 
                         // If path is just a file delete it
                         if (is_file($pathImage)) {
@@ -601,7 +601,7 @@ class PostsController extends Controller
         $this->data->languages = $this->language->getLanguages(['sort'=>'name', 'order'=>'asc'])->get();
         $this->data->watermark = $this->user->getWatermarkByUserId($this->data->auth_id);
         $this->data->layouts = $this->layout->orderBy('name', 'asc')->lists('name', 'layout_id');
-        $this->data->status = $this->config->status();
+        $this->data->status = $this->status();
 
         if($this->data->watermark || isset($datas['post'])) {
 
@@ -770,7 +770,7 @@ class PostsController extends Controller
                     $postCommentDatas = [
                         'user_id'     => $this->data->auth_id,
                         'post_id'     => $request['post_id'],
-                        'comment'     => $this->config->escape($request['comment']),
+                        'comment'     => $this->escape($request['comment']),
                         'parent_id'   => '0'
                     ];
 

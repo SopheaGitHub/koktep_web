@@ -245,7 +245,7 @@ class PostAccountController extends Controller
 
         // defind search title, description, tag
         if(isset($request['search'])) {
-            $search = $this->config->escape($request['search']);
+            $search = $this->escape($request['search']);
         }else {
             $search = null;
         }
@@ -432,7 +432,7 @@ class PostAccountController extends Controller
             $url .= '&page='.$request['page'];
         }
 
-        $this->data->status = $this->config->status();
+        $this->data->status = $this->status();
 
         $this->data->show = trans('text.show');
         $this->data->to = trans('text.to');

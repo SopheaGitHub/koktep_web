@@ -149,7 +149,7 @@ class PostsGroupsAccountController extends Controller
         $this->data->of = trans('text.of');
         $this->data->page = trans('text.page');
 
-        $this->data->status = $this->config->status();
+        $this->data->status = $this->status();
         $this->data->post_detail = url('/post-account/detail');
         $this->data->text_empty = '...';
 

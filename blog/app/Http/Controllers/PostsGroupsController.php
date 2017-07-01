@@ -152,7 +152,7 @@ class PostsGroupsController extends Controller
         $this->data->button_yes = trans('button.yes');
         $this->data->button_no = trans('button.no');
 
-        $this->data->status = $this->config->status();
+        $this->data->status = $this->status();
         $this->data->post_detail = url('/post-account/detail');
         $this->data->text_empty = '...';
 
@@ -366,7 +366,7 @@ class PostsGroupsController extends Controller
     public function getPostGroupForm($datas=[]) {
         $this->data->go_post_autocomplete = url('/posts/autocomplete');
         $this->data->languages = $this->language->getLanguages(['sort'=>'name', 'order'=>'asc'])->get();
-        $this->data->status = $this->config->status();
+        $this->data->status = $this->status();
 
         // define tap
         $this->data->tab_general = trans('text.tab_general');

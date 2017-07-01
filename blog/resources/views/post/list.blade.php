@@ -3,6 +3,9 @@
     foreach ($data->posts as $post) { 
         $post_category = (($post->category_id)? $post->category_id.'-'.str_replace(' ', '-', strtolower($post->category_name)):'0');
         $view_detail = $data->post_detail.'?account_id='.$post->author_id.'&post_id='.$post->post_id.'&category_id='.$post_category;
+      
+        $description = mb_substr(strip_tags(html_entity_decode($post->description, ENT_QUOTES, 'UTF-8')), 0, 100).((mb_strlen($post->description)>100)? '...':'');
+
       ?>
       <div class="row">
       <div class="col-sm-6 col-md-6">
@@ -11,7 +14,7 @@
       <div class="col-sm-6 col-md-6">
           <div class="w3-container w3-white">
               <p><b><?php echo $post->title; ?></b></p>
-              <p><?php echo htmlspecialchars_decode($post->description); ?></p>
+              <p><?php echo $description; ?></p>
           </div>
           <hr />
             <!-- <i class="fa fa-btn fa-eye"></i> View : 0121 | <i class="fa fa-btn fa-hand-peace-o"></i> Like : 23 | <i class="fa fa-btn fa-hand-rock-o"></i> Unlike : 212 -->

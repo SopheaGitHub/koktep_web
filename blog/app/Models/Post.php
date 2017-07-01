@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Language;
-use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\Controller;
 use DB;
 
 class Post extends Model {
@@ -276,11 +276,11 @@ class Post extends Model {
 	}
 
 	public function insertPostDescription($datas=[]) {
-		$config = new ConfigController();
+		$controller = new Controller();
 		$sql = '';
 		if(isset($datas['post_description_datas']) && count($datas['post_description_datas']) > 0) {
 			foreach ($datas['post_description_datas'] as $language_id => $post_description) {
-				$sql .= " INSERT INTO `post_description`(`post_id`, `language_id`, `title`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) VALUES ('".$datas['post_id']."', '".$language_id."', '".$config->escape($post_description['title'])."', '".$config->escape($post_description['description'])."', '".$config->escape($post_description['tag'])."', '".$config->escape($post_description['title'])."', '".$config->escape($post_description['title'])."', '".$config->escape($post_description['title'])."'); ";
+				$sql .= " INSERT INTO `post_description`(`post_id`, `language_id`, `title`, `description`, `tag`, `meta_title`, `meta_description`, `meta_keyword`) VALUES ('".$datas['post_id']."', '".$language_id."', '".$controller->escape($post_description['title'])."', '".$controller->escape($post_description['description'])."', '".$controller->escape($post_description['tag'])."', '".$controller->escape($post_description['title'])."', '".$controller->escape($post_description['title'])."', '".$controller->escape($post_description['title'])."'); ";
 			}
 			DB::connection()->getPdo()->exec($sql);
 		}
@@ -307,11 +307,11 @@ class Post extends Model {
 	}
 
 	public function insertPostImage($datas=[]) {
-		$config = new ConfigController();
+		$controller = new Controller();
 		$sql = '';
 		if (isset($datas['post_images']) && count($datas['post_images']) > 0) {
 			foreach ($datas['post_images'] as $post_image) {
-				$sql .= "INSERT INTO post_image SET post_id = '" . $datas['post_id'] . "', image = '" . $config->escape($post_image['image']) . "', watermark_status = '" . $config->escape( ((isset($post_image['watermark']))? $post_image['watermark']:'0') ) . "', sort_order = '" . $config->escape($post_image['sort_order']) . "'; ";
+				$sql .= "INSERT INTO post_image SET post_id = '" . $datas['post_id'] . "', image = '" . $controller->escape($post_image['image']) . "', watermark_status = '" . $controller->escape( ((isset($post_image['watermark']))? $post_image['watermark']:'0') ) . "', sort_order = '" . $controller->escape($post_image['sort_order']) . "'; ";
 			}
 			DB::connection()->getPdo()->exec($sql);
 		}

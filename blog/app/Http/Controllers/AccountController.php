@@ -118,12 +118,12 @@ class AccountController extends Controller
 
                 // update user
                 $userDatas = [
-                    'name'          => $this->config->escape($request['name']),
-                    'email'         => $this->config->escape($request['email']),
-                    'description'   => $this->config->escape($request['description']),
-                    'image'         => $this->config->escape($request['image']),
-                    'first_cover'   => $this->config->escape($request['first_cover']),
-                    'second_cover'  => $this->config->escape($request['second_cover'])
+                    'name'          => $this->escape($request['name']),
+                    'email'         => $this->escape($request['email']),
+                    'description'   => $this->escape($request['description']),
+                    'image'         => $this->escape($request['image']),
+                    'first_cover'   => $this->escape($request['first_cover']),
+                    'second_cover'  => $this->escape($request['second_cover'])
                 ];
                 $post = $this->user->where('id', '=', $user_id)->update($userDatas);
                 // End
@@ -313,8 +313,8 @@ class AccountController extends Controller
         // End
 
         $this->data->load_zone_action = url('geo-zones/zone');
-        $this->data->status = $this->config->status();
-        $this->data->watermark_positions = $this->config->watermark_positions();
+        $this->data->status = $this->status();
+        $this->data->watermark_positions = $this->watermark_positions();
         $this->data->action = (($datas['action'])? $datas['action']:'');
         $this->data->titlelist = (($datas['titlelist'])? $datas['titlelist']:'');
 
