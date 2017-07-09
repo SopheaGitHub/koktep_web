@@ -188,6 +188,13 @@ footer {
   color: #0F97B7;
 }
 
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+    color: #555;
+    text-decoration: none;
+    background-color: #e7e7e7;
+    outline: 0;
+}
+
 /*@media (max-width: 767px) {
   navbar.less:475
   .navbar-default .navbar-nav .open .dropdown-menu>li>a {

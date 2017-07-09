@@ -73,11 +73,11 @@ class User extends Authenticatable
         }
 
         if($filter_data['country_id']!='') {
-            $db->join(DB::raw("(SELECT uac.country_id, uac.user_id FROM user_address AS uac WHERE uac.country_id = '".$filter_data['country_id']."' ORDER BY uac.user_address_id DESC LIMIT 1) AS country"), 'country.user_id', '=', 'u.id');
+            $db->join(DB::raw("(SELECT uac.country_id, uac.user_id FROM user_address AS uac WHERE uac.country_id = '".$filter_data['country_id']."' ORDER BY uac.sort_order DESC LIMIT 1) AS country"), 'country.user_id', '=', 'u.id');
         }
 
         if($filter_data['zone_id']!='') {
-            $db->join(DB::raw("(SELECT uaz.zone_id, uaz.user_id FROM user_address AS uaz WHERE uaz.zone_id = '".$filter_data['zone_id']."' ORDER BY uaz.user_address_id DESC LIMIT 1) AS zone"), 'zone.user_id', '=', 'u.id');
+            $db->join(DB::raw("(SELECT uaz.zone_id, uaz.user_id FROM user_address AS uaz WHERE uaz.zone_id = '".$filter_data['zone_id']."' ORDER BY uaz.sort_order DESC LIMIT 1) AS zone"), 'zone.user_id', '=', 'u.id');
         }
         
         if($filter_data['browse']!='') {

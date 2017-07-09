@@ -83,17 +83,17 @@
 
                             if(count($categories1) > 0) { 
                                 foreach ($categories1 as $key => $value) {
-                                    $sub_categories[$value->category_id] = $value->parent_id;
+                                    $sub_categories[$value->parent_id][$value->category_id] = $value->name;
                                 }
                             ?>
-                                <li class="dropdown <?php echo ((isset($sub_categories[$route_category_id]))? 'active':''); ?>">
+                                <li class="dropdown <?php echo ((isset($sub_categories[$category->category_id][$route_category_id]))? 'active':''); ?>">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn <?php echo $category->icon; ?>"></i> <?php echo $category->name; ?> <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <?php
                                             foreach ($categories1 as $category1) { 
                                                 $category_id1 = (($category1->category_id)? $category1->category_id.'-'.str_replace(' ', '-', strtolower(htmlspecialchars($category1->name))):'0');
                                              ?>
-                                                <li><a href="<?php echo url('/category?category_id='.$category_id1); ?>"><i class="fa fa-btn <?php echo $category1->icon; ?>"></i><?php echo $category1->name; ?></a></li>
+                                                <li <?php echo (($route_category_id==$category1->category_id)? 'class="active"':''); ?>><a href="<?php echo url('/category?category_id='.$category_id1); ?>"><i class="fa fa-btn <?php echo $category1->icon; ?>"></i><?php echo $category1->name; ?></a></li>
                                         <?php    }
                                         ?>
                                         <li style="border-top:1px solid #eee;"><a href="<?php echo url('/category?category_id='.$category_id); ?>"><?php echo (($locale=='en') ? trans('text.other').' '.$category->name:$category->name.''.trans('text.other')); ?> ...</a></li>

@@ -42,11 +42,12 @@ return [
     'text_and' => 'and',
     'privacy_policy' => 'Privacy Policy',
     'terms_conditions' => 'Terms &amp; Conditions',
-    'text_enjoy' => 'Enjoy creative, design, development, and photography all here',
+    'text_enjoy' => 'Enjoy Art, Design, Development and Photography here.',
     'artists' => 'Artists',
     'designers' => 'Designers',
     'photographers' => 'Photographers',
-    'developers' => 'Software Developers',
-    'text_koktep_collections' => 'We collection images of concepts on creative, design, software development and photography to share with you all around the world.'
+    'developers' => 'Developers',
+    'tourism_site' => 'Tourism\'s Company',
+    'text_koktep_collections' => 'We focus on the user\'s image in the field of Art, Design, Development and Photography to be displayed with everyone around the world.'
  
 ];
