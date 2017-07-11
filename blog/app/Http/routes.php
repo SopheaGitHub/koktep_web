@@ -40,3 +40,12 @@ Route::controllers([
 	'/posts-groups'	=> 'PostsGroupsController',
 	'/geo-zones' 	=> 'GeoZonesController'
 ]);
+
+Route::get('/email', function() {
+	Mail::send('emails.welcome', [], function($message){
+	    $message->from('chansophea9@gmail.com', 'Laravel');
+	    $message->to('chansophea9@gmail.com');
+	});
+	echo 'success';
+	exit();
+});
