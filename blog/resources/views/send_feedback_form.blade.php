@@ -4,13 +4,13 @@
         <div class="form-group required">
             <label class="col-sm-3 control-label" for="input-name"><?php echo $data->entry_your_name; ?></label>
             <div class="col-sm-9">
-                <input type="text" name="name" value="" id="input-name" placeholder="<?php echo $data->entry_your_name; ?>" class="form-control">
+                <input type="text" name="name" value="<?php echo $data->auth_name; ?>" id="input-name" placeholder="<?php echo $data->entry_your_name; ?>" class="form-control">
             </div>
         </div>
         <div class="form-group required">
             <label class="col-sm-3 control-label" for="input-email"><?php echo $data->entry_email; ?></label>
             <div class="col-sm-9">
-                <input type="text" name="email" value="" id="input-email" placeholder="<?php echo $data->entry_email; ?>" class="form-control">
+                <input type="text" name="email" value="<?php echo $data->auth_email; ?>" id="input-email" placeholder="<?php echo $data->entry_email; ?>" class="form-control">
             </div>
         </div>
         <div class="form-group required">

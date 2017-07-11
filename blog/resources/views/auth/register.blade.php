@@ -77,8 +77,9 @@ $language = $objLanguage->getLanguageByCode( $locale );
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn btn-sm btn-primary" id="register">
-                                    <i class="fa fa-btn fa-user"></i> <?php echo trans('auth.register'); ?>
+                                    <i class="fa fa-btn fa-user"></i> <?php echo trans('auth.register'); ?>​​
                                 </button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="btn btn-sm" href="{{ url('/login') }}"><i class="fa fa-btn fa-sign-in"></i><?php echo trans('text.login'); ?></a>
                             </div>
                         </div>
                     </form>

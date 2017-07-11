@@ -65,6 +65,9 @@ class ContactUsController extends Controller
         $this->data->entry_message = trans('contactus.message');
         $this->data->button_send = trans('contactus.send');
 
+        $this->data->auth_name = (( \Auth::check() )? \Auth::user()->name:'' );
+        $this->data->auth_email = (( \Auth::check() )? \Auth::user()->email:'' );
+
         return view('contact_us_form', ['data' => $this->data]);
     }
 

@@ -65,6 +65,9 @@ class SendFeedbackController extends Controller
         $this->data->entry_message = trans('sendfeedback.message');
         $this->data->button_send = trans('sendfeedback.send');
 
+        $this->data->auth_name = (( \Auth::check() )? \Auth::user()->name:'' );
+        $this->data->auth_email = (( \Auth::check() )? \Auth::user()->email:'' );
+
         return view('send_feedback_form', ['data' => $this->data]);
     }
 

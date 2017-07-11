@@ -59,7 +59,7 @@
                                     <i class="fa fa-btn fa-sign-in"></i> <?php echo trans('auth.login'); ?>
                                 </button>
 
-                                <a class="btn btn-sm" href="{{ url('/password/reset') }}"><?php echo trans('auth.forgot_password'); ?></a>
+                                <a class="btn btn-sm" href="{{ url('/password/reset') }}"><?php echo trans('auth.forgot_password'); ?></a> | <a class="btn btn-sm" href="{{ url('/register') }}"><i class="fa fa-btn fa-pencil-square-o"></i><?php echo trans('text.register'); ?></a>
                             </div>
                         </div>
                     </form>
