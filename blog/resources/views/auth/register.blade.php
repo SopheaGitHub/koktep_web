@@ -91,10 +91,10 @@ $language = $objLanguage->getLanguageByCode( $locale );
 @endsection
 @section('script')
 <script type="text/javascript">
-$(document).ready(function() {
-    $(document).on('click', '#register', function() {
-        $('#register').prop('disabled', true);
-    });
-});
+// $(document).ready(function() {
+//     $(document).on('click', '#register', function() {
+//         $('#register').prop('disabled', true);
+//     });
+// });
 </script>
 @endsection

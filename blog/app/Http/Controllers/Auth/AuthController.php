@@ -125,6 +125,7 @@ class AuthController extends Controller
             'name' => $config->escape($data['name']),
             'email' => $config->escape($data['email']),
             'password' => bcrypt($data['password']),
+            'status' => '1'
         ]);
     }
 }
