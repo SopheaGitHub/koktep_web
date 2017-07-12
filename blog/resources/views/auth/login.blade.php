@@ -8,6 +8,9 @@
                 <div class="col-md-6">
                     <hr />
                     @include('auth.auth_left')
+                    <br />
+                    <p><?php echo trans('auth.point_user_register'); ?></p>
+                    <a class="btn btn-sm btn-primary" href="{{ url('/register') }}"><i class="fa fa-btn fa-user"></i> <?php echo trans('auth.register'); ?>​​</a>
                 </div>
                 <div class="col-md-6">
                     <hr />
@@ -27,7 +30,7 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="email" class="col-md-4 control-label"><?php echo trans('auth.email'); ?></label>
 
                             <div class="col-md-8">
@@ -35,7 +38,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="password" class="col-md-4 control-label"><?php echo trans('auth.password'); ?></label>
 
                             <div class="col-md-8">
@@ -59,7 +62,7 @@
                                     <i class="fa fa-btn fa-sign-in"></i> <?php echo trans('auth.login'); ?>
                                 </button>
 
-                                <a class="btn btn-sm" href="{{ url('/password/reset') }}"><?php echo trans('auth.forgot_password'); ?></a> | <a class="btn btn-sm" href="{{ url('/register') }}"><i class="fa fa-btn fa-pencil-square-o"></i><?php echo trans('text.register'); ?></a>
+                                <a class="btn btn-sm" href="{{ url('/password/reset') }}"><?php echo trans('auth.forgot_password'); ?></a>
                             </div>
                         </div>
                     </form>

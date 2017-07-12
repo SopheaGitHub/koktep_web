@@ -9,6 +9,8 @@
                 <div class="row">
                     <div class="col-md-12"><h4><i class="fa fa-btn fa-comment"></i><?php echo $data->entry_title; ?></h4></div>
                 </div>
+                <br />
+                <p><?php echo $data->text_feedback;?></p>
                 <hr />
                 <div class="row">
                     <div class="col-md-6">

@@ -39,6 +39,7 @@ class SendFeedbackController extends Controller
         $this->data->entry_website = trans('sendfeedback.website');
         $this->data->entry_address = trans('sendfeedback.address');
         $this->data->entry_sendfeedback_form = trans('sendfeedback.sendfeedback_form');
+        $this->data->text_feedback = trans('sendfeedback.text_feedback');
 
         $this->data->action = url('/send-feedback/send');
         $this->data->action_form = url('/send-feedback/sendfeedback-load-form');

@@ -33,4 +33,5 @@ return [
     'email_required' => 'The <b>Email</b> field is required.',
     'email_email' => 'The <b>Email</b> must be a valid email address.',
     'message_required' => 'The <b>Message</b> field is required.',
+    'text_feedback' => 'We would love to hear your thoughts, concerns or problumns with anything so we can improvel.'
 ];

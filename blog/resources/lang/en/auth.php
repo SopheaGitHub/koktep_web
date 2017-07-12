@@ -38,7 +38,7 @@ return [
     'password_required' => 'The <b>Password</b> field is required.',
     'password_min_6' => 'The <b>Password</b> must be at least 6 characters',
     'password_in_confirmed' => 'The <b>Password Confirmation</b> does not match.',
-    'text_agree' => 'When clicking on button Register, that you have read and agree to our',
+    'text_agree' => 'When clicking on button Register, mean that you have read and agree to our',
     'text_and' => 'and',
     'privacy_policy' => 'Privacy Policy',
     'terms_conditions' => 'Terms &amp; Conditions',
@@ -48,6 +48,7 @@ return [
     'photographers' => 'Photographers',
     'developers' => 'Developers',
     'tourism_site' => 'Tourism\'s Company',
-    'text_koktep_collections' => 'We focus on the user\'s image in the field of Art, Design, Development and Photography to be displayed with everyone around the world.'
- 
+    'text_koktep_collections' => 'We focus on the user\'s image in the field of Art, Design, Development and Photography to be displayed with everyone around the world.',
+    'point_user_register' => 'Register an account to join and show your achievements to the whole world.',
+    'point_user_login' => 'If you already have an account with us, please login at the login page.'
 ];

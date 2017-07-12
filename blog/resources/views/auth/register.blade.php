@@ -17,6 +17,9 @@ $language = $objLanguage->getLanguageByCode( $locale );
                 <div class="col-md-6">
                     <hr />
                     @include('auth.auth_left')
+                    <br />
+                    <p><?php echo trans('auth.point_user_login'); ?></p>
+                    <a class="btn btn-sm btn-primary" href="{{ url('/login') }}"><i class="fa fa-btn fa-sign-in"></i> <?php echo trans('auth.login'); ?>​​</a>
                 </div>
                 <div class="col-md-6">
                     <hr />
@@ -34,7 +37,7 @@ $language = $objLanguage->getLanguageByCode( $locale );
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="name" class="col-md-4 control-label"><?php echo trans('auth.name'); ?></label>
 
                             <div class="col-md-8">
@@ -42,7 +45,7 @@ $language = $objLanguage->getLanguageByCode( $locale );
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="email" class="col-md-4 control-label"><?php echo trans('auth.email'); ?></label>
 
                             <div class="col-md-8">
@@ -50,7 +53,7 @@ $language = $objLanguage->getLanguageByCode( $locale );
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="password" class="col-md-4 control-label"><?php echo trans('auth.password'); ?></label>
 
                             <div class="col-md-8">
@@ -58,7 +61,7 @@ $language = $objLanguage->getLanguageByCode( $locale );
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group required">
                             <label for="password-confirm" class="col-md-4 control-label"><?php echo trans('auth.confirm_password'); ?></label>
 
                             <div class="col-md-8">
@@ -79,7 +82,6 @@ $language = $objLanguage->getLanguageByCode( $locale );
                                 <button type="submit" class="btn btn-sm btn-primary" id="register">
                                     <i class="fa fa-btn fa-user"></i> <?php echo trans('auth.register'); ?>​​
                                 </button>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="btn btn-sm" href="{{ url('/login') }}"><i class="fa fa-btn fa-sign-in"></i><?php echo trans('text.login'); ?></a>
                             </div>
                         </div>
                     </form>

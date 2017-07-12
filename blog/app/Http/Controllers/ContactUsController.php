@@ -39,6 +39,7 @@ class ContactUsController extends Controller
         $this->data->entry_website = trans('contactus.website');
         $this->data->entry_address = trans('contactus.address');
         $this->data->entry_contact_form = trans('contactus.contact_form');
+        $this->data->text_contact_us = trans('contactus.text_contact_us');
 
         $this->data->action = url('/contact-us/send');
         $this->data->action_form = url('/contact-us/contact-load-form');
