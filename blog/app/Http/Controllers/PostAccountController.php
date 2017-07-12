@@ -33,6 +33,8 @@ class PostAccountController extends Controller
         $this->config = new ConfigController();
         $this->data->web_title = 'Overview';
         $this->data->auth_id = ((Auth::check())? Auth::user()->id:'0');
+        $this->data->auth_image = ((Auth::check())? Auth::user()->image:'');
+        $this->data->auth_name = ((Auth::check())? Auth::user()->name:'');
         $this->data->dir_image = $this->config->dir_image;
     }
 
@@ -41,16 +43,6 @@ class PostAccountController extends Controller
         // add system log
         $this->systemLogs('view', 'post-account', $request);
         // End
-        $this->data->action_detail_form = url('/post-account/post-detail-form?post_id='.$request['post_id']);
-        return view('post_account.detail', ['data' => $this->data]);
-    }
-
-    public function getPostDetailForm() {
-        $request = \Request::all();
-        // add system log
-        $this->systemLogs('load_form', 'post-account', $request);
-        // End
-
         if(\Session::has('locale')) {
             $locale = \Session::get('locale');
         }else {
@@ -67,6 +59,12 @@ class PostAccountController extends Controller
             $post_id = $request['post_id'];
         }else {
             $post_id = 0;
+        }
+
+        if (!empty($this->data->auth_image) && is_file($this->data->dir_image . $this->data->auth_image)) {
+            $this->data->auth_image = $this->filemanager->resize($this->data->auth_image, 100, 100);
+        } else {
+            $this->data->auth_image = $this->filemanager->resize('no_image.png', 100, 100);
         }
 
         $this->data->check_post = false;
@@ -94,6 +92,7 @@ class PostAccountController extends Controller
             $this->data->author_id = $post->author_id;
             $this->data->post_viewed = ($post->viewed+1);
             $this->data->post_commented = $post->commented;
+            $this->data->post_average_rating = $post->average_rating;
             $this->data->post_created_at = $post->created_at;
             $this->data->title = $post->title;
         }else {
@@ -103,6 +102,7 @@ class PostAccountController extends Controller
             $this->data->author_id = '0';
             $this->data->post_viewed = '0';
             $this->data->post_commented = '0';
+            $this->data->post_average_rating = '0';
             $this->data->post_created_at = '';
             $this->data->title = '';
         }
@@ -180,6 +180,7 @@ class PostAccountController extends Controller
 
         $this->data->entry_comment = trans('text.entry_comment');
         $this->data->entry_related_post = trans('text.entry_related_post');
+        $this->data->text_rating = trans('text.text_rating');
 
         $this->data->url_tag = url('/?tag=');
         $this->data->url_category = url('/category?category_id=');
@@ -189,8 +190,8 @@ class PostAccountController extends Controller
         $this->data->action = url('/posts/comment');
         $this->data->action_comment_form = url('/post-account/comment-form?post_id='.$post_id);
         $this->data->authorized = ((\Auth::check())? true:false);
-        
-        return view('post_account.detail_form', ['data' => $this->data]);
+
+        return view('post_account.detail', ['data' => $this->data]);
     }
 
     public function getCommentForm() {
@@ -217,6 +218,12 @@ class PostAccountController extends Controller
         }
 
         $this->data->entry_comment = trans('text.entry_comment');
+        $this->data->your_text = trans('text.your_text');
+        $this->data->text_comment = trans('text.text_comment');
+        $this->data->text_rating = trans('text.text_rating');
+        $this->data->text_bad = trans('text.text_bad');
+        $this->data->text_good = trans('text.text_good');
+
         $this->data->button_send = trans('button.send');
 
         $this->data->overview_account = url('/overview-account');

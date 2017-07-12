@@ -18,6 +18,15 @@
                             <i data-toggle="tooltip" title="<?php echo $data->icon_date; ?>" class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y', strtotime($data->post_created_at)); ?>
                         </div>
                         <br />
+                        <div>
+                            Rating
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <br />
                         <div class="row">
                             <div class="col-md-12">
                                 <ul class="nav nav-tabs">
@@ -91,9 +100,9 @@
                                             <br />
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <span><a href="<?php echo url('/login'); ?>"><i class="fa fa-btn fa-sign-in"></i><?php echo trans('text.login'); ?></a></span> 
-                                                    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                                                    <span><a href="<?php echo url('/register'); ?>"><i class="fa fa-btn fa-pencil-square-o"></i><?php echo trans('text.register'); ?></a></span>
+                                                    <span><a href="<?php echo url('/login'); ?>" class="btn btn-primary btn-sm"><i class="fa fa-btn fa-sign-in"></i><?php echo trans('text.login'); ?></a></span> 
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <span><a href="<?php echo url('/register'); ?>" class="btn btn-primary btn-sm"><i class="fa fa-btn fa-pencil-square-o"></i><?php echo trans('text.register'); ?></a></span>
                                                 </div>
                                             </div>
                                         <?php } ?>

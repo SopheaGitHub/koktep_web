@@ -763,7 +763,12 @@ class PostsController extends Controller
         if(\Request::ajax()) {
             DB::beginTransaction();
             try {
-                            
+
+                $validationError = $this->post->validationCommentForm(['request'=>$request]);
+                if($validationError) {
+                    return \Response::json($validationError);
+                }
+
                 $this->data->action_form = url('/post-account/comment-form?post_id='.$request['post_id']);
                 if(\Request::has('comment')) {
                     // insert post comment
@@ -771,6 +776,7 @@ class PostsController extends Controller
                         'user_id'     => $this->data->auth_id,
                         'post_id'     => $request['post_id'],
                         'comment'     => $this->escape($request['comment']),
+                        'rating'      => ((isset($request['rating']))? $request['rating']:0),
                         'parent_id'   => '0'
                     ];
 
@@ -779,7 +785,7 @@ class PostsController extends Controller
                 }
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>'Success : save post comment successfully!', 'load_form'=>$this->data->action_form];
+                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>'Send comment successfully!, Thank you for your commentation on this post.', 'load_form'=>$this->data->action_form];
                 return \Response::json($return);
             } catch (Exception $e) {
                 DB::rollback();

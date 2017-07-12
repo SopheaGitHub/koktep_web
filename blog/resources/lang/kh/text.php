@@ -215,6 +215,13 @@ return [
     'title_tags' => 'បំបែកដោយសញ្ញាក្បៀស',
     'title_keyword' => 'កុំប្រើដកឃ្លា, ជំនួសដកឃ្លាដោយមាន - និងធ្វើឱ្យប្រាកដថាពាក្យគន្លឹះគឺមានតែមួយនៅទូទាំងពិភពលោក។',
     'title_password' => 'ត្រូវតែបញ្ចូលយ៉ាងហោចណាស់ 6 តួអក្សរ, <br /> គួរតែបញ្ចូលឧទាហរណ៍:@As!02',
-    'title_watermark' => 'អនុញ្ញាតឱ្យបន្ថែមរូបភាពសម្គាល់'
+    'title_watermark' => 'អនុញ្ញាតឱ្យបន្ថែមរូបភាពសម្គាល់',
+
+    'your_text' => 'Your Text',
+    'text_comment' => 'Writing your comment here!',
+    'text_rating' => 'Rating',
+    'text_bad' => 'Bad',
+    'text_good' => 'Good',
+    'send_comment' => 'Send comment'
 
 ];

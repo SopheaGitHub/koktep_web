@@ -13,7 +13,7 @@ class Post extends Model {
 	public function getPost($post_id) {
 		$result = DB::table(DB::raw('
 				(SELECT
-				DISTINCT p.*,(SELECT COUNT(1) FROM post_comment WHERE post_id = p.post_id) AS commented, u.name as author_name, u.image AS author_image,
+				DISTINCT p.*,(SELECT COUNT(1) FROM post_comment WHERE post_id = p.post_id) AS commented, (SELECT CEIL((SUM(rating) / COUNT(1))) AS average_rating FROM post_comment WHERE post_id = p.post_id) AS average_rating, u.name as author_name, u.image AS author_image,
 					(
 						SELECT
 							keyword
@@ -423,6 +423,24 @@ class Post extends Model {
         $validator = \Validator::make($datas['request'], $rules, $messages);
         if ($validator->fails()) {
             $error = ['error'=>'1','success'=>'0','msg'=> trans('text.delete').' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
+        }
+        return $error;
+	}
+
+	public function validationCommentForm($datas=[]) {
+		$error = false;
+		$rules = [];
+		$messages = [];
+
+		$rules['comment'] = 'required|min:5';
+		// $messages['post_invalid.required'] = trans('text.post_invalid');
+
+		$rules['rating'] = 'required';
+		// $messages['post_id.required'] = trans('text.post_id_required');
+
+        $validator = \Validator::make($datas['request'], $rules, $messages);
+        if ($validator->fails()) {
+            $error = ['error'=>'1','success'=>'0','msg'=> trans('text.send_comment').' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
         }
         return $error;
 	}

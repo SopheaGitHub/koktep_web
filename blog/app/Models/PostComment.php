@@ -8,7 +8,7 @@ use DB;
 class PostComment extends Model
 {
     protected $table = 'post_comment';
-	protected $fillable = ['user_id', 'post_id', 'comment', 'parent_id'];
+	protected $fillable = ['user_id', 'post_id', 'comment', 'rating', 'parent_id'];
 
 	public function getPostCommentsByPostId($post_id) {
 		$result = DB::table(DB::raw('
@@ -16,6 +16,7 @@ class PostComment extends Model
 					pc.post_comment_id AS post_comment_id,
 					pc.comment AS comment,
 					pc.created_at AS created_at,
+					pc.rating AS rating,
 					u.id AS user_id,
 					u.name AS user_name,
 					u.image AS image
