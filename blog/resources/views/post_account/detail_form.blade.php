@@ -96,6 +96,31 @@
 
                                             </div>
                                         <?php } else { ?>
+
+                                            <div class="form-group required">
+                                                <input type="hidden" name="post_id" value="<?php echo $data->post_id; ?>" />
+                                                <div class="col-sm-12">
+                                                    <label class="control-label" for="input-review"><?php echo $data->your_text; ?></label>
+                                                    <textarea name="comment" rows="3" id="input-review" class="form-control" placeholder="<?php echo $data->text_comment; ?>"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group required">
+                                                <div class="col-sm-12">
+                                                    <label class="control-label"><?php echo $data->text_rating; ?></label>
+                                                    &nbsp;&nbsp;&nbsp; <?php echo $data->text_bad; ?>&nbsp;
+                                                    <input name="rating" value="1" type="radio">
+                                                    &nbsp;
+                                                    <input name="rating" value="2" type="radio">
+                                                    &nbsp;
+                                                    <input name="rating" value="3" type="radio">
+                                                    &nbsp;
+                                                    <input name="rating" value="4" type="radio">
+                                                    &nbsp;
+                                                    <input name="rating" value="5" type="radio">
+                                                    &nbsp;<?php echo $data->text_good; ?>
+                                                </div>
+                                            </div>
+
                                             <?php echo trans('auth.text_koktep_collections'); ?>
                                             <br />
                                             <div class="row">

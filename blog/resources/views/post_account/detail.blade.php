@@ -21,15 +21,8 @@
                             <i data-toggle="tooltip" title="<?php echo $data->icon_date; ?>" class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y', strtotime($data->post_created_at)); ?>
                         </div>
                         <br />
-                        <div>
-                            <?php echo $data->text_rating; ?>
-                            <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                <?php if ($data->post_average_rating < $i) { ?>
-                                <span class="fa fa-stack" style="margin-right: -12px;"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                <?php } else { ?>
-                                <span class="fa fa-stack" style="color: #27C3ED; margin-right: -12px;"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                <?php } ?>
-                            <?php } ?>
+                        <div id="load-rating">
+                            
                         </div>
                         <br />
                         <div class="row">
@@ -100,15 +93,45 @@
 
                                             </div>
                                         <?php } else { ?>
-                                            <?php echo trans('auth.text_koktep_collections'); ?>
                                             <br />
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <span><a href="<?php echo url('/login'); ?>" class="btn btn-primary btn-sm"><i class="fa fa-btn fa-sign-in"></i><?php echo trans('text.login'); ?></a></span> 
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <span><a href="<?php echo url('/register'); ?>" class="btn btn-primary btn-sm"><i class="fa fa-btn fa-pencil-square-o"></i><?php echo trans('text.register'); ?></a></span>
+                                            <div class="alert alert-success" id="success">
+                                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                <i class="fa fa-info-circle fa-btn"></i><?php echo trans('auth.point_comment_post'); ?>
+                                            </div>
+                                            <div class="form-group required">
+                                                <input type="hidden" name="post_id" value="<?php echo $data->post_id; ?>" />
+                                                <div class="col-sm-12">
+                                                    <label class="control-label" for="input-review"><?php echo $data->your_text; ?></label>
+                                                    <textarea name="comment" rows="3" id="input-review" class="form-control" readonly="readonly" placeholder="<?php echo $data->text_comment; ?>"></textarea>
                                                 </div>
                                             </div>
+                                            <div class="form-group required">
+                                                <div class="col-sm-12">
+                                                    <label class="control-label"><?php echo $data->text_rating; ?></label>
+                                                    &nbsp;&nbsp;&nbsp; <?php echo $data->text_bad; ?>&nbsp;
+                                                    <input name="rating" value="1" disabled="disabled" type="radio">
+                                                    &nbsp;
+                                                    <input name="rating" value="2" disabled="disabled" type="radio">
+                                                    &nbsp;
+                                                    <input name="rating" value="3" disabled="disabled" type="radio">
+                                                    &nbsp;
+                                                    <input name="rating" value="4" disabled="disabled" type="radio">
+                                                    &nbsp;
+                                                    <input name="rating" value="5" disabled="disabled" type="radio">
+                                                    &nbsp;<?php echo $data->text_good; ?>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p><?php echo trans('auth.point_user_login'); ?></p>
+                                                    <a class="btn btn-sm btn-primary" href="<?php echo url('/login'); ?>"><i class="fa fa-btn fa-sign-in"></i> <?php echo trans('auth.login'); ?>​​</a>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><?php echo trans('auth.point_user_register'); ?></p>
+                                                    <a class="btn btn-sm btn-primary" href="<?php echo url('/register'); ?>"><i class="fa fa-btn fa-user"></i> <?php echo trans('auth.register'); ?>​​</a>
+                                                </div>
+                                            </div>
+
                                         <?php } ?>
                                     </div>    
                                 </form>
@@ -160,8 +183,9 @@ $(document).ready(function() {
     $(document).on('submit', '#form-comment', function() {
         return false;
     });
+    loadingFormToID("<?php echo $data->action_load_rating; ?>", "load-rating");
     loadingForm("<?php echo $data->action_comment_form; ?>");
-    requestSubmitForm('submit-comment', 'form-comment', "<?php echo $data->action; ?>");
+    requestSubmitForm2('submit-comment', 'form-comment', "<?php echo $data->action; ?>");
 
     $('.thumbnailimage').magnificPopup({
         type:'image',

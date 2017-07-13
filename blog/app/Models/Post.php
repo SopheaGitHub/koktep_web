@@ -13,7 +13,7 @@ class Post extends Model {
 	public function getPost($post_id) {
 		$result = DB::table(DB::raw('
 				(SELECT
-				DISTINCT p.*,(SELECT COUNT(1) FROM post_comment WHERE post_id = p.post_id) AS commented, (SELECT CEIL((SUM(rating) / COUNT(1))) AS average_rating FROM post_comment WHERE post_id = p.post_id) AS average_rating, u.name as author_name, u.image AS author_image,
+				DISTINCT p.*,(SELECT COUNT(1) FROM post_comment WHERE post_id = p.post_id) AS commented, u.name as author_name, u.image AS author_image,
 					(
 						SELECT
 							keyword
@@ -29,6 +29,13 @@ class Post extends Model {
 				WHERE
 					p.post_id = "'.$post_id.'" AND p.status IN (\'0\', \'1\')
 				) AS post
+			'))->first();
+		return $result;
+	}
+
+	public function getPostRating($post_id) {
+		$result = DB::table(DB::raw('
+				(SELECT CEIL((SUM(rating) / COUNT(1))) AS average_rating FROM post_comment WHERE post_id = '.$post_id.') AS average_rating
 			'))->first();
 		return $result;
 	}
@@ -74,6 +81,7 @@ class Post extends Model {
 		->select(DB::raw('p.post_id as post_id,
 								p.viewed as viewed,
 								(SELECT COUNT(1) FROM post_comment WHERE post_id = p.post_id) AS commented,
+								(SELECT CEIL((SUM(rating) / COUNT(1))) AS average_rating FROM post_comment WHERE post_id = p.post_id) AS average_rating,
 								(SELECT COUNT(1) FROM post_image WHERE post_id = p.post_id) AS total_post_image,
 								p.image as image,
 								p.created_at as created_at,
@@ -433,10 +441,11 @@ class Post extends Model {
 		$messages = [];
 
 		$rules['comment'] = 'required|min:5';
-		// $messages['post_invalid.required'] = trans('text.post_invalid');
+		$messages['comment.required'] = trans('text.comment_required');
+		$messages['comment.min'] = trans('text.comment_min');
 
 		$rules['rating'] = 'required';
-		// $messages['post_id.required'] = trans('text.post_id_required');
+		$messages['rating.required'] = trans('text.rating_required');
 
         $validator = \Validator::make($datas['request'], $rules, $messages);
         if ($validator->fails()) {

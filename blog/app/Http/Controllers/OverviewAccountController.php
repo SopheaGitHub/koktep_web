@@ -38,6 +38,13 @@ class OverviewAccountController extends Controller
             return view('overview_account.index', ['data'=>$this->data]);
         }else {
             if(isset($request['login'])&&$request['login']=='success'&&Auth::check()) {
+
+                if(\Session::has('return_detail')) {
+                    $store_return_detail = \Session::get('return_detail');
+                    \Session::forget('return_detail');
+                    return redirect($store_return_detail);
+                }
+
                 $this->data->action_list = url('/post-account/list?account_id='.((Auth::check())? Auth::user()->id:'0'));
                 $this->data->action_paginate_list = url('/post-account/list');
                 return view('overview_account.index', ['data'=>$this->data]);

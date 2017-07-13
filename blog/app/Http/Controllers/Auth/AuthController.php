@@ -48,6 +48,12 @@ class AuthController extends Controller
                 $this->systemLogs('submit_form', 'auth', \Request::except('password', 'password_confirmation'));
                 // End
             }else{
+                $previous_url = \Session::get('_previous')['url'];
+                if( strpos( $previous_url, url('post-account/detail') ) !== false ) {
+                    \Session::put('return_detail', $previous_url);
+                }else {
+                    \Session::forget('return_detail');
+                }
                 // add system log
                 $this->systemLogs('register', 'auth', \Request::except('password', 'password_confirmation'));
                 // End
@@ -62,6 +68,12 @@ class AuthController extends Controller
                 $this->systemLogs('submit_form', 'auth', \Request::except('password'));
                 // End
             }else{
+                $previous_url = \Session::get('_previous')['url'];
+                if( strpos( $previous_url, url('post-account/detail') ) !== false ) {
+                    \Session::put('return_detail', $previous_url);
+                }else {
+                    \Session::forget('return_detail');
+                }
                 // add system log
                 $this->systemLogs('login', 'auth', \Request::except('password'));
                 // End

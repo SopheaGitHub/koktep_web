@@ -40,6 +40,7 @@ class PostAccountController extends Controller
 
     public function getDetail() {
         $request = \Request::all();
+
         // add system log
         $this->systemLogs('view', 'post-account', $request);
         // End
@@ -92,7 +93,6 @@ class PostAccountController extends Controller
             $this->data->author_id = $post->author_id;
             $this->data->post_viewed = ($post->viewed+1);
             $this->data->post_commented = $post->commented;
-            $this->data->post_average_rating = $post->average_rating;
             $this->data->post_created_at = $post->created_at;
             $this->data->title = $post->title;
         }else {
@@ -102,7 +102,6 @@ class PostAccountController extends Controller
             $this->data->author_id = '0';
             $this->data->post_viewed = '0';
             $this->data->post_commented = '0';
-            $this->data->post_average_rating = '0';
             $this->data->post_created_at = '';
             $this->data->title = '';
         }
@@ -180,7 +179,11 @@ class PostAccountController extends Controller
 
         $this->data->entry_comment = trans('text.entry_comment');
         $this->data->entry_related_post = trans('text.entry_related_post');
+        $this->data->your_text = trans('text.your_text');
+        $this->data->text_comment = trans('text.text_comment');
         $this->data->text_rating = trans('text.text_rating');
+        $this->data->text_bad = trans('text.text_bad');
+        $this->data->text_good = trans('text.text_good');
 
         $this->data->url_tag = url('/?tag=');
         $this->data->url_category = url('/category?category_id=');
@@ -188,10 +191,33 @@ class PostAccountController extends Controller
         $this->data->post_detail = url('/post-account/detail');
         $this->data->text_empty = '...';
         $this->data->action = url('/posts/comment');
+        $this->data->post_id = $post_id;
         $this->data->action_comment_form = url('/post-account/comment-form?post_id='.$post_id);
+        $this->data->action_load_rating = url('/post-account/load-rating?post_id='.$post_id);
         $this->data->authorized = ((\Auth::check())? true:false);
 
         return view('post_account.detail', ['data' => $this->data]);
+    }
+
+    public function getLoadRating() {
+        $request = \Request::all();
+
+        if(isset($request['post_id'])) {
+            $post_id = $request['post_id'];
+        }else {
+            $post_id = 0;
+        }
+
+        $post = $this->post->getPostRating($post_id);
+
+        if($post) {
+            $this->data->post_average_rating = $post->average_rating;
+        }else {
+            $this->data->post_average_rating = '0';
+        }
+
+        $this->data->text_rating = trans('text.text_rating');
+        return view('post_account.load_rating_form', ['data' => $this->data]);
     }
 
     public function getCommentForm() {

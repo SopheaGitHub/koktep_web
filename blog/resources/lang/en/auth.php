@@ -49,6 +49,7 @@ return [
     'developers' => 'Developers',
     'tourism_site' => 'Tourism\'s Company',
     'text_koktep_collections' => 'We focus on the user\'s image in the field of Art, Design, Development and Photography to be displayed with everyone around the world.',
-    'point_user_register' => 'Register an account to join and show your achievements to the whole world.',
-    'point_user_login' => 'If you already have an account with us, please login at the login page.'
+    'point_user_register' => 'Register an account to use the many functionality available on the web or show your achievements to the whole world.',
+    'point_user_login' => 'If you already have an account with us, please login at the login page.',
+    'point_comment_post' => 'Please login before you can comment on this post.'
 ];

@@ -223,6 +223,7 @@ class PostsController extends Controller
         $this->data->to = trans('text.to');
         $this->data->of = trans('text.of');
         $this->data->page = trans('text.page');
+        $this->data->text_rating = trans('text.text_rating');
 
         $this->data->icon_view = trans('icon.view');
         $this->data->icon_comment = trans('icon.comment');
@@ -770,6 +771,8 @@ class PostsController extends Controller
                 }
 
                 $this->data->action_form = url('/post-account/comment-form?post_id='.$request['post_id']);
+                $this->data->action_load_rating = url('/post-account/load-rating?post_id='.$request['post_id']);
+
                 if(\Request::has('comment')) {
                     // insert post comment
                     $postCommentDatas = [
@@ -785,7 +788,7 @@ class PostsController extends Controller
                 }
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>'Send comment successfully!, Thank you for your commentation on this post.', 'load_form'=>$this->data->action_form];
+                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>trans('text.success_comment'), 'load_form'=>$this->data->action_form, 'load_rating'=>$this->data->action_load_rating, 'display_id'=>'load-rating'];
                 return \Response::json($return);
             } catch (Exception $e) {
                 DB::rollback();

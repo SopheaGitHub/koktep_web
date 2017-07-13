@@ -217,11 +217,16 @@ return [
     'title_password' => 'Must be enter at least 6 characters,<br /> You have to enter as Ex:@As!02',
     'title_watermark' => 'Allow to add watermark image',
 
-    'your_text' => 'Your Text',
+    'your_text' => 'Your Comment',
     'text_comment' => 'Writing your comment here!',
     'text_rating' => 'Rating',
     'text_bad' => 'Bad',
     'text_good' => 'Good',
-    'send_comment' => 'Send comment'
+    'send_comment' => 'Send comment',
+    'success_comment' => 'Send comment successfully, Thank you for your commentation on this post.',
+
+    'comment_required' => 'The <b>Your Comment</b> field is required.',
+    'comment_min' => 'The <b>Your Comment</b> must be at least 5 characters.',
+    'rating_required' => 'The <b>Rating</b> field is required.'
 
 ];

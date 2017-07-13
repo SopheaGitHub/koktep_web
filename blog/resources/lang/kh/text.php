@@ -36,7 +36,7 @@ return [
     'people' => 'អ្នកបង្កើត',
     'feature' => 'លក្ខណៈពិសេស',
     'viewed' => 'មើលច្រើនបំផុត',
-    'commented' => 'អធិប្បាយច្រើនបំផុត',
+    'commented' => 'មតិយោបល់ច្រើនបំផុត',
     'recent' => 'ថ្មី',
     'today' => 'ថ្ងៃនេះ',
     'this_week' => 'ស​ប្តា​ហ៍​នេះ',
@@ -163,7 +163,7 @@ return [
     'tab_social_media' => 'ប្រព័ន្ធ​ផ្សព្វផ្សាយ​សង្គម',
     'tab_watermark' => 'ការសម្គាល់',
 
-    'entry_comment' => 'សេចក្តីអធិប្បាយ',
+    'entry_comment' => 'មតិយោបល់',
     'entry_related_post' => 'ការបង្ហោះដែលទាក់ទង',
 
     'entry_title' => 'ចំណងជើង',
@@ -217,11 +217,16 @@ return [
     'title_password' => 'ត្រូវតែបញ្ចូលយ៉ាងហោចណាស់ 6 តួអក្សរ, <br /> គួរតែបញ្ចូលឧទាហរណ៍:@As!02',
     'title_watermark' => 'អនុញ្ញាតឱ្យបន្ថែមរូបភាពសម្គាល់',
 
-    'your_text' => 'Your Text',
-    'text_comment' => 'Writing your comment here!',
-    'text_rating' => 'Rating',
-    'text_bad' => 'Bad',
-    'text_good' => 'Good',
-    'send_comment' => 'Send comment'
+    'your_text' => 'មតិយោបល់របស់អ្នក',
+    'text_comment' => 'មតិយោបល់របស់អ្នកនៅទីនេះ!',
+    'text_rating' => 'ការវាយតំលៃ',
+    'text_bad' => 'មិនល្អ',
+    'text_good' => 'ល្អ',
+    'send_comment' => 'ផ្ញើមត្តិ',
+    'success_comment' => 'ផ្ញើមតិយោបល់ដោយជោគជ័យ, សូមអរគុណចំពោះមតិយោបល់របស់អ្នកនៅលើរូបភាពដាក់បង្ហាញនេះ។',
+
+    'comment_required' => '<b>មតិយោបល់របស់អ្នក</b> តម្រូវឱ្យបញ្ចូល។',
+    'comment_min' => '<b>មតិយោបល់របស់អ្នក</b> ត្រូវតែមានយ៉ាងហោចណាស់ 5 តួអក្សរ។',
+    'rating_required' => '<b>ការវាយតំលៃ</b> តម្រូវឱ្យបញ្ចូល។'
 
 ];
