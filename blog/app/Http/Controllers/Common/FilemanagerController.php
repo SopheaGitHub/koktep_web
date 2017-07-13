@@ -319,7 +319,11 @@ class FilemanagerController extends Controller {
 		}
 
 		if (!$json) {
+			// upload image
 			move_uploaded_file($_FILES['file']['tmp_name'], $directory . '/' . $filename);
+
+			// compress image
+			$this->compress_image($directory . '/' . $filename, $directory . '/' . $filename, 25);
 
 			$json['success'] = 'Success: Your file has been uploaded!';
 		}
@@ -548,6 +552,22 @@ class FilemanagerController extends Controller {
 		// }
 
 		return $this->data->http_best_path. '/images/' . $new_image;
+	}
+
+	function compress_image($source_url, $destination_url, $quality) {
+		$info = getimagesize($source_url);
+	 
+		if ($info['mime'] == 'image/jpeg') $image = imagecreatefromjpeg($source_url);
+		elseif ($info['mime'] == 'image/pjpeg') $image = imagecreatefromjpeg($source_url);
+		elseif ($info['mime'] == 'image/gif') $image = imagecreatefromgif($source_url);
+		elseif ($info['mime'] == 'image/png') $image = imagecreatefrompng($source_url);
+		elseif ($info['mime'] == 'image/x-png') $image = imagecreatefrompng($source_url);
+	 
+		//save file
+		imagejpeg($image, $destination_url, $quality);
+	 
+		//return destination file
+		return $destination_url;
 	}
 
 }

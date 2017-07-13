@@ -1,3 +1,4 @@
+$('#block-loader').hide();
 function getURLVar(key) {
 	var value = [];
 
@@ -135,10 +136,12 @@ function requestSubmitForm(buttonId, formId, formAction) {
 	      	beforeSend: function() {
 	        	console.log('beforeSend');
 	        	$('#'+buttonId).prop('disabled', true);
+	        	$('#block-loader').show();
 	      	},
 	      	complete: function() {
 	        	console.log('completed');
 	        	$('#'+buttonId).prop('disabled', false);
+	        	$('#block-loader').hide();
 	      	},
 	      	success: function(data) {
 	        	var msg = '';
@@ -192,10 +195,12 @@ function requestSubmitForm2(buttonId, formId, formAction) {
 	      	beforeSend: function() {
 	        	console.log('beforeSend');
 	        	$('#'+buttonId).prop('disabled', true);
+	        	$('#block-loader').show();
 	      	},
 	      	complete: function() {
 	        	console.log('completed');
 	        	$('#'+buttonId).prop('disabled', false);
+	        	$('#block-loader').hide();
 	      	},
 	      	success: function(data) {
 	        	var msg = '';
@@ -250,10 +255,12 @@ function requestSubmitDeleteForm(buttonId, formId, formAction) {
 	      	beforeSend: function() {
 	        	console.log('beforeSend');
 	        	$('#'+buttonId).prop('disabled', true);
+	        	$('#block-loader').show();
 	      	},
 	      	complete: function() {
 	        	console.log('completed');
 	        	$('#'+buttonId).prop('disabled', false);
+	        	$('#block-loader').hide();
 	      	},
 	      	success: function(data) {
 	        	var msg = '';
@@ -301,9 +308,11 @@ function loadingList (requestAction) {
 	  	url: requestAction,
 	  	beforeSend:function() {
 	  		console.log('beforeSend');
+	  		$('#block-loader').show();
 	  	},
 	  	complete:function() {
 	    	console.log('complete');
+	    	$('#block-loader').hide();
 	  	},
 	  	success:function(html) {
 	    	$('#display-list').html(html).show();
@@ -322,9 +331,11 @@ function loadingForm (requestAction) {
 	  	url: requestAction,
 	  	beforeSend:function() {
 	  		console.log('beforeSend');
+	  		$('#block-loader').show();
 	  	},
 	  	complete:function() {
 	    	console.log('complete');
+	    	$('#block-loader').hide();
 	  	},
 	  	success:function(html) {
 	    	$('#load-form').html(html).show();
@@ -343,9 +354,11 @@ function loadingFormToID (requestAction, id) {
 	  	url: requestAction,
 	  	beforeSend:function() {
 	  		console.log('beforeSend');
+	  		$('#block-loader').show();
 	  	},
 	  	complete:function() {
 	    	console.log('complete');
+	    	$('#block-loader').hide();
 	  	},
 	  	success:function(html) {
 	    	$('#'+id).html(html).show();
@@ -370,9 +383,11 @@ function paginateListAction (mainPaginateId, requestAction) {
 	        	url: url,
 	        	beforeSend:function() {
 	    			console.log('beforeSend');
+	    			$('#block-loader').show();
 	    		},
 	    		complete:function() {
 	      			console.log('complete');
+	      			$('#block-loader').hide();
 	    		},
 	    		success:function(html) {
 	      			$('#display-list').html(html).show();

@@ -36,6 +36,9 @@
 
 </head>
 <body id="app-layout">
+    <div id="block-loader">
+      <div class="myloader"></div>
+    </div>
     <header>
       <!-- include header -->
       @include('common.header')
