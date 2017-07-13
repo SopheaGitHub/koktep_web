@@ -15,6 +15,8 @@ return [
 
     // 'failed' => 'These credentials do not match our records.',
     'error' => 'កំហុស',
+    'unauthorized' => 'គ្មានការអនុញ្ញាត',
+    'unauthorized_message' => 'ការចូលរបស់អ្នកត្រូវបានផុតតំណត់ សូមធ្វើការចូលម្តងទៀត។',
     'login_unsuccessful' => 'ចូលមិនបានជោគជ័យ',
     'register_unsuccessful' => 'ចុះឈ្មោះមិនបានជោគជ័យ',
     'failed' => '<b>អ៊ីម៉ែល</b> ឬ <b>ពាក្យសម្ងាត់</b> មិនត្រូវគ្នា។',

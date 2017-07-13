@@ -15,6 +15,8 @@ return [
 
     // 'failed' => 'These credentials do not match our records.',
     'error' => 'Error',
+    'unauthorized' => 'Unauthorized',
+    'unauthorized_message' => 'Your session has expired, please login again.',
     'login_unsuccessful' => 'login unsuccessful',
     'register_unsuccessful' => 'register unsuccessful',
     'failed' => 'These <b>Email</b> or <b>Password</b> do not match.',

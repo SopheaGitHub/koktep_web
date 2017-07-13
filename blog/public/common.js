@@ -168,7 +168,7 @@ function requestSubmitForm(buttonId, formId, formAction) {
 
 	        	$('#message').html(msg).show();
 	      	},
-	      	error: function(error) {
+	      	error: function(request, status, error) {
 	        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
 	      	},
 	      	cache: false,
@@ -226,7 +226,7 @@ function requestSubmitForm2(buttonId, formId, formAction) {
 
 	        	$('#message').html(msg).show();
 	      	},
-	      	error: function(error) {
+	      	error: function(request, status, error) {
 	        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
 	      	},
 	      	cache: false,
@@ -283,7 +283,7 @@ function requestSubmitDeleteForm(buttonId, formId, formAction) {
 
 	        	$('#message').html(msg).show();
 	      	},
-	      	error: function(error) {
+	      	error: function(request, status, error) {
 	        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
 	      	},
 	      	cache: false,
@@ -308,7 +308,7 @@ function loadingList (requestAction) {
 	  	success:function(html) {
 	    	$('#display-list').html(html).show();
 	  	},
-	  	error:function(err) {
+	  	error:function(request, status, error) {
 	    	$('#display-list').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
 	  	}
 	});
@@ -329,7 +329,7 @@ function loadingForm (requestAction) {
 	  	success:function(html) {
 	    	$('#load-form').html(html).show();
 	  	},
-	  	error:function(err) {
+	  	error:function(request, status, error) {
 	    	$('#load-form').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
 	  	}
 	});
@@ -350,7 +350,7 @@ function loadingFormToID (requestAction, id) {
 	  	success:function(html) {
 	    	$('#'+id).html(html).show();
 	  	},
-	  	error:function(err) {
+	  	error:function(request, status, error) {
 	    	$('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
 	  	}
 	});
@@ -377,7 +377,7 @@ function paginateListAction (mainPaginateId, requestAction) {
 	    		success:function(html) {
 	      			$('#display-list').html(html).show();
 	    		},
-	    		error:function(err) {
+	    		error:function(request, status, error) {
 	      			$('#display-list').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
 	    		}
 	      	});

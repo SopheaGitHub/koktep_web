@@ -15,6 +15,7 @@ return [
 
     'save' => 'Save',
     'save_change' => 'Save Change',
+    'continue_login' => 'Continue Login',
     'add' => 'Add',
     'edit' => 'Edit',
     'delete' => 'Delete',
