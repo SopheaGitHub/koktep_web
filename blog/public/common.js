@@ -126,118 +126,132 @@ function parse_url (str, component) { // eslint-disable-line camelcase
 function requestSubmitForm(buttonId, formId, formAction) {
 	$(document).on('click', '#'+buttonId, function(e) {
 	    e.preventDefault();
-	    var postDatas = new FormData($("form#"+formId)[0]);
-	    $.ajax({
-	      	url: formAction,
-	      	type: "POST",
-	      	data: postDatas,
-	      	dataType: "json",
-	      	async: false,
-	      	beforeSend: function() {
-	        	console.log('beforeSend');
-	        	$('#'+buttonId).prop('disabled', true);
-	        	$('#block-loader').show();
-	      	},
-	      	complete: function() {
-	        	console.log('completed');
-	        	$('#'+buttonId).prop('disabled', false);
-	        	$('#block-loader').hide();
-	      	},
-	      	success: function(data) {
-	        	var msg = '';
-	        	// if vaildate error
-	        	if(data.error==1) {
-	          		msg += '<div class="alert alert-warning" id="warning">';
-	         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
-	          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' </b><br />';
-	          		if(data.validatormsg) {
-	            		$.each(data.validatormsg, function(index, value) {
-	              			msg += '- '+value+'<br />';
-	            		});
-	          		}
-	          		msg += '</div>';
-	        	}
+	    if (typeof timer != 'undefined') {
+		    clearInterval(timer);
+		}
 
-	        	// if success
-	        	if(data.success==1) {
-	          		msg += '<div class="alert alert-success" id="success">';
-	          		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
-	          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
-	          		msg += '</div>';
-	          		if(data.action=='create') {
-	            		loadingForm(data.load_form);
-	          		}
-	        	}
+		timer = setInterval(function() {
+			clearInterval(timer);
+		    var postDatas = new FormData($("form#"+formId)[0]);
+		    $.ajax({
+		      	url: formAction,
+		      	type: "POST",
+		      	data: postDatas,
+		      	dataType: "json",
+		      	async: true,
+		      	beforeSend: function() {
+		        	console.log('beforeSend');
+		        	$('#'+buttonId).prop('disabled', true);
+		        	$('#block-loader').show();
+		      	},
+		      	complete: function() {
+		        	console.log('completed');
+		        	$('#'+buttonId).prop('disabled', false);
+		        	$('#block-loader').hide();
+		      	},
+		      	success: function(data) {
+		        	var msg = '';
+		        	// if vaildate error
+		        	if(data.error==1) {
+		          		msg += '<div class="alert alert-warning" id="warning">';
+		         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' </b><br />';
+		          		if(data.validatormsg) {
+		            		$.each(data.validatormsg, function(index, value) {
+		              			msg += '- '+value+'<br />';
+		            		});
+		          		}
+		          		msg += '</div>';
+		        	}
 
-	        	$('#message').html(msg).show();
-	      	},
-	      	error: function(request, status, error) {
-	        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
-	      	},
-	      	cache: false,
-	      	contentType: false,
-	      	processData: false
-	    });
+		        	// if success
+		        	if(data.success==1) {
+		          		msg += '<div class="alert alert-success" id="success">';
+		          		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
+		          		msg += '</div>';
+		          		if(data.action=='create') {
+		            		loadingForm(data.load_form);
+		          		}
+		        	}
+
+		        	$('#message').html(msg).show();
+		      	},
+		      	error: function(request, status, error) {
+		        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      	},
+		      	cache: false,
+		      	contentType: false,
+		      	processData: false
+		    });
+		}, 10);
   	});
 }
 
 // submit form data
 function requestSubmitForm2(buttonId, formId, formAction) {
 	$(document).on('click', '#'+buttonId, function(e) {
-	    e.preventDefault();
-	    var postDatas = new FormData($("form#"+formId)[0]);
-	    $.ajax({
-	      	url: formAction,
-	      	type: "POST",
-	      	data: postDatas,
-	      	dataType: "json",
-	      	async: false,
-	      	beforeSend: function() {
-	        	console.log('beforeSend');
-	        	$('#'+buttonId).prop('disabled', true);
-	        	$('#block-loader').show();
-	      	},
-	      	complete: function() {
-	        	console.log('completed');
-	        	$('#'+buttonId).prop('disabled', false);
-	        	$('#block-loader').hide();
-	      	},
-	      	success: function(data) {
-	        	var msg = '';
-	        	// if vaildate error
-	        	if(data.error==1) {
-	          		msg += '<div class="alert alert-warning" id="warning">';
-	         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
-	          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' </b><br />';
-	          		if(data.validatormsg) {
-	            		$.each(data.validatormsg, function(index, value) {
-	              			msg += '- '+value+'<br />';
-	            		});
-	          		}
-	          		msg += '</div>';
-	        	}
+		e.preventDefault();
+	    if (typeof timer != 'undefined') {
+		    clearInterval(timer);
+		}
 
-	        	// if success
-	        	if(data.success==1) {
-	          		msg += '<div class="alert alert-success" id="success">';
-	          		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
-	          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
-	          		msg += '</div>';
-	          		if(data.action=='create') {
-	            		loadingForm(data.load_form);
-	            		loadingFormToID(data.load_rating, data.display_id);
-	          		}
-	        	}
+		timer = setInterval(function() {
+			clearInterval(timer);
+		    var postDatas = new FormData($("form#"+formId)[0]);
+		    $.ajax({
+		      	url: formAction,
+		      	type: "POST",
+		      	data: postDatas,
+		      	dataType: "json",
+		      	async: true,
+		      	beforeSend: function() {
+		        	console.log('beforeSend');
+		        	$('#'+buttonId).prop('disabled', true);
+		        	$('#block-loader').show();
+		      	},
+		      	complete: function() {
+		        	console.log('completed');
+		        	$('#'+buttonId).prop('disabled', false);
+		        	$('#block-loader').hide();
+		      	},
+		      	success: function(data) {
+		        	var msg = '';
+		        	// if vaildate error
+		        	if(data.error==1) {
+		          		msg += '<div class="alert alert-warning" id="warning">';
+		         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' </b><br />';
+		          		if(data.validatormsg) {
+		            		$.each(data.validatormsg, function(index, value) {
+		              			msg += '- '+value+'<br />';
+		            		});
+		          		}
+		          		msg += '</div>';
+		        	}
 
-	        	$('#message').html(msg).show();
-	      	},
-	      	error: function(request, status, error) {
-	        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
-	      	},
-	      	cache: false,
-	      	contentType: false,
-	      	processData: false
-	    });
+		        	// if success
+		        	if(data.success==1) {
+		          		msg += '<div class="alert alert-success" id="success">';
+		          		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
+		          		msg += '</div>';
+		          		if(data.action=='create') {
+		            		loadingForm(data.load_form);
+		            		loadingFormToID(data.load_rating, data.display_id);
+		          		}
+		        	}
+
+		        	$('#message').html(msg).show();
+		      	},
+		      	error: function(request, status, error) {
+		        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      	},
+		      	cache: false,
+		      	contentType: false,
+		      	processData: false
+		    });
+		}, 10);
   	});
 }
 
@@ -245,58 +259,65 @@ function requestSubmitForm2(buttonId, formId, formAction) {
 function requestSubmitDeleteForm(buttonId, formId, formAction) {
 	$(document).on('click', '#'+buttonId, function(e) {
 	    e.preventDefault();
-	    var postDatas = new FormData($("form#"+formId)[0]);
-	    $.ajax({
-	      	url: formAction,
-	      	type: "POST",
-	      	data: postDatas,
-	      	dataType: "json",
-	      	async: false,
-	      	beforeSend: function() {
-	        	console.log('beforeSend');
-	        	$('#'+buttonId).prop('disabled', true);
-	        	$('#block-loader').show();
-	      	},
-	      	complete: function() {
-	        	console.log('completed');
-	        	$('#'+buttonId).prop('disabled', false);
-	        	$('#block-loader').hide();
-	      	},
-	      	success: function(data) {
-	        	var msg = '';
-	        	// if vaildate error
-	        	if(data.error==1) {
-	          		msg += '<div class="alert alert-warning" id="warning">';
-	         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
-	          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' </b><br />';
-	          		if(data.validatormsg) {
-	            		$.each(data.validatormsg, function(index, value) {
-	              			msg += '- '+value+'<br />';
-	            		});
-	          		}
-	          		msg += '</div>';
-	        	}
+	    if (typeof timer != 'undefined') {
+		    clearInterval(timer);
+		}
 
-	        	// if success
-	        	if(data.success==1) {
-	          		msg += '<div class="alert alert-success" id="success">';
-	          		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
-	          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
-	          		msg += '</div>';
-	          		if(data.action=='delete') {
-	            		loadingList(data.load_form);
-	          		}
-	        	}
+		timer = setInterval(function() {
+			clearInterval(timer);
+		    var postDatas = new FormData($("form#"+formId)[0]);
+		    $.ajax({
+		      	url: formAction,
+		      	type: "POST",
+		      	data: postDatas,
+		      	dataType: "json",
+		      	async: true,
+		      	beforeSend: function() {
+		        	console.log('beforeSend');
+		        	$('#'+buttonId).prop('disabled', true);
+		        	$('#block-loader').show();
+		      	},
+		      	complete: function() {
+		        	console.log('completed');
+		        	$('#'+buttonId).prop('disabled', false);
+		        	$('#block-loader').hide();
+		      	},
+		      	success: function(data) {
+		        	var msg = '';
+		        	// if vaildate error
+		        	if(data.error==1) {
+		          		msg += '<div class="alert alert-warning" id="warning">';
+		         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' </b><br />';
+		          		if(data.validatormsg) {
+		            		$.each(data.validatormsg, function(index, value) {
+		              			msg += '- '+value+'<br />';
+		            		});
+		          		}
+		          		msg += '</div>';
+		        	}
 
-	        	$('#message').html(msg).show();
-	      	},
-	      	error: function(request, status, error) {
-	        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
-	      	},
-	      	cache: false,
-	      	contentType: false,
-	      	processData: false
-	    });
+		        	// if success
+		        	if(data.success==1) {
+		          		msg += '<div class="alert alert-success" id="success">';
+		          		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
+		          		msg += '</div>';
+		          		if(data.action=='delete') {
+		            		loadingList(data.load_form);
+		          		}
+		        	}
+
+		        	$('#message').html(msg).show();
+		      	},
+		      	error: function(request, status, error) {
+		        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      	},
+		      	cache: false,
+		      	contentType: false,
+		      	processData: false
+		    });
+		}, 10);
 		return false;
   	});
 }
