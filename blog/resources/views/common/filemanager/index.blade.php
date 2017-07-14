@@ -16,7 +16,7 @@
     </div>
     <div class="modal-body">
       <div class="row">
-        <div class="col-sm-5"><a href="<?php echo $data['parent']; ?>" data-toggle="tooltip" title="<?php echo $data['button_parent']; ?>" id="button-parent" class="btn btn-default btntooltip"><i class="fa fa-level-up"></i></a> 
+        <div class="col-sm-5"><a href="<?php echo $data['parent']; ?>" data-toggle="tooltip" title="<?php echo $data['button_parent']; ?>" id="button-parent" class="btn btn-default btntooltip"><i class="fa fa-arrow-left"></i></a> 
           <a href="<?php echo $data['refresh']; ?>" data-toggle="tooltip" title="<?php echo $data['button_refresh']; ?>" id="button-refresh" class="btn btn-default btntooltip"><i class="fa fa-refresh"></i></a>
           <button type="button" data-toggle="tooltip" title="<?php echo $data['button_upload']; ?>" id="button-upload" class="btn btn-primary btntooltip"><i class="fa fa-upload"></i></button>
           <button type="button" data-toggle="tooltip" title="<?php echo $data['button_folder']; ?>" id="button-folder" class="btn btn-default btntooltip"><i class="fa fa-folder"></i></button>
@@ -43,7 +43,12 @@
             <?php echo $image['name']; ?></label>
           <?php } ?>
           <?php if ($image['type'] == 'image') { ?>
-          <a href="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
+            <?php
+              if($data['target']=='no-input') { ?>
+                <div class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></div>
+              <?php }else{ ?>
+                <a href="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
+            <?php  } ?>
           <label>
             <input type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" />
             <?php echo $image['name']; ?></label>

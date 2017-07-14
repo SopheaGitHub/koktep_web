@@ -515,10 +515,12 @@ $(document).ready(function() {
 			beforeSend: function() {
 				$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 				$('#button-image').prop('disabled', true);
+				$('#block-loader').show();
 			},
 			complete: function() {
 				$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
 				$('#button-image').prop('disabled', false);
+				$('#block-loader').hide();
 			},
 			success: function(html) {
 				$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
@@ -526,6 +528,28 @@ $(document).ready(function() {
 				$('#modal-image').modal('show');
 			}
 		});
+	});
+
+	// Menu Image Manager
+	$(document).delegate('a[data-toggle=\'menufilemanager\']', 'click', function() {
+		$('#modal-image').remove();
+		$.ajax({
+			url: 'filemanager?target=no-input',
+			dataType: 'html',
+			beforeSend: function() {
+				$('#block-loader').show();
+			},
+			complete: function() {
+				$('#block-loader').hide();
+			},
+			success: function(html) {
+				$('body').append('<div id="modal-image" class="modal in">' + html + '</div>');
+
+				$('#modal-image').modal('show');
+			}
+		});
+		$('.dropdown').removeClass('open');
+		return false;
 	});
 
 	// Image Manager
@@ -558,10 +582,12 @@ $(document).ready(function() {
 				beforeSend: function() {
 					$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
 					$('#button-image').prop('disabled', true);
+					$('#block-loader').show();
 				},
 				complete: function() {
 					$('#button-image i').replaceWith('<i class="fa fa-pencil"></i>');
 					$('#button-image').prop('disabled', false);
+					$('#block-loader').hide();
 				},
 				success: function(html) {
 					$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
@@ -617,9 +643,11 @@ $(document).ready(function() {
 			dataType: 'html',
 			beforeSend: function() {
 				// before send
+				$('#block-loader').show();
 			},
 			complete: function() {
 				// completed
+				$('#block-loader').hide();
 			},
 			success: function(html) {
 				$('body').append('<div id="modal-information" class="modal">' + html + '</div>');

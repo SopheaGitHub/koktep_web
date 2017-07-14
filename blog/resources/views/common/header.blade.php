@@ -119,16 +119,17 @@
                 @else
                     <li class="dropdown <?php echo (($route_category_id=='user_auth_menu')? 'active':''); ?>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <i class="fa fa-btn fa-user"></i> <?php echo Auth::user()->name; ?> <span class="caret"></span>
+                            <i class="fa fa-btn fa-user"></i> <?php echo trans('text.account'); ?> <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="<?php echo url('/overview-account?account_id='.Auth::user()->id); ?>"><img src="<?php echo $thumb_profile; ?>" style="height:50px; width:50px;-webkit-border-radius: 50%;
 -moz-border-radius: 50%;
 border-radius: 50%;
-border: 5px solid rgba(255,255,255,0.5);" alt="Avatar"> <?php echo trans('text.my_profile'); ?> </a></li>
+border: 5px solid rgba(255,255,255,0.5);" alt="Avatar"> <?php echo Auth::user()->name; ?> </a></li>
                             <li><a href="<?php echo url('/posts?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-tasks"></i><?php echo trans('text.posts_management'); ?></a></li>
                             <li><a href="<?php echo url('/posts-groups?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-object-group"></i><?php echo trans('text.posted_groups_management'); ?></a></li>
+                            <li><a href="#" role="button" data-toggle="menufilemanager"><i class="fa fa-btn fa-image"></i><?php echo trans('filemanager.title'); ?></a></li>
                             <li><a href="<?php echo url('/account/settings?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-cogs"></i><?php echo trans('text.account_settings'); ?></a></li>
                             <li><a href="<?php echo url('/account/change-password?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-exchange"></i><?php echo trans('text.account_change_password'); ?></a></li>
                             <li><a href="<?php echo url('/logout'); ?>"><i class="fa fa-btn fa-sign-out"></i><?php echo trans('text.logout'); ?></a></li>

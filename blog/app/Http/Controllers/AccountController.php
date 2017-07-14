@@ -225,7 +225,7 @@ class AccountController extends Controller
         $this->data->entry_social_media = trans('text.entry_social_media');
         $this->data->entry_link = trans('text.entry_link');
 
-        $this->data->entry_watermark_status = trans('text.entry_default_status');
+        $this->data->entry_watermark_status = trans('text.tab_watermark');
         $this->data->entry_position = trans('text.entry_position');
         $this->data->entry_image = trans('text.entry_image');
 
@@ -238,6 +238,7 @@ class AccountController extends Controller
         // define text
         $this->data->text_select = trans('text.text_select');
         $this->data->text_title_email = trans('text.title_email_login');
+        $this->data->title_watermark = trans('text.title_watermark');
 
         if(isset($datas['user'])) {
             $this->data->name = $datas['user']->name;

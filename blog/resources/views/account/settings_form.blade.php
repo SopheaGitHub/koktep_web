@@ -271,7 +271,7 @@
             <div class="tab-pane" id="tab-contact">
 
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $data->entry_watermark_status; ?></label>
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $data->title_watermark; ?>"><?php echo $data->entry_watermark_status; ?></span></label>
                 <div class="col-sm-10">
                   <select name="user_watermark[status]" id="input-status" class="form-control">
                     <?php
