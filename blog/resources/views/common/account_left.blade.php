@@ -31,8 +31,8 @@
         <div class="profile-pic">
             <img alt="" src="<?php echo $thumb_profile; ?>">
             <?php
-                if(Auth::user()->id==\Request::get('account_id')) { ?>
-                    <div class="edit"><a href="<?php echo url('/account/settings?account_id='.Auth::user()->id.'&tabpanel=image'); ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
+                if(((Auth::check())? Auth::user()->id:'0')==\Request::get('account_id')) { ?>
+                    <div class="edit"><a href="<?php echo url('/account/settings?account_id='.((Auth::check())? Auth::user()->id:'0').'&tabpanel=image'); ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
             <?php } ?>
         </div>
     </div>
