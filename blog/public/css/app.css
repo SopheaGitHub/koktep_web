@@ -437,7 +437,7 @@ div.required .control-label:not(span):before, td.required:before {
 .myloader {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 16px solid #1e91cf;
+  border-top: 16px solid #27C3ED;
   width: 100px;
   height: 100px;
   margin: 15% auto;
