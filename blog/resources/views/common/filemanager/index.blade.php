@@ -226,9 +226,11 @@ $('#button-folder').on('shown.bs.popover', function() {
       dataType: 'json',
       data: 'folder=' + encodeURIComponent($('input[name=\'folder\']').val()),
       beforeSend: function() {
+        $('#button-create i').replaceWith('<i class="fa fa-circle-o-notch fast-spin"></i>');
         $('#button-create').prop('disabled', true);
       },
       complete: function() {
+        $('#button-create i').replaceWith('<i class="fa fa-plus-circle"></i>');
         $('#button-create').prop('disabled', false);
       },
       success: function(json) {
@@ -257,9 +259,11 @@ $('#modal-image #button-delete').on('click', function(e) {
       dataType: 'json',
       data: $('input[name^=\'path\']:checked'),
       beforeSend: function() {
+        $('#button-delete i').replaceWith('<i class="fa fa-circle-o-notch fast-spin"></i>');
         $('#button-delete').prop('disabled', true);
       },
       complete: function() {
+        $('#button-delete i').replaceWith('<i class="fa fa-trash-o"></i>');
         $('#button-delete').prop('disabled', false);
       },
       success: function(json) {
