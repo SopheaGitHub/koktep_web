@@ -55,6 +55,15 @@ class AccountController extends Controller
         // add system log
         $this->systemLogs('view', 'account', $request);
         // End
+
+        $array_tabs = ['general','image','skills-charge','contact','social-media','watermark'];
+
+        if(isset($request['tabpanel']) && in_array($request['tabpanel'], $array_tabs)) {
+            $tab_panel = $request['tabpanel'];
+        }else{
+            $tab_panel = 'general';
+        }
+
         // check if auth != get account id
         if($request['account_id']==$this->data->auth_id) {
 
@@ -63,7 +72,7 @@ class AccountController extends Controller
             $this->data->button_save_change = trans('button.save_change');
 
             $this->data->go_back = url('/overview-account?account_id='.$this->data->auth_id);
-            $this->data->action_form = url('/account/settings-load-form');
+            $this->data->action_form = url('/account/settings-load-form?tabpanel='.$tab_panel);
             return view('account.settings', ['data'=>$this->data]);
         }else {
             return view('errors.504');
@@ -75,11 +84,13 @@ class AccountController extends Controller
         // add system log
         $this->systemLogs('load_form', 'account', $request);
         // End
+
         $user = $this->user->getUser($this->data->auth_id);
         $user_technical = $this->user->getTechnicalByUserId($this->data->auth_id);
         $user_address = $this->user->getAddressByUserId($this->data->auth_id);
         $user_social_medias = $this->user->getSocialMediaByUserId($this->data->auth_id);
         $user_watermark = $this->user->getWatermarkByUserId($this->data->auth_id);
+        $tab_panel = $request['tabpanel'];
 
         $datas = [
             'icon' => 'icon_edit',
@@ -89,7 +100,8 @@ class AccountController extends Controller
             'user_technical' => $user_technical,
             'user_address'  => $user_address,
             'user_social_medias'  => $user_social_medias,
-            'user_watermark' => $user_watermark
+            'user_watermark' => $user_watermark,
+            'tab_panel' => $tab_panel
         ];
         echo $this->getSettingForm($datas);
         exit();
@@ -183,6 +195,8 @@ class AccountController extends Controller
     public function getSettingForm($datas=[]) {
         $this->data->countries = $this->country->getCountries(['sort'=>'name','order'=>'asc'])->lists('name', 'country_id');
         $this->data->social_medias = $this->social_media->orderBy('name', 'asc')->lists('name', 'social_media_id');
+
+        $this->data->tab_panel = ((isset($datas['tab_panel']))? $datas['tab_panel']:'general');
 
         // define tap
         $this->data->tab_general = trans('text.tab_general');

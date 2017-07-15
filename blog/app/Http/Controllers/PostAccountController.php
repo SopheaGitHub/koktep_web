@@ -92,7 +92,6 @@ class PostAccountController extends Controller
             $this->data->author_name = $post->author_name;
             $this->data->author_id = $post->author_id;
             $this->data->post_viewed = ($post->viewed+1);
-            $this->data->post_commented = $post->commented;
             $this->data->post_created_at = $post->created_at;
             $this->data->title = $post->title;
         }else {
@@ -101,7 +100,6 @@ class PostAccountController extends Controller
             $this->data->author_name = $this->filemanager->resize('no_image.png', 100, 100);
             $this->data->author_id = '0';
             $this->data->post_viewed = '0';
-            $this->data->post_commented = '0';
             $this->data->post_created_at = '';
             $this->data->title = '';
         }
@@ -211,10 +209,14 @@ class PostAccountController extends Controller
         $post = $this->post->getPostRating($post_id);
 
         if($post) {
+            $this->data->post_commented = $post->commented;
             $this->data->post_average_rating = $post->average_rating;
         }else {
+            $this->data->post_commented = '0';
             $this->data->post_average_rating = '0';
         }
+
+        $this->data->icon_comment = trans('icon.comment');
 
         $this->data->text_rating = trans('text.text_rating');
         return view('post_account.load_rating_form', ['data' => $this->data]);

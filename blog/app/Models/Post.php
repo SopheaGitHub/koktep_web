@@ -13,7 +13,7 @@ class Post extends Model {
 	public function getPost($post_id) {
 		$result = DB::table(DB::raw('
 				(SELECT
-				DISTINCT p.*,(SELECT COUNT(1) FROM post_comment WHERE post_id = p.post_id) AS commented, u.name as author_name, u.image AS author_image,
+				DISTINCT p.*, u.name as author_name, u.image AS author_image,
 					(
 						SELECT
 							keyword
@@ -35,7 +35,7 @@ class Post extends Model {
 
 	public function getPostRating($post_id) {
 		$result = DB::table(DB::raw('
-				(SELECT CEIL((SUM(rating) / COUNT(1))) AS average_rating FROM post_comment WHERE post_id = '.$post_id.') AS average_rating
+				(SELECT (SELECT COUNT(1) FROM post_comment WHERE post_id = '.$post_id.') AS commented, CEIL((SUM(rating) / COUNT(1))) AS average_rating FROM post_comment WHERE post_id = '.$post_id.') AS average_rating
 			'))->first();
 		return $result;
 	}

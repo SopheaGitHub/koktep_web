@@ -8,15 +8,15 @@
       <form action="#" method="post" enctype="multipart/form-data" id="form-account-setting" class="form-horizontal">
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $data->tab_general; ?></a></li>
-          <li><a href="#tab-image" data-toggle="tab"><?php echo $data->tab_image; ?></a></li>
-          <li><a href="#tab-skills-charge" data-toggle="tab"><?php echo $data->tab_skill_charge; ?></a></li>
-          <li><a href="#tab-contact" data-toggle="tab"><?php echo $data->tab_contact; ?></a></li>
-          <li><a href="#tab-social-media" data-toggle="tab"><?php echo $data->tab_social_media; ?></a></li>
-          <li><a href="#tab-watermark" data-toggle="tab"><?php echo $data->tab_watermark; ?></a></li>
+          <li <?php echo (($data->tab_panel=='general')? 'class="active"':''); ?>><a href="#tab-general" data-toggle="tab"><?php echo $data->tab_general; ?></a></li>
+          <li <?php echo (($data->tab_panel=='image')? 'class="active"':''); ?>><a href="#tab-image" data-toggle="tab"><?php echo $data->tab_image; ?></a></li>
+          <li <?php echo (($data->tab_panel=='skills-charge')? 'class="active"':''); ?>><a href="#tab-skills-charge" data-toggle="tab"><?php echo $data->tab_skill_charge; ?></a></li>
+          <li <?php echo (($data->tab_panel=='contact')? 'class="active"':''); ?>><a href="#tab-contact" data-toggle="tab"><?php echo $data->tab_contact; ?></a></li>
+          <li <?php echo (($data->tab_panel=='social-media')? 'class="active"':''); ?>><a href="#tab-social-media" data-toggle="tab"><?php echo $data->tab_social_media; ?></a></li>
+          <li <?php echo (($data->tab_panel=='watermark')? 'class="active"':''); ?>><a href="#tab-watermark" data-toggle="tab"><?php echo $data->tab_watermark; ?></a></li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane active" id="tab-general">
+          <div class="tab-pane <?php echo (($data->tab_panel=='general')? 'active':''); ?>" id="tab-general">
             <div class="form-group required">
               <label class="col-sm-2 control-label"><?php echo $data->entry_name; ?></label>
               <div class="col-sm-10">
@@ -37,7 +37,7 @@
             </div>
           </div>
 
-          <div class="tab-pane" id="tab-image">
+          <div class="tab-pane <?php echo (($data->tab_panel=='image')? 'active':''); ?>" id="tab-image">
             <div class="form-group">
               <label class="col-sm-3 control-label"><?php echo $data->entry_profile; ?> <br /> <?php echo $data->entry_scale; ?>: 100px, 100px</label>
               <div class="col-sm-9"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb_image; ?>" alt="" title="" data-placeholder="<?php echo $data->image_placeholder; ?>" /></a>
@@ -58,7 +58,7 @@
             </div>
           </div>
 
-          <div class="tab-pane" id="tab-skills-charge">
+          <div class="tab-pane <?php echo (($data->tab_panel=='skills-charge')? 'active':''); ?>" id="tab-skills-charge">
             <div class="table-responsive">
               <table id="technicals" class="table table-striped table-bordered table-hover">
                 <thead>
@@ -99,7 +99,7 @@
             </div>
           </div>
 
-          <div class="tab-pane" id="tab-contact">
+          <div class="tab-pane <?php echo (($data->tab_panel=='contact')? 'active':''); ?>" id="tab-contact">
             <div class="table-responsive">
               <table id="address" class="table table-striped table-bordered table-hover">
                 <thead>
@@ -219,7 +219,7 @@
             </div>
           </div>
 
-          <div class="tab-pane" id="tab-social-media">
+          <div class="tab-pane <?php echo (($data->tab_panel=='social-media')? 'active':''); ?>" id="tab-social-media">
             <div class="tab-pane" id="tab-contact">
               <div class="table-responsive">
                 <table id="social-media" class="table table-striped table-bordered table-hover">
@@ -267,7 +267,7 @@
             </div>
           </div>
 
-          <div class="tab-pane" id="tab-watermark">
+          <div class="tab-pane <?php echo (($data->tab_panel=='watermark')? 'active':''); ?>" id="tab-watermark">
             <div class="tab-pane" id="tab-contact">
 
               <div class="form-group">

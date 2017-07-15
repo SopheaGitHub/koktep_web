@@ -28,7 +28,13 @@
 <div class="profile-sidebar">
     <!-- SIDEBAR USERPIC -->
     <div class="profile-userpic">
-        <a href="<?php echo url('/about-account?account_id='.$user_info_id); ?>"><img alt="" src="<?php echo $thumb_profile; ?>"></a>
+        <div class="profile-pic">
+            <img alt="" src="<?php echo $thumb_profile; ?>">
+            <?php
+                if(Auth::user()->id==\Request::get('account_id')) { ?>
+                    <div class="edit"><a href="<?php echo url('/account/settings?account_id='.Auth::user()->id.'&tabpanel=image'); ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
+            <?php } ?>
+        </div>
     </div>
     <!-- END SIDEBAR USERPIC -->
     <!-- SIDEBAR USER TITLE -->

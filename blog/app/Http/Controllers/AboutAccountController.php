@@ -81,6 +81,8 @@ class AboutAccountController extends Controller
             $this->data->thumb_second_cover = $this->filemanager->resize('no_image.png', 600, 400);
         }
 
+        $this->data->user_id = $user_id;
+
         $this->data->text_about = trans('text.about');
         $this->data->text_technical_skills = trans('text.technical_skills');
 

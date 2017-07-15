@@ -14,15 +14,11 @@
                         <div>
                             <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $data->post_viewed; ?>
                         </div>
-                        <div>
-                            <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $data->post_commented; ?>
+                        <div id="load-rating">
+                            
                         </div>
                         <div>
                             <i data-toggle="tooltip" title="<?php echo $data->icon_date; ?>" class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y', strtotime($data->post_created_at)); ?>
-                        </div>
-                        <br />
-                        <div id="load-rating">
-                            
                         </div>
                         <br />
                         <div class="row">

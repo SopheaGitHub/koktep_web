@@ -42,6 +42,50 @@ body {
     border: 5px solid #f8f8f8;
 }
 
+.profile-userpic .profile-pic {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-userpic .profile-pic:hover .edit, .profile-userpic .profile-pic:focus .edit {
+  display: block;
+}
+
+.profile-userpic .edit {
+  padding-top: 7px; 
+  padding-right: 7px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+}
+
+.profile-userpic .edit a {
+  /*color: #000;*/
+}
+
+.cover-userpic .profile-pic {
+  position: relative;
+  display: inline-block;
+}
+
+.cover-userpic .profile-pic:hover .edit, .profile-userpic .profile-pic:focus .edit {
+  display: block;
+}
+
+.cover-userpic .edit {
+  padding-top: 7px; 
+  padding-right: 7px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+}
+
+.cover-userpic .edit a {
+  /*color: #000;*/
+}
+
 .profile-usertitle {
   text-align: center;
   margin-top: 20px;
