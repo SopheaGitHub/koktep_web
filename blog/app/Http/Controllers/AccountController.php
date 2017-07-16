@@ -73,6 +73,8 @@ class AccountController extends Controller
 
             $this->data->go_back = url('/overview-account?account_id='.$this->data->auth_id);
             $this->data->action_form = url('/account/settings-load-form?tabpanel='.$tab_panel);
+            $this->data->action_load_location = url('geo-zones/zone');
+
             return view('account.settings', ['data'=>$this->data]);
         }else {
             return view('errors.504');
@@ -253,6 +255,8 @@ class AccountController extends Controller
         $this->data->text_select = trans('text.text_select');
         $this->data->text_title_email = trans('text.title_email_login');
         $this->data->title_watermark = trans('text.title_watermark');
+
+        $this->data->website_placeholder = 'http://example.com';
 
         if(isset($datas['user'])) {
             $this->data->name = $datas['user']->name;

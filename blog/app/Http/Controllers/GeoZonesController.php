@@ -35,4 +35,10 @@ class GeoZonesController extends Controller
 		$this->data->zone_id = $zone_id;
 		return view('geo_zone.zone_form', ['data' => $this->data]);
 	}
+
+	public function getGeoLocationMap() {
+		$request = \Request::all();
+		print_r($request);
+	}
+
 }

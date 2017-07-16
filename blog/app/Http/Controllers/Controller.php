@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use App\Http\Controllers\ConfigController;
+use DB;
 
 class Controller extends BaseController
 {
@@ -110,6 +111,30 @@ class Controller extends BaseController
 
         // how to use it
         // echo readJsonFile("AccessLog.txt");
+    }
+
+    public function getUserLocation() {
+        // get information for log
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip_note = 'HTTP_CLIENT_IP='.$_SERVER['HTTP_CLIENT_IP'];
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip_note = 'HTTP_X_FORWARDED_FOR='.$_SERVER['HTTP_X_FORWARDED_FOR'];
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip_note = 'REMOTE_ADDR='.$_SERVER['REMOTE_ADDR'];
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        $ip = '117.20.119.245';
+        $loc = file_get_contents("http://ipinfo.io/".$ip."/loc");
+
+        if($loc) {
+            $array_loc = explode(',', $loc);
+            return ['lat'=> ((isset($array_loc[0]))? $array_loc[0]:'') ,'lon'=> ((isset($array_loc[1]))? $array_loc[1]:'')];
+        }
+
+        return ['lat'=>'','lon'=>''];
+
     }
 
 }

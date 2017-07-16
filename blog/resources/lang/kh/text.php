@@ -185,7 +185,7 @@ return [
     'entry_contact_name' => 'ឈ្មោះ​ទំនាក់ទំនង',
     'entry_email' => 'អ៊ីម៉ែល',
     'entry_skill' => 'ជំនាញ',
-    'entry_percent' => 'ភាគរយជំនាញ',
+    'entry_percent' => 'ភាគរយជំនាញ (%)',
     'entry_min_charge' => 'ការ​គិតថ្លៃអប្បបរមា (ដុល្លារ)',
     'entry_max_charge' => 'ការ​គិតថ្លៃអតិបរមា (ដុល្លារ)',
     'entry_firstname' => 'គោត្តនាម',

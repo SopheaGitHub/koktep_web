@@ -100,166 +100,123 @@
           </div>
 
           <div class="tab-pane <?php echo (($data->tab_panel=='contact')? 'active':''); ?>" id="tab-contact">
-            <?php
-              $address_row = 0;
-              if(count($data->user_address) > 0) {
-                foreach ($data->user_address as $address) { ?>
+            <div class="table-responsive">
+              <table id="address" class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td class="text-left"><?php echo $data->entry_detail; ?></td>
+                    <td class="text-right"><?php echo $data->entry_sort_order; ?></td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                    $address_row = 0;
+                    if(count($data->user_address) > 0) {
+                      foreach ($data->user_address as $address) { ?>
+                        
+                        <tr id="address-row<?php echo $address_row; ?>">
+                          <td class="text-left">
 
-                  <fieldset>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-firstname"><?php echo $data->entry_firstname; ?></label>
-                      <div class="col-sm-9">
-                        <input type="text" name="user_address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address->firstname; ?>" placeholder="<?php echo $data->entry_firstname; ?>" id="firstname" class="form-control" />
-                      </div>
-                    </div>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-lastname"><?php echo $data->entry_lastname; ?></label>
-                      <div class="col-sm-9">
-                        <input type="text" name="user_address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address->lastname; ?>" placeholder="<?php echo $data->entry_lastname; ?>" id="lastname" class="form-control" />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label" for="input-company"><?php echo $data->entry_company; ?></label>
-                      <div class="col-sm-9">
-                        <input type="text" name="user_address[<?php echo $address_row; ?>][company]" value="<?php echo $address->company; ?>" placeholder="<?php echo $data->entry_company; ?>" id="company" class="form-control" />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label" for="input-phone"><?php echo $data->entry_phone; ?></label>
-                      <div class="col-sm-9">
-                        <input type="text" name="user_address[<?php echo $address_row; ?>][phone]" value="<?php echo $address->phone; ?>" placeholder="<?php echo $data->entry_phone; ?>" id="phone" class="form-control" />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label" for="input-fax"><?php echo $data->entry_fax; ?></label>
-                      <div class="col-sm-9">
-                        <input type="text" name="user_address[<?php echo $address_row; ?>][fax]" value="<?php echo $address->fax; ?>" placeholder="<?php echo $data->entry_fax; ?>" id="fax" class="form-control" />
-                      </div>
-                    </div>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-email"><?php echo $data->entry_email; ?></label>
-                      <div class="col-sm-9">
-                        <input type="text" name="user_address[<?php echo $address_row; ?>][email]" value="<?php echo $address->email; ?>" placeholder="<?php echo $data->entry_email; ?>" id="email" class="form-control" />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label" for="input-website"><?php echo $data->entry_website; ?></label>
-                      <div class="col-sm-9">
-                        <input type="text" name="user_address[<?php echo $address_row; ?>][website]" value="<?php echo $address->website; ?>" placeholder="<?php echo $data->website_placeholder; ?>" id="website" class="form-control" />
-                      </div>
-                    </div>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-address"><?php echo $data->entry_address; ?></label>
-                      <div class="col-sm-9">
-                        <input type="text" name="user_address[<?php echo $address_row; ?>][address]" value="<?php echo $address->address; ?>" placeholder="<?php echo $data->entry_address; ?>" id="address" class="form-control" />
-                      </div>
-                    </div>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-city"><?php echo $data->entry_city; ?></label>
-                      <div class="col-sm-9">
-                        <input type="text" name="user_address[<?php echo $address_row; ?>][city]" value="<?php echo $address->city; ?>" placeholder="<?php echo $data->entry_city; ?>" id="city" class="form-control" />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label" for="input-postcode"><?php echo $data->entry_postcode; ?></label>
-                      <div class="col-sm-9">
-                        <input type="text" name="user_address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address->postcode; ?>" placeholder="<?php echo $data->entry_postcode; ?>" id="postcode" class="form-control" />
-                      </div>
-                    </div>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-country"><?php echo $data->entry_country; ?></label>
-                      <div class="col-sm-9">
-                        <select name="user_address[<?php echo $address_row; ?>][country_id]" id="country<?php echo $address_row; ?>" onchange="$('#zone<?php echo $address_row; ?>').load('<?php echo $data->load_zone_action; ?>/' + this.value + '/0');" class="form-control">
-                          <option value=""><?php echo $data->text_select; ?></option>
-                          <?php foreach ($data->countries as $country_id => $country_name) { ?>
-                            <option <?php echo (($country_id==$address->country_id)? 'selected="selected"':''); ?> value="<?php echo $country_id; ?>"><?php echo $country_name; ?></option>
-                          <?php } ?>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-zone"><?php echo $data->entry_zone; ?></label>
-                      <div class="col-sm-9">
-                        <select name="user_address[<?php echo $address_row; ?>][zone_id]" id="zone<?php echo $address_row; ?>" class="form-control">
-                        </select>
-                      </div>
-                    </div>
-                  </fieldset>
+                            <fieldset>
+                              <div class="form-group required">
+                                <label class="col-sm-3 control-label" for="input-firstname"><?php echo $data->entry_firstname; ?></label>
+                                <div class="col-sm-9">
+                                  <input type="text" name="user_address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address->firstname; ?>" placeholder="<?php echo $data->entry_firstname; ?>" id="firstname" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="form-group required">
+                                <label class="col-sm-3 control-label" for="input-lastname"><?php echo $data->entry_lastname; ?></label>
+                                <div class="col-sm-9">
+                                  <input type="text" name="user_address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address->lastname; ?>" placeholder="<?php echo $data->entry_lastname; ?>" id="lastname" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-sm-3 control-label" for="input-company"><?php echo $data->entry_company; ?></label>
+                                <div class="col-sm-9">
+                                  <input type="text" name="user_address[<?php echo $address_row; ?>][company]" value="<?php echo $address->company; ?>" placeholder="<?php echo $data->entry_company; ?>" id="company" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-sm-3 control-label" for="input-phone"><?php echo $data->entry_phone; ?></label>
+                                <div class="col-sm-9">
+                                  <input type="text" name="user_address[<?php echo $address_row; ?>][phone]" value="<?php echo $address->phone; ?>" placeholder="<?php echo $data->entry_phone; ?>" id="phone" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-sm-3 control-label" for="input-fax"><?php echo $data->entry_fax; ?></label>
+                                <div class="col-sm-9">
+                                  <input type="text" name="user_address[<?php echo $address_row; ?>][fax]" value="<?php echo $address->fax; ?>" placeholder="<?php echo $data->entry_fax; ?>" id="fax" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="form-group required">
+                                <label class="col-sm-3 control-label" for="input-email"><?php echo $data->entry_email; ?></label>
+                                <div class="col-sm-9">
+                                  <input type="text" name="user_address[<?php echo $address_row; ?>][email]" value="<?php echo $address->email; ?>" placeholder="<?php echo $data->entry_email; ?>" id="email" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-sm-3 control-label" for="input-website"><?php echo $data->entry_website; ?></label>
+                                <div class="col-sm-9">
+                                  <input type="text" name="user_address[<?php echo $address_row; ?>][website]" value="<?php echo $address->website; ?>" placeholder="<?php echo $data->entry_website; ?>" id="website" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="form-group required">
+                                <label class="col-sm-3 control-label" for="input-address"><?php echo $data->entry_address; ?></label>
+                                <div class="col-sm-9">
+                                  <input type="text" name="user_address[<?php echo $address_row; ?>][address]" value="<?php echo $address->address; ?>" placeholder="<?php echo $data->entry_address; ?>" id="address" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="form-group required">
+                                <label class="col-sm-3 control-label" for="input-city"><?php echo $data->entry_city; ?></label>
+                                <div class="col-sm-9">
+                                  <input type="text" name="user_address[<?php echo $address_row; ?>][city]" value="<?php echo $address->city; ?>" placeholder="<?php echo $data->entry_city; ?>" id="city" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-sm-3 control-label" for="input-postcode"><?php echo $data->entry_postcode; ?></label>
+                                <div class="col-sm-9">
+                                  <input type="text" name="user_address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address->postcode; ?>" placeholder="<?php echo $data->entry_postcode; ?>" id="postcode" class="form-control" />
+                                </div>
+                              </div>
+                              <div class="form-group required">
+                                <label class="col-sm-3 control-label" for="input-country"><?php echo $data->entry_country; ?></label>
+                                <div class="col-sm-9">
+                                  <select name="user_address[<?php echo $address_row; ?>][country_id]" id="country<?php echo $address_row; ?>" onchange="$('#zone<?php echo $address_row; ?>').load('<?php echo $data->load_zone_action; ?>/' + this.value + '/0');" class="form-control">
+                                    <option value=""><?php echo $data->text_select; ?></option>
+                                    <?php foreach ($data->countries as $country_id => $country_name) { ?>
+                                      <option <?php echo (($country_id==$address->country_id)? 'selected="selected"':''); ?> value="<?php echo $country_id; ?>"><?php echo $country_name; ?></option>
+                                    <?php } ?>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group required">
+                                <label class="col-sm-3 control-label" for="input-zone"><?php echo $data->entry_zone; ?></label>
+                                <div class="col-sm-9">
+                                  <select name="user_address[<?php echo $address_row; ?>][zone_id]" id="zone<?php echo $address_row; ?>" class="form-control">
+                                  </select>
+                                </div>
+                              </div>
+                            </fieldset>
 
-                <?php $address_row++; ?>
-              <?php  }
-              } else { ?>
-                <fieldset>
-                  <div class="form-group required">
-                    <label class="col-sm-3 control-label" for="input-firstname">First Name</label>
-                    <div class="col-sm-9"><input name="user_address[0][firstname]" value="" placeholder="First Name" id="firstname" class="form-control" type="text"></div>
-                  </div>
-                  <div class="form-group required">
-                    <label class="col-sm-3 control-label" for="input-lastname">Last Name</label>
-                    <div class="col-sm-9"><input name="user_address[0][lastname]" value="" placeholder="Last Name" id="lastname" class="form-control" type="text"></div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label" for="input-company">Company</label>
-                    <div class="col-sm-9"><input name="user_address[0][company]" value="" placeholder="Company" id="company" class="form-control" type="text"></div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label" for="input-phone">Phone</label>
-                    <div class="col-sm-9"><input name="user_address[0][phone]" value="" placeholder="Phone" id="phone" class="form-control" type="text"></div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label" for="input-fax">Fax</label>
-                    <div class="col-sm-9"><input name="user_address[0][fax]" value="" placeholder="Fax" id="fax" class="form-control" type="text"></div>
-                  </div>
-                  <div class="form-group required">
-                    <label class="col-sm-3 control-label" for="input-email">Email</label>
-                    <div class="col-sm-9"><input name="user_address[0][email]" value="" placeholder="Email" id="email" class="form-control" type="text"></div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label" for="input-website">Website</label>
-                    <div class="col-sm-9"><input name="user_address[0][website]" value="" placeholder="Website" id="website" class="form-control" type="text"></div>
-                  </div>
-                  <div class="form-group required">
-                    <label class="col-sm-3 control-label" for="input-address">Address</label>
-                    <div class="col-sm-9"><input name="user_address[0][address]" value="" placeholder="Address" id="address" class="form-control" type="text"></div>
-                  </div>
-                  <div class="form-group required">
-                    <label class="col-sm-3 control-label" for="input-city">City</label>
-                    <div class="col-sm-9"><input name="user_address[0][city]" value="" placeholder="City" id="city" class="form-control" type="text"></div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label" for="input-postcode">Post Code</label>
-                    <div class="col-sm-9">
-                      <input name="user_address[0][postcode]" value="" placeholder="Post Code" id="postcode" class="form-control" type="text">
-                    </div>
-                  </div>
-                  <div class="form-group required">
-                    <label class="col-sm-3 control-label" for="input-country">Country</label>
-                    <div class="col-sm-9">
-                      <select name="user_address[0][country_id]" id="country0" onchange="$('#zone0').load('<?php echo $data->load_zone_action; ?>/' + this.value + '/0');" class="form-control">
-                        <option value=""><?php echo $data->text_select; ?></option>
-                        <?php foreach ($data->countries as $country_id => $country_name) { ?>
-                          <option value="<?php echo $country_id; ?>"><?php echo $country_name; ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group required">
-                    <label class="col-sm-3 control-label" for="input-zone">Region / State</label>
-                    <div class="col-sm-9">
-                      <select name="user_address[0][zone_id]" id="zone0" class="form-control">
-                        <option value="">All Zones</option>
-                      </select>
-                    </div>
-                  </div>
-                  <!-- <div class="form-group">
-                    <label class="col-sm-3 control-label" for="input-postcode">GEO Location</label>
-                    <div class="col-sm-9">
-                      <button type="button" class="btn btn-primary btn-sm" id="reload_location"><i class="fa fa-btn fa-repeat"></i>Reload</button>
-                    </div>
-                  </div> -->
-                </fieldset>
-            <?php  }
-            ?>
+                          </td>
+                          <td class="text-right"><input type="text" name="user_address[<?php echo $address_row; ?>][sort_order]" value="<?php echo $address->sort_order; ?>" placeholder="<?php echo $data->entry_sort_order; ?>" class="form-control" /></td>
+                          <td class="text-left"><button type="button" onclick="$('#address-row<?php echo $address_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $data->button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                        </tr>
+
+                      <?php $address_row++; ?>
+                    <?php  }
+                    }
+                  ?>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="2"></td>
+                    <td class="text-left"><button type="button" onclick="addAddress();" data-toggle="tooltip" title="<?php echo $data->button_contact_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
           </div>
 
           <div class="tab-pane <?php echo (($data->tab_panel=='social-media')? 'active':''); ?>" id="tab-social-media">
@@ -345,6 +302,7 @@
                   <input type="hidden" name="user_watermark[image]" value="<?php echo ((isset($data->watermark_image))? $data->watermark_image:''); ?>" id="input-watermark-image" />
                 </div>
               </div>
+
             </div>
           </div>
           
@@ -354,9 +312,6 @@
     </div>
   </div>
 </div>
-<style type="text/css">
-#geo-map { width:100%; height:250px; }
-</style>
 <script type="text/javascript">
   <?php
     $address_row=0;
@@ -381,6 +336,109 @@ function addImage() {
   $('#technicals tbody').append(html);
 
   technical_row++;
+}
+
+
+var address_row = <?php echo $address_row; ?>;
+
+function addAddress() {
+  var requestAction = "<?php echo $data->load_zone_action; ?>";
+  var html = '';
+  html += '<tr id="address-row' + address_row + '">'
+  html += '<td class="text-left">';
+
+  html += '<fieldset>';
+  html += '<div class="form-group required">';
+  html += '<label class="col-sm-3 control-label" for="input-firstname"><?php echo $data->entry_firstname; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<input type="text" name="user_address[' + address_row + '][firstname]" value="" placeholder="<?php echo $data->entry_firstname; ?>" id="firstname" class="form-control" />';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group required">';
+  html += '<label class="col-sm-3 control-label" for="input-lastname"><?php echo $data->entry_lastname; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<input type="text" name="user_address[' + address_row + '][lastname]" value="" placeholder="<?php echo $data->entry_lastname; ?>" id="lastname" class="form-control" />';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group">';
+  html += '<label class="col-sm-3 control-label" for="input-company"><?php echo $data->entry_company; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<input type="text" name="user_address[' + address_row + '][company]" value="" placeholder="<?php echo $data->entry_company; ?>" id="company" class="form-control" />';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group">';
+  html += '<label class="col-sm-3 control-label" for="input-phone"><?php echo $data->entry_phone; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<input type="text" name="user_address[' + address_row + '][phone]" value="" placeholder="<?php echo $data->entry_phone; ?>" id="phone" class="form-control" />';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group">';
+  html += '<label class="col-sm-3 control-label" for="input-fax"><?php echo $data->entry_fax; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<input type="text" name="user_address[' + address_row + '][fax]" value="" placeholder="<?php echo $data->entry_fax; ?>" id="fax" class="form-control" />';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group required">';
+  html += '<label class="col-sm-3 control-label" for="input-email"><?php echo $data->entry_email; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<input type="text" name="user_address[' + address_row + '][email]" value="" placeholder="<?php echo $data->entry_email; ?>" id="email" class="form-control" />';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group">';
+  html += '<label class="col-sm-3 control-label" for="input-website"><?php echo $data->entry_website; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<input type="text" name="user_address[' + address_row + '][website]" value="" placeholder="<?php echo $data->entry_website; ?>" id="website" class="form-control" />';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group required">';
+  html += '<label class="col-sm-3 control-label" for="input-address"><?php echo $data->entry_address; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<input type="text" name="user_address[' + address_row + '][address]" value="" placeholder="<?php echo $data->entry_address; ?>" id="address" class="form-control" />';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group required">';
+  html += '<label class="col-sm-3 control-label" for="input-city"><?php echo $data->entry_city; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<input type="text" name="user_address[' + address_row + '][city]" value="" placeholder="<?php echo $data->entry_city; ?>" id="city" class="form-control" />';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group">';
+  html += '<label class="col-sm-3 control-label" for="input-postcode"><?php echo $data->entry_postcode; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<input type="text" name="user_address[' + address_row + '][postcode]" value="" placeholder="<?php echo $data->entry_postcode; ?>" id="postcode" class="form-control" />';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group required">';
+  html += '<label class="col-sm-3 control-label" for="input-country"><?php echo $data->entry_country; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<select name="user_address[' + address_row + '][country_id]" onchange="$(\'#zone' + address_row + '\').load(\''+requestAction+'/\' + this.value + \'/0\');" id="country'+address_row+'" class="form-control">';
+  <?php
+    if(count($data->countries) > 0) {
+      foreach ($data->countries as $country_id => $country_name) { ?>
+        html += '<option value="<?php echo $country_id; ?>"><?php echo addslashes($country_name); ?></option>';
+      <?php  }
+    }
+  ?>
+  html += '</select>';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="form-group required">';
+  html += '<label class="col-sm-3 control-label" for="input-zone"><?php echo $data->entry_zone; ?></label>';
+  html += '<div class="col-sm-9">';
+  html += '<select name="user_address[' + address_row + '][zone_id]" id="zone' + address_row + '" class="form-control">';
+  html += '</select>';
+  html += '</div>';
+  html += '</div>';
+  html += '</fieldset>';
+
+  html += '</td>';
+  html += '<td class="text-right"><input type="text" name="user_address[' + address_row + '][sort_order]" value="" placeholder="<?php echo $data->entry_sort_order; ?>" class="form-control" /></td>';
+  html += '<td class="text-left"><button type="button" onclick="$(\'#address-row' + address_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $data->button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+  html += '</tr>';
+
+  $('#address tbody').append(html);
+  $('#zone' + address_row).load(requestAction+ '/' + $('#country' + address_row).val()+'/0');
+  address_row++;
 }
 
 var social_media_row = <?php echo $social_media_row; ?>;

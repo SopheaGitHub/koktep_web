@@ -31,4 +31,29 @@
 <script type="text/javascript">
 loadingForm("<?php echo $data->action_form; ?>");
 </script>
+
+<script type="text/javascript">
+    $(document).on('click', '#reload_location', function(e) {
+        $.ajax({
+            type: "GET",
+            url: "<?php echo $data->action_load_location; ?>",
+            beforeSend:function() {
+                console.log('beforeSend');
+                $('#block-loader').show();
+            },
+            complete:function() {
+                console.log('complete');
+                $('#block-loader').hide();
+            },
+            success:function(html) {
+                $('#'+id).html(html).show();
+            },
+            error:function(request, status, error) {
+                $('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+            }
+        });
+        return false;
+    });
+</script>
+
 @endsection

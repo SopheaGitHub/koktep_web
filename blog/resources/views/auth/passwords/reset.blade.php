@@ -17,7 +17,7 @@
 
                 <input type="hidden" name="token" value="{{ $token }}">
 
-                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }} required">
                     <label for="email" class="col-md-4 control-label"><?php echo trans('auth.email'); ?></label>
 
                     <div class="col-md-6">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} required">
                     <label for="password" class="col-md-4 control-label"><?php echo trans('auth.password'); ?></label>
 
                     <div class="col-md-6">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-                <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }} required">
                     <label for="password-confirm" class="col-md-4 control-label"><?php echo trans('auth.confirm_password'); ?></label>
                     <div class="col-md-6">
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation">

@@ -88,7 +88,7 @@ return [
 
     'name_required' => 'The <b>Name</b> field is required.',
     'name_max255' => 'The <b>Name</b> may not be greater than 255 characters.',
-    'relate_post_min2' => 'The <b>Posts</b> must be at least 2 item.',
+    'relate_post_min2' => 'The <b>Related Posts</b> must be at least 2 item.',
 
     'email_required' => 'The <b>Email</b> field is required.',
     'email_max255' => 'The <b>Email</b> may not be greater than 255 characters.',
@@ -185,7 +185,7 @@ return [
     'entry_contact_name' => 'Contact Name',
     'entry_email' => 'Email',
     'entry_skill' => 'Skill',
-    'entry_percent' => 'Skill Percent',
+    'entry_percent' => 'Skill Percent (%)',
     'entry_min_charge' => 'Min Charge (USD)',
     'entry_max_charge' => 'Max Charge (USD)',
     'entry_firstname' => 'First Name',

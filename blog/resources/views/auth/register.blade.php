@@ -72,7 +72,7 @@ $language = $objLanguage->getLanguageByCode( $locale );
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
                                 <div class="checkbox" style="font-size: 10px;">
-                                    <em> <?php echo trans('auth.text_agree'); ?> <a href="#" role="button" data-toggle="information" data-id="3" data-languageid="<?php echo ((isset($language->language_id))? $language->language_id:'1'); ?>"> <?php echo trans('auth.privacy_policy'); ?> </a> <?php echo trans('auth.text_and'); ?> <a href="#" role="button" data-toggle="information" data-id="4" data-languageid="<?php echo ((isset($language->language_id))? $language->language_id:'1'); ?>"> <?php echo trans('auth.terms_conditions'); ?> </a> .</em>
+                                    <em> <?php echo trans('auth.text_agree'); ?> <a href="#" role="button" data-toggle="information" data-id="2" data-languageid="<?php echo ((isset($language->language_id))? $language->language_id:'1'); ?>"> <?php echo trans('auth.privacy_policy'); ?> </a> <?php echo trans('auth.text_and'); ?> <a href="#" role="button" data-toggle="information" data-id="3" data-languageid="<?php echo ((isset($language->language_id))? $language->language_id:'1'); ?>"> <?php echo trans('auth.terms_conditions'); ?> </a> .</em>
                                 </div>
                             </div>
                         </div>
