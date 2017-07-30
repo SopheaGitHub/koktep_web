@@ -145,7 +145,7 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label" for="input-website"><?php echo $data->entry_website; ?></label>
                       <div class="col-sm-9">
-                        <input type="text" name="user_address[<?php echo $address_row; ?>][website]" value="<?php echo $address->website; ?>" placeholder="<?php echo $data->website_placeholder; ?>" id="website" class="form-control" />
+                        <input type="text" name="user_address[<?php echo $address_row; ?>][website]" value="<?php echo $address->website; ?>" placeholder="<?php echo $data->entry_website; ?>" id="website" class="form-control" />
                       </div>
                     </div>
                     <div class="form-group required">
@@ -216,7 +216,7 @@
                   </div>
                   <div class="form-group">
                     <label class="col-sm-3 control-label" for="input-website">Website</label>
-                    <div class="col-sm-9"><input name="user_address[0][website]" value="" placeholder="Website" id="website" class="form-control" type="text"></div>
+                    <div class="col-sm-9"><input name="user_address[0][website]" value="" placeholder="<?php echo $data->website_placeholder; ?>" id="website" class="form-control" type="text"></div>
                   </div>
                   <div class="form-group required">
                     <label class="col-sm-3 control-label" for="input-address">Address</label>
