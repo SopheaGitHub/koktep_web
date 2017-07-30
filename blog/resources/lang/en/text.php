@@ -14,7 +14,8 @@ return [
     */
     'home' => 'Home',
     'contact_us' => 'Contact Us',
-    'send_feedback' => 'Send Feedback',
+    'information' => 'Information',
+    'send_feedback' => 'Feedback',
     'documentation' => 'Documentation',
     'khmer' => 'Khmer',
     'english' => 'English',
@@ -46,9 +47,10 @@ return [
     'all_alpha' => 'All Alpha',
     'overview' => 'Overview',
     'posted_groups' => 'Posted\'s Groups',
-    'about' => 'About User',
-    'contact' => 'Contact User',
+    'about' => 'About',
+    'contact' => 'Contact',
     'my_profile' => 'My Profile',
+    'profile' => 'Profile',
     'technical_skills' => 'Technical Skills',
     'go_to_contact_account' => 'If my skill related to your searching or you are fall into my skill also, You can <a href="%s"><b>%sContact</b> </a> to me.',
 
@@ -131,8 +133,8 @@ return [
 
     'posts_management' => 'Posts Management',
     'posted_groups_management' => 'Posted\'s Groups Management',
-    'account_settings' => 'Account Settings',
-    'account_change_password' => 'Account Change Password',
+    'account_settings' => 'Settings',
+    'account_change_password' => 'Change Password',
     'enabled' => 'Enabled',
     'disabled' => 'Disabled',
     'none' => '-- None --',

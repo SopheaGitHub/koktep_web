@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    @include('common.account_profile')
     <div class="row profile">
         <div class="col-md-3">
             @include('common.account_left')

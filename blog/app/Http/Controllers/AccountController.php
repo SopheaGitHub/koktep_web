@@ -50,6 +50,10 @@ class AccountController extends Controller
         return view('account.index');
     }
 
+    public function getCropProfile() {
+        return view('account.crop_profile', ['data'=>$this->data]);
+    }
+
     public function getSettings() {
         $request = \Request::all();
         // add system log
@@ -405,6 +409,16 @@ class AccountController extends Controller
         $this->data->titlelist = (($datas['titlelist'])? $datas['titlelist']:'');
 
         return view('account.change_password_form', ['data' => $this->data]);
+    }
+
+    public function getCropit() {
+        $this->data->action_form = url('account/load-cropit-form');
+        return view('account.cropit', ['data' => $this->data]);
+    }
+
+    public function getLoadCropitForm() {
+        $this->data->image = url('/images/avatar_g2.jpg');
+        return view('account.load_cropit', ['data' => $this->data]);
     }
 
 }

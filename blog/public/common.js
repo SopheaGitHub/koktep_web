@@ -633,7 +633,7 @@ $(document).ready(function() {
 		$(this).tooltip('destroy');
 	});
 
-	// 
+	// Load information
 	$(document).delegate('a[data-toggle=\'information\']', 'click', function() {
 		$('#modal-information').remove();
 		var information_id = $(this).data("id");

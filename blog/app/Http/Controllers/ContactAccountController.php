@@ -70,6 +70,7 @@ class ContactAccountController extends Controller
         $this->data->entry_address = trans('text.entry_address');
         $this->data->entry_company = trans('text.entry_company');
         $this->data->entry_address = trans('text.entry_address');
+        $this->data->entry_contact = trans('text.contact');
         $this->data->entry_postcode = trans('text.entry_postcode');
         $this->data->entry_phone = trans('text.entry_phone');
         $this->data->entry_fax = trans('text.entry_fax');

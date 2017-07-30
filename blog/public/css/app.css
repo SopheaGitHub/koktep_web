@@ -22,7 +22,7 @@ body {
 
 /* Profile sidebar */
 .profile-sidebar {
-  padding: 20px 0 10px 0;
+  /*padding: 20px 0 10px 0;*/
   background: #fff;
 }
 
@@ -127,45 +127,45 @@ body {
   margin-top: 30px;
 }
 
-.profile-usermenu ul li {
+.profilemenu ul li {
   border-bottom: 1px solid #f0f4f7;
 }
 
-.profile-usermenu ul li ul li {
+.profilemenu ul li ul li {
   border-bottom: 1px solid #f0f4f7;
   list-style: none;
   padding: 10px 0px;
 }
 
-.profile-usermenu ul li ul li a{
+.profilemenu ul li ul li a{
   text-decoration: none;
 }
 
-.profile-usermenu ul li:last-child {
+.profilemenu ul li:last-child {
   border-bottom: none;
 }
 
-.profile-usermenu ul li a {
+.profilemenu ul li a {
   color: #27C3ED;
   font-size: 14px;
   font-weight: 400;
 }
 
-.profile-usermenu ul li a i {
+.profilemenu ul li a i {
   margin-right: 8px;
   font-size: 14px;
 }
 
-.profile-usermenu ul li a:hover {
+.profilemenu ul li a:hover {
   background-color: #fafcfd;
   color: #5b9bd1;
 }
 
-.profile-usermenu ul li.active {
+.profilemenu ul li.active {
   border-bottom: none;
 }
 
-.profile-usermenu ul li.active a {
+.profilemenu ul li.active a {
   color: #0F97B7;
   background-color: #f6f9fb;
   border-left: 2px solid #0F97B7;
@@ -197,6 +197,11 @@ footer {
   /*border-bottom: 3px solid #0F97B7;*/
 }
 
+.navbar-default {
+  background: #fff;
+  border-color: #d1d1d1;
+}
+
 .navbar-default .navbar-nav>li>a {
   color: #27C3ED;
 }
@@ -208,15 +213,15 @@ footer {
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
   color: #27C3ED;
-  background-color: #f8f8f8;
-  border-bottom: 2px solid #27C3ED;
+  background-color: #F1F3FA;
+  /*border-top: 2px solid #27C3ED;*/
 }
 
-.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+/*.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
   color: #0F97B7;
   background-color: #f8f8f8;
   border-bottom: 2px solid #0F97B7;
-}
+}*/
 
 .dropdown-menu>li>a {
   display: block;
@@ -460,4 +465,11 @@ div.required .control-label:not(span):before, td.required:before {
 .fast-spin {
   -webkit-animation: fa-spin 0.5s infinite linear;
   animation: fa-spin 0.5s infinite linear;
+}
+
+.overview h4 {
+    font-weight: bold !important;
+    font-size: 20px;
+    margin-top: 0;
+    color: #8b8b8b;
 }

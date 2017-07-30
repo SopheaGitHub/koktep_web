@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-12 col-md-12">
-    <h4 style="margin:0px; padding:0px;"><b><i class="fa fa-btn fa-university"></i><?php echo $data->entry_address; ?></b></h4>
-    <hr />
+    <h4 style="margin:0px; padding:0px;"><b><i class="fa fa-btn fa-phone"></i><?php echo $data->entry_contact; ?></b></h4>
+    <br />
     <form action="#" method="post" enctype="multipart/form-data" id="form-account-setting" class="form-horizontal">
       <?php
         if(count($data->user_address) > 0) {

@@ -17,6 +17,7 @@ return [
     'save_change' => 'Save Change',
     'continue_login' => 'Continue Login',
     'add' => 'Add',
+    'upload' => 'Upload',
     'edit' => 'Edit',
     'delete' => 'Delete',
     'cancel' => 'Cancel',

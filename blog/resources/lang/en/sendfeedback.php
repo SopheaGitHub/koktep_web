@@ -13,14 +13,14 @@ return [
     |
     */
 
-    'title' => 'Send Feedback',
+    'title' => 'Feedback',
     'our_location' => 'Our Location',
     'team' => 'Team',
     'telephone' => 'Telephone',
     'email' => 'Email',
     'website' => 'Website',
     'address' => 'Address',
-    'sendfeedback_form' => 'Send Feedback Form',
+    'sendfeedback_form' => 'Feedback Form',
     'your_name' => 'Your Name',
     'message' => 'Message',
     'send' => 'Send',

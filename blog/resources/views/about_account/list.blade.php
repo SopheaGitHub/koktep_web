@@ -1,25 +1,4 @@
 <div class="row">
-    <div class="col-md-6 cover-userpic">
-        <div class="profile-pic">
-            <img class="thumbnail" src="<?php echo $data->thumb_first_cover; ?>" alt="" style="width:100%; border-radius:0px;">
-            <?php
-                if($data->auth_id==$data->user_id) { ?>
-                    <div class="edit"><a href="<?php echo url('/account/settings?account_id='.$data->auth_id.'&tabpanel=image'); ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
-            <?php } ?>
-        </div>
-    </div>
-    <div class="col-md-6 cover-userpic">
-        <div class="profile-pic">
-            <img class="thumbnail" src="<?php echo $data->thumb_second_cover; ?>" alt="" style="width:100%; border-radius:0px;">
-            <?php
-                if($data->auth_id==$data->user_id) { ?>
-                    <div class="edit"><a href="<?php echo url('/account/settings?account_id='.$data->auth_id.'&tabpanel=image'); ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
-            <?php } ?>
-        </div>
-    </div>
-</div>
-
-<div class="row">
     <div class="col-sm-12 col-md-12">
         <h4><b><?php echo $data->text_about; ?></b></h4>
         <p><?php echo $data->description; ?></p>

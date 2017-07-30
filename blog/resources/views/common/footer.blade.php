@@ -36,15 +36,23 @@
 			    </ul>
 		  	</li>
 
-		  	<?php
-		  		if(count($informations) > 0) {
-		  			foreach ($informations as $information) { ?>
-		  				<li role="presentation" class="dropdown information">
-						    <a href="#" role="button" data-toggle="information" data-id="<?php echo $information->information_id; ?>" data-languageid="<?php echo $language->language_id; ?>" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn <?php echo $information->icon; ?>"></i><?php echo $information->title; ?></a>
-						</li>
-		  		<?php	}
-		  		}
-		  	?>
+		  	<li role="presentation" class="dropdown">
+			    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+			    	<i class="fa fa-btn fa-info-circle"></i><?php echo trans('text.information'); ?>
+			      	<span class="caret"></span>
+			    </a>
+			    <ul class="dropdown-menu dropup">
+			    	<?php
+				  		if(count($informations) > 0) {
+				  			foreach ($informations as $information) { ?>
+				  				<li role="presentation" class="dropdown information">
+								    <a href="#" role="button" data-toggle="information" data-id="<?php echo $information->information_id; ?>" data-languageid="<?php echo $language->language_id; ?>" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn <?php echo $information->icon; ?>"></i><?php echo $information->title; ?></a>
+								</li>
+				  		<?php	}
+				  		}
+				  	?>
+			    </ul>
+		  	</li>
 
 		  	<li role="presentation" class="dropdown information">
 			    <a href="<?php echo url('/contact-us'); ?>" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-phone"></i><?php echo trans('text.contact_us'); ?></a>
@@ -54,9 +62,9 @@
 			    <a href="<?php echo url('/send-feedback'); ?>" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-comment"></i><?php echo trans('text.send_feedback'); ?> </a>
 			</li>
 
-			<li role="presentation" class="dropdown information">
-			    <a href="<?php echo url('/documentation'); ?>" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-file"></i><?php echo trans('text.documentation'); ?> </a>
-			</li>
+			<!-- <li role="presentation" class="dropdown information">
+			    <a href="<?php // echo url('/documentation'); ?>" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-btn fa-file"></i><?php // echo trans('text.documentation'); ?> </a>
+			</li> -->
 
 		</ul>
 	</div>
