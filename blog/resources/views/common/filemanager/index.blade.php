@@ -46,6 +46,8 @@
             <?php
               if($data['target']=='no-input') { ?>
                 <div class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></div>
+              <?php }else if($data['target']=='select-profile') { ?>
+                <a href="#" role="button" data-toggle="choose-profile" data-image="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
               <?php }else{ ?>
                 <a href="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
             <?php  } ?>
@@ -285,7 +287,34 @@ $('#modal-image #button-delete').on('click', function(e) {
 });
 //--></script>
 <script type="text/javascript">
+$(document).ready(function() {
+    // Load profile
+    $(document).delegate('a[data-toggle=\'choose-profile\']', 'click', function() {
+      
+      $('#modal-image').remove();
+      var image = $(this).data("image");
+      $.ajax({
+          url: 'account/crop-profile?image='+encodeURIComponent(image),
+          dataType: 'html',
+          beforeSend: function() {
+              // before send
+              $('#block-loader').show();
+          },
+          complete: function() {
+              // completed
+              $('#block-loader').hide();
+          },
+          success: function(html) {
+              $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
 
+              $('#modal-image').modal('show');
+          }
+      });
+      return false;
+    });
+});
+</script>
+<script type="text/javascript">
 $(document).on('click', '.btntooltip', function() {
   $(this).tooltip('hide');
 });

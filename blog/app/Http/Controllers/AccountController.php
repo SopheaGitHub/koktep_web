@@ -51,7 +51,36 @@ class AccountController extends Controller
     }
 
     public function getCropProfile() {
+        $request = \Request::all();
+        $this->data->title = 'Update Profile';
+        $this->data->image = $request['image'];
+        $this->data->action_form = url('account/load-cropit-form');
+        $this->data->action_save_profile = url('account/save-profile');
         return view('account.crop_profile', ['data'=>$this->data]);
+    }
+
+    public function getSaveProfile() {
+        $request = \Request::all();
+        $username = ((Auth::check())? str_replace(' ', '', strtolower(Auth::user()->name)):'0').$this->data->auth_id;
+        $this->base64_decode($request['image_profile'], $username);
+        return back();
+    }
+
+    public function base64_decode ($code, $username) {
+        $saveImage = 'profile'.$username.'.png';
+        $data = $code;
+        list($t, $data) = explode(';', $data);
+        list($t, $data)  = explode(',', $data);
+        $src = base64_decode($data);
+
+        $directory = $this->data->dir_image.'catalog/'.$this->data->auth_id.'/profile/';
+        // create user diractory
+        if(!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+            chmod($directory, 0777);
+        }
+
+        file_put_contents($directory.$saveImage, $src);
     }
 
     public function getSettings() {
@@ -417,7 +446,8 @@ class AccountController extends Controller
     }
 
     public function getLoadCropitForm() {
-        $this->data->image = url('/images/avatar_g2.jpg');
+        $request = \Request::all();
+        $this->data->image = $request['image'];
         return view('account.load_cropit', ['data' => $this->data]);
     }
 

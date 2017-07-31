@@ -245,6 +245,9 @@ class FilemanagerController extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
+		// load profile
+		$data['action_form_crop_profile'] = url('account/load-cropit-form');
+
 		return view('common.filemanager.index', compact('data'));
 	}
 

@@ -32,7 +32,6 @@
                 <a href="<?php echo url('/overview-account?account_id='.$user_id); ?>">
                 <i class="fa fa-btn fa-home"></i><?php echo trans('text.overview'); ?> </a>
             </li>
-            <li><a href="<?php echo url('/posts?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-tasks"></i><?php echo trans('text.posts_management'); ?></a></li>
             <li <?php echo (($route_name=='posts-groups-account')? 'class="active"':''); ?> >
                 <a href="<?php echo url('/posts-groups-account?account_id='.$user_id); ?>">
                 <i class="fa fa-btn fa-object-group"></i><?php echo trans('text.posted_groups'); ?> </a>

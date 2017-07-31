@@ -1,5 +1,21 @@
 <?php
+    $objFile = new App\Http\Controllers\Common\FilemanagerController();
+    $objConfig = new App\Http\Controllers\ConfigController();
+    $objUser = new App\User();
+
     $author_id = ((Auth::check())? Auth::user()->id:'0');
+    $user_info = $objUser->getUser($author_id);
+
+    if($user_info) {
+        if ($user_info->image && is_file($objConfig->dir_image . $user_info->image)) {
+            $thumb_profile = $objFile->resize($user_info->image, 100, 100);
+        } else {
+            $thumb_profile = $objFile->resize('no_image.png', 100, 100);
+        }
+    }else {
+        $thumb_profile = $objFile->resize('no_image.png', 100, 100);
+    }
+    
 ?>
 <div class="row profile" style="background: #fff; margin:15px;">
     <div class="col-md-3">
@@ -7,11 +23,10 @@
             <!-- SIDEBAR USERPIC -->
             <div class="profile-userpic">
                 <div class="profile-pic">
-                    <img alt="" src="http://localhost/development/koktep_storage//images/cache/catalog/profile/avatar_g2-100x100.jpg">
+                    <img alt="" src="<?php echo $thumb_profile; ?>">
                     <?php
                         if($author_id==\Request::get('account_id')) { ?>
-                            <!-- <div class="edit"><a href="<?php // echo url('/account/settings?account_id='.((Auth::check())? Auth::user()->id:'0').'&tabpanel=image'); ?>"><i class="fa fa-pencil fa-lg"></i></a></div> -->
-                            <div class="edit"><a href="#" role="button" data-toggle="crop-profile" data-id="<?php echo $author_id; ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
+                            <div class="edit"><a href="#" role="button" data-toggle="select-profile" data-id="<?php echo $author_id; ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
                     <?php } ?>
                 </div>
             </div>
@@ -60,28 +75,26 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        // Load profile
-        $(document).delegate('a[data-toggle=\'crop-profile\']', 'click', function() {
-            $('#modal-profile').remove();
-            var account_id = $(this).data("id");
+        // Load Image Manager
+        $(document).delegate('a[data-toggle=\'select-profile\']', 'click', function() {
+            $('#modal-image').remove();
             $.ajax({
-                url: 'account/crop-profile?account_id='+encodeURIComponent(account_id),
+                url: 'filemanager?target=select-profile',
                 dataType: 'html',
                 beforeSend: function() {
-                    // before send
                     $('#block-loader').show();
                 },
                 complete: function() {
-                    // completed
                     $('#block-loader').hide();
                 },
                 success: function(html) {
-                    $('body').append('<div id="modal-profile" class="modal">' + html + '</div>');
+                    $('body').append('<div id="modal-image" class="modal in">' + html + '</div>');
 
-                    $('#modal-profile').modal('show');
+                    $('#modal-image').modal('show');
                 }
             });
             return false;
         });
+
     });
 </script>
