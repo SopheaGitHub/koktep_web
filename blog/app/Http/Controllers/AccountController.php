@@ -52,6 +52,10 @@ class AccountController extends Controller
 
     public function getCropProfile() {
         $request = \Request::all();
+        $data = getimagesize($request['image']);
+        $this->data->width = $data['0'];
+        $this->data->height = $data['1'];
+        $this->data->error_size = trans('text.error_profile_image_size_crop');
         $this->data->title = trans('text.create_new_profile_picture');
         $this->data->button_save = trans('button.save');
         $this->data->button_cancel = trans('button.cancel');
@@ -61,21 +65,49 @@ class AccountController extends Controller
         return view('account.crop_profile', ['data'=>$this->data]);
     }
 
-    public function getSaveProfile() {
+    public function postSaveProfile() {
         $request = \Request::all();
-        $username = ((Auth::check())? str_replace(' ', '', strtolower(Auth::user()->name)):'0').$this->data->auth_id;
+        $username = 'profile_'.((Auth::check())? str_replace(' ', '', strtolower(Auth::user()->name)):'0').$this->data->auth_id;
         $file_path = 'catalog/'.$this->data->auth_id.'/profile/';
         $this->base64_decode($request['image_profile'], $username, $file_path);
-        $this->user->where('id', '=', $this->data->auth_id)->update(['image'=>$file_path.'profile_'.$username.'.jpg']);
+        $this->user->where('id', '=', $this->data->auth_id)->update(['image'=>$file_path.$username.'.jpg']);
         // remove old profile
-        if (file_exists($this->data->dir_image.'cache/'.$file_path.'profile_'.$username.'.jpg')) {
-            unlink($this->data->dir_image.'cache/'.$file_path.'profile_'.$username.'.jpg');
+        if (file_exists($this->data->dir_image.'cache/'.$file_path.$username.'-100x100.jpg')) {
+            unlink($this->data->dir_image.'cache/'.$file_path.$username.'-100x100.jpg');
+        }
+        return back();
+    }
+
+    public function getCropCover() {
+        $request = \Request::all();
+        $data = getimagesize($request['image']);
+        $this->data->width = $data['0'];
+        $this->data->height = $data['1'];
+        $this->data->error_size = trans('text.error_cover_image_size_crop');
+        $this->data->title = trans('text.create_new_cover_picture');
+        $this->data->button_save = trans('button.save');
+        $this->data->button_cancel = trans('button.cancel');
+        $this->data->image = $request['image'];
+        $this->data->action_form = url('account/load-cropit-form');
+        $this->data->action_save_cover = url('account/save-cover');
+        return view('account.crop_cover', ['data'=>$this->data]);
+    }
+
+    public function postSaveCover() {
+        $request = \Request::all();
+        $username = 'cover_'.((Auth::check())? str_replace(' ', '', strtolower(Auth::user()->name)):'0').$this->data->auth_id;
+        $file_path = 'catalog/'.$this->data->auth_id.'/cover/';
+        $this->base64_decode($request['image_cover'], $username, $file_path);
+        $this->user->where('id', '=', $this->data->auth_id)->update(['first_cover'=>$file_path.$username.'.jpg']);
+        // remove old profile
+        if (file_exists($this->data->dir_image.'cache/'.$file_path.$username.'-850x280.jpg')) {
+            unlink($this->data->dir_image.'cache/'.$file_path.$username.'-850x280.jpg');
         }
         return back();
     }
 
     public function base64_decode ($code, $username, $file_path) {
-        $saveImage = 'profile_'.$username.'.jpg';
+        $saveImage = $username.'.jpg';
         $data = $code;
         list($t, $data) = explode(';', $data);
         list($t, $data)  = explode(',', $data);

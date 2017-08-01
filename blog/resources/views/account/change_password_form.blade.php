@@ -13,8 +13,8 @@
                     <div class="col-md-6"><h4><i class="fa fa-btn fa-exchange"></i><?php echo $data->titlelist; ?></h4></div>
                     <div class="col-md-6">
                         <span class="pull-right">
-                            <a href="<?php echo $data->go_back; ?>" class="btn btn-sm btn-default"><i class="fa fa-btn fa-undo"></i> <?php echo $data->button_cancel; ?></a>
                             <button type="button" id="submit-user-password" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save_change; ?></button>
+                            <a href="<?php echo $data->go_back; ?>" class="btn btn-sm btn-default"><i class="fa fa-btn fa-close"></i> <?php echo $data->button_cancel; ?></a>                            
                         </span>
                     </div>
                 </div>

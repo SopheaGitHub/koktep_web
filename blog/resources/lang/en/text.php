@@ -231,6 +231,8 @@ return [
     'comment_required' => 'The <b>Your Comment</b> field is required.',
     'comment_min' => 'The <b>Your Comment</b> must be at least 5 characters.',
     'rating_required' => 'The <b>Rating</b> field is required.',
-    'create_new_profile_picture' => 'Create New Profile Picture'
-
+    'create_new_profile_picture' => 'Create New Profile Picture',
+    'create_new_cover_picture' => 'Create New Cover Picture',
+    'error_profile_image_size_crop' => 'Please choose an image that has a width greater than 110px and heights greater than 110px',
+    'error_cover_image_size_crop' => 'Please choose an image that has a width greater than 860px and heights greater than 290px',
 ];

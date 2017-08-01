@@ -12,8 +12,14 @@
         } else {
             $thumb_profile = $objFile->resize('no_image.png', 100, 100);
         }
+        if ($user_info->first_cover && is_file($objConfig->dir_image . $user_info->first_cover)) {
+            $thumb_cover = $objFile->resize($user_info->first_cover, 850, 280);
+        } else {
+            $thumb_cover = $objFile->resize('no_image.png', 850, 280);
+        }
     }else {
         $thumb_profile = $objFile->resize('no_image.png', 100, 100);
+        $thumb_cover = $objFile->resize('no_image.png', 850, 280);
     }
     
 ?>
@@ -34,7 +40,7 @@
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
                 <div class="profile-usertitle-name">
-                    <a href="http://localhost/development/koktep_web/blog/public/about-account?account_id=1">Chan Sophea</a>
+                    <a href="#">Chan Sophea</a>
                 </div>
                 <div class="desc">Passionate Designer</div>
                 <div class="desc">Curious Developer</div>
@@ -46,9 +52,9 @@
     <div class="col-md-9">
         <div class="row">
             <div class="cover-userpic">
-                <div class="cover-pic">
+                <div class="profile-pic">
                     <div>
-                        <img width="100%" src="<?php echo url('images/5.jpg'); ?>">
+                        <img width="100%" src="<?php echo $thumb_cover; ?>">
                     </div>
                     <?php
                         if($author_id==\Request::get('account_id')) { ?>
@@ -103,7 +109,25 @@
             });
             return false;
         });
+        $(document).delegate('a[data-toggle=\'select-cover\']', 'click', function() {
+            $('#modal-image').remove();
+            $.ajax({
+                url: 'filemanager?target=select-cover',
+                dataType: 'html',
+                beforeSend: function() {
+                    $('#block-loader').show();
+                },
+                complete: function() {
+                    $('#block-loader').hide();
+                },
+                success: function(html) {
+                    $('body').append('<div id="modal-image" class="modal in">' + html + '</div>');
 
+                    $('#modal-image').modal('show');
+                }
+            });
+            return false;
+        });
     });
 </script>
 <script type="text/javascript">
@@ -132,30 +156,72 @@ $(document).ready(function() {
       });
       return false;
     });
+    $(document).delegate('a[data-toggle=\'choose-cover\']', 'click', function() {
+      
+      $('#modal-image').remove();
+      var image = $(this).data("image");
+      $.ajax({
+          url: 'account/crop-cover?image='+encodeURIComponent(image),
+          dataType: 'html',
+          beforeSend: function() {
+              // before send
+              $('#block-loader').show();
+          },
+          complete: function() {
+              // completed
+              $('#block-loader').hide();
+          },
+          success: function(html) {
+              $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+
+              $('#modal-image').modal('show');
+          }
+      });
+      return false;
+    });
 });
 </script>
 <script type="text/javascript">
   $(document).ready(function() {
-      // Load Image Manager
-      $(document).delegate('a[data-toggle=\'reselect-profile\']', 'click', function() {
-          $('#modal-image').remove();
-          $.ajax({
-              url: 'filemanager?target=select-profile',
-              dataType: 'html',
-              beforeSend: function() {
-                  $('#block-loader').show();
-              },
-              complete: function() {
-                  $('#block-loader').hide();
-              },
-              success: function(html) {
-                  $('body').append('<div id="modal-image" class="modal in">' + html + '</div>');
+        // Load Image Manager
+        $(document).delegate('a[data-toggle=\'reselect-profile\']', 'click', function() {
+              $('#modal-image').remove();
+              $.ajax({
+                url: 'filemanager?target=select-profile',
+                dataType: 'html',
+                beforeSend: function() {
+                    $('#block-loader').show();
+                },
+                complete: function() {
+                    $('#block-loader').hide();
+                },
+                success: function(html) {
+                    $('body').append('<div id="modal-image" class="modal in">' + html + '</div>');
 
-                  $('#modal-image').modal('show');
-              }
-          });
-          return false;
-      });
+                    $('#modal-image').modal('show');
+                }
+            });
+            return false;
+        });
 
+        $(document).delegate('a[data-toggle=\'reselect-cover\']', 'click', function() {
+            $('#modal-image').remove();
+                $.ajax({
+                    url: 'filemanager?target=select-cover',
+                    dataType: 'html',
+                    beforeSend: function() {
+                        $('#block-loader').show();
+                    },
+                    complete: function() {
+                        $('#block-loader').hide();
+                    },
+                    success: function(html) {
+                        $('body').append('<div id="modal-image" class="modal in">' + html + '</div>');
+
+                        $('#modal-image').modal('show');
+                    }
+              });
+              return false;
+        });
   });
 </script>

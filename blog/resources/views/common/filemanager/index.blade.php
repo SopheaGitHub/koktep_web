@@ -48,6 +48,8 @@
                 <div class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></div>
               <?php }else if($data['target']=='select-profile') { ?>
                 <a href="#" role="button" data-toggle="choose-profile" data-image="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
+              <?php }else if($data['target']=='select-cover') { ?>
+                <a href="#" role="button" data-toggle="choose-cover" data-image="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
               <?php }else{ ?>
                 <a href="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
             <?php  } ?>

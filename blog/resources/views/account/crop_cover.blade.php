@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-sm">
+<div class="modal-dialog modal-lg">
   <div class="modal-content" role="document">
     <div class="modal-header">
       <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
@@ -13,14 +13,12 @@
           border: 5px solid #ccc;
           border-radius: 3px;
           margin-top: 7px;
-          width: 110px;
-          height: 110px;
-          border-radius: 50%;
+          width: 860px;
+          height: 290px;
         }
 
         .cropit-preview-image-container {
           cursor: move;
-          border-radius: 50%;
         }
 
         .cropit-preview-background {
@@ -47,7 +45,7 @@
       <div class="row">
         <div class="col-md-12">
           <?php
-            if($data->width < 100 || $data->height < 100 ) { ?>
+            if($data->width < 850 || $data->height < 290 ) { ?>
               <div class="alert alert-warning" id="warning">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <i class="fa fa-btn fa-info-circle"></i><?php echo $data->error_size; ?><br />
@@ -55,9 +53,9 @@
           <?php  }
           ?>
           <div class="image-editor">
-            <a href="#" role="button" data-toggle="reselect-profile" data-dismiss="modal"><i class="fa fa-pencil fa-lg"></i></a>
+            <a href="#" role="button" data-toggle="reselect-cover" data-dismiss="modal"><i class="fa fa-pencil fa-lg"></i></a>
             <!-- <input type="file" class="cropit-image-input"> -->
-            <div style="padding-bottom: 10px; padding-left: 18px;">
+            <div style="padding-bottom: 10px;">
               <div class="cropit-preview"></div>
             </div>
             <div class="image-size-label"></div>
@@ -72,10 +70,10 @@
         </div>
       </div>
 
-      <form id="save-profile" action="<?php echo $data->action_save_profile; ?>" method="POST">
+      <form id="save-cover" action="<?php echo $data->action_save_cover; ?>" method="POST">
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
         <input type="hidden" name="original_image" value="<?php echo $data->image; ?>">
-        <input type="hidden" id="image_profile" name="image_profile" value="">
+        <input type="hidden" id="image_cover" name="image_cover" value="">
       </form>
 
     </div>
@@ -108,8 +106,8 @@
         type: 'image/jpeg',
       });
       // window.open(imageData);
-      $('#image_profile').val(imageData);
-      $('#save-profile').submit();
+      $('#image_cover').val(imageData);
+      $('#save-cover').submit();
     });
   });
 </script>

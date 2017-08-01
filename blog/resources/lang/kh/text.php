@@ -231,6 +231,9 @@ return [
     'comment_required' => '<b>មតិយោបល់របស់អ្នក</b> តម្រូវឱ្យបញ្ចូល។',
     'comment_min' => '<b>មតិយោបល់របស់អ្នក</b> ត្រូវតែមានយ៉ាងហោចណាស់ 5 តួអក្សរ។',
     'rating_required' => '<b>ការវាយតំលៃ</b> តម្រូវឱ្យបញ្ចូល។',
-    'create_new_profile_picture' => 'Create New Profile Picture'
+    'create_new_profile_picture' => 'Create New Profile Picture',
+    'create_new_cover_picture' => 'Create New Cover Picture',
+    'error_profile_image_size_crop' => 'សូមជ្រើរើសយកតែរូបភាពណាដែលមានប្រវែង ទទឹង ធំជាង 110px និង កំពស់ ធំជាង 110px',
+    'error_cover_image_size_crop' => 'សូមជ្រើរើសយកតែរូបភាពណាដែលមានប្រវែង ទទឹង ធំជាង 860px និង កំពស់ ធំជាង 290px',
 
 ];
