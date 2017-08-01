@@ -230,6 +230,7 @@ return [
 
     'comment_required' => 'The <b>Your Comment</b> field is required.',
     'comment_min' => 'The <b>Your Comment</b> must be at least 5 characters.',
-    'rating_required' => 'The <b>Rating</b> field is required.'
+    'rating_required' => 'The <b>Rating</b> field is required.',
+    'create_new_profile_picture' => 'Create New Profile Picture'
 
 ];

@@ -287,34 +287,6 @@ $('#modal-image #button-delete').on('click', function(e) {
 });
 //--></script>
 <script type="text/javascript">
-$(document).ready(function() {
-    // Load profile
-    $(document).delegate('a[data-toggle=\'choose-profile\']', 'click', function() {
-      
-      $('#modal-image').remove();
-      var image = $(this).data("image");
-      $.ajax({
-          url: 'account/crop-profile?image='+encodeURIComponent(image),
-          dataType: 'html',
-          beforeSend: function() {
-              // before send
-              $('#block-loader').show();
-          },
-          complete: function() {
-              // completed
-              $('#block-loader').hide();
-          },
-          success: function(html) {
-              $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
-
-              $('#modal-image').modal('show');
-          }
-      });
-      return false;
-    });
-});
-</script>
-<script type="text/javascript">
 $(document).on('click', '.btntooltip', function() {
   $(this).tooltip('hide');
 });

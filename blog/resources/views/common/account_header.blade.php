@@ -45,8 +45,16 @@
     </div>
     <div class="col-md-9">
         <div class="row">
-            <div>
-                <img width="100%" src="<?php echo url('images/5.jpg'); ?>">
+            <div class="cover-userpic">
+                <div class="cover-pic">
+                    <div>
+                        <img width="100%" src="<?php echo url('images/5.jpg'); ?>">
+                    </div>
+                    <?php
+                        if($author_id==\Request::get('account_id')) { ?>
+                            <div class="edit"><a href="#" role="button" data-toggle="select-cover" data-id="<?php echo $author_id; ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
+                    <?php } ?>
+                </div>  
             </div>
         </div>
         <div class="row overview">
@@ -97,4 +105,57 @@
         });
 
     });
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // Load profile
+    $(document).delegate('a[data-toggle=\'choose-profile\']', 'click', function() {
+      
+      $('#modal-image').remove();
+      var image = $(this).data("image");
+      $.ajax({
+          url: 'account/crop-profile?image='+encodeURIComponent(image),
+          dataType: 'html',
+          beforeSend: function() {
+              // before send
+              $('#block-loader').show();
+          },
+          complete: function() {
+              // completed
+              $('#block-loader').hide();
+          },
+          success: function(html) {
+              $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+
+              $('#modal-image').modal('show');
+          }
+      });
+      return false;
+    });
+});
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+      // Load Image Manager
+      $(document).delegate('a[data-toggle=\'reselect-profile\']', 'click', function() {
+          $('#modal-image').remove();
+          $.ajax({
+              url: 'filemanager?target=select-profile',
+              dataType: 'html',
+              beforeSend: function() {
+                  $('#block-loader').show();
+              },
+              complete: function() {
+                  $('#block-loader').hide();
+              },
+              success: function(html) {
+                  $('body').append('<div id="modal-image" class="modal in">' + html + '</div>');
+
+                  $('#modal-image').modal('show');
+              }
+          });
+          return false;
+      });
+
+  });
 </script>

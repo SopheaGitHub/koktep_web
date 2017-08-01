@@ -230,6 +230,7 @@ return [
 
     'comment_required' => '<b>មតិយោបល់របស់អ្នក</b> តម្រូវឱ្យបញ្ចូល។',
     'comment_min' => '<b>មតិយោបល់របស់អ្នក</b> ត្រូវតែមានយ៉ាងហោចណាស់ 5 តួអក្សរ។',
-    'rating_required' => '<b>ការវាយតំលៃ</b> តម្រូវឱ្យបញ្ចូល។'
+    'rating_required' => '<b>ការវាយតំលៃ</b> តម្រូវឱ្យបញ្ចូល។',
+    'create_new_profile_picture' => 'Create New Profile Picture'
 
 ];

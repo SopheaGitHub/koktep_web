@@ -88,8 +88,8 @@
         <?php echo $data->delete_confirmation_message; ?>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i><?php echo $data->button_no; ?></button>
         <button type="botton" class="btn btn-primary btn-sm" data-dismiss="modal" id="submit-delete-post"><i class="fa fa-btn fa-check"></i><?php echo $data->button_yes; ?></button>
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i><?php echo $data->button_no; ?></button>
       </div>
     </div>
   </div>

@@ -57,6 +57,7 @@
     </footer>
     <!-- JavaScripts -->
     <script src="<?php echo asset('/common.js'); ?>" type="text/javascript"></script>
+    <script type="text/javascript" src="<?php echo asset('/javascript/cropit/dist/jquery.cropit.js'); ?>"></script>
     @yield('script')
 </body>
 </html>
