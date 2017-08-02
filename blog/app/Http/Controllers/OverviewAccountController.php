@@ -38,6 +38,7 @@ class OverviewAccountController extends Controller
             return view('overview_account.index', ['data'=>$this->data]);
         }else {
             if(isset($request['login'])&&$request['login']=='success'&&Auth::check()) {
+                \Request::merge(['account_id' => $this->data->auth_id]);
 
                 if(\Session::has('return_detail')) {
                     $store_return_detail = \Session::get('return_detail');

@@ -275,9 +275,11 @@ class AccountController extends Controller
 
         // define tap
         $this->data->tab_general = trans('text.tab_general');
+        $this->data->tab_user_information = trans('text.tab_user_information');
         $this->data->tab_image = trans('text.tab_image');
         $this->data->tab_skill_charge = trans('text.tab_skill_charge');
         $this->data->tab_contact = trans('text.tab_contact');
+        $this->data->tab_user_contact = trans('text.tab_user_contact');
         $this->data->tab_social_media = trans('text.tab_social_media');
         $this->data->tab_watermark = trans('text.tab_watermark');
 
@@ -300,6 +302,7 @@ class AccountController extends Controller
         $this->data->entry_firstname = trans('text.entry_firstname');
         $this->data->entry_lastname = trans('text.entry_lastname');
         $this->data->entry_company = trans('text.entry_company');
+        $this->data->entry_location_name = trans('text.entry_location_name');
         $this->data->entry_phone = trans('text.entry_phone');
         $this->data->entry_fax = trans('text.entry_fax');
         $this->data->entry_website = trans('text.entry_website');
@@ -371,7 +374,7 @@ class AccountController extends Controller
             $this->data->watermark_status = $datas['user_watermark']->status;
         }else {
             $this->data->watermark_image = '';
-            $this->data->watermark_position = 'center';
+            $this->data->watermark_position = 'bottomright';
             $this->data->watermark_status = '0';
         }
 
@@ -403,6 +406,10 @@ class AccountController extends Controller
         $this->data->placeholder = $this->filemanager->resize('no_image.png', 120, 80);
         $this->data->image_placeholder = $this->filemanager->resize('no_image.png', 100, 100);
         // End
+
+
+        $this->data->button_save = trans('button.save');
+        $this->data->button_cancel = trans('button.cancel');
 
         $this->data->load_zone_action = url('geo-zones/zone');
         $this->data->status = $this->status();

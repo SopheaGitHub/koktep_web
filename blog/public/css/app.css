@@ -473,3 +473,13 @@ div.required .control-label:not(span):before, td.required:before {
     margin-top: 0;
     color: #8b8b8b;
 }
+
+h4.panel-title {
+  color: #27C3ED;
+  font-size: 14px;
+}
+
+h4.panel-title:hover {
+  cursor: pointer;
+  color: #27C3ED;
+}
