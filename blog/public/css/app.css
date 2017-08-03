@@ -188,11 +188,11 @@ body {
 
 footer {
   /*margin-top: 30px;*/
-  background: #fff;
-  bottom: 0;
-  position: fixed;
-  width: 100%;
-  z-index: 100;
+  background: #F1F3FA;
+  /*bottom: 0;*/
+  /*position: fixed;*/
+  /*width: 100%;*/
+  /*z-index: 100;*/
   /*font-size: 12px;*/
   /*border-bottom: 3px solid #0F97B7;*/
 }
@@ -482,4 +482,8 @@ h4.panel-title {
 h4.panel-title:hover {
   cursor: pointer;
   color: #27C3ED;
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    border-top: none;
 }

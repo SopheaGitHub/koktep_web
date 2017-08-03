@@ -1,122 +1,43 @@
-<div class="container-fluid">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><b><i class="fa fa-btn <?php echo (($data->icon=='icon_create')? 'fa-plus-square':'fa-pencil-square') ?>"></i><?php echo $data->titlelist; ?></b></h3>
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="row">
+        <div class="col-md-6"><h4 class="modal-title"><b><i class="fa fa-btn <?php echo (($data->icon=='icon_create')? 'fa-upload':'fa-pencil-square') ?>"></i><?php echo $data->titlelist; ?></b></h4></div>
+        <div class="col-md-6">
+            <span class="pull-right">
+              <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-btn fa-check"></i>Save</button>
+              <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i>Close</button>
+            </span>
+        </div>
+      </div>
     </div>
-    <div class="panel-body">
+    <div class="modal-body">
 
-      <form action="#" method="post" enctype="multipart/form-data" id="form-post" class="form-horizontal">
+      <form action="#" method="post" enctype="multipart/form-data" id="form-post">
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $data->tab_general; ?></a></li>
-          <li><a href="#tab-data" data-toggle="tab"><?php echo $data->tab_data; ?></a></li>
-          <li><a href="#tab-links" data-toggle="tab"><?php echo $data->tab_links; ?></a></li>
-          <li><a href="#tab-image" data-toggle="tab"><?php echo $data->tab_image; ?></a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="tab-general">
-              <?php foreach ($data->languages as $language) { ?>
-              <div class="tab-pane" id="language<?php echo $language->language_id; ?>">
-                <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-title<?php echo $language->language_id; ?>"><?php echo $data->entry_title; ?></label>
-                  <div class="col-sm-10">
-                    <input type="text" name="post_description[<?php echo $language->language_id; ?>][title]" value="<?php echo $data->post_description[$language->language_id]['title']; ?>" placeholder="<?php echo $data->entry_title; ?>" id="input-title<?php echo $language->language_id; ?>" class="form-control" />
-                  </div>
-                </div>
-                <div class="form-group required">
-                  <label class="col-sm-2 control-label" for="input-description<?php echo $language->language_id; ?>"><?php echo $data->entry_description; ?></label>
-                  <div class="col-sm-10">
-                    <textarea name="post_description[<?php echo $language->language_id; ?>][description]" placeholder="<?php echo $data->entry_description; ?>" id="input-description<?php echo $language->language_id; ?>" class="text_summernote form-control"><?php echo $data->post_description[$language->language_id]['description']; ?></textarea>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-tag<?php echo $language->language_id; ?>"><span data-toggle="tooltip" title="<?php echo $data->title_tags; ?>"><?php echo $data->entry_tag; ?></span></label>
-                  <div class="col-sm-10">
-                    <input type="text" name="post_description[<?php echo $language->language_id; ?>][tag]" value="<?php echo $data->post_description[$language->language_id]['tag']; ?>" placeholder="<?php echo $data->entry_tag; ?>" id="input-tag<?php echo $language->language_id; ?>" class="form-control" />
-                  </div>
-                </div>
-              </div>
-              <?php } ?>
-          </div>
+        <div class="row">
+          <div class="col-md-6">
 
-          <div class="tab-pane" id="tab-data">
-            <div class="form-group required">
-              <label class="col-sm-2 control-label"><?php echo $data->entry_image; ?></label>
-              <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a>
-                <input type="hidden" name="image" value="<?php echo $data->image; ?>" id="input-image" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-watermark"><span data-toggle="tooltip" title="" data-original-title="<?php echo $data->title_watermark; ?>"><?php echo $data->entry_watermark; ?></span></label>
-              <div class="col-sm-10">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" name="watermark" value="1" <?php echo (($data->watermark_status=='1')? 'checked="checked"':'' ); ?>/>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $data->entry_status; ?></label>
-              <div class="col-sm-10">
-                <select name="status" id="input-status" class="form-control">
-                  <?php
-                    foreach ($data->status as $key => $status) { ?>
-                      <option <?php echo (($key == $data->post_status)? 'selected="selected"':''); ?> value="<?php echo $key; ?>"><?php echo $status; ?></option>
-                    <?php }
-                  ?>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="tab-links">
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-category"><span data-toggle="tooltip" title="" data-original-title="<?php echo $data->title_category; ?>"><?php echo $data->entry_category; ?></span></label>
-              <div class="col-sm-10">
-                <input type="text" name="category" value="" placeholder="<?php echo $data->entry_category; ?>" id="input-category" class="form-control" />
-                <div id="post-category" class="well well-sm" style="height: 150px; overflow: auto;">
-                  <?php foreach ($data->post_categories as $post_category) { ?>
-                  <div id="post-category<?php echo $post_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $post_category['name']; ?>
-                    <input type="hidden" name="post_category[]" value="<?php echo $post_category['category_id']; ?>" />
-                  </div>
-                  <?php } ?>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-related"><span data-toggle="tooltip" title="" data-original-title="<?php echo $data->title_related; ?>"><?php echo $data->entry_related; ?></span></label>
-              <div class="col-sm-10">
-                <input type="text" name="related" value="" placeholder="<?php echo $data->entry_related; ?>" id="input-related" class="form-control" />
-                <div id="post-related" class="well well-sm" style="height: 150px; overflow: auto;">
-                  <?php foreach ($data->post_relateds as $post_related) { ?>
-                  <div id="post-related<?php echo $post_related['post_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $post_related['title']; ?>
-                    <input type="hidden" name="post_related[]" value="<?php echo $post_related['post_id']; ?>" />
-                  </div>
-                  <?php } ?>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="tab-pane" id="tab-image">
             <div class="table-responsive">
-              <table id="images" class="table table-striped table-bordered table-hover">
+              <table id="images" class="table">
                 <thead>
                   <tr>
                     <td class="text-left"><?php echo $data->entry_image; ?></td>
                     <td class="text-left"><span data-toggle="tooltip" title="" data-original-title="<?php echo $data->title_watermark; ?>"><?php echo $data->entry_watermark; ?></span></td>
-                    <td class="text-right"><?php echo $data->entry_sort_order; ?></td>
                     <td></td>
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td class="text-left"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a><input type="hidden" name="image" value="<?php echo $data->image; ?>" id="input-image" /></td>
+                    <td class="text-left"><input type="checkbox" name="watermark" value="1" <?php echo (($data->watermark_status=='1')? 'checked="checked"':'' ); ?>/></td>
+                    <td></td>
+                  </tr>
                   <?php $image_row = 0; ?>
                   <?php foreach ($data->post_images as $post_image) { ?>
                   <tr id="image-row<?php echo $image_row; ?>">
                     <td class="text-left"><a href="" id="thumb-image<?php echo $image_row; ?>" data-toggle="image" class="img-thumbnail"><img src="<?php echo $post_image['thumb']; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a><input type="hidden" name="post_image[<?php echo $image_row; ?>][image]" value="<?php echo $post_image['image']; ?>" id="input-image<?php echo $image_row; ?>" /></td>
                     <td class="text-left"><input type="checkbox" name="post_image[<?php echo $image_row; ?>][watermark]" value="1" <?php echo (($post_image['watermark_status']=='1')? 'checked="checked"':''); ?> /></td>
-                    <td class="text-right"><input type="text" name="post_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $post_image['sort_order']; ?>" placeholder="<?php echo $data->entry_sort_order; ?>" class="form-control" /></td>
                     <td class="text-left"><button type="button" onclick="$('#image-row<?php echo $image_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $data->button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
                   <?php $image_row++; ?>
@@ -124,21 +45,74 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="3"></td>
+                    <td colspan="2"></td>
                     <td class="text-left"><button type="button" onclick="addImage();" data-toggle="tooltip" title="<?php echo $data->button_image_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
             </div>
+
           </div>
-          
+          <div class="col-md-6">
+
+            <?php foreach ($data->languages as $language) { ?>
+              <div class="form-group required">
+                <label for="input-title<?php echo $language->language_id; ?>"><?php echo $data->entry_title; ?></label>
+                <input type="text" name="post_description[<?php echo $language->language_id; ?>][title]" value="<?php echo $data->post_description[$language->language_id]['title']; ?>" placeholder="<?php echo $data->entry_title; ?>" id="input-title<?php echo $language->language_id; ?>" class="form-control" />
+              </div>
+              <div class="form-group required">
+                <label for="input-description<?php echo $language->language_id; ?>"><?php echo $data->entry_description; ?></label>
+                <textarea name="post_description[<?php echo $language->language_id; ?>][description]" placeholder="<?php echo $data->entry_description; ?>" id="input-description<?php echo $language->language_id; ?>" class="text_summernote form-control"><?php echo $data->post_description[$language->language_id]['description']; ?></textarea>
+              </div>
+              <div class="form-group">
+                <label for="input-tag<?php echo $language->language_id; ?>"><span data-toggle="tooltip" title="<?php echo $data->title_tags; ?>"><?php echo $data->entry_tag; ?></span></label>
+                <input type="text" name="post_description[<?php echo $language->language_id; ?>][tag]" value="<?php echo $data->post_description[$language->language_id]['tag']; ?>" placeholder="<?php echo $data->entry_tag; ?>" id="input-tag<?php echo $language->language_id; ?>" class="form-control" />
+              </div>
+            <?php } ?>
+
+            <div class="form-group">
+              <label><?php echo $data->entry_status; ?></label>
+              <select name="status" id="input-status" class="form-control">
+                <?php
+                  foreach ($data->status as $key => $status) { ?>
+                    <option <?php echo (($key == $data->post_status)? 'selected="selected"':''); ?> value="<?php echo $key; ?>"><?php echo $status; ?></option>
+                  <?php }
+                ?>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="input-category"><span data-toggle="tooltip" title="" data-original-title="<?php echo $data->title_category; ?>"><?php echo $data->entry_category; ?></span></label>
+              <input type="text" name="category" value="" placeholder="<?php echo $data->entry_category; ?>" id="input-category" class="form-control" />
+              <div id="post-category" class="well well-sm" style="height: 80px; overflow: auto;">
+                <?php foreach ($data->post_categories as $post_category) { ?>
+                <div id="post-category<?php echo $post_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $post_category['name']; ?>
+                  <input type="hidden" name="post_category[]" value="<?php echo $post_category['category_id']; ?>" />
+                </div>
+                <?php } ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="input-related"><span data-toggle="tooltip" title="" data-original-title="<?php echo $data->title_related; ?>"><?php echo $data->entry_related; ?></span></label>
+              <input type="text" name="related" value="" placeholder="<?php echo $data->entry_related; ?>" id="input-related" class="form-control" />
+              <div id="post-related" class="well well-sm" style="height: 80px; overflow: auto;">
+                <?php foreach ($data->post_relateds as $post_related) { ?>
+                <div id="post-related<?php echo $post_related['post_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $post_related['title']; ?>
+                  <input type="hidden" name="post_related[]" value="<?php echo $post_related['post_id']; ?>" />
+                </div>
+                <?php } ?>
+              </div>
+            </div>
+
+          </div>
         </div>
       </form>
 
     </div>
+    <div class="modal-footer"></div>
   </div>
 </div>
-
 <script type="text/javascript"><!--
 <?php foreach ($data->languages as $language) { ?>
 $('#input-description<?php echo $language->language_id; ?>').summernote({
@@ -151,7 +125,7 @@ $('#input-description<?php echo $language->language_id; ?>').summernote({
     // ['para', ['ul', 'ol', 'paragraph']],
     // ['height', ['height']],
     // ['misc', ['fullscreen','help']]
-    ['misc', ['fullscreen']]
+    // ['misc', ['fullscreen']]
   ], height: 150
 });
 <?php } ?>
@@ -163,7 +137,6 @@ function addImage() {
   html  = '<tr id="image-row' + image_row + '">';
   html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '"data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->placeholder; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /><input type="hidden" name="post_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
   html += '  <td class="text-left"><input type="checkbox" name="post_image[' + image_row + '][watermark]" value="1" <?php echo (($data->watermark_status=="1")? "checked=\'checked\'":"" ); ?> /></td>';
-  html += '  <td class="text-right"><input type="text" name="post_image[' + image_row + '][sort_order]" value="" placeholder="<?php echo $data->entry_sort_order; ?>" class="form-control" /></td>';
   html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $data->button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
   html += '</tr>';
 

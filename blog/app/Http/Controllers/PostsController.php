@@ -59,7 +59,7 @@ class PostsController extends Controller
         }
         
         $this->data->text_title = trans('text.posts_management');
-        $this->data->button_add = trans('button.add');
+        $this->data->button_upload = trans('button.upload');
         $this->data->action_list = url('/posts/list');
         $this->data->add_post = url('/posts/create');
         $this->data->action_delete = url('/posts/delete');
@@ -270,9 +270,14 @@ class PostsController extends Controller
         // End
         $datas = [
             'icon' => 'icon_create',
-            'titlelist' => trans('button.add')
+            'titlelist' => trans('button.upload')
         ];
         echo $this->getPostForm($datas);
+        exit();
+    }
+
+    public function getLoadUploadForm() {
+        $this->getCreateLoadForm();
         exit();
     }
 

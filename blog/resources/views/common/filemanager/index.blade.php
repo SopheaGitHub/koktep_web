@@ -1,7 +1,7 @@
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <button type="button" href="#modal-upload-form" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
       <h4 class="modal-title"><i class="fa fa-btn fa-image"></i> <?php echo $data['heading_title']; ?></h4>
       <ol class="breadcrumb" style="margin:0px; margin-top:10px; padding:0px; background: none;">
         <li data-toggle="tooltip" title="<?php echo $data['text_diractory_image']; ?>" ><i class="fa fa-btn fa-folder"></i></li>
