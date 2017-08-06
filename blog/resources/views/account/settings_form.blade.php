@@ -10,16 +10,17 @@
           <div id="collapse1" class="panel-collapse collapse">
           <div class="panel-body">
 
-            <form action="#" method="post" enctype="multipart/form-data" id="form-account-setting" class="form-horizontal">
+            <form action="#" method="post" enctype="multipart/form-data" id="form-setting-information" class="form-horizontal">
               <div class="row">
                 <div class="col-md-12">
                   <span class="pull-right">
-                      <button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save; ?></button>
+                      <button type="button" id="submit-setting-information" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save_change; ?></button>
                       <button type="reset" class="btn btn-sm btn-default"><i class="fa fa-btn fa-close"></i> <?php echo $data->button_cancel; ?></button>                            
                   </span>
                 </div>
               </div>
               <br />
+              <p id="message-setting-information"></p>
               <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <div class="form-group required">
                 <label class="col-sm-2 control-label"><?php echo $data->entry_name; ?></label>
@@ -52,16 +53,17 @@
         <div id="collapse2" class="panel-collapse collapse">
           <div class="panel-body">
 
-            <form action="#" method="post" enctype="multipart/form-data" id="form-account-setting" class="form-horizontal">
+            <form action="#" method="post" enctype="multipart/form-data" id="form-setting-contact" class="form-horizontal">
               <div class="row">
                 <div class="col-md-12">
                   <span class="pull-right">
-                      <button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save; ?></button>
+                      <button type="button" id="submit-setting-contact" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save_change; ?></button>
                       <button type="reset" class="btn btn-sm btn-default"><i class="fa fa-btn fa-close"></i> <?php echo $data->button_cancel; ?></button>                            
                   </span>
                 </div>
               </div>
               <br />
+              <p id="message-setting-contact"></p>
               <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <?php
                 $address_row = 0;
@@ -69,10 +71,10 @@
                   foreach ($data->user_address as $address) { ?>
 
                     <fieldset>
-                      <div class="form-group">
-                        <label class="col-sm-3 control-label" for="input-lastname"><?php echo $data->entry_name; ?></label>
+                      <div class="form-group required">
+                        <label class="col-sm-3 control-label" for="input-firstname"><?php echo $data->entry_name; ?></label>
                         <div class="col-sm-9">
-                          <input type="text" name="user_address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address->lastname; ?>" placeholder="<?php echo $data->entry_lastname; ?>" id="lastname" class="form-control" />
+                          <input type="text" name="user_address[<?php echo $address_row; ?>][firstname]" value="<?php echo (($address->firstname!='')? $address->firstname: ((\Auth::check())? \Auth::user()->name:'') ); ?>" placeholder="<?php echo $data->entry_firstname; ?>" id="lastname" class="form-control" />
                         </div>
                       </div>
                       <div class="form-group">
@@ -93,10 +95,10 @@
                           <input type="text" name="user_address[<?php echo $address_row; ?>][fax]" value="<?php echo $address->fax; ?>" placeholder="<?php echo $data->entry_fax; ?>" id="fax" class="form-control" />
                         </div>
                       </div>
-                      <div class="form-group">
+                      <div class="form-group required">
                         <label class="col-sm-3 control-label" for="input-email"><?php echo $data->entry_email; ?></label>
                         <div class="col-sm-9">
-                          <input type="text" name="user_address[<?php echo $address_row; ?>][email]" value="<?php echo $address->email; ?>" placeholder="<?php echo $data->entry_email; ?>" id="email" class="form-control" />
+                          <input type="text" name="user_address[<?php echo $address_row; ?>][email]" value="<?php echo (($address->email!='')? $address->email : ((\Auth::check())? \Auth::user()->email:'') ); ?>" placeholder="<?php echo $data->entry_email; ?>" id="email" class="form-control" />
                         </div>
                       </div>
                       <div class="form-group">
@@ -148,49 +150,45 @@
                 } else { ?>
                   <fieldset>
                     <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-firstname">First Name</label>
-                      <div class="col-sm-9"><input name="user_address[0][firstname]" value="" placeholder="First Name" id="firstname" class="form-control" type="text"></div>
+                      <label class="col-sm-3 control-label" for="input-firstname"><?php echo $data->entry_name; ?></label>
+                      <div class="col-sm-9"><input name="user_address[0][firstname]" value="<?php echo ((\Auth::check())? \Auth::user()->name:''); ?>" placeholder="<?php echo $data->entry_name; ?>" id="firstname" class="form-control" type="text"></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label" for="input-company"><?php echo $data->entry_location_name; ?></label>
+                      <div class="col-sm-9"><input name="user_address[0][company]" value="" placeholder="<?php echo $data->entry_location_name; ?>" id="company" class="form-control" type="text"></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label" for="input-phone"><?php echo $data->entry_phone; ?></label>
+                      <div class="col-sm-9"><input name="user_address[0][phone]" value="" placeholder="<?php echo $data->entry_phone; ?>" id="phone" class="form-control" type="text"></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label" for="input-fax"><?php echo $data->entry_fax; ?></label>
+                      <div class="col-sm-9"><input name="user_address[0][fax]" value="" placeholder="<?php echo $data->entry_fax; ?>" id="fax" class="form-control" type="text"></div>
                     </div>
                     <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-lastname">Last Name</label>
-                      <div class="col-sm-9"><input name="user_address[0][lastname]" value="" placeholder="Last Name" id="lastname" class="form-control" type="text"></div>
+                      <label class="col-sm-3 control-label" for="input-email"><?php echo $data->entry_email; ?></label>
+                      <div class="col-sm-9"><input name="user_address[0][email]" value="<?php echo ((\Auth::check())? \Auth::user()->email:''); ?>" placeholder="<?php echo $data->entry_email; ?>" id="email" class="form-control" type="text"></div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label" for="input-company">Company</label>
-                      <div class="col-sm-9"><input name="user_address[0][company]" value="" placeholder="Company" id="company" class="form-control" type="text"></div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label" for="input-phone">Phone</label>
-                      <div class="col-sm-9"><input name="user_address[0][phone]" value="" placeholder="Phone" id="phone" class="form-control" type="text"></div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label" for="input-fax">Fax</label>
-                      <div class="col-sm-9"><input name="user_address[0][fax]" value="" placeholder="Fax" id="fax" class="form-control" type="text"></div>
-                    </div>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-email">Email</label>
-                      <div class="col-sm-9"><input name="user_address[0][email]" value="" placeholder="Email" id="email" class="form-control" type="text"></div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label" for="input-website">Website</label>
+                      <label class="col-sm-3 control-label" for="input-website"><?php echo $data->entry_website; ?></label>
                       <div class="col-sm-9"><input name="user_address[0][website]" value="" placeholder="<?php echo $data->website_placeholder; ?>" id="website" class="form-control" type="text"></div>
                     </div>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-address">Address</label>
-                      <div class="col-sm-9"><input name="user_address[0][address]" value="" placeholder="Address" id="address" class="form-control" type="text"></div>
-                    </div>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-city">City</label>
-                      <div class="col-sm-9"><input name="user_address[0][city]" value="" placeholder="City" id="city" class="form-control" type="text"></div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label" for="input-address"><?php echo $data->entry_address; ?></label>
+                      <div class="col-sm-9"><input name="user_address[0][address]" value="" placeholder="<?php echo $data->entry_address; ?>" id="address" class="form-control" type="text"></div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-3 control-label" for="input-postcode">Post Code</label>
+                      <label class="col-sm-3 control-label" for="input-city"><?php echo $data->entry_city; ?></label>
+                      <div class="col-sm-9"><input name="user_address[0][city]" value="" placeholder="<?php echo $data->entry_city; ?>" id="city" class="form-control" type="text"></div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label" for="input-postcode"><?php echo $data->entry_postcode; ?></label>
                       <div class="col-sm-9">
-                        <input name="user_address[0][postcode]" value="" placeholder="Post Code" id="postcode" class="form-control" type="text">
+                        <input name="user_address[0][postcode]" value="" placeholder="<?php echo $data->entry_postcode; ?>" id="postcode" class="form-control" type="text">
                       </div>
                     </div>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-country">Country</label>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label" for="input-country"><?php echo $data->entry_country; ?></label>
                       <div class="col-sm-9">
                         <select name="user_address[0][country_id]" id="country0" onchange="$('#zone0').load('<?php echo $data->load_zone_action; ?>/' + this.value + '/0');" class="form-control">
                           <option value=""><?php echo $data->text_select; ?></option>
@@ -200,20 +198,13 @@
                         </select>
                       </div>
                     </div>
-                    <div class="form-group required">
-                      <label class="col-sm-3 control-label" for="input-zone">Region / State</label>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label" for="input-zone"><?php echo $data->entry_zone; ?></label>
                       <div class="col-sm-9">
                         <select name="user_address[0][zone_id]" id="zone0" class="form-control">
-                          <option value="">All Zones</option>
                         </select>
                       </div>
                     </div>
-                    <!-- <div class="form-group">
-                      <label class="col-sm-3 control-label" for="input-postcode">GEO Location</label>
-                      <div class="col-sm-9">
-                        <button type="button" class="btn btn-primary btn-sm" id="reload_location"><i class="fa fa-btn fa-repeat"></i>Reload</button>
-                      </div>
-                    </div> -->
                   </fieldset>
               <?php  }
               ?>
@@ -230,25 +221,26 @@
         <div id="collapse3" class="panel-collapse collapse">
           <div class="panel-body">
 
-            <form action="#" method="post" enctype="multipart/form-data" id="form-account-setting" class="form-horizontal">
+            <form action="#" method="post" enctype="multipart/form-data" id="form-setting-technical-skills" class="form-horizontal">
               <div class="row">
                 <div class="col-md-12">
                   <span class="pull-right">
-                      <button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save; ?></button>
+                      <button type="button" id="submit-setting-technical-skills" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save_change; ?></button>
                       <button type="reset" class="btn btn-sm btn-default"><i class="fa fa-btn fa-close"></i> <?php echo $data->button_cancel; ?></button>                            
                   </span>
                 </div>
               </div>
               <br />
+              <p id="message-setting-technical-skills"></p>
               <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <div class="table-responsive">
                 <table id="technicals" class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td class="text-left"><?php echo $data->entry_skill; ?></td>
-                      <td class="text-right"><?php echo $data->entry_percent; ?></td>
-                      <td class="text-right"><?php echo $data->entry_min_charge; ?></td>
-                      <td class="text-right"><?php echo $data->entry_max_charge; ?></td>
+                      <td width="70%" class="text-left"><?php echo $data->entry_skill; ?></td>
+                      <td width="10%" class="text-right"><?php echo $data->entry_percent; ?></td>
+                      <td width="10%" class="text-right"><?php echo $data->entry_min_charge; ?></td>
+                      <td width="10%" class="text-right"><?php echo $data->entry_max_charge; ?></td>
                       <td></td>
                     </tr>
                   </thead>
@@ -262,7 +254,7 @@
                             <td class="text-right"><input type="text" name="user_technical[<?php echo $technical_row; ?>][percent]" value="<?php echo $technical->percent; ?>" placeholder="<?php echo $data->entry_percent; ?>" class="form-control" /></td>
                             <td class="text-right"><input type="text" name="user_technical[<?php echo $technical_row; ?>][min_charge]" value="<?php echo $technical->min_charge; ?>" placeholder="<?php echo $data->entry_min_charge; ?>" class="form-control" /></td>
                             <td class="text-right"><input type="text" name="user_technical[<?php echo $technical_row; ?>][max_charge]" value="<?php echo $technical->max_charge; ?>" placeholder="<?php echo $data->entry_max_charge; ?>" class="form-control" /></td>
-                            <td class="text-left"><button type="button" onclick="$('#technical-row<?php echo $technical_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $data->button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                            <td class="text-left"><button type="button" onclick="$('#technical-row<?php echo $technical_row; ?>').remove();" class="btn btn-danger btn-xs"><i class="fa fa-btn fa-minus-circle"></i><?php echo $data->button_remove; ?></button></td>
                           </tr>
                         <?php $technical_row++; ?>
                       <?php  }
@@ -272,7 +264,7 @@
                   <tfoot>
                     <tr>
                       <td colspan="4"></td>
-                      <td class="text-left"><button type="button" onclick="addSkill();" data-toggle="tooltip" title="<?php echo $data->button_technical_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                      <td class="text-left"><button type="button" onclick="addSkill();" class="btn btn-primary btn-xs"><i class="fa fa-btn fa-plus-circle"></i><?php echo $data->button_technical_add; ?></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -290,27 +282,22 @@
         <div id="collapse4" class="panel-collapse collapse">
           <div class="panel-body">
 
-            <form action="#" method="post" enctype="multipart/form-data" id="form-account-setting" class="form-horizontal">
+            <form action="#" method="post" enctype="multipart/form-data" id="form-setting-watermark" class="form-horizontal">
               <div class="row">
                 <div class="col-md-12">
                   <span class="pull-right">
-                      <button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save; ?></button>
+                      <button type="button" id="submit-setting-watermark" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save_change; ?></button>
                       <button type="reset" class="btn btn-sm btn-default"><i class="fa fa-btn fa-close"></i> <?php echo $data->button_cancel; ?></button>                            
                   </span>
                 </div>
               </div>
               <br />
+              <p id="message-setting-watermark"></p>
               <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
               <div class="form-group">
-                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $data->title_watermark; ?>"><?php echo $data->entry_watermark_status; ?></span></label>
+                <label class="col-sm-2 control-label"><?php echo $data->entry_enabled; ?></label>
                 <div class="col-sm-10">
-                  <select name="user_watermark[status]" id="input-status" class="form-control">
-                    <?php
-                      foreach ($data->status as $key => $status) { ?>
-                        <option <?php echo (($key == $data->watermark_status)? 'selected="selected"':''); ?> value="<?php echo $key; ?>"><?php echo $status; ?></option>
-                      <?php }
-                    ?>
-                  </select>
+                  <input type="checkbox" name="user_watermark[status]" value="<?php echo $data->watermark_status; ?>" <?php echo (($data->watermark_status == '1')? 'checked="checked"':''); ?> />
                 </div>
               </div>
 
@@ -328,7 +315,7 @@
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $data->entry_image; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $data->entry_watermark_status; ?></label>
                 <div class="col-sm-10"><a href="" id="thumb-watermark-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->watermark_thumb; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a>
                   <input type="hidden" name="user_watermark[image]" value="<?php echo ((isset($data->watermark_image))? $data->watermark_image:''); ?>" id="input-watermark-image" />
                 </div>
@@ -354,10 +341,10 @@
   function addSkill() {
     html  = '<tr id="technical-row' + technical_row + '">';
     html += '<td class="text-left"><input type="text" name="user_technical[' + technical_row + '][skill]" value="" placeholder="<?php echo $data->entry_skill; ?>" class="form-control" /></td>';
-    html += '<td class="text-right"><input type="text" name="user_technical[' + technical_row + '][percent]" value="" placeholder="<?php echo $data->entry_percent; ?>" class="form-control" /></td>';
-    html += '<td class="text-right"><input type="text" name="user_technical[' + technical_row + '][min_charge]" value="" placeholder="<?php echo $data->entry_min_charge; ?>" class="form-control" /></td>';
-    html += '<td class="text-right"><input type="text" name="user_technical[' + technical_row + '][max_charge]" value="" placeholder="<?php echo $data->entry_max_charge; ?>" class="form-control" /></td>';
-    html += '<td class="text-left"><button type="button" onclick="$(\'#technical-row' + technical_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $data->button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+    html += '<td class="text-right"><input type="text" name="user_technical[' + technical_row + '][percent]" value="0" placeholder="<?php echo $data->entry_percent; ?>" class="form-control" /></td>';
+    html += '<td class="text-right"><input type="text" name="user_technical[' + technical_row + '][min_charge]" value="0" placeholder="<?php echo $data->entry_min_charge; ?>" class="form-control" /></td>';
+    html += '<td class="text-right"><input type="text" name="user_technical[' + technical_row + '][max_charge]" value="0" placeholder="<?php echo $data->entry_max_charge; ?>" class="form-control" /></td>';
+    html += '<td class="text-left"><button type="button" onclick="$(\'#technical-row' + technical_row  + '\').remove();" class="btn btn-danger btn-xs"><i class="fa fa-btn fa-minus-circle"></i><?php echo $data->button_remove; ?></button></td>';
     html += '</tr>';
 
     $('#technicals tbody').append(html);

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container"> 
     <div class="row profile">
         <div class="col-md-3">
             @include('common.filter_left') 

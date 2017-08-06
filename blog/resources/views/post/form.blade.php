@@ -22,23 +22,24 @@
               <table id="images" class="table">
                 <thead>
                   <tr>
-                    <td class="text-left"><?php echo $data->entry_image; ?></td>
-                    <td class="text-left"><span data-toggle="tooltip" title="" data-original-title="<?php echo $data->title_watermark; ?>"><?php echo $data->entry_watermark; ?></span></td>
+                    <td class="text-left" style="font-weight: 700;"><?php echo $data->entry_image; ?></td>
+                    <td class="text-left" style="font-weight: 700;"><span data-toggle="tooltip" title="" data-original-title="<?php echo $data->title_watermark; ?>"><?php echo $data->entry_watermark; ?></span></td>
                     <td></td>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="text-left"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a><input type="hidden" name="image" value="<?php echo $data->image; ?>" id="input-image" /></td>
-                    <td class="text-left"><input type="checkbox" name="watermark" value="1" <?php echo (($data->watermark_status=='1')? 'checked="checked"':'' ); ?>/></td>
-                    <td></td>
-                  </tr>
                   <?php $image_row = 0; ?>
+                  <tr id="image-row<?php echo $image_row; ?>">
+                    <td class="text-left"><a href="" id="thumb-image<?php echo $image_row; ?>" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a><input type="hidden" name="post_image[<?php echo $image_row; ?>][image]" value="<?php echo $data->image; ?>" id="input-image<?php echo $image_row; ?>" /></td>
+                    <td class="text-left"><input type="checkbox" name="watermark" value="1" <?php echo (($data->watermark_status=='1')? 'checked="checked"':'' ); ?>/></td>
+                    <td class="text-left"><button type="button" onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle fa-btn"></i><?php echo $data->button_remove; ?></button></td>
+                  </tr>
+                  <?php $image_row++; ?>
                   <?php foreach ($data->post_images as $post_image) { ?>
                   <tr id="image-row<?php echo $image_row; ?>">
                     <td class="text-left"><a href="" id="thumb-image<?php echo $image_row; ?>" data-toggle="image" class="img-thumbnail"><img src="<?php echo $post_image['thumb']; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a><input type="hidden" name="post_image[<?php echo $image_row; ?>][image]" value="<?php echo $post_image['image']; ?>" id="input-image<?php echo $image_row; ?>" /></td>
                     <td class="text-left"><input type="checkbox" name="post_image[<?php echo $image_row; ?>][watermark]" value="1" <?php echo (($post_image['watermark_status']=='1')? 'checked="checked"':''); ?> /></td>
-                    <td class="text-left"><button type="button" onclick="$('#image-row<?php echo $image_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $data->button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                    <td class="text-left"><button type="button" onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle fa-btn"></i><?php echo $data->button_remove; ?></button></td>
                   </tr>
                   <?php $image_row++; ?>
                   <?php } ?>
@@ -46,7 +47,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="2"></td>
-                    <td class="text-left"><button type="button" onclick="addImage();" data-toggle="tooltip" title="<?php echo $data->button_image_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
+                    <td class="text-left"><button type="button" onclick="addImage();" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle fa-btn"></i><?php echo $data->button_image_add; ?></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -71,14 +72,8 @@
             <?php } ?>
 
             <div class="form-group">
-              <label><?php echo $data->entry_status; ?></label>
-              <select name="status" id="input-status" class="form-control">
-                <?php
-                  foreach ($data->status as $key => $status) { ?>
-                    <option <?php echo (($key == $data->post_status)? 'selected="selected"':''); ?> value="<?php echo $key; ?>"><?php echo $status; ?></option>
-                  <?php }
-                ?>
-              </select>
+              <label for="status"><?php echo $data->entry_enabled; ?></label><br />
+              <input type="checkbox" name="status" id="status" value="1" <?php echo (($data->post_status=='1')? 'checked="checked"':''); ?> />
             </div>
 
             <div class="form-group">
@@ -137,7 +132,7 @@ function addImage() {
   html  = '<tr id="image-row' + image_row + '">';
   html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '"data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->placeholder; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /><input type="hidden" name="post_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
   html += '  <td class="text-left"><input type="checkbox" name="post_image[' + image_row + '][watermark]" value="1" <?php echo (($data->watermark_status=="1")? "checked=\'checked\'":"" ); ?> /></td>';
-  html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();" data-toggle="tooltip" title="<?php echo $data->button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+  html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();" class="btn btn-danger btn-xs"><i class="fa fa-btn fa-minus-circle"></i><?php echo $data->button_remove; ?></button></td>';
   html += '</tr>';
 
   $('#images tbody').append(html);

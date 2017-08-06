@@ -255,6 +255,72 @@ function requestSubmitForm2(buttonId, formId, formAction) {
   	});
 }
 
+// submit form data3
+function requestSubmitForm3(buttonId, formId, formAction, id) {
+	$(document).on('click', '#'+buttonId, function(e) {
+	    e.preventDefault();
+	    if (typeof timer != 'undefined') {
+		    clearInterval(timer);
+		}
+
+		timer = setInterval(function() {
+			clearInterval(timer);
+		    var postDatas = new FormData($("form#"+formId)[0]);
+		    $.ajax({
+		      	url: formAction,
+		      	type: "POST",
+		      	data: postDatas,
+		      	dataType: "json",
+		      	async: true,
+		      	beforeSend: function() {
+		        	console.log('beforeSend');
+		        	$('#'+buttonId).prop('disabled', true);
+		        	$('#block-loader').show();
+		      	},
+		      	complete: function() {
+		        	console.log('completed');
+		        	$('#'+buttonId).prop('disabled', false);
+		        	$('#block-loader').hide();
+		      	},
+		      	success: function(data) {
+		        	var msg = '';
+		        	// if vaildate error
+		        	if(data.error==1) {
+		          		msg += '<div class="alert alert-warning" id="warning">';
+		         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' </b><br />';
+		          		if(data.validatormsg) {
+		            		$.each(data.validatormsg, function(index, value) {
+		              			msg += '- '+value+'<br />';
+		            		});
+		          		}
+		          		msg += '</div>';
+		        	}
+
+		        	// if success
+		        	if(data.success==1) {
+		          		msg += '<div class="alert alert-success" id="success">';
+		          		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
+		          		msg += '</div>';
+		          		if(data.action=='create') {
+		            		loadingForm(data.load_form);
+		          		}
+		        	}
+
+		        	$('#'+id).html(msg).show();
+		      	},
+		      	error: function(request, status, error) {
+		        	$('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      	},
+		      	cache: false,
+		      	contentType: false,
+		      	processData: false
+		    });
+		}, 10);
+  	});
+}
+
 // submit delete data
 function requestSubmitDeleteForm(buttonId, formId, formAction) {
 	$(document).on('click', '#'+buttonId, function(e) {
@@ -553,7 +619,7 @@ $(document).ready(function() {
 	});
 
 	// Image Manager
-	$(document).delegate('a[data-toggle=\'image\']', 'click', function(e) {
+	/*$(document).delegate('a[data-toggle=\'image\']', 'click', function(e) {
 		e.preventDefault();
 
 		$('.popover').popover('hide', function() {
@@ -609,6 +675,33 @@ $(document).ready(function() {
 			$(element).popover('hide', function() {
 				$('.popover').remove();
 			});
+		});
+	});*/
+	$(document).delegate('a[data-toggle=\'image\']', 'click', function(e) {
+		e.preventDefault();
+
+		var element = this;
+
+		$('#modal-image').remove();
+
+		$.ajax({
+			url: 'filemanager?target=' + $(element).parent().find('input').attr('id') + '&thumb=' + $(element).attr('id'),
+			dataType: 'html',
+			beforeSend: function() {
+				$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+				$('#button-image').prop('disabled', true);
+				$('#block-loader').show();
+			},
+			complete: function() {
+				$('#button-image i').replaceWith('<i class="fa fa-pencil"></i>');
+				$('#button-image').prop('disabled', false);
+				$('#block-loader').hide();
+			},
+			success: function(html) {
+				$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+
+				$('#modal-image').modal('show');
+			}
 		});
 	});
 

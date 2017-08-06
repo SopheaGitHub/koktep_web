@@ -26,16 +26,20 @@
         $tag = '';
     }
 ?>
-<div class="" style="padding: 10px; background: #fff;">
+<div class="" style="padding: 10px; background: #fbfcfc;">
     <form action="#" method="GET" enctype="multipart/form-data" id="form-filter" class="form-horizontal">
         <input type="hidden" name="category_id" value="<?php echo $category_id; ?>" id="category_id">
+        <div class="row" style="border:1px solid red;">
+            <div class="col-md-2">
+                GRID
+            </div>
+            <div class="col-md-2">
+                VIEW
+            </div>
+            <div class="col-md-8">&nbsp;</div>
+        </div>
         <div class="table-responsive">
             <table class="table">
-                <thead>
-                    <tr>
-                        <th style="margin:0px; padding:0px 0px 10px 0px;"><h4><i class="fa fa-btn fa-search"></i><?php echo trans('text.search'); ?> ...</h4></th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr>
                         <td>
@@ -43,17 +47,11 @@
                         </td>
                     </tr>
                 </tbody>
-                
             </table>
             </div>
 
             <div class="table-responsive">
                 <table class="table">
-                <thead>
-                    <tr>
-                        <th colspan="2" style="margin:0px; padding:0px 0px 10px 0px;"><h4><i class="fa fa-btn fa-search-plus"></i><?php echo trans('text.filter_option'); ?></h4></th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr>
                     <td width="20%"><?php echo trans('text.view'); ?></td>

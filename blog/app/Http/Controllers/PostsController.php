@@ -641,6 +641,7 @@ class PostsController extends Controller
         $this->data->entry_image = trans('text.entry_image');
         $this->data->entry_watermark = trans('text.entry_watermark');
         $this->data->entry_status = trans('text.entry_status');
+        $this->data->entry_enabled = trans('text.enabled');
         $this->data->entry_sort_order = trans('text.entry_sort_order');
 
         $this->data->entry_category = trans('text.entry_category');

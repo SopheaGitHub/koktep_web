@@ -23,7 +23,7 @@ body {
 /* Profile sidebar */
 .profile-sidebar {
   /*padding: 20px 0 10px 0;*/
-  background: #fff;
+  background: #fbfcfc;
 }
 
 .profile-userpic {
@@ -175,7 +175,7 @@ body {
 /* Profile Content */
 .profile-content {
   padding: 20px;
-  background: #fff;
+  background: #fbfcfc;
   min-height: 460px;
 }
 
@@ -486,4 +486,9 @@ h4.panel-title:hover {
 
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
     border-top: none;
+}
+
+.modal { overflow: auto !important; }
+.modal-content {
+  background: #fbfcfc;
 }

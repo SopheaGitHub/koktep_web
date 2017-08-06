@@ -134,7 +134,7 @@ class User extends Authenticatable
         $sql = '';
         if (isset($datas['user_technicals']) && count($datas['user_technicals']) > 0) {
             foreach ($datas['user_technicals'] as $user_technical) {
-                $sql .= "INSERT INTO user_technical SET user_id = '" . $datas['user_id'] . "', skill = '" . htmlspecialchars($user_technical['skill']) . "', percent = '" . htmlspecialchars($user_technical['percent']) . "', min_charge = '" . htmlspecialchars($user_technical['min_charge']) . "', max_charge = '" . htmlspecialchars($user_technical['max_charge']) . "', sort_order = '" . htmlspecialchars($user_technical['sort_order']) . "'; ";
+                $sql .= "INSERT INTO user_technical SET user_id = '" . $datas['user_id'] . "', skill = '" . htmlspecialchars($user_technical['skill']) . "', percent = '" . htmlspecialchars($user_technical['percent']) . "', min_charge = '" . htmlspecialchars($user_technical['min_charge']) . "', max_charge = '" . htmlspecialchars($user_technical['max_charge']) . "', sort_order = '0'; ";
             }
             DB::connection()->getPdo()->exec($sql);
         }
@@ -144,7 +144,7 @@ class User extends Authenticatable
         $sql = '';
         if (isset($datas['user_address']) && count($datas['user_address']) > 0) {
             foreach ($datas['user_address'] as $address) {
-                $sql .= "INSERT INTO user_address SET user_id = '" . $datas['user_id'] . "', firstname = '" . htmlspecialchars($address['firstname']) . "', lastname = '" . htmlspecialchars($address['lastname']) . "', company = '" . htmlspecialchars($address['company']) . "', phone = '" . htmlspecialchars($address['phone']) . "', fax = '" . htmlspecialchars($address['fax']) . "', email = '" . htmlspecialchars($address['email']) . "', website = '" . htmlspecialchars($address['website']) . "', address = '" . htmlspecialchars($address['address']) . "', city = '" . htmlspecialchars($address['city']) . "', postcode = '" . htmlspecialchars($address['postcode']) . "', country_id = '" . htmlspecialchars($address['country_id']) . "', zone_id = '" . htmlspecialchars($address['zone_id']) . "', sort_order = '0'; ";
+                $sql .= "INSERT INTO user_address SET user_id = '" . $datas['user_id'] . "', firstname = '" . htmlspecialchars($address['firstname']) . "', company = '" . htmlspecialchars($address['company']) . "', phone = '" . htmlspecialchars($address['phone']) . "', fax = '" . htmlspecialchars($address['fax']) . "', email = '" . htmlspecialchars($address['email']) . "', website = '" . htmlspecialchars($address['website']) . "', address = '" . htmlspecialchars($address['address']) . "', city = '" . htmlspecialchars($address['city']) . "', postcode = '" . htmlspecialchars($address['postcode']) . "', country_id = '" . htmlspecialchars($address['country_id']) . "', zone_id = '" . htmlspecialchars($address['zone_id']) . "', sort_order = '0'; ";
             }
             DB::connection()->getPdo()->exec($sql);
         }
@@ -163,7 +163,7 @@ class User extends Authenticatable
     public function insertUserWatermark($datas=[]) {
         $sql = '';
         if (isset($datas['user_watermarks']) && count($datas['user_watermarks']) > 0) {
-            $sql .= "INSERT INTO user_watermark SET user_id = '" . $datas['user_id'] . "', image = '" . htmlspecialchars($datas['user_watermarks']['image']) . "', position = '" . htmlspecialchars($datas['user_watermarks']['position']) . "', status = '" . htmlspecialchars($datas['user_watermarks']['status']) . "'; ";
+            $sql .= "INSERT INTO user_watermark SET user_id = '" . $datas['user_id'] . "', image = '" . htmlspecialchars($datas['user_watermarks']['image']) . "', position = '" . htmlspecialchars($datas['user_watermarks']['position']) . "', status = '" . htmlspecialchars( ((isset($datas['user_watermarks']['status']))? $datas['user_watermarks']['status']:0) ) . "'; ";
             DB::connection()->getPdo()->exec($sql);
         }
     }
@@ -182,6 +182,96 @@ class User extends Authenticatable
 
     public function deletedWatermark($user_id) {
         DB::table('user_watermark')->where('user_id', '=', $user_id)->delete();
+    }
+
+    public function validationSettingFormInformation($datas=[]) {
+        $error = false;
+        $rules = [];
+        $messages = [];
+
+        $rules['name'] = 'required|max:255';
+        $rules['email'] = 'required|max:255|email';
+
+        $messages['name.required'] = trans('text.name_required');
+        $messages['name.max'] = trans('text.name_max255');
+        
+        $messages['email.required'] = trans('text.email_required');
+        $messages['email.max'] = trans('text.email_max255');
+        $messages['email.email'] = trans('text.email_valid');
+
+        $validator = \Validator::make($datas['request'], $rules, $messages);
+        if ($validator->fails()) {
+            $error = ['error'=>'1','success'=>'0','msg'=> (($datas['action']=='create')? ucfirst(trans('text.save')):ucfirst(trans('text.save_change'))).' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
+        }
+        return $error;
+    }
+
+    public function validationSettingFormContact($datas=[]) {
+        $error = false;
+        $rules = [];
+        $messages = [];
+        
+        if(isset($datas['request']['user_address'])) {
+            $i = 1;
+            foreach($datas['request']['user_address'] as $key => $val) {
+                $rules['user_address.'.$key.'.firstname'] = 'required|max:32';
+                $rules['user_address.'.$key.'.email'] = 'required|email|max:100';
+                $rules['user_address.'.$key.'.address'] = 'max:255';
+                $rules['user_address.'.$key.'.city'] = 'max:100';
+                $rules['user_address.'.$key.'.country_id'] = 'integer';
+                $rules['user_address.'.$key.'.zone_id'] = 'integer';
+                $rules['user_address.'.$key.'.sort_order'] = 'integer';
+
+                $messages['user_address.'.$key.'.firstname.required'] = trans('text.name_required') ;
+                $messages['user_address.'.$key.'.firstname.max'] = trans('text.before_add_address'). trans('text.address_firstname_max') ;
+                $messages['user_address.'.$key.'.email.required'] = trans('text.before_add_address'). trans('text.address_email_required') ;
+                $messages['user_address.'.$key.'.email.email'] = trans('text.before_add_address'). trans('text.address_email_email') ;
+                $messages['user_address.'.$key.'.email.max'] = trans('text.before_add_address'). trans('text.address_email_max') ;
+                $messages['user_address.'.$key.'.address.max'] = trans('text.before_add_address'). trans('text.address_address_max') ;
+                $messages['user_address.'.$key.'.city.max'] = trans('text.before_add_address'). trans('text.address_city_max') ;
+                $messages['user_address.'.$key.'.country_id.integer'] = trans('text.before_add_address'). trans('text.address_country_id_integer') ;
+                $messages['user_address.'.$key.'.zone_id.integer'] = trans('text.before_add_address'). trans('text.address_zone_id_integer') ;
+                $messages['user_address.'.$key.'.sort_order.integer'] = trans('text.before_add_address'). trans('text.address_sort_order_integer') ;
+                $i++;
+            }
+        }
+
+        $validator = \Validator::make($datas['request'], $rules, $messages);
+        if ($validator->fails()) {
+            $error = ['error'=>'1','success'=>'0','msg'=> (($datas['action']=='create')? ucfirst(trans('text.save')):ucfirst(trans('text.save_change'))).' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
+        }
+        return $error;
+    }
+
+    public function validationSettingFormTechnicalSkills($datas=[]) {
+        $error = false;
+        $rules = [];
+        $messages = [];
+        
+        if(isset($datas['request']['user_technical'])) {
+            $i = 1;
+            foreach($datas['request']['user_technical'] as $key => $val) {
+                $rules['user_technical.'.$key.'.skill'] = 'required|max:255';
+                $rules['user_technical.'.$key.'.percent'] = 'integer';
+                $rules['user_technical.'.$key.'.min_charge'] = 'integer';
+                $rules['user_technical.'.$key.'.max_charge'] = 'integer';
+                $rules['user_technical.'.$key.'.sort_order'] = 'integer';
+                $messages['user_technical.'.$key.'.skill.required'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_skill_required') ;
+                $messages['user_technical.'.$key.'.skill.max'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_skill_max') ;
+                
+                $messages['user_technical.'.$key.'.percent.integer'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_percent_integer') ;
+                $messages['user_technical.'.$key.'.min_charge.integer'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_min_charge_integer') ;
+                $messages['user_technical.'.$key.'.max_charge.integer'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_max_charge_integer') ;
+                $messages['user_technical.'.$key.'.sort_order.integer'] = trans('text.before_add_skill').' ('.$i.') '. trans('text.technical_sort_order_integer') ;
+                $i++;
+            }
+        }
+
+        $validator = \Validator::make($datas['request'], $rules, $messages);
+        if ($validator->fails()) {
+            $error = ['error'=>'1','success'=>'0','msg'=> (($datas['action']=='create')? ucfirst(trans('text.save')):ucfirst(trans('text.save_change'))).' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
+        }
+        return $error;
     }
 
     public function validationSettingForm($datas=[]) {

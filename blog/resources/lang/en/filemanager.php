@@ -15,8 +15,9 @@ return [
 
     'title' => 'Image Manager',
     'diractory_image' => 'Diractory Image',
-    'no_file' => 'No image uploaded.',
+    'no_file' => 'There is no image uploaded.',
     'parent' => 'Parent',
+    'back' => 'Back',
     'refresh' => 'Refresh',
     'upload' => 'Upload',
     'new_folder' => 'New Folder',

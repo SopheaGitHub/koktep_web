@@ -104,7 +104,7 @@ return [
     'technical_max_charge_integer' => 'Max Charge </b> must be an integer.',
     'technical_sort_order_integer' => 'Sort Order </b> must be an integer.',
 
-    'before_add_address' => 'The <b>Contact',
+    'before_add_address' => 'The <b>',
     'address_firstname_required' => 'First Name</b> field is required.',
     'address_firstname_max' => 'First Name</b> may not be greater than 32 characters.',
     'address_lastname_required' => 'Last Name</b> field is required.',
@@ -189,7 +189,7 @@ return [
     'entry_contact_name' => 'Contact Name',
     'entry_email' => 'Email',
     'entry_skill' => 'Skill',
-    'entry_percent' => 'Skill Percent (%)',
+    'entry_percent' => 'Percent (%)',
     'entry_min_charge' => 'Min Charge (USD)',
     'entry_max_charge' => 'Max Charge (USD)',
     'entry_firstname' => 'First Name',

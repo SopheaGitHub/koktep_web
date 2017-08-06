@@ -149,6 +149,9 @@ class FilemanagerController extends Controller {
 		$data['entry_folder'] = trans('filemanager.folder_name');
 
 		$data['button_parent'] = trans('filemanager.parent');
+		$data['button_back'] = trans('filemanager.back');
+		$data['button_add'] = trans('button.add');
+		$data['button_close'] = trans('button.close');
 		$data['button_refresh'] = trans('filemanager.refresh');
 		$data['button_upload'] = trans('filemanager.upload');
 		$data['button_folder'] = trans('filemanager.new_folder');

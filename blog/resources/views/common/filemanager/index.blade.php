@@ -1,36 +1,35 @@
 <div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
-      <button type="button" href="#modal-upload-form" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title"><i class="fa fa-btn fa-image"></i> <?php echo $data['heading_title']; ?></h4>
-      <ol class="breadcrumb" style="margin:0px; margin-top:10px; padding:0px; background: none;">
-        <li data-toggle="tooltip" title="<?php echo $data['text_diractory_image']; ?>" ><i class="fa fa-btn fa-folder"></i></li>
-        <?php
-          if (count($data['diractories']) > 0) {
-            foreach ($data['diractories'] as $diractory) { ?>
-              <li><?php echo $diractory ?></li>
-          <?php  }
-          }
-        ?>
-      </ol>
+      <div class="row">
+        <div class="col-md-4"><h4 class="modal-title"><i class="fa fa-btn fa-image"></i> <?php echo $data['heading_title']; ?></h4></div>
+        <div class="col-md-8">
+            <span class="pull-right">
+              <button type="button" id="button-upload" class="btn btn-primary btn-sm"><i class="fa fa-upload fa-btn"></i><?php echo $data['button_upload']; ?></button>
+              <button type="button" id="button-delete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-btn"></i><?php echo $data['button_delete']; ?></button>
+              <a href="<?php echo $data['parent']; ?>" id="button-parent" class="btn btn-default btn-sm"><i class="fa fa-arrow-left fa-btn"></i><?php echo $data['button_back']; ?></a>
+              <a href="<?php echo $data['refresh']; ?>" id="button-refresh" class="btn btn-default btn-sm"><i class="fa fa-refresh fa-btn"></i><?php echo $data['button_refresh']; ?></a>
+              <button type="button" id="button-folder" class="btn btn-default btn-sm"><i class="fa fa-folder fa-btn"></i><?php echo $data['button_folder']; ?></button>
+              <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i><?php echo $data['button_close']; ?></button>
+            </span>
+        </div>
+      </div>
     </div>
     <div class="modal-body">
       <div class="row">
-        <div class="col-sm-5"><a href="<?php echo $data['parent']; ?>" data-toggle="tooltip" title="<?php echo $data['button_parent']; ?>" id="button-parent" class="btn btn-default btntooltip"><i class="fa fa-arrow-left"></i></a> 
-          <a href="<?php echo $data['refresh']; ?>" data-toggle="tooltip" title="<?php echo $data['button_refresh']; ?>" id="button-refresh" class="btn btn-default btntooltip"><i class="fa fa-refresh"></i></a>
-          <button type="button" data-toggle="tooltip" title="<?php echo $data['button_upload']; ?>" id="button-upload" class="btn btn-primary btntooltip"><i class="fa fa-upload"></i></button>
-          <button type="button" data-toggle="tooltip" title="<?php echo $data['button_folder']; ?>" id="button-folder" class="btn btn-default btntooltip"><i class="fa fa-folder"></i></button>
-          <button type="button" data-toggle="tooltip" title="<?php echo $data['button_delete']; ?>" id="button-delete" class="btn btn-danger btntooltip"><i class="fa fa-trash-o"></i></button>
-        </div>
-        <div class="col-sm-7">
-          <div class="input-group">
-            <input type="text" name="search" value="<?php echo $data['filter_name']; ?>" placeholder="<?php echo $data['entry_search']; ?>" class="form-control">
-            <span class="input-group-btn">
-            <button type="button" data-toggle="tooltip" title="<?php echo $data['button_search']; ?>" id="button-search" class="btn btn-primary btntooltip"><i class="fa fa-search"></i></button>
-            </span></div>
+        <div class="col-md-12">
+          <ol class="breadcrumb">
+            <li data-toggle="tooltip" title="<?php echo $data['text_diractory_image']; ?>" ><i class="fa fa-btn fa-folder"></i></li>
+            <?php
+              if (count($data['diractories']) > 0) {
+                foreach ($data['diractories'] as $diractory) { ?>
+                  <li><?php echo $diractory ?></li>
+              <?php  }
+              }
+            ?>
+          </ol>
         </div>
       </div>
-      <hr />
       <?php echo ((count($data['images'])<1)? $data['text_no_results']:''); ?>
       <?php foreach (array_chunk($data['images'], 6) as $image) { ?>
       <div class="row">
@@ -215,7 +214,7 @@ $('#button-folder').popover({
   content: function() {
     html  = '<div class="input-group">';
     html += '  <input type="text" name="folder" value="" placeholder="<?php echo $data["entry_folder"]; ?>" class="form-control">';
-    html += '  <span class="input-group-btn"><button type="button" title="<?php echo $data["button_folder"]; ?>" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></span>';
+    html += '  <span class="input-group-btn"><button type="button" title="<?php echo $data["button_folder"]; ?>" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle fa-btn"></i><?php echo $data["button_add"]; ?></button></span>';
     html += '</div>';
 
     return html;

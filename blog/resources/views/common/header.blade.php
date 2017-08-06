@@ -121,7 +121,7 @@
                 @else
                     <li class="dropdown <?php echo (($route_category_id=='user_auth_menu')? 'active':''); ?>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <span class="thumb-sm avatar pull-left"><img class="img-circle" width="30px" style="margin-top:-5px;" src="<?php echo $thumb_profile; ?>" alt="..."></span> &nbsp;&nbsp; <?php echo Auth::user()->name; ?>
+                            <span class="thumb-sm avatar pull-left"><img class="img-circle" width="30px" style="margin-top:-5px;​​​" src="<?php echo $thumb_profile; ?>" alt="..."></span> &nbsp;&nbsp; <?php echo Auth::user()->name; ?>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">

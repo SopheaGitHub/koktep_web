@@ -104,7 +104,7 @@ return [
     'technical_max_charge_integer' => 'ការ​គិតថ្លៃអតិបរមា </b> ត្រូវតែជាចំនួនគត់។',
     'technical_sort_order_integer' => 'លំដាប់តម្រៀប </b> ត្រូវតែជាចំនួនគត់។',
 
-    'before_add_address' => '<b>ទំនាក់ទំនង',
+    'before_add_address' => '<b>',
     'address_firstname_required' => 'គោត្តនាម</b> តម្រូវឱ្យបញ្ចូល។',
     'address_firstname_max' => 'គោត្តនាម</b> នេះមិនអាចនឹងធំជាង 32 តួអក្សរ។',
     'address_lastname_required' => 'នាមត្រកូល</b> តម្រូវឱ្យបញ្ចូល។',
@@ -189,7 +189,7 @@ return [
     'entry_contact_name' => 'ឈ្មោះ​ទំនាក់ទំនង',
     'entry_email' => 'អ៊ីម៉ែល',
     'entry_skill' => 'ជំនាញ',
-    'entry_percent' => 'ភាគរយជំនាញ (%)',
+    'entry_percent' => 'ភាគរយ (%)',
     'entry_min_charge' => 'ការ​គិតថ្លៃអប្បបរមា (ដុល្លារ)',
     'entry_max_charge' => 'ការ​គិតថ្លៃអតិបរមា (ដុល្លារ)',
     'entry_firstname' => 'គោត្តនាម',

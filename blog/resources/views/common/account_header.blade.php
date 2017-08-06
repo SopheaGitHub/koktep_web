@@ -5,8 +5,11 @@
 
     $author_id = ((Auth::check())? Auth::user()->id:'0');
     $user_info = $objUser->getUser($author_id);
+    $user_technical_info = $objUser->getTechnicalByUserId($author_id);
 
     if($user_info) {
+        $user_info_id = $user_info->id;
+        $user_info_name = $user_info->name;
         if ($user_info->image && is_file($objConfig->dir_image . $user_info->image)) {
             $thumb_profile = $objFile->resize($user_info->image, 100, 100);
         } else {
@@ -18,12 +21,14 @@
             $thumb_cover = $objFile->resize('no_image.png', 850, 280);
         }
     }else {
+        $user_info_id = '0';
+        $user_info_name = '';
         $thumb_profile = $objFile->resize('no_image.png', 100, 100);
         $thumb_cover = $objFile->resize('no_image.png', 850, 280);
     }
     
 ?>
-<div class="row profile" style="background: #fff; margin:15px;">
+<div class="row profile" style="background: #fbfcfc; margin:15px;">
     <div class="col-md-3">
         <div class="profile-sidebar">
             <!-- SIDEBAR USERPIC -->
@@ -40,11 +45,17 @@
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
                 <div class="profile-usertitle-name">
-                    <a href="#">Chan Sophea</a>
+                    <a href="<?php echo url('/overview-account?account_id='.$user_info_id); ?>"><?php echo $user_info_name; ?></a>
                 </div>
-                <div class="desc">Passionate Designer</div>
-                <div class="desc">Curious Developer</div>
-                <div class="desc">Tech Geek</div>
+                <?php
+                    if(count($user_technical_info) > 0) {
+                        foreach ($user_technical_info as $technical) {
+                            echo '<div class="desc">'.$technical->skill.'</div>';
+                        }
+                    }else {
+                        echo '<div class="desc">...</div>';
+                    }
+                ?>
                 <div style="padding:10px;"><button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> Message</button></div>
             </div>
         </div>

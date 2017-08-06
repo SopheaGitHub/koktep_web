@@ -129,14 +129,6 @@ class AccountController extends Controller
         $this->systemLogs('view', 'account', $request);
         // End
 
-        $array_tabs = ['general','image','skills-charge','contact','social-media','watermark'];
-
-        if(isset($request['tabpanel']) && in_array($request['tabpanel'], $array_tabs)) {
-            $tab_panel = $request['tabpanel'];
-        }else{
-            $tab_panel = 'general';
-        }
-
         // check if auth != get account id
         if($request['account_id']==$this->data->auth_id) {
 
@@ -145,7 +137,11 @@ class AccountController extends Controller
             $this->data->button_save_change = trans('button.save_change');
 
             $this->data->go_back = url('/overview-account?account_id='.$this->data->auth_id);
-            $this->data->action_form = url('/account/settings-load-form?tabpanel='.$tab_panel);
+            $this->data->action_form = url('/account/settings-load-form');
+            $this->data->action_setting_information = url('/account/setting-information/'.$this->data->auth_id);
+            $this->data->action_setting_contact = url('/account/setting-contact/'.$this->data->auth_id);
+            $this->data->action_setting_technical_skills = url('/account/setting-technical-skills/'.$this->data->auth_id);
+            $this->data->action_setting_watermark = url('/account/setting-watermark/'.$this->data->auth_id);
             $this->data->action_load_location = url('geo-zones/zone');
 
             return view('account.settings', ['data'=>$this->data]);
@@ -165,7 +161,6 @@ class AccountController extends Controller
         $user_address = $this->user->getAddressByUserId($this->data->auth_id);
         $user_social_medias = $this->user->getSocialMediaByUserId($this->data->auth_id);
         $user_watermark = $this->user->getWatermarkByUserId($this->data->auth_id);
-        $tab_panel = $request['tabpanel'];
 
         $datas = [
             'icon' => 'icon_edit',
@@ -175,10 +170,151 @@ class AccountController extends Controller
             'user_technical' => $user_technical,
             'user_address'  => $user_address,
             'user_social_medias'  => $user_social_medias,
-            'user_watermark' => $user_watermark,
-            'tab_panel' => $tab_panel
+            'user_watermark' => $user_watermark
         ];
         echo $this->getSettingForm($datas);
+        exit();
+    }
+
+    public function postSettingInformation($user_id) {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'account', $request);
+        // End
+
+        if(\Request::ajax()) {
+            DB::beginTransaction();
+            try {
+
+                $validationError = $this->user->validationSettingFormInformation(['request'=>$request, 'action'=>'edit']);
+                if($validationError) {
+                    return \Response::json($validationError);
+                }
+
+                // update user
+                $userDatas = [
+                    'name'          => $this->escape($request['name']),
+                    'email'         => $this->escape($request['email']),
+                    'description'   => $this->escape($request['description'])
+                ];
+                $post = $this->user->where('id', '=', $user_id)->update($userDatas);
+                // End
+
+                DB::commit();
+                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=> ucfirst(trans('text.save_change')).' '.trans('text.successfully').'!', 'load_form'=>'none'];
+                return \Response::json($return);
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+                exit();
+            }
+        }
+        exit();
+    }
+
+    public function postSettingContact($user_id) {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'account', $request);
+        // End
+
+        if(\Request::ajax()) {
+            DB::beginTransaction();
+            try {
+
+                $validationError = $this->user->validationSettingFormContact(['request'=>$request, 'action'=>'edit']);
+                if($validationError) {
+                    return \Response::json($validationError);
+                }
+
+                // update user address
+                $clear_user_address = $this->user->deletedUserAddress($user_id);
+                $user_addressDatas = [
+                    'user_id'           => $user_id,
+                    'user_address'   => ((isset($request['user_address']))? $request['user_address']:[])
+                ];
+
+                $user_address = $this->user->insertUserAddress($user_addressDatas);
+                // End
+
+                DB::commit();
+                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=> ucfirst(trans('text.save_change')).' '.trans('text.successfully').'!', 'load_form'=>'none'];
+                return \Response::json($return);
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+                exit();
+            }
+        }
+        exit();
+    }
+
+    public function postSettingTechnicalSkills($user_id) {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'account', $request);
+        // End
+
+        if(\Request::ajax()) {
+            DB::beginTransaction();
+            try {
+
+                $validationError = $this->user->validationSettingFormTechnicalSkills(['request'=>$request, 'action'=>'edit']);
+                if($validationError) {
+                    return \Response::json($validationError);
+                }
+
+                // update user technical
+                $clear_user_technical = $this->user->deletedUserTechnical($user_id);
+                $user_technicalDatas = [
+                    'user_id'           => $user_id,
+                    'user_technicals'   => ((isset($request['user_technical']))? $request['user_technical']:[])
+                ];
+
+                $user_technical = $this->user->insertUserTechnical($user_technicalDatas);
+                // End
+
+                DB::commit();
+                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=> ucfirst(trans('text.save_change')).' '.trans('text.successfully').'!', 'load_form'=>'none'];
+                return \Response::json($return);
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+                exit();
+            }
+        }
+        exit();
+    }
+
+    public function postSettingWatermark($user_id) {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'account', $request);
+        // End
+
+        if(\Request::ajax()) {
+            DB::beginTransaction();
+            try {
+
+                // update user watermark
+                $clear_user_watermark = $this->user->deletedWatermark($user_id);
+                $user_watermarkDatas = [
+                    'user_id'           => $user_id,
+                    'user_watermarks'   => ((isset($request['user_watermark']))? $request['user_watermark']:[])
+                ];
+
+                $user_watermark = $this->user->insertUserWatermark($user_watermarkDatas);
+                // End
+
+                DB::commit();
+                $return = ['error'=>'0','success'=>'1','action'=>'edit','msg'=> ucfirst(trans('text.save_change')).' '.trans('text.successfully').'!', 'load_form'=>'none'];
+                return \Response::json($return);
+            } catch (Exception $e) {
+                DB::rollback();
+                echo $e->getMessage();
+                exit();
+            }
+        }
         exit();
     }
 
@@ -265,7 +401,7 @@ class AccountController extends Controller
             }
         }
         exit();
-    } 
+    }
 
     public function getSettingForm($datas=[]) {
         $this->data->countries = $this->country->getCountries(['sort'=>'name','order'=>'asc'])->lists('name', 'country_id');
@@ -318,6 +454,7 @@ class AccountController extends Controller
         $this->data->entry_link = trans('text.entry_link');
 
         $this->data->entry_watermark_status = trans('text.tab_watermark');
+        $this->data->entry_enabled = trans('text.enabled');
         $this->data->entry_position = trans('text.entry_position');
         $this->data->entry_image = trans('text.entry_image');
 
@@ -409,6 +546,7 @@ class AccountController extends Controller
 
 
         $this->data->button_save = trans('button.save');
+        $this->data->button_save_change = trans('button.save_change');
         $this->data->button_cancel = trans('button.cancel');
 
         $this->data->load_zone_action = url('geo-zones/zone');
@@ -472,7 +610,6 @@ class AccountController extends Controller
 
     public function getAccountChangePasswordForm($datas=[]) {
         $this->data->entry_title_form = trans('button.edit');
-        
 
         $this->data->entry_current_password = trans('text.entry_current_password');
         $this->data->entry_new_password = trans('text.entry_new_password');
