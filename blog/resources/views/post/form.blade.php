@@ -1,19 +1,26 @@
 <div class="modal-dialog modal-lg">
-  <div class="modal-content">
+  <div class="modal-content" style="-webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; border:1px solid #ddd;">
     <div class="modal-header">
       <div class="row">
-        <div class="col-md-6"><h4 class="modal-title"><b><i class="fa fa-btn <?php echo (($data->icon=='icon_create')? 'fa-upload':'fa-pencil-square') ?>"></i><?php echo $data->titlelist; ?></b></h4></div>
+        <div class="col-md-6"><h4 class="modal-title"><b><i class="fa fa-btn <?php echo (($data->icon=='icon_create')? 'fa-upload':'fa-pencil-square'); ?>"></i><?php echo $data->titlelist; ?></b></h4></div>
         <div class="col-md-6">
             <span class="pull-right">
-              <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-btn fa-check"></i>Save</button>
-              <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i>Close</button>
+              <?php
+                if($data->request_from=='popup') { ?>
+                  <button type="button" id="popup-submit-post" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save; ?></button>
+                  <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i><?php echo $data->button_close; ?></button>
+              <?php  }else { ?>
+                  <button type="button" id="submit-post" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save; ?></button>
+                  <a href="<?php echo $data->go_back.'?account_id='.$data->auth_id; ?>" class="btn btn-sm btn-default"><i class="fa fa-btn fa-angle-double-left"></i> <?php echo $data->button_back; ?></a>
+              <?php  }
+              ?>
             </span>
         </div>
       </div>
     </div>
     <div class="modal-body">
-
-      <form action="#" method="post" enctype="multipart/form-data" id="form-post">
+      <p id="<?php echo (($data->request_from=='popup')? 'popup-message':'message'); ?>"></p>
+      <form action="#" method="post" enctype="multipart/form-data" id="<?php echo (($data->request_from=='popup')? 'popup-form-post':'form-post'); ?>">
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
         <div class="row">
           <div class="col-md-6">
@@ -31,7 +38,7 @@
                   <?php $image_row = 0; ?>
                   <tr id="image-row<?php echo $image_row; ?>">
                     <td class="text-left"><a href="" id="thumb-image<?php echo $image_row; ?>" data-toggle="image" class="img-thumbnail"><img src="<?php echo $data->thumb; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" /></a><input type="hidden" name="post_image[<?php echo $image_row; ?>][image]" value="<?php echo $data->image; ?>" id="input-image<?php echo $image_row; ?>" /></td>
-                    <td class="text-left"><input type="checkbox" name="watermark" value="1" <?php echo (($data->watermark_status=='1')? 'checked="checked"':'' ); ?>/></td>
+                    <td class="text-left"><input type="checkbox" name="post_image[<?php echo $image_row; ?>][watermark]" value="1" <?php echo (($data->watermark_status=='1')? 'checked="checked"':'' ); ?>/></td>
                     <td class="text-left"><button type="button" onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle fa-btn"></i><?php echo $data->button_remove; ?></button></td>
                   </tr>
                   <?php $image_row++; ?>
@@ -213,4 +220,9 @@ $(document).on('mouseover', '#submit-post', function(e) {
 // Override summernotes image manager
 $('button[data-original-title=\'Picture\']').attr('data-toggle', 'image').removeAttr('data-event');
 // End
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    requestSubmitForm4('popup-submit-post', 'popup-form-post', "<?php echo $data->action; ?>", "popup-message");
+});
 </script>

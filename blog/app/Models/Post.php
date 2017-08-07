@@ -377,15 +377,15 @@ class Post extends Model {
 		$rules = [];
 		$messages = [];
 
-		foreach ($languages as $language) {
+		/*foreach ($languages as $language) {
 			$rules['post_description.'.$language->language_id.'.title'] = 'required';
 			$rules['post_description.'.$language->language_id.'.description'] = 'required';
 			$description_len = str_replace(['<p>','</p>','<br>','</br>'], ['','','',''], $datas['request']['post_description'][$language->language_id]['description']);
 			if(mb_strlen($description_len) < 5){
 				$rules['description_len'.$language->language_id] = 'required';
 			}
-		}
-		$rules['image'] = 'required';
+		}*/
+		// $rules['image'] = 'required';
 
 		foreach ($languages as $language) {
 			$messages['post_description.'.$language->language_id.'.title.required'] = trans('text.title_required');
@@ -393,8 +393,8 @@ class Post extends Model {
 			$messages['description_len'.$language->language_id.'.required'] = trans('text.description_min_len');
 		}
 
-		if(isset($datas['request']['post_image'])) {
-        	$i = 1;
+		if(count($datas['request']['post_image']) > 0) {
+			$i=1;
         	foreach($datas['request']['post_image'] as $key => $val) {
         		$rules['post_image.'.$key.'.image'] = 'required';
 				$rules['post_image.'.$key.'.sort_order'] = 'integer';
@@ -402,13 +402,16 @@ class Post extends Model {
 				$messages['post_image.'.$key.'.sort_order.integer'] = trans('text.before_sort_order_integer').' ('.$i.') '.trans('text.after_sort_order_integer');
 				$i++;
 			}
+        } else {
+        	$rules['image'] = 'required';
+        	$messages['image.required'] = trans('text.image_required');
         }
 
-        $messages['image.required'] = trans('text.image_required');
+        // $messages['image.required'] = trans('text.image_required');
 
 		$validator = \Validator::make($datas['request'], $rules, $messages);
 		if ($validator->fails()) {
-			$error = ['error'=>'1','success'=>'0','msg'=> (($datas['action']=='create')? trans('text.save'):trans('text.save_change')).' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
+			$error = ['error'=>'1','success'=>'0','msg'=> (($datas['action']=='create')? ucfirst(trans('text.save')):ucfirst(trans('text.save_change'))).' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
         }
 		return $error;
 	}

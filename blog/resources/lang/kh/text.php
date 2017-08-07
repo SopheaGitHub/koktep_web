@@ -77,8 +77,8 @@ return [
     'description_required' => '<b>ពិពណ៌នា</b> តម្រូវឱ្យបញ្ចូល។',
     'description_min_len' => '<b>ពិពណ៌នា</b> ត្រូវតែមានយ៉ាងហោចណាស់ 5 តួអក្សរ។',
     'image_required' => '<b>រូបភាព</b> តម្រូវឱ្យបញ្ចូល។',
-    'before_add_image_required' => '<b>បន្ថែមរូបភាព',
-    'after_add_image_required' => 'រូបភាព</b> តម្រូវឱ្យបញ្ចូល។',
+    'before_add_image_required' => '<b>រូបភាព',
+    'after_add_image_required' => '</b> តម្រូវឱ្យបញ្ចូល។',
     'before_sort_order_integer' => '<b>បន្ថែមរូបភាព',
     'after_sort_order_integer' => 'លំដាប់តម្រៀប </b> ត្រូវតែជាចំនួនគត់។',
 
@@ -238,5 +238,6 @@ return [
     'create_new_cover_picture' => 'Create New Cover Picture',
     'error_profile_image_size_crop' => 'សូមជ្រើរើសយកតែរូបភាពណាដែលមានប្រវែង ទទឹង ធំជាង 110px និង កំពស់ ធំជាង 110px',
     'error_cover_image_size_crop' => 'សូមជ្រើរើសយកតែរូបភាពណាដែលមានប្រវែង ទទឹង ធំជាង 860px និង កំពស់ ធំជាង 290px',
-
+    'upload_success' => 'បង្ហោះដោយជោគជ័យ'
+    
 ];

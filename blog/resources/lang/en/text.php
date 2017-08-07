@@ -77,8 +77,8 @@ return [
     'description_required' => 'The <b>Description</b> field is required.',
     'description_min_len' => 'The <b>Description</b> must be at least 5 characters.',
     'image_required' => 'The <b>Image</b> field is required.',
-    'before_add_image_required' => 'The <b>Add Image',
-    'after_add_image_required' => 'Image</b> field is required.',
+    'before_add_image_required' => 'The <b>Image',
+    'after_add_image_required' => '</b> field is required.',
     'before_sort_order_integer' => 'The <b>Add Image',
     'after_sort_order_integer' => 'Sort Order </b> must be an integer.',
 
@@ -238,4 +238,5 @@ return [
     'create_new_cover_picture' => 'Create New Cover Picture',
     'error_profile_image_size_crop' => 'Please choose an image that has a width greater than 110px and heights greater than 110px',
     'error_cover_image_size_crop' => 'Please choose an image that has a width greater than 860px and heights greater than 290px',
+    'upload_success' => 'Upload successfully'
 ];

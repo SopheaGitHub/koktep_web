@@ -253,31 +253,29 @@ class PostsController extends Controller
         $this->systemLogs('create', 'posts', $request);
         // End
         $this->data->text_title = trans('text.posts_management');
-
-        $this->data->button_cancel = trans('button.cancel');
-        $this->data->button_save = trans('button.save');
-
-        $this->data->go_back = url('/posts');
         $this->data->action = url('/posts/store');
         $this->data->action_form = url('/posts/create-load-form');
         return view('post.create', ['data'=>$this->data]);
     }
 
-    public function getCreateLoadForm() {
+    public function getCreateLoadForm($request_from='normal') {
         $request = \Request::all();
         // add system log
         $this->systemLogs('load_form', 'posts', $request);
         // End
         $datas = [
             'icon' => 'icon_create',
-            'titlelist' => trans('button.upload')
+            'titlelist' => trans('button.upload'),
+            'request_from' => $request_from,
+            'action' => url('/posts/store')
         ];
+
         echo $this->getPostForm($datas);
         exit();
     }
 
     public function getLoadUploadForm() {
-        $this->getCreateLoadForm();
+        $this->getCreateLoadForm('popup');
         exit();
     }
 
@@ -296,7 +294,15 @@ class PostsController extends Controller
             DB::beginTransaction();
             try {
 
-                $this->data->action_form = url('/posts/create-load-form');
+                if(isset($request['post_image'])) {
+                    foreach ($request['post_image'] as $key => $value) {
+                        if (empty($value['image'])) {
+                            unset($request['post_image'][$key]);
+                        }
+                    }
+                }else {
+                    $request['post_image'] = [];
+                }
 
                 $validationError = $this->post->validationForm(['request'=>$request, 'action'=>'create']);
                 if($validationError) {
@@ -304,64 +310,67 @@ class PostsController extends Controller
                 }
 
                 // insert post
+                /*$image = array_shift($request['post_image'])['image'];
                 $postDatas = [
                     'author_id'     => $this->data->auth_id,
-                    'image'         => $this->escape($request['image']),
+                    'image'         => $this->escape($image),
                     'watermark_status' => $this->escape(((isset($request['watermark']))? $request['watermark']:'0')),
-                    'status'        => $this->escape($request['status'])
+                    'status'        => $this->escape( ((isset($request['status']))? $request['status']:0) )
                 ];
 
-                $post = $this->post->create($postDatas);
+                $post = $this->post->create($postDatas);*/
                 // End
 
                 // insert post description
-                $post_descriptionDatas = [
+                /*$post_descriptionDatas = [
                     'post_id'       => $post->id,
                     'post_description_datas'    => ((isset($request['post_description']))? $request['post_description']:[])
                 ];
 
-                $post_description = $this->post->insertPostDescription($post_descriptionDatas);
+                $post_description = $this->post->insertPostDescription($post_descriptionDatas);*/
                 // End
 
                 // insert post to layout
-                $post_to_layoutDatas['post_to_layout_datas'][] = [
+                /*$post_to_layoutDatas['post_to_layout_datas'][] = [
                     'post_id'       => $post->id,
                     'website_id'    => '1',
                     'layout_id'     => '0'
                 ];
 
-                $post_to_layout = $this->post->insertPostToLayout($post_to_layoutDatas);
+                $post_to_layout = $this->post->insertPostToLayout($post_to_layoutDatas);*/
                 // End
 
                 // insert post to categories
-                $post_to_categoryDatas = [
+                /*$post_to_categoryDatas = [
                     'post_id'       => $post->id,
                     'post_category_datas'   => ((isset($request['post_category']))? $request['post_category']:[])
                 ];
 
-                $post_category = $this->post->insertPostCategory($post_to_categoryDatas);
+                $post_category = $this->post->insertPostCategory($post_to_categoryDatas);*/
                 // End
 
                 // insert post image
-                $post_imageDatas = [
+                /*$post_imageDatas = [
                     'post_id'       => $post->id,
                     'post_images'   => ((isset($request['post_image']))? $request['post_image']:[])
                 ];
 
-                $post_category = $this->post->insertPostImage($post_imageDatas);
+                $post_category = $this->post->insertPostImage($post_imageDatas);*/
                 // End
 
                 // insert post image
-                $post_relatedDatas = [
+                /*$post_relatedDatas = [
                     'post_id'       => $post->id,
                     'posts_related' => ((isset($request['post_related']))? $request['post_related']:[])
                 ];
 
-                $post_category = $this->post->insertPostRelated($post_relatedDatas);
+                $post_category = $this->post->insertPostRelated($post_relatedDatas);*/
                 // End
+                $post = '2';
+                $this->data->reload_page = url('/posts/upload-success/'.$post);
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=> trans('text.save').' '.trans('text.successfully').'!', 'load_form'=>$this->data->action_form];
+                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=> ucfirst(trans('text.save')).' '.trans('text.successfully').'!', 'reload_page'=>$this->data->reload_page];
                 return \Response::json($return);
             } catch (Exception $e) {
                 DB::rollback();
@@ -370,7 +379,27 @@ class PostsController extends Controller
             }
         }
         exit();
-    }    
+    }
+
+    public function getUploadSuccess($post_id) {
+        $request = \Request::all();
+        $this->data->action_form = url('/posts/upload-success-form/'.$post_id);
+        return view('post.upload_success', ['data'=>$this->data]);
+    }
+
+    public function getUploadSuccessForm($post_id) {
+        $request = \Request::all();
+        $this->data->titlelist = trans('text.upload_success');
+        $this->data->message_success = ucfirst(trans('text.save')).' '.trans('text.successfully').'!';
+        $this->data->action_upload_management = url('/posts?account_id='.$this->data->auth_id);
+        $this->data->action_view_uploaded = url('/post-account/detail?account_id=1&post_id=11&category_id=3-photography');
+        $this->data->action_form = url('/posts/upload-success-form/'.$post_id);
+
+        $this->data->button_back = trans('button.back');
+        $this->data->go_back = url('/posts/create');
+
+        return view('post.upload_success_form', ['data'=>$this->data]);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -386,12 +415,6 @@ class PostsController extends Controller
         // End
 
         $this->data->text_title = trans('text.posts_management');
-
-        $this->data->button_cancel = trans('button.cancel');
-        $this->data->button_save_change = trans('button.save_change');
-
-        $this->data->go_back = url('/posts');
-        $this->data->action  = url('/posts/update/'.$post_id);
         $this->data->action_form = url('/posts/edit-load-form/'.$post_id);
         return view('post.edit', ['data'=>$this->data]);
     }
@@ -471,7 +494,9 @@ class PostsController extends Controller
             'post_descriptions' => $this->data->post_descriptions,
             'post_to_categories' => $data['post_categories'],
             'post_relateds' => $data['post_relateds'],
-            'post_images'    => $data['post_images']
+            'post_images'    => $data['post_images'],
+            'request_from' => 'normal',
+            'action' => url('/posts/update/'.$post_id)
         ];
 
         echo $this->getPostForm($datas);
@@ -715,6 +740,16 @@ class PostsController extends Controller
 
         $this->data->titlelist = (($datas['titlelist'])? $datas['titlelist']:'');
         $this->data->icon = (($datas['icon'])? $datas['icon']:'');
+        $this->data->request_from = (($datas['request_from'])? $datas['request_from']:'popup');
+        $this->data->action = (($datas['action'])? $datas['action']:'');
+
+        $this->data->button_save = trans('button.save');
+        $this->data->button_save_change = trans('button.save_change');
+        $this->data->button_close = trans('button.close');
+        $this->data->button_cancel = trans('button.cancel');
+        $this->data->button_back = trans('button.back');
+        $this->data->go_back = url('/posts');
+        
 
         return view('post.form', ['data' => $this->data]);
     }
