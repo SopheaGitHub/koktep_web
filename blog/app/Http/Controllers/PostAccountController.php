@@ -482,12 +482,24 @@ class PostAccountController extends Controller
         $this->data->text_empty = '...';
 
         switch ($view) {
+            case 'grid-large':
+                return view('post_account.grid_large', ['data' => $this->data]);
+                break;
+
+            case 'grid':
+                return view('post_account.grid', ['data' => $this->data]);
+                break;
+
+            case 'list':
+                return view('post_account.list', ['data' => $this->data]);
+                break;
+
             case 'people':
                 return view('post_account.people', ['data' => $this->data]);
                 break;
             
             default:
-                return view('post_account.list', ['data' => $this->data]);
+                return view('post_account.grid_large', ['data' => $this->data]);
                 break;
         }
         exit();

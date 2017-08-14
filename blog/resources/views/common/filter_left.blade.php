@@ -29,14 +29,16 @@
 <div class="" style="padding: 10px; background: #fbfcfc;">
     <form action="#" method="GET" enctype="multipart/form-data" id="form-filter" class="form-horizontal">
         <input type="hidden" name="category_id" value="<?php echo $category_id; ?>" id="category_id">
-        <div class="row" style="border:1px solid red;">
-            <div class="col-md-2">
-                GRID
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="filter-left-display-menu">
+                    <li><a href="#" role="button" data-toggle="view-grid-large"><i class="fa fa-btn fa-th-large"></i></a></li>
+                    <li><a href="#" role="button" data-toggle="view-grid"><i class="fa fa-btn fa-th"></i></a></li>
+                    <li><a href="#" role="button" data-toggle="view-list"><i class="fa fa-btn fa-list"></i></a></li>
+                    <li><a href="#" role="button" data-toggle="view-people"><i class="fa fa-btn fa-users"></i></a></li>
+                </ul>
+                <input type="hidden" name="view" id="view" value="grid" />
             </div>
-            <div class="col-md-2">
-                VIEW
-            </div>
-            <div class="col-md-8">&nbsp;</div>
         </div>
         <div class="table-responsive">
             <table class="table">
@@ -53,70 +55,70 @@
             <div class="table-responsive">
                 <table class="table">
                 <tbody>
+                    <!-- <tr>
+                        <td width="20%"><?php // echo trans('text.view'); ?></td>
+                        <td>
+                            <select name="view" id="view" class="form-control select-filter">
+                                <?php
+                                    /*foreach ($array_view as $key => $value) {
+                                        echo '<option value="'.$key.'">'.$value.'</option>';
+                                    }*/
+                                ?>
+                            </select>
+                        </td>
+                    </tr> -->
                     <tr>
-                    <td width="20%"><?php echo trans('text.view'); ?></td>
-                    <td>
-                        <select name="view" id="view" class="form-control select-filter">
-                            <?php
-                                foreach ($array_view as $key => $value) {
-                                    echo '<option value="'.$key.'">'.$value.'</option>';
-                                }
-                            ?>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php echo trans('text.browse'); ?></td>
-                    <td>
-                        <select name="browse" id="browse" class="form-control select-filter">
-                            <?php
-                                foreach ($array_browse as $key => $value) {
-                                    echo '<option value="'.$key.'">'.$value.'</option>';
-                                }
-                            ?>
-                            <!-- <option>Most Like</option>
-                            <option>Most Unlike</option> -->
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php echo trans('text.time'); ?></td>
-                    <td>
-                        <select name="time" id="time" class="form-control select-filter">
-                            <?php
-                                foreach ($array_time as $key => $value) {
-                                    echo '<option value="'.$key.'">'.$value.'</option>';
-                                }
-                            ?>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php echo trans('text.alpha'); ?></td>
-                    <td>
-                        <select name="alpha" id="alpha" class="form-control select-filter">
-                            <option value=""><?php echo trans('text.all_alpha'); ?></option>
-                            <?php
-                                foreach ($array_alpha as $alpha) {
-                                    echo '<option value="'.strtolower($alpha).'">'.$alpha.'</option>';
-                                }
-                            ?>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <?php echo trans('text.location'); ?>
-                        <select name="country_id" id="country" onchange="$('#zone').load('<?php echo $load_zone_action; ?>/' + this.value + '/0');" class="form-control select-filter">
-                            <option value="0"><?php echo trans('text.select_country'); ?></option>
-                            <?php foreach ($countries as $country_id => $country_name) { ?>
-                              <option value="<?php echo $country_id; ?>"><?php echo $country_name; ?></option>
-                            <?php } ?>
-                        </select>
-                        <select name="zone_id" id="zone" class="form-control select-filter">
-                        </select>
-                    </td>
-                </tr>
+                        <td><?php echo trans('text.browse'); ?></td>
+                        <td>
+                            <select name="browse" id="browse" class="form-control select-filter">
+                                <?php
+                                    foreach ($array_browse as $key => $value) {
+                                        echo '<option value="'.$key.'">'.$value.'</option>';
+                                    }
+                                ?>
+                                <!-- <option>Most Like</option>
+                                <option>Most Unlike</option> -->
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo trans('text.time'); ?></td>
+                        <td>
+                            <select name="time" id="time" class="form-control select-filter">
+                                <?php
+                                    foreach ($array_time as $key => $value) {
+                                        echo '<option value="'.$key.'">'.$value.'</option>';
+                                    }
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo trans('text.alpha'); ?></td>
+                        <td>
+                            <select name="alpha" id="alpha" class="form-control select-filter">
+                                <option value=""><?php echo trans('text.all_alpha'); ?></option>
+                                <?php
+                                    foreach ($array_alpha as $alpha) {
+                                        echo '<option value="'.strtolower($alpha).'">'.$alpha.'</option>';
+                                    }
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <?php echo trans('text.location'); ?>
+                            <select name="country_id" id="country" onchange="$('#zone').load('<?php echo $load_zone_action; ?>/' + this.value + '/0');" class="form-control select-filter">
+                                <option value="0"><?php echo trans('text.select_country'); ?></option>
+                                <?php foreach ($countries as $country_id => $country_name) { ?>
+                                  <option value="<?php echo $country_id; ?>"><?php echo $country_name; ?></option>
+                                <?php } ?>
+                            </select>
+                            <select name="zone_id" id="zone" class="form-control select-filter">
+                            </select>
+                        </td>
+                    </tr>
                 </tbody>
                 
             </table>
@@ -125,6 +127,46 @@
     
 </div>
 <script type="text/javascript"><!--
+$(document).delegate('a[data-toggle=\'view-grid-large\']', 'click', function() {
+    $('#view').val('grid-large');
+    var postDatas = $('#form-filter').serializeArray();
+    var url = '<?php echo $action_list; ?>?filter=yes';
+    $.each(postDatas, function(i, field) {
+        url += '&'+field.name+'='+encodeURIComponent(field.value);
+    });
+    loadingList(url);
+    return false;
+});
+$(document).delegate('a[data-toggle=\'view-grid\']', 'click', function() {
+    $('#view').val('grid');
+    var postDatas = $('#form-filter').serializeArray();
+    var url = '<?php echo $action_list; ?>?filter=yes';
+    $.each(postDatas, function(i, field) {
+        url += '&'+field.name+'='+encodeURIComponent(field.value);
+    });
+    loadingList(url);
+    return false;
+});
+$(document).delegate('a[data-toggle=\'view-list\']', 'click', function() {
+    $('#view').val('list');
+    var postDatas = $('#form-filter').serializeArray();
+    var url = '<?php echo $action_list; ?>?filter=yes';
+    $.each(postDatas, function(i, field) {
+        url += '&'+field.name+'='+encodeURIComponent(field.value);
+    });
+    loadingList(url);
+    return false;
+});
+$(document).delegate('a[data-toggle=\'view-people\']', 'click', function() {
+    $('#view').val('people');
+    var postDatas = $('#form-filter').serializeArray();
+    var url = '<?php echo $action_list; ?>?filter=yes';
+    $.each(postDatas, function(i, field) {
+        url += '&'+field.name+'='+encodeURIComponent(field.value);
+    });
+    loadingList(url);
+    return false;
+});
 $(document).on('submit', '#form-filter', function() {
     var postDatas = $('#form-filter').serializeArray();
     var url = '<?php echo $action_list; ?>?filter=yes';
