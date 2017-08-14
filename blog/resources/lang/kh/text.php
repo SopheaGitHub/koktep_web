@@ -238,6 +238,7 @@ return [
     'create_new_cover_picture' => 'Create New Cover Picture',
     'error_profile_image_size_crop' => 'សូមជ្រើរើសយកតែរូបភាពណាដែលមានប្រវែង ទទឹង ធំជាង 110px និង កំពស់ ធំជាង 110px',
     'error_cover_image_size_crop' => 'សូមជ្រើរើសយកតែរូបភាពណាដែលមានប្រវែង ទទឹង ធំជាង 860px និង កំពស់ ធំជាង 290px',
+    'error_watermark_image_size_crop' => 'សូមជ្រើរើសយកតែរូបភាពណាដែលមានប្រវែង ទទឹង ធំជាង 96px និង កំពស់ ធំជាង 30px',
     'upload_success' => 'បង្ហោះដោយជោគជ័យ'
     
 ];

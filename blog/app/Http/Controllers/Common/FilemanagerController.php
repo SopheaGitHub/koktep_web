@@ -151,6 +151,7 @@ class FilemanagerController extends Controller {
 		$data['button_parent'] = trans('filemanager.parent');
 		$data['button_back'] = trans('filemanager.back');
 		$data['button_add'] = trans('button.add');
+		$data['button_create'] = trans('button.create');
 		$data['button_close'] = trans('button.close');
 		$data['button_refresh'] = trans('filemanager.refresh');
 		$data['button_upload'] = trans('filemanager.upload');
@@ -597,14 +598,26 @@ class FilemanagerController extends Controller {
 	function compress_image($source_url, $destination_url, $quality) {
 		$info = getimagesize($source_url);
 	 
-		if ($info['mime'] == 'image/jpeg') $image = imagecreatefromjpeg($source_url);
-		elseif ($info['mime'] == 'image/pjpeg') $image = imagecreatefromjpeg($source_url);
-		elseif ($info['mime'] == 'image/gif') $image = imagecreatefromgif($source_url);
-		elseif ($info['mime'] == 'image/png') $image = imagecreatefrompng($source_url);
-		elseif ($info['mime'] == 'image/x-png') $image = imagecreatefrompng($source_url);
-	 
-		//save file
-		imagejpeg($image, $destination_url, $quality);
+		if ($info['mime'] == 'image/jpeg') {
+			$image = imagecreatefromjpeg($source_url);
+			imagejpeg($image, $destination_url, $quality);
+		} elseif ($info['mime'] == 'image/pjpeg') {
+			$image = imagecreatefromjpeg($source_url);
+			imagejpeg($image, $destination_url, $quality);
+		} elseif ($info['mime'] == 'image/gif') {
+			$image = imagecreatefromgif($source_url);
+			imagejpeg($image, $destination_url, $quality);
+		} elseif ($info['mime'] == 'image/png') {
+			$image = imagecreatefrompng($source_url);
+			imagealphablending($image, true);
+			imagesavealpha($image, true);
+			imagepng($image, $destination_url, 9);
+		} elseif ($info['mime'] == 'image/x-png') {
+			$image = imagecreatefrompng($source_url);
+			imagealphablending($image, true);
+			imagesavealpha($image, true);
+			imagepng($image, $destination_url, 9);
+		}
 	 
 		//return destination file
 		return $destination_url;

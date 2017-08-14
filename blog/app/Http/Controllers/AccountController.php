@@ -34,6 +34,7 @@ class AccountController extends Controller
         $this->data->web_title = 'Account';
         $this->data->auth_id = ((Auth::check())? Auth::user()->id:'0');
         $this->data->dir_image = $this->config->dir_image;
+        $this->data->http_best_path = $this->config->http_best_path;
     }
 
     /**
@@ -106,12 +107,29 @@ class AccountController extends Controller
         return back();
     }
 
-    public function base64_decode ($code, $username, $file_path) {
-        $saveImage = $username.'.jpg';
+    public function getCropWatermark() {
+        $request = \Request::all();
+        $data = getimagesize($request['image']);
+        $this->data->width = $data['0'];
+        $this->data->height = $data['1'];
+        $this->data->error_size = trans('text.error_watermark_image_size_crop');
+        $this->data->title = trans('text.create_new_cover_picture');
+        $this->data->button_save = trans('button.ok');
+        $this->data->button_cancel = trans('button.cancel');
+        $this->data->thumb_image = $request['image'];
+        $this->data->image = str_replace([$this->data->http_best_path.'images/', $this->data->http_best_path.'/images/'], '', $request['image']);
+        $this->data->action_form = url('account/load-cropit-form');
+        $this->data->action_save_cover = url('account/save-cover');
+        return view('account.crop_watermark', ['data'=>$this->data]);
+    }
+
+    public function base64_decode ($code, $username, $file_path, $extention='.jpg') {
+        $saveImage = $username.''.$extention;
         $data = $code;
+        $info = getimagesize($code);
         list($t, $data) = explode(';', $data);
         list($t, $data)  = explode(',', $data);
-        $src = base64_decode($data);
+        $source_url = base64_decode($data);
 
         $directory = $this->data->dir_image.$file_path;
         // create user diractory
@@ -120,7 +138,22 @@ class AccountController extends Controller
             chmod($directory, 0777);
         }
 
-        file_put_contents($directory.$saveImage, $src);
+        $image = imagecreatefromstring($source_url);
+        imagealphablending($image, true);
+        imagesavealpha($image, true);
+        if ($info['mime'] == 'image/jpeg') {
+            imagejpeg($image, $directory.$saveImage);
+        } elseif ($info['mime'] == 'image/pjpeg') {
+            imagejpeg($image, $directory.$saveImage);
+        } elseif ($info['mime'] == 'image/gif') {
+            imagejpeg($image, $directory.$saveImage);
+        } elseif ($info['mime'] == 'image/png') {
+            imagepng($image, $directory.$saveImage);
+        } elseif ($info['mime'] == 'image/x-png') {
+            imagepng($image, $directory.$saveImage);
+        }
+
+        // file_put_contents($directory.$saveImage, $source_url);
     }
 
     public function getSettings() {
@@ -288,6 +321,7 @@ class AccountController extends Controller
 
     public function postSettingWatermark($user_id) {
         $request = \Request::all();
+
         // add system log
         $this->systemLogs('submit_form', 'account', $request);
         // End
@@ -295,6 +329,25 @@ class AccountController extends Controller
         if(\Request::ajax()) {
             DB::beginTransaction();
             try {
+
+                // upload watermark
+                if(!empty($request['user_watermark']['data_image'])) {
+                    $username = 'watermark_'.((Auth::check())? str_replace(' ', '', strtolower(Auth::user()->name)):'0').$this->data->auth_id;
+                    $file_path = 'catalog/'.$this->data->auth_id.'/watermark/';
+                    $this->base64_decode($request['user_watermark']['data_image'], $username, $file_path, '.png');
+                    // remove old watermark
+                    if (file_exists($this->data->dir_image.'cache/'.$file_path.$username.'-157x49.png')) {
+                        unlink($this->data->dir_image.'cache/'.$file_path.$username.'-157x49.png');
+                    }
+
+                    // remove old watermark
+                    if (file_exists($this->data->dir_image.'cache/'.$file_path.$username.'-120x80.png')) {
+                        unlink($this->data->dir_image.'cache/'.$file_path.$username.'-120x80.png');
+                    }
+
+                    // change water image name
+                    $request['user_watermark']['image'] = $file_path.$username.'.png';
+                }
 
                 // update user watermark
                 $clear_user_watermark = $this->user->deletedWatermark($user_id);
@@ -535,9 +588,9 @@ class AccountController extends Controller
         }
 
         if ($this->data->watermark_image && is_file($this->data->dir_image . $this->data->watermark_image)) {
-            $this->data->watermark_thumb = $this->filemanager->resize($this->data->watermark_image, 120, 80);
+            $this->data->watermark_thumb = $this->filemanager->resize($this->data->watermark_image, 157, 49);
         } else {
-            $this->data->watermark_thumb = $this->filemanager->resize('logo_koktep.png', 120, 30);
+            $this->data->watermark_thumb = $this->filemanager->resize('no_image.png', 157, 49);
         }
 
         $this->data->placeholder = $this->filemanager->resize('no_image.png', 120, 80);

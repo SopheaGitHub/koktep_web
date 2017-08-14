@@ -5,10 +5,10 @@
         <div class="col-md-4"><h4 class="modal-title"><i class="fa fa-btn fa-image"></i> <?php echo $data['heading_title']; ?></h4></div>
         <div class="col-md-8">
             <span class="pull-right">
-              <button type="button" id="button-upload" class="btn btn-primary btn-sm"><i class="fa fa-upload fa-btn"></i><?php echo $data['button_upload']; ?></button>
-              <button type="button" id="button-delete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-btn"></i><?php echo $data['button_delete']; ?></button>
               <a href="<?php echo $data['parent']; ?>" id="button-parent" class="btn btn-default btn-sm"><i class="fa fa-arrow-left fa-btn"></i><?php echo $data['button_back']; ?></a>
               <a href="<?php echo $data['refresh']; ?>" id="button-refresh" class="btn btn-default btn-sm"><i class="fa fa-refresh fa-btn"></i><?php echo $data['button_refresh']; ?></a>
+              <button type="button" id="button-upload" class="btn btn-primary btn-sm"><i class="fa fa-upload fa-btn"></i><?php echo $data['button_upload']; ?></button>
+              <button type="button" id="button-delete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-btn"></i><?php echo $data['button_delete']; ?></button>
               <button type="button" id="button-folder" class="btn btn-default btn-sm"><i class="fa fa-folder fa-btn"></i><?php echo $data['button_folder']; ?></button>
               <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i><?php echo $data['button_close']; ?></button>
             </span>
@@ -16,20 +16,21 @@
       </div>
     </div>
     <div class="modal-body">
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
           <ol class="breadcrumb">
-            <li data-toggle="tooltip" title="<?php echo $data['text_diractory_image']; ?>" ><i class="fa fa-btn fa-folder"></i></li>
+            <li data-toggle="tooltip" title="<?php // echo $data['text_diractory_image']; ?>" ><i class="fa fa-btn fa-folder"></i></li>
             <?php
-              if (count($data['diractories']) > 0) {
+              /*if (count($data['diractories']) > 0) {
                 foreach ($data['diractories'] as $diractory) { ?>
                   <li><?php echo $diractory ?></li>
               <?php  }
-              }
+              }*/
             ?>
           </ol>
         </div>
-      </div>
+      </div> -->
+      <br />
       <?php echo ((count($data['images'])<1)? $data['text_no_results']:''); ?>
       <?php foreach (array_chunk($data['images'], 6) as $image) { ?>
       <div class="row">
@@ -44,11 +45,13 @@
           <?php if ($image['type'] == 'image') { ?>
             <?php
               if($data['target']=='no-input') { ?>
-                <div class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></div>
+                <div class="thumbnail"  style="background: #F1F3FA;"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></div>
               <?php }else if($data['target']=='select-profile') { ?>
                 <a href="#" role="button" data-toggle="choose-profile" data-image="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
               <?php }else if($data['target']=='select-cover') { ?>
                 <a href="#" role="button" data-toggle="choose-cover" data-image="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
+              <?php }else if($data['target']=='select-watermark') { ?>
+                <a href="#" role="button" data-toggle="choose-watermark" data-image="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
               <?php }else{ ?>
                 <a href="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
             <?php  } ?>
@@ -214,7 +217,7 @@ $('#button-folder').popover({
   content: function() {
     html  = '<div class="input-group">';
     html += '  <input type="text" name="folder" value="" placeholder="<?php echo $data["entry_folder"]; ?>" class="form-control">';
-    html += '  <span class="input-group-btn"><button type="button" title="<?php echo $data["button_folder"]; ?>" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle fa-btn"></i><?php echo $data["button_add"]; ?></button></span>';
+    html += '  <span class="input-group-btn"><button type="button" title="<?php echo $data["button_folder"]; ?>" id="button-create" class="btn btn-primary"><i class="fa fa-plus-circle fa-btn"></i><?php echo $data["button_create"]; ?></button></span>';
     html += '</div>';
 
     return html;

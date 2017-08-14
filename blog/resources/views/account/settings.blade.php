@@ -31,4 +31,73 @@ $(document).ready(function() {
   requestSubmitForm3('submit-setting-watermark', 'form-setting-watermark', "<?php echo $data->action_setting_watermark; ?>", "message-setting-watermark");
 });
 </script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Load Image Manager
+        $(document).delegate('a[data-toggle=\'select-watermark\']', 'click', function() {
+            $('#modal-image').remove();
+            $.ajax({
+                url: 'filemanager?target=select-watermark',
+                dataType: 'html',
+                beforeSend: function() {
+                    $('#block-loader').show();
+                },
+                complete: function() {
+                    $('#block-loader').hide();
+                },
+                success: function(html) {
+                    $('body').append('<div id="modal-image" class="modal in">' + html + '</div>');
+
+                    $('#modal-image').modal('show');
+                }
+            });
+            return false;
+        });
+
+        $(document).delegate('a[data-toggle=\'choose-watermark\']', 'click', function() {
+      
+            $('#modal-image').remove();
+              var image = $(this).data("image");
+              $.ajax({
+                url: 'account/crop-watermark?image='+encodeURIComponent(image),
+                dataType: 'html',
+                beforeSend: function() {
+                    // before send
+                    $('#block-loader').show();
+                },
+                complete: function() {
+                    // completed
+                    $('#block-loader').hide();
+                },
+                success: function(html) {
+                    $('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+
+                    $('#modal-image').modal('show');
+                }
+            });
+            return false;
+        });
+
+        $(document).delegate('a[data-toggle=\'reselect-watermark\']', 'click', function() {
+            $('#modal-image').remove();
+                $.ajax({
+                    url: 'filemanager?target=select-watermark',
+                    dataType: 'html',
+                    beforeSend: function() {
+                        $('#block-loader').show();
+                    },
+                    complete: function() {
+                        $('#block-loader').hide();
+                    },
+                    success: function(html) {
+                        $('body').append('<div id="modal-image" class="modal in">' + html + '</div>');
+
+                        $('#modal-image').modal('show');
+                    }
+              });
+              return false;
+        });
+
+    });
+</script>
 @endsection

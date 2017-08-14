@@ -71,7 +71,7 @@
                         if($author_id==\Request::get('account_id')) { ?>
                             <div class="edit"><a href="#" role="button" data-toggle="select-cover" data-id="<?php echo $author_id; ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
                     <?php } ?>
-                </div>  
+                </div>
             </div>
         </div>
         <div class="row overview">

@@ -238,5 +238,6 @@ return [
     'create_new_cover_picture' => 'Create New Cover Picture',
     'error_profile_image_size_crop' => 'Please choose an image that has a width greater than 110px and heights greater than 110px',
     'error_cover_image_size_crop' => 'Please choose an image that has a width greater than 860px and heights greater than 290px',
+    'error_watermark_image_size_crop' => 'Please choose an image that has a width greater than 96px and heights greater than 30px',
     'upload_success' => 'Upload successfully'
 ];
