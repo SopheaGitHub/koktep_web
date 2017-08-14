@@ -7,10 +7,10 @@
             <span class="pull-right">
               <?php
                 if($data->request_from=='popup') { ?>
-                  <button type="button" id="popup-submit-post" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save; ?></button>
+                  <button type="button" id="popup-submit-post" data-toggle="tooltip" title="" class="btn btn-sm btn-primary button-submit-post"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save; ?></button>
                   <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i><?php echo $data->button_close; ?></button>
               <?php  }else { ?>
-                  <button type="button" id="submit-post" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save; ?></button>
+                  <button type="button" id="submit-post" data-toggle="tooltip" title="" class="btn btn-sm btn-primary button-submit-post"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save; ?></button>
                   <a href="<?php echo $data->go_back.'?account_id='.$data->auth_id; ?>" class="btn btn-sm btn-default"><i class="fa fa-btn fa-angle-double-left"></i> <?php echo $data->button_back; ?></a>
               <?php  }
               ?>
@@ -211,7 +211,7 @@ $('#post-related').delegate('.fa-minus-circle', 'click', function() {
 $('#language a:first').tab('show');
 </script>
 <script type="text/javascript">
-$(document).on('mouseover', '#submit-post', function(e) {
+$(document).on('mouseover', '.button-submit-post', function(e) {
   <?php foreach ($data->languages as $language) { ?>
     $('#input-description<?php echo $language->language_id; ?>').val($('#input-description<?php echo $language->language_id; ?>').code());
   <?php } ?>

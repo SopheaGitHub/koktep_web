@@ -13,7 +13,7 @@ class Post extends Model {
 	public function getPost($post_id) {
 		$result = DB::table(DB::raw('
 				(SELECT
-				DISTINCT p.*, u.name as author_name, u.image AS author_image,
+				DISTINCT p.*, (SELECT COUNT(1) FROM post_comment WHERE post_id = p.post_id) AS commented, (SELECT COUNT(1) FROM post_image WHERE post_id = p.post_id) AS total_post_image, u.name as author_name, u.image AS author_image,
 					(
 						SELECT
 							keyword
@@ -319,7 +319,7 @@ class Post extends Model {
 		$sql = '';
 		if (isset($datas['post_images']) && count($datas['post_images']) > 0) {
 			foreach ($datas['post_images'] as $post_image) {
-				$sql .= "INSERT INTO post_image SET post_id = '" . $datas['post_id'] . "', image = '" . $controller->escape($post_image['image']) . "', watermark_status = '" . $controller->escape( ((isset($post_image['watermark']))? $post_image['watermark']:'0') ) . "', sort_order = '" . $controller->escape($post_image['sort_order']) . "'; ";
+				$sql .= "INSERT INTO post_image SET post_id = '" . $datas['post_id'] . "', image = '" . $controller->escape($post_image['image']) . "', watermark_status = '" . $controller->escape( ((isset($post_image['watermark']))? $post_image['watermark']:'0') ) . "', sort_order = '0'; ";
 			}
 			DB::connection()->getPdo()->exec($sql);
 		}

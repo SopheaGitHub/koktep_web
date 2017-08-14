@@ -309,65 +309,70 @@ class PostsController extends Controller
                     return \Response::json($validationError);
                 }
 
+                
+
                 // insert post
-                /*$image = array_shift($request['post_image'])['image'];
+                $first_image = array_shift($request['post_image']);
+                $image = $first_image['image'];
+                $watermark_status = ((isset($first_image['watermark']))? $first_image['watermark']:'0');
+
                 $postDatas = [
                     'author_id'     => $this->data->auth_id,
                     'image'         => $this->escape($image),
-                    'watermark_status' => $this->escape(((isset($request['watermark']))? $request['watermark']:'0')),
+                    'watermark_status' => $this->escape($watermark_status),
                     'status'        => $this->escape( ((isset($request['status']))? $request['status']:0) )
                 ];
 
-                $post = $this->post->create($postDatas);*/
+                $post = $this->post->create($postDatas);
                 // End
 
                 // insert post description
-                /*$post_descriptionDatas = [
+                $post_descriptionDatas = [
                     'post_id'       => $post->id,
                     'post_description_datas'    => ((isset($request['post_description']))? $request['post_description']:[])
                 ];
 
-                $post_description = $this->post->insertPostDescription($post_descriptionDatas);*/
+                $post_description = $this->post->insertPostDescription($post_descriptionDatas);
                 // End
 
                 // insert post to layout
-                /*$post_to_layoutDatas['post_to_layout_datas'][] = [
+                $post_to_layoutDatas['post_to_layout_datas'][] = [
                     'post_id'       => $post->id,
                     'website_id'    => '1',
                     'layout_id'     => '0'
                 ];
 
-                $post_to_layout = $this->post->insertPostToLayout($post_to_layoutDatas);*/
+                $post_to_layout = $this->post->insertPostToLayout($post_to_layoutDatas);
                 // End
 
                 // insert post to categories
-                /*$post_to_categoryDatas = [
+                $post_to_categoryDatas = [
                     'post_id'       => $post->id,
                     'post_category_datas'   => ((isset($request['post_category']))? $request['post_category']:[])
                 ];
 
-                $post_category = $this->post->insertPostCategory($post_to_categoryDatas);*/
+                $post_category = $this->post->insertPostCategory($post_to_categoryDatas);
                 // End
 
                 // insert post image
-                /*$post_imageDatas = [
+                $post_imageDatas = [
                     'post_id'       => $post->id,
                     'post_images'   => ((isset($request['post_image']))? $request['post_image']:[])
                 ];
 
-                $post_category = $this->post->insertPostImage($post_imageDatas);*/
+                $post_category = $this->post->insertPostImage($post_imageDatas);
                 // End
 
                 // insert post image
-                /*$post_relatedDatas = [
+                $post_relatedDatas = [
                     'post_id'       => $post->id,
                     'posts_related' => ((isset($request['post_related']))? $request['post_related']:[])
                 ];
 
-                $post_category = $this->post->insertPostRelated($post_relatedDatas);*/
+                $post_category = $this->post->insertPostRelated($post_relatedDatas);
                 // End
-                $post = '2';
-                $this->data->reload_page = url('/posts/upload-success/'.$post);
+
+                $this->data->reload_page = url('/posts/upload-success/'.$post->id);
 
                 DB::commit();
                 $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=> ucfirst(trans('text.save')).' '.trans('text.successfully').'!', 'reload_page'=>$this->data->reload_page];
@@ -389,11 +394,87 @@ class PostsController extends Controller
 
     public function getUploadSuccessForm($post_id) {
         $request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'post', $request);
+        // End
+        if(\Session::has('locale')) {
+            $locale = \Session::get('locale');
+        }else {
+            $locale = 'en';
+        }
+        $language_id = '1';
+        $language = $this->language->getLanguageByCode( $locale );
+
+        if($language) {
+            $language_id = $language->language_id;
+        }
+
+        $post = $this->post->getPost($post_id);
+        $post_description = $this->post->getPostDescription($post_id);
+
+        if($post) {
+            if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {
+                $this->data->image = $this->filemanager->resize($post->image, 600, 400);
+            } else {
+                $this->data->image = $this->filemanager->resize('no_image.png', 600, 400);
+            }
+            if (!empty($post->author_image) && is_file($this->data->dir_image . $post->author_image)) {
+                $this->data->thumb_author = $this->filemanager->resize($post->author_image, 100, 100);
+            } else {
+                $this->data->thumb_author = $this->filemanager->resize('no_image.png', 100, 100);
+            }
+            $this->data->post_image = $post->image;
+            $this->data->author_name = $post->author_name;
+            $this->data->author_id = $post->author_id;
+            $this->data->post_viewed = $post->viewed;
+            $this->data->post_commented = $post->commented;
+            $this->data->total_post_image = ($post->total_post_image + 1);
+            $this->data->post_created_at = $post->created_at;
+            $this->data->title = $post->title;
+        }else {
+            $this->data->post_image = '';
+            $this->data->image = $this->filemanager->resize('no_image.png', 600, 400);
+            $this->data->author_name = $this->filemanager->resize('no_image.png', 100, 100);
+            $this->data->author_id = '0';
+            $this->data->post_viewed = '0';
+            $this->data->post_commented = '0';
+            $this->data->total_post_image = '0';
+            $this->data->post_created_at = '';
+            $this->data->title = '';
+        }
+
+        if($post_description) {
+            $this->data->description = $post_description->description;
+            $this->data->tags = explode(',', $post_description->tag);
+        }else {
+            $this->data->description = '';
+            $this->data->tags = [];
+        }
+
+        $post_to_categories = $this->post->getPostCategories($post_id);
+        $this->data->post_categories = [];
+
+        foreach ($post_to_categories as $post_to_category) {
+            $category_info = $this->category->getCategory($post_to_category->category_id, $language_id);
+
+            if ($category_info) {
+                $this->data->post_categories[] = [
+                    'category_id' => $category_info->category_id,
+                    'name' => ($category_info->path) ? $category_info->path . ' &gt; ' . $category_info->name : $category_info->name
+                ];
+            }
+        }
+
+        $this->data->post_id = $post_id;
         $this->data->titlelist = trans('text.upload_success');
         $this->data->message_success = ucfirst(trans('text.save')).' '.trans('text.successfully').'!';
         $this->data->action_upload_management = url('/posts?account_id='.$this->data->auth_id);
         $this->data->action_view_uploaded = url('/post-account/detail?account_id=1&post_id=11&category_id=3-photography');
         $this->data->action_form = url('/posts/upload-success-form/'.$post_id);
+        $this->data->post_detail = url('/post-account/detail');
+        $this->data->overview_account = url('/overview-account');
+        $this->data->user_posted = url('/overview-account');
+        $this->data->action_post_management = url('/posts?account_id='.$this->data->author_id);
 
         $this->data->button_back = trans('button.back');
         $this->data->go_back = url('/posts/create');
@@ -416,6 +497,7 @@ class PostsController extends Controller
 
         $this->data->text_title = trans('text.posts_management');
         $this->data->action_form = url('/posts/edit-load-form/'.$post_id);
+        $this->data->action = url('/posts/update/'.$post_id);
         return view('post.edit', ['data'=>$this->data]);
     }
 
@@ -520,16 +602,31 @@ class PostsController extends Controller
             DB::beginTransaction();
             try {
 
+                if(isset($request['post_image'])) {
+                    foreach ($request['post_image'] as $key => $value) {
+                        if (empty($value['image'])) {
+                            unset($request['post_image'][$key]);
+                        }
+                    }
+                }else {
+                    $request['post_image'] = [];
+                }
+
                 $validationError = $this->post->validationForm(['request'=>$request, 'action'=>'edit']);
                 if($validationError) {
                     return \Response::json($validationError);
                 }
 
+                // insert post
+                $first_image = array_shift($request['post_image']);
+                $image = $first_image['image'];
+                $watermark_status = ((isset($first_image['watermark']))? $first_image['watermark']:'0');
+
                 // update post
                 $postDatas = [
                     'updated_by_author_id'  => $this->data->auth_id,
-                    'image'         => $this->escape($request['image']),
-                    'watermark_status' => $this->escape(((isset($request['watermark']))? $request['watermark']:'0')),
+                    'image'         => $this->escape($image),
+                    'watermark_status' => $this->escape($watermark_status),
                     'status'        => $this->escape($request['status'])
                 ];
                 $post = $this->post->where('post_id', '=', $post_id)->update($postDatas);
@@ -587,7 +684,7 @@ class PostsController extends Controller
                 // End
 
                 // remove image from diractory
-                $old_image = $request['image'];
+                $old_image = $image;
                 $extension = pathinfo($old_image, PATHINFO_EXTENSION);
                 $new_image = 'cache/' . substr($old_image, 0, strrpos($old_image, '.')) . '-' . 600 . 'x' . 400 . '.' . $extension;
                 $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', $this->escape($new_image)), '/');
