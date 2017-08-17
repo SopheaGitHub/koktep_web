@@ -109,7 +109,7 @@ class Post extends Model {
 			  $join->on('ptc.category_id', '=', DB::raw(''.$category_id.''));
 			});
 		}else {
-			$db->leftJoin('post_to_category as ptc', function($join) {
+			$db->leftJoin(DB::raw('( SELECT * FROM `post_to_category` ORDER BY category_id ASC LIMIT 1 ) AS ptc'), function($join) {
 			  $join->on('p.post_id', '=', 'ptc.post_id');
 			});
 		}
@@ -217,7 +217,7 @@ class Post extends Model {
 		  $join->on('p.post_id', '=', 'pd.post_id');
 		  $join->on('pd.language_id', '=', DB::raw('1'));
 		})
-		->leftJoin('post_to_category as ptc', function($join) {
+		->leftJoin(DB::raw('( SELECT * FROM `post_to_category` ORDER BY category_id ASC LIMIT 1 ) AS ptc'), function($join) {
 			  $join->on('p.post_id', '=', 'ptc.post_id');
 			})
 		->leftJoin('category_description as cd', function($join) {

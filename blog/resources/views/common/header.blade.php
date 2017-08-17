@@ -42,8 +42,8 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="<?php echo url('/'); ?>" style="color:#EFD518;">
-              <!-- <img src="<?php // echo url('/images/logo_koktep.png'); ?>" width="75%" style="margin-top:-8px;"> -->
-              <i class="fa fa-btn fa-twitter"></i> KOKTEP
+              <img src="<?php  echo url('/images/logo_koktep_v2.png'); ?>" width="50%">
+              <!-- <i class="fa fa-btn fa-twitter"></i> KOKTEP -->
             </a>
         </div>
 
@@ -110,7 +110,7 @@
 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <!-- <a href="<?php //echo url('/posts/create'); ?>" class="btn btn-primary navbar-btn btn-xs"><i class="fa fa-btn fa-upload"></i> <?php //echo trans('button.upload'); ?> </a> -->
-            <a href="#" role="button" data-toggle="load-upload-form" class="btn btn-primary navbar-btn btn-xs"><i class="fa fa-btn fa-upload"></i> <?php echo trans('button.upload'); ?> </a>
+            <span class="abutton"><a href="#" role="button" data-toggle="load-upload-form" class="btn btn-primary navbar-btn btn-xs"><i class="fa fa-btn fa-upload"></i> <?php echo trans('button.upload'); ?> </a></span>
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
