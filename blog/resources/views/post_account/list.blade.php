@@ -9,7 +9,22 @@
       ?>
       <div class="row">
       <div class="col-sm-4 col-md-4">
+        <div style="margin-bottom:5px;">
           <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" style="width:100%"></a>
+        </div>
+        <div style="background: #F1F3FA;">
+          <?php
+              if($post->post_id != '2') { ?>
+              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub"></a>
+              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub"></a>
+              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub"></a>
+              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub"></a>
+              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub-more"></a>
+          <?php } else { ?>
+              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub"></a>
+          <?php }
+          ?>
+        </div>
       </div>
       <div class="col-sm-8 col-md-8">
         <div class="w3-container w3-white">

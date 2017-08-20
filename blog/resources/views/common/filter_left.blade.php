@@ -13,8 +13,8 @@
     // defind array
     // $array_view = ['posted'=>'Posted', 'people'=>'People', 'teams'=>'Teams', 'collection'=>'Collection'];
     $array_view = ['posted'=>trans('text.posted'), 'people'=>trans('text.people')];
-    $array_browse = [''=>trans('text.feature'), 'viewed'=>trans('text.viewed'), 'commented'=>trans('text.commented')];
-    $array_time = [''=>trans('text.recent'), 'today'=>trans('text.today'), 'this_week'=>trans('text.this_week'), 'this_month'=>trans('text.this_month'), 'this_year'=>trans('text.this_year')];
+    $array_browse = [''=>'-- '.trans('text.all').' --', 'viewed'=>trans('text.viewed'), 'commented'=>trans('text.commented')];
+    $array_time = [''=>'-- '.trans('text.recent').' --', 'today'=>trans('text.today'), 'this_week'=>trans('text.this_week'), 'this_month'=>trans('text.this_month'), 'this_year'=>trans('text.this_year')];
     $array_alpha = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
     $countries = $objCountry->getCountries(['sort'=>'name','order'=>'asc'])->lists('name', 'country_id');
@@ -37,7 +37,7 @@
                     <li><a href="#" role="button" data-toggle="view-list"><i class="fa fa-btn fa-list"></i></a></li>
                     <li><a href="#" role="button" data-toggle="view-people"><i class="fa fa-btn fa-users"></i></a></li>
                 </ul>
-                <input type="hidden" name="view" id="view" value="grid" />
+                <input type="hidden" name="view" id="view" value="grid-large" />
             </div>
         </div>
         <div class="table-responsive">
@@ -68,7 +68,7 @@
                         </td>
                     </tr> -->
                     <tr>
-                        <td><?php echo trans('text.browse'); ?></td>
+                        <td><?php echo trans('text.feature'); ?></td>
                         <td>
                             <select name="browse" id="browse" class="form-control select-filter">
                                 <?php
@@ -97,7 +97,7 @@
                         <td><?php echo trans('text.alpha'); ?></td>
                         <td>
                             <select name="alpha" id="alpha" class="form-control select-filter">
-                                <option value=""><?php echo trans('text.all_alpha'); ?></option>
+                                <option value="">-- <?php echo trans('text.all'); ?> --</option>
                                 <?php
                                     foreach ($array_alpha as $alpha) {
                                         echo '<option value="'.strtolower($alpha).'">'.$alpha.'</option>';

@@ -37,6 +37,7 @@ return [
     'posted' => 'Posted',
     'people' => 'Users',
     'feature' => 'Feature',
+    'all' => 'All',
     'viewed' => 'Most Viewed',
     'commented' => 'Most Comment',
     'recent' => 'Recent',
