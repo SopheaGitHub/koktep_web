@@ -27,18 +27,6 @@
           <a href="<?php echo $view_detail; ?>"><img src="<?php echo $data->image ?>" alt="" style="width:100%"></a>
           <div><b><a href="<?php echo $view_detail; ?>"><?php echo $data->title; ?></a></b></div>
           <p><?php echo $description; ?></p>
-          <div class="row">
-              <div class="col-md-8">
-                  <div><span><img style="width:40px; 5px solid rgba(255,255,255,0.5); border-radius:50%;" src="<?php echo $data->thumb_author ?>"></span> &nbsp; <a href="<?php echo $data->overview_account.'?account_id='.$data->author_id; ?>"> <b><?php echo $data->author_name; ?></b></a></div>
-              </div>
-              <div class="col-md-4">
-                  <span class="pull-right" style="font-size:11px;">
-                    <i data-toggle="tooltip" title="" class="fa fa-btn fa-eye" data-original-title="View"></i><?php echo $data->post_viewed; ?> &nbsp;
-                    <i data-toggle="tooltip" title="" class="fa fa-btn fa-comment" data-original-title="Comment"></i><?php echo $data->post_commented; ?> &nbsp;
-                    <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="" class="fa fa-btn fa-picture-o" data-original-title="Image"></i></a><?php echo $data->total_post_image; ?>                           
-                  </span>
-              </div>
-          </div>
         </div>
       </div>
 

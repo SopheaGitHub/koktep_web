@@ -2,13 +2,12 @@
 
 @section('content')
 <div class="container">
-    @include('common.account_header')
     <div class="row profile">
         <div class="col-md-3">
-            @include('common.account_left')
+            @include('common.filter_left') 
         </div>
         <div class="col-md-9">
-            <div class="profile-content" id="display-list" style="overflow:hidden;">
+            <div class="profile-content" id="display-list">
                 
             </div>
         </div>

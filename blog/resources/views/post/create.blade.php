@@ -8,6 +8,7 @@
 </div>
 @endsection
 @section('script')
+<!-- tags input -->
 <script type="text/javascript">
 $(document).ready(function() {
     loadingForm("<?php echo $data->action_form; ?>");

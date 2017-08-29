@@ -41,6 +41,7 @@ class PostsController extends Controller
         $this->data->web_title = 'Posts';
         $this->data->auth_id = ((Auth::check())? Auth::user()->id:'0');
         $this->data->dir_image = $this->config->dir_image;
+        $this->data->http_best_path = $this->config->http_best_path;
     }
 
     /**
@@ -188,15 +189,17 @@ class PostsController extends Controller
             foreach ($this->data->posts as $post) {
                 if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {
 
-                    if($post->watermark_status=='1') {
-                        $user_watermark = $this->user->getWatermarkByUserId($this->data->auth_id);
-                        $this->data->thumb[$post->post_id] = $this->filemanager->resizeWithWatermark($post->image, 600, 400, ((isset($user_watermark->image))? $user_watermark->image:'watermark_koktep.png'), ((isset($user_watermark->position))? $user_watermark->position:'center'));
-                    }else {
-                        $this->data->thumb[$post->post_id] = $this->filemanager->resize($post->image, 600, 400);
-                    }
+                    // if($post->watermark_status=='1') {
+                    //     $user_watermark = $this->user->getWatermarkByUserId($this->data->auth_id);
+                    //     $this->data->thumb[$post->post_id] = $this->filemanager->resizeWithWatermark($post->image, 600, 400, ((isset($user_watermark->image))? $user_watermark->image:'watermark_koktep.png'), ((isset($user_watermark->position))? $user_watermark->position:'center'));
+                    // }else {
+                    //     $this->data->thumb[$post->post_id] = $this->filemanager->resize($post->image, 600, 400);
+                    // }
+
+                    $this->data->thumb[$post->post_id] = $this->data->http_best_path.'/images/'. $post->image;
                     
                 } else {
-                    $this->data->thumb[$post->post_id] = $this->filemanager->resize('no_image.png', 600, 400);
+                    $this->data->thumb[$post->post_id] = $this->filemanager->resize('no_image.png', 120, 80);
                 }
             }
         }
@@ -287,6 +290,7 @@ class PostsController extends Controller
     public function postStore()
     {
         $request = \Request::all();
+
         // add system log
         $this->systemLogs('submit_form', 'posts', $request);
         // End
@@ -309,17 +313,16 @@ class PostsController extends Controller
                     return \Response::json($validationError);
                 }
 
-                
-
                 // insert post
-                $first_image = array_shift($request['post_image']);
-                $image = $first_image['image'];
-                $watermark_status = ((isset($first_image['watermark']))? $first_image['watermark']:'0');
+                // $first_image = array_shift($request['post_image']);
+                // $image = $first_image['image'];
+                // $watermark_status = ((isset($first_image['watermark']))? $first_image['watermark']:'0');
 
                 $postDatas = [
                     'author_id'     => $this->data->auth_id,
-                    'image'         => $this->escape($image),
-                    'watermark_status' => $this->escape($watermark_status),
+                    'image'         => $this->escape($request['image']),
+                    // 'watermark_status' => $this->escape($watermark_status),
+                    'watermark_status' => '0',
                     'status'        => $this->escape( ((isset($request['status']))? $request['status']:0) )
                 ];
 
@@ -618,15 +621,15 @@ class PostsController extends Controller
                 }
 
                 // insert post
-                $first_image = array_shift($request['post_image']);
-                $image = $first_image['image'];
-                $watermark_status = ((isset($first_image['watermark']))? $first_image['watermark']:'0');
+                // $first_image = array_shift($request['post_image']);
+                // $image = $first_image['image'];
+                // $watermark_status = ((isset($first_image['watermark']))? $first_image['watermark']:'0');
 
                 // update post
                 $postDatas = [
                     'updated_by_author_id'  => $this->data->auth_id,
-                    'image'         => $this->escape($image),
-                    'watermark_status' => $this->escape($watermark_status),
+                    'image'         => $this->escape($request['image']),
+                    // 'watermark_status' => $this->escape($watermark_status),
                     'status'        => $this->escape($request['status'])
                 ];
                 $post = $this->post->where('post_id', '=', $post_id)->update($postDatas);
@@ -684,16 +687,19 @@ class PostsController extends Controller
                 // End
 
                 // remove image from diractory
-                $old_image = $image;
+                /*$old_image = $image;
                 $extension = pathinfo($old_image, PATHINFO_EXTENSION);
                 $new_image = 'cache/' . substr($old_image, 0, strrpos($old_image, '.')) . '-' . 600 . 'x' . 400 . '.' . $extension;
                 $pathImage = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', $this->escape($new_image)), '/');
+                */
 
                 // If path is just a file delete it
-                if (is_file($pathImage)) {
+                /*if (is_file($pathImage)) {
                     unlink($pathImage);
                 }
+                */
 
+                /*
                 if(isset($request['post_image'])) {
                     foreach ($request['post_image'] as $post_image) {
                         // remove image from diractory
@@ -708,6 +714,7 @@ class PostsController extends Controller
                         }
                     }
                 }
+                */
 
                 // End
 
@@ -757,10 +764,12 @@ class PostsController extends Controller
         $this->data->entry_meta_description = trans('text.entry_meta_description');
         $this->data->entry_meta_keyword = trans('text.entry_meta_keyword');
         $this->data->entry_tag = trans('text.entry_tag');
+        $this->data->entry_tag_ex = trans('text.entry_tag_ex');
 
 
         $this->data->entry_keyword = trans('text.entry_keyword');
         $this->data->entry_image = trans('text.entry_image');
+        $this->data->entry_additional_images = trans('text.entry_additional_images');
         $this->data->entry_watermark = trans('text.entry_watermark');
         $this->data->entry_status = trans('text.entry_status');
         $this->data->entry_enabled = trans('text.enabled');

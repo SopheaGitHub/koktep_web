@@ -12,26 +12,13 @@
         <div style="margin-bottom:5px;">
           <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" style="width:100%"></a>
         </div>
-        <div style="background: #F1F3FA;">
-          <?php
-              if($post->post_id != '2') { ?>
-              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub"></a>
-              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub"></a>
-              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub"></a>
-              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub"></a>
-              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub-more"></a>
-          <?php } else { ?>
-              <a href="<?php echo $view_detail; ?>"><img src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" alt="" class="image-sub"></a>
-          <?php }
-          ?>
-        </div>
       </div>
       <div class="col-sm-6 col-md-6">
           <div class="w3-container w3-white">
               <p><b><?php echo $post->title; ?></b></p>
               <p><?php echo $description; ?></p>
           </div>
-          <hr />
+          <br />
             <!-- <i class="fa fa-btn fa-eye"></i> View : 0121 | <i class="fa fa-btn fa-hand-peace-o"></i> Like : 23 | <i class="fa fa-btn fa-hand-rock-o"></i> Unlike : 212 -->
             <div>
               <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?>
@@ -52,7 +39,7 @@
             <div>
               <i data-toggle="tooltip" title="<?php echo $data->icon_date; ?>" class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y', strtotime($post->created_at)); ?>
             </div>
-          <hr />
+          <br />
           <div class="row">
             <div class="col-md-6">
               <a href="<?php echo $data->edit_post.'/'.$post->post_id; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil-square"></i> <?php echo $data->button_edit; ?></a>

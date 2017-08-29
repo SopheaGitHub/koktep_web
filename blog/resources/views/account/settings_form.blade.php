@@ -275,66 +275,6 @@
         </div>
       </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse4"><i class="fa fa-btn fa-picture-o"></i><?php echo $data->tab_watermark; ?></h4>
-        </div>
-        <div id="collapse4" class="panel-collapse collapse">
-          <div class="panel-body">
-
-            <form action="#" method="post" enctype="multipart/form-data" id="form-setting-watermark" class="form-horizontal">
-              <div class="row">
-                <div class="col-md-12">
-                  <span class="pull-right">
-                      <button type="button" id="submit-setting-watermark" data-toggle="tooltip" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-check"></i> <?php echo $data->button_save_change; ?></button>
-                      <button type="reset" class="btn btn-sm btn-default"><i class="fa fa-btn fa-close"></i> <?php echo $data->button_cancel; ?></button>                            
-                  </span>
-                </div>
-              </div>
-              <br />
-              <p id="message-setting-watermark"></p>
-              <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $data->entry_enabled; ?></label>
-                <div class="col-sm-10">
-                  <input type="checkbox" name="user_watermark[status]" value="1" <?php echo (($data->watermark_status == '1')? 'checked="checked"':''); ?> />
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $data->entry_position; ?></label>
-                <div class="col-sm-10">
-                  <select name="user_watermark[position]" id="input-position" class="form-control">
-                    <?php
-                      foreach ($data->watermark_positions as $key => $position) { ?>
-                        <option <?php echo (($key == $data->watermark_position)? 'selected="selected"':''); ?> value="<?php echo $key; ?>"><?php echo $position; ?></option>
-                      <?php }
-                    ?>
-                  </select>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $data->entry_watermark_status; ?></label>
-                <div class="col-sm-10">
-                  <div class="watermark-userpic">
-                    <div class="watermark-pic">
-                        <div class="img-thumbnail">
-                          <img id="view-watermark" src="<?php echo $data->watermark_thumb; ?>" alt="" title="" data-placeholder="<?php echo $data->placeholder; ?>" />
-                          <input type="hidden" name="user_watermark[image]" value="<?php echo ((isset($data->watermark_image))? $data->watermark_image:''); ?>" id="input-watermark-image" />
-                          <input type="hidden" name="user_watermark[data_image]" value="" id="input-data-watermark-image" />
-                        </div>
-                        <div class="edit"><a href="#" role="button" data-toggle="select-watermark" data-id="1"><i class="fa fa-pencil fa-lg"></i></a></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>

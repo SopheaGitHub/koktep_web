@@ -36,6 +36,7 @@ class PostAccountController extends Controller
         $this->data->auth_image = ((Auth::check())? Auth::user()->image:'');
         $this->data->auth_name = ((Auth::check())? Auth::user()->name:'');
         $this->data->dir_image = $this->config->dir_image;
+        $this->data->http_best_path = $this->config->http_best_path;
     }
 
     public function getDetail() {
@@ -286,6 +287,13 @@ class PostAccountController extends Controller
         }
 
         // defind view loading people or posted
+        if(isset($request['view_option'])) {
+            $view_option = $request['view_option'];
+        }else {
+            $view_option = null;
+        }
+
+        // defind view loading grid, grid large or list
         if(isset($request['view'])) {
             $view = $request['view'];
         }else {
@@ -364,6 +372,7 @@ class PostAccountController extends Controller
             'account_id'=>$user_id, 
             'category_id'=>$category_id,
             'search' => $search,
+            'view_option' => $view_option,
             'view' => $view,
             'browse' => $browse,
             'time' => $time,
@@ -382,13 +391,13 @@ class PostAccountController extends Controller
 
         $this->data->posts = [];
         $this->data->users = [];
-        switch ($view) {
+        switch ($view_option) {
             case 'people':
-                $this->data->users = $this->user->getUsers($filter_data)->paginate(10)->setPath(url('/post-account'))->appends($paginate_url);
+                $this->data->users = $this->user->getUsers($filter_data)->paginate(20)->setPath(url('/post-account'))->appends($paginate_url);
                 break;
             
             default:
-                $this->data->posts = $this->post->getPosts($filter_data)->paginate(10)->setPath(url('/post-account'))->appends($paginate_url);
+                $this->data->posts = $this->post->getPosts($filter_data)->paginate(20)->setPath(url('/post-account'))->appends($paginate_url);
                 break;
         }
 
@@ -431,12 +440,13 @@ class PostAccountController extends Controller
                 // thumb podt image
                 if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {
                     
-                    if($post->watermark_status=='1') {
-                        $user_watermark = $this->user->getWatermarkByUserId($post->author_id);
-                        $this->data->thumb[$post->post_id] = $this->filemanager->resizeWithWatermark($post->image, 600, 400, ((isset($user_watermark->image))? $user_watermark->image:'watermark_koktep.png'), ((isset($user_watermark->position))? $user_watermark->position:'center'));
-                    }else {
-                        $this->data->thumb[$post->post_id] = $this->filemanager->resize($post->image, 600, 400);
-                    }
+                    // if($post->watermark_status=='1') {
+                    //     $user_watermark = $this->user->getWatermarkByUserId($post->author_id);
+                    //     $this->data->thumb[$post->post_id] = $this->filemanager->resizeWithWatermark($post->image, 600, 400, ((isset($user_watermark->image))? $user_watermark->image:'watermark_koktep.png'), ((isset($user_watermark->position))? $user_watermark->position:'center'));
+                    // }else {
+                    //     $this->data->thumb[$post->post_id] = $this->filemanager->resize($post->image, 600, 400);
+                    // }
+                    $this->data->thumb[$post->post_id] = $this->data->http_best_path.'/images/'. $post->image;
 
                 } else {
                     $this->data->thumb[$post->post_id] = $this->filemanager->resize('no_image.png', 600, 400);
@@ -479,29 +489,32 @@ class PostAccountController extends Controller
         $this->data->icon_image = trans('icon.image');
 
         $this->data->text_view_profile = trans('text.view_profile');
-        $this->data->text_empty = '...';
+        $this->data->text_empty = trans('text.empty');
 
-        switch ($view) {
-            case 'grid-large':
-                return view('post_account.grid_large', ['data' => $this->data]);
-                break;
+        if($view_option=='posted') {
+            switch ($view) {
+                case 'grid-large':
+                    return view('post_account.grid_large', ['data' => $this->data]);
+                    break;
 
-            case 'grid':
-                return view('post_account.grid', ['data' => $this->data]);
-                break;
+                case 'grid':
+                    return view('post_account.grid', ['data' => $this->data]);
+                    break;
 
-            case 'list':
-                return view('post_account.list', ['data' => $this->data]);
-                break;
-
-            case 'people':
-                return view('post_account.people', ['data' => $this->data]);
-                break;
-            
-            default:
-                return view('post_account.grid_large', ['data' => $this->data]);
-                break;
+                case 'list':
+                    return view('post_account.list', ['data' => $this->data]);
+                    break;
+                
+                default:
+                    return view('post_account.grid_large', ['data' => $this->data]);
+                    break;
+            }
+        }else if($view_option=='people') {
+            return view('post_account.people', ['data' => $this->data]);
+        }else {
+            return view('post_account.grid_large', ['data' => $this->data]);
         }
+
         exit();
     }
 

@@ -3,7 +3,7 @@
     $objConfig = new App\Http\Controllers\ConfigController();
     $objUser = new App\User();
 
-    $author_id = ((Auth::check())? Auth::user()->id:'0');
+    $author_id = ((\Request::has('account_id'))? \Request::get('account_id'):'0');
     $user_info = $objUser->getUser($author_id);
     $user_technical_info = $objUser->getTechnicalByUserId($author_id);
 
@@ -80,21 +80,21 @@
                 <div style="padding:10px;"><button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> Follower</button></div>
                 <h4>2,784</h4>
             </div> -->
-            <div class="col-md-4 user-pad text-center">
-                <!-- <h5>APPRECIATIONS</h5> -->
+            <!-- <div class="col-md-4 user-pad text-center">
+                <h5>APPRECIATIONS</h5>
                 <div style="padding:10px;"><button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-star"></i> Stars</button></div>
                 <h4>4,901</h4>
-            </div>
-            <div class="col-md-4 user-pad text-center">
-                <!-- <h5>APPRECIATIONS</h5> -->
+            </div> -->
+            <!-- <div class="col-md-4 user-pad text-center">
+                <h5>APPRECIATIONS</h5>
                 <div style="padding:10px;"><button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-heart"></i> Favorites</button></div>
                 <h4>4,901</h4>
-            </div>
-            <div class="col-md-4 user-pad text-center">
-                <!-- <h5>FOLLOWING</h5> -->
+            </div> -->
+            <!-- <div class="col-md-4 user-pad text-center">
+                <h5>FOLLOWING</h5>
                 <div style="padding:10px;"><button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-user"></i> Following</button></div>
                 <h4>456</h4>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

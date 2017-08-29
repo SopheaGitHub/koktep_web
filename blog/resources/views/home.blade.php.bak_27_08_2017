@@ -1,18 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div style="margin-top:-9px; height:30px; background: #91beb1; color: #fff; text-align:center;">
-    <h4 style="margin:0px; padding-top:7px;">Show Cash Your Work?</h4>
-</div>
-<div>
-    <div class="container" style="padding-right: 5px; padding-left: 5px;">
-        @include('common.filter_top')
-    </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div id="display-list">
+<div class="container"> 
+    <div class="row profile">
+        <div class="col-md-3">
+            @include('common.filter_left') 
+        </div>
+        <div class="col-md-9">
+            <!-- HTML to write -->
+            <div class="profile-content" id="display-list">
                 
             </div>
         </div>

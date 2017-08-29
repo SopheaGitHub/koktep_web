@@ -377,15 +377,15 @@ class Post extends Model {
 		$rules = [];
 		$messages = [];
 
-		/*foreach ($languages as $language) {
+		foreach ($languages as $language) {
 			$rules['post_description.'.$language->language_id.'.title'] = 'required';
-			$rules['post_description.'.$language->language_id.'.description'] = 'required';
-			$description_len = str_replace(['<p>','</p>','<br>','</br>'], ['','','',''], $datas['request']['post_description'][$language->language_id]['description']);
-			if(mb_strlen($description_len) < 5){
-				$rules['description_len'.$language->language_id] = 'required';
-			}
-		}*/
-		// $rules['image'] = 'required';
+			// $rules['post_description.'.$language->language_id.'.description'] = 'required';
+			// $description_len = str_replace(['<p>','</p>','<br>','</br>'], ['','','',''], $datas['request']['post_description'][$language->language_id]['description']);
+			// if(mb_strlen($description_len) < 5){
+			// 	$rules['description_len'.$language->language_id] = 'required';
+			// }
+		}
+		$rules['image'] = 'required';
 
 		foreach ($languages as $language) {
 			$messages['post_description.'.$language->language_id.'.title.required'] = trans('text.title_required');
@@ -407,7 +407,7 @@ class Post extends Model {
         	$messages['image.required'] = trans('text.image_required');
         }
 
-        // $messages['image.required'] = trans('text.image_required');
+        $messages['image.required'] = trans('text.image_required');
 
 		$validator = \Validator::make($datas['request'], $rules, $messages);
 		if ($validator->fails()) {

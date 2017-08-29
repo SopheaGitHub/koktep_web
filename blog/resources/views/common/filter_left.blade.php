@@ -68,7 +68,7 @@
                         </td>
                     </tr> -->
                     <tr>
-                        <td><?php echo trans('text.feature'); ?></td>
+                        <td><?php echo trans('text.browse'); ?></td>
                         <td>
                             <select name="browse" id="browse" class="form-control select-filter">
                                 <?php
