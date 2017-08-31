@@ -819,7 +819,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	// Load information
+	// Load Upload form
 	$(document).delegate('a[data-toggle=\'load-upload-form\']', 'click', function() {
 		$('#modal-upload-form').remove();
 		var information_id = $(this).data("id");
@@ -839,6 +839,31 @@ $(document).ready(function() {
 				$('body').append('<div id="modal-upload-form" class="modal">' + html + '</div>');
 
 				$('#modal-upload-form').modal('show');
+			}
+		});
+		return false;
+	});
+
+	// Load Message Form
+	$(document).delegate('a[data-toggle=\'load-message-form\']', 'click', function() {
+		$('#modal-message-form').remove();
+		var information_id = $(this).data("id");
+		var language_id = $(this).data("languageid");
+		$.ajax({
+			url: 'message/load-message-form',
+			dataType: 'html',
+			beforeSend: function() {
+				// before send
+				$('#block-loader').show();
+			},
+			complete: function() {
+				// completed
+				$('#block-loader').hide();
+			},
+			success: function(html) {
+				$('body').append('<div id="modal-message-form" class="modal">' + html + '</div>');
+
+				$('#modal-message-form').modal('show');
 			}
 		});
 		return false;

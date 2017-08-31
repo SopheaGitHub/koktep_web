@@ -56,7 +56,7 @@
                         echo '<div class="desc">...</div>';
                     }
                 ?>
-                <div style="padding:10px;"><button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> Message</button></div>
+                <div style="padding:10px;"><a href="#" id="submit-account-setting" role="button" data-toggle="load-message-form" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-envelope"></i> Message</a></div>
             </div>
         </div>
     </div>
