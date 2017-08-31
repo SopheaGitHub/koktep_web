@@ -27,6 +27,7 @@ Route::controllers([
 	'/filemanager' 	=> 'Common\FilemanagerController',
 	'/information' => 'InformationController',
 	'/contact-us' => 'ContactUsController',
+	'message' => 'MessageController',
 	'/send-feedback' => 'SendFeedbackController',
 	'/documentation' => 'DocumentationController',
 	'/account' 	=> 'AccountController',

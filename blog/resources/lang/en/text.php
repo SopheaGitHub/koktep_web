@@ -54,7 +54,7 @@ return [
     'list' => 'List',
     'empty' => 'There is no record found!',
     'overview' => 'Overview',
-    'posted_groups' => 'Group Uploaded',
+    'posted_groups' => 'Uploaded Group',
     'about' => 'About',
     'contact' => 'Contact',
     'my_profile' => 'My Profile',
@@ -249,5 +249,6 @@ return [
     'error_profile_image_size_crop' => 'Please choose an image that has a width greater than 110px and heights greater than 110px',
     'error_cover_image_size_crop' => 'Please choose an image that has a width greater than 860px and heights greater than 290px',
     'error_watermark_image_size_crop' => 'Please choose an image that has a width greater than 96px and heights greater than 30px',
-    'upload_success' => 'Upload successfully'
+    'upload_success' => 'Upload successfully',
+    'message' => 'Message',
 ];
