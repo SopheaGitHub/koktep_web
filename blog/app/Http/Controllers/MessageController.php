@@ -28,6 +28,10 @@ class MessageController extends Controller
         return view('message.index', ['data'=>$this->data]);
     }
 
+    public function getLoadMessageForm() {
+        return view('message.form', ['data'=>$this->data]);
+    }
+
     public function getList() {
     	return view('message.list', ['data'=>$this->data]);
     	exit();

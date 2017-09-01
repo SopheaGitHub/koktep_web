@@ -659,15 +659,17 @@ ul.filter-left-display-menu li {
 
 .message-list {
   border-top: 1px dotted #91beb1;
-  padding: 20px 0px;
+  padding: 10px 0px;
   cursor: pointer;
+  color: #a0a0a0;
 }
 
 .message-list-active {
   border-top: 1px dotted #91beb1;
-  padding: 20px;
+  padding: 10px;
   background: #F1F3FA;
   cursor: pointer;
+  color: #a0a0a0;
 }
 
 .message-subject {
@@ -681,5 +683,5 @@ ul.filter-left-display-menu li {
 
 .message-list:hover, .message-list-active:hover {
   opacity: 0.8;
-  padding: 20px;
+  padding: 10px;
 }

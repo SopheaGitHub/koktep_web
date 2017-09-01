@@ -56,7 +56,7 @@
                         echo '<div class="desc">...</div>';
                     }
                 ?>
-                <div style="padding:10px;"><button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> Message</button></div>
+                <div style="padding:10px;"><button type="button" id="submit-account-setting" data-trigger="message" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> Message</button></div>
             </div>
         </div>
     </div>
@@ -234,5 +234,32 @@ $(document).ready(function() {
               });
               return false;
         });
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(document).delegate('button[data-trigger=\'message\']', 'click', function() {
+      $('#modal-message-form').remove();
+      var information_id = $(this).data("id");
+      var language_id = $(this).data("languageid");
+      $.ajax({
+        url: 'message/load-message-form',
+        dataType: 'html',
+        beforeSend: function() {
+          // before send
+          $('#block-loader').show();
+        },
+        complete: function() {
+          // completed
+          $('#block-loader').hide();
+        },
+        success: function(html) {
+          $('body').append('<div id="modal-message-form" class="modal">' + html + '</div>');
+
+          $('#modal-message-form').modal('show');
+        }
+      });
+      return false;
+    });
   });
 </script>

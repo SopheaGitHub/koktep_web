@@ -9,7 +9,7 @@
    		<img style="width:30px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 12px;">Chan Sophea</span>
    </div>
    <div class="message-subject">New subscribers!</div>
-   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? Eaque odio quae debitis saepe explicabo alias sit tenetur animi...</p>
+   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? ...</p>
 
 </div>
 </a>
@@ -20,7 +20,7 @@
    		<img style="width:30px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 12px;">Chan Sophea</span>
    </div>
    <div class="message-subject">New subscribers!</div>
-   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? Eaque odio quae debitis saepe explicabo alias sit tenetur animi...</p>
+   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? ...</p>
 
 </div>
 </a>
@@ -30,7 +30,7 @@
    		<img style="width:30px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 12px;">Chan Sophea</span>
    </div>
    <div class="message-subject">New subscribers!</div>
-   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? Eaque odio quae debitis saepe explicabo alias sit tenetur animi...</p>
+   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? ...</p>
 
 </div>
 <div class="message-list-active">
@@ -39,7 +39,7 @@
    		<img style="width:30px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 12px;">Chan Sophea</span>
    </div>
    <div class="message-subject">New subscribers!</div>
-   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? Eaque odio quae debitis saepe explicabo alias sit tenetur animi...</p>
+   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? ...</p>
 
 </div>
 <div class="message-list">
@@ -48,7 +48,7 @@
    		<img style="width:30px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 12px;">Chan Sophea</span>
    </div>
    <div class="message-subject">New subscribers!</div>
-   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? Eaque odio quae debitis saepe explicabo alias sit tenetur animi...</p>
+   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? ...</p>
 
 </div>
 <div class="message-list">
@@ -57,7 +57,7 @@
    		<img style="width:30px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 12px;">Chan Sophea</span>
    </div>
    <div class="message-subject">New subscribers!</div>
-   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? Eaque odio quae debitis saepe explicabo alias sit tenetur animi...</p>
+   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? ...</p>
 
 </div>
 <div class="message-list">
@@ -66,7 +66,7 @@
    		<img style="width:30px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 12px;">Chan Sophea</span>
    </div>
    <div class="message-subject">New subscribers!</div>
-   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? Eaque odio quae debitis saepe explicabo alias sit tenetur animi...</p>
+   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? ...</p>
 
 </div>
 <div class="message-list">
@@ -75,7 +75,7 @@
    		<img style="width:30px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 12px;">Chan Sophea</span>
    </div>
    <div class="message-subject">New subscribers!</div>
-   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? Eaque odio quae debitis saepe explicabo alias sit tenetur animi...</p>
+   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? ...</p>
 
 </div>
 <div class="message-list">
@@ -84,7 +84,7 @@
    		<img style="width:30px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 12px;">Chan Sophea</span>
    </div>
    <div class="message-subject">New subscribers!</div>
-   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? Eaque odio quae debitis saepe explicabo alias sit tenetur animi...</p>
+   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? ...</p>
 
 </div>
 <div class="message-list">
@@ -93,6 +93,6 @@
    		<img style="width:30px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 12px;">Chan Sophea</span>
    </div>
    <div class="message-subject">New subscribers!</div>
-   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? Eaque odio quae debitis saepe explicabo alias sit tenetur animi...</p>
+   <p class="message-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil eveniet ipsum nisi? ...</p>
 
 </div>
