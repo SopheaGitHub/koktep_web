@@ -47,4 +47,9 @@ class MessageController extends Controller
         return view('message.detail', ['data'=>$this->data]);
     }
 
+    public function getLoadMessageForm() {
+        return view('message.form', ['data' => $this->data]);
+        exit();
+    }
+
 }

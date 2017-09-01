@@ -819,7 +819,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	// Load information
+	// Load Upload form
 	$(document).delegate('a[data-toggle=\'load-upload-form\']', 'click', function() {
 		$('#modal-upload-form').remove();
 		var information_id = $(this).data("id");
