@@ -256,6 +256,7 @@ class Post extends Model {
 					SELECT
 						p.post_id AS post_id,
 						p.created_at AS created_at,
+						p.image AS image,
 						pd.title AS title,
 						u.name AS author_name,
 						p.status AS status

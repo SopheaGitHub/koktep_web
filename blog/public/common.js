@@ -321,7 +321,7 @@ function requestSubmitForm3(buttonId, formId, formAction, id) {
   	});
 }
 
-// submit form data3
+// submit form data4
 function requestSubmitForm4(buttonId, formId, formAction, id) {
 	$(document).on('click', '#'+buttonId, function(e) {
 	    e.preventDefault();
@@ -373,6 +373,139 @@ function requestSubmitForm4(buttonId, formId, formAction, id) {
 		          		if(data.reload_page) {
 		          			window.location = data.reload_page;
 		          		}
+
+		        	}
+
+		        	$('#'+id).html(msg).show();
+		      	},
+		      	error: function(request, status, error) {
+		        	$('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      	},
+		      	cache: false,
+		      	contentType: false,
+		      	processData: false
+		    });
+		}, 10);
+  	});
+}
+
+// submit form data5
+function requestSubmitForm5(buttonId, formId, formAction, id) {
+	$(document).on('click', '#'+buttonId, function(e) {
+	    e.preventDefault();
+	    if (typeof timer != 'undefined') {
+		    clearInterval(timer);
+		}
+
+		timer = setInterval(function() {
+			clearInterval(timer);
+		    var postDatas = new FormData($("form#"+formId)[0]);
+		    $.ajax({
+		      	url: formAction,
+		      	type: "POST",
+		      	data: postDatas,
+		      	dataType: "json",
+		      	async: true,
+		      	beforeSend: function() {
+		        	console.log('beforeSend');
+		        	$('#'+buttonId).prop('disabled', true);
+		        	$('#block-loader').show();
+		      	},
+		      	complete: function() {
+		        	console.log('completed');
+		        	$('#'+buttonId).prop('disabled', false);
+		        	$('#block-loader').hide();
+		      	},
+		      	success: function(data) {
+		        	var msg = '';
+		        	// if vaildate error
+		        	if(data.error==1) {
+		          		msg += '<div class="alert alert-warning" id="warning">';
+		         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' </b><br />';
+		          		if(data.validatormsg) {
+		            		$.each(data.validatormsg, function(index, value) {
+		              			msg += '- '+value+'<br />';
+		            		});
+		          		}
+		          		msg += '</div>';
+		        	}
+
+		        	// if success
+		        	if(data.success==1) {
+		          		msg += '<div class="alert alert-success" id="success">';
+		          		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
+		          		msg += '</div>';
+
+		          		$("form#"+formId)[0].reset();
+
+		        	}
+
+		        	$('#'+id).html(msg).show();
+		      	},
+		      	error: function(request, status, error) {
+		        	$('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      	},
+		      	cache: false,
+		      	contentType: false,
+		      	processData: false
+		    });
+		}, 10);
+  	});
+}
+
+// submit form data6
+function requestSubmitForm6(buttonId, formId, formAction, id) {
+	$(document).on('click', '#'+buttonId, function(e) {
+	    e.preventDefault();
+	    if (typeof timer != 'undefined') {
+		    clearInterval(timer);
+		}
+
+		timer = setInterval(function() {
+			clearInterval(timer);
+		    var postDatas = new FormData($("form#"+formId)[0]);
+		    $.ajax({
+		      	url: formAction,
+		      	type: "POST",
+		      	data: postDatas,
+		      	dataType: "json",
+		      	async: true,
+		      	beforeSend: function() {
+		        	console.log('beforeSend');
+		        	$('#'+buttonId).prop('disabled', true);
+		        	$('#block-loader').show();
+		      	},
+		      	complete: function() {
+		        	console.log('completed');
+		        	$('#'+buttonId).prop('disabled', false);
+		        	$('#block-loader').hide();
+		      	},
+		      	success: function(data) {
+		        	var msg = '';
+		        	// if vaildate error
+		        	if(data.error==1) {
+		          		msg += '<div class="alert alert-warning" id="warning">';
+		         		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-info-circle"></i> '+data.msg+' </b><br />';
+		          		if(data.validatormsg) {
+		            		$.each(data.validatormsg, function(index, value) {
+		              			msg += '- '+value+'<br />';
+		            		});
+		          		}
+		          		msg += '</div>';
+		        	}
+
+		        	// if success
+		        	if(data.success==1) {
+		          		msg += '<div class="alert alert-success" id="success">';
+		          		msg += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+		          		msg += '<b><i class="fa fa-check-circle"></i> '+data.msg+'</b><br />';
+		          		msg += '</div>';
+
+		          		$("form#"+formId)[0].reset();
+		          		loadingFormToID(data.action_load, data.display_id);
 
 		        	}
 

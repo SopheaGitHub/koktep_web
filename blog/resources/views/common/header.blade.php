@@ -3,6 +3,7 @@
     $objConfig = new App\Http\Controllers\ConfigController();
     $objLanguage = new App\Models\Language();
     $objCategory = new App\Models\Category();
+    $objMessage = new App\Models\Message();
 
     if(\Session::has('locale')) {
         $locale = \Session::get('locale');
@@ -26,6 +27,8 @@
     }else {
         $thumb_profile = $objFile->resize('no_image.png', 100, 100);
     }
+
+    $message = $objMessage->getTotalInboxByAutorId(((Auth::check())? Auth::user()->id:'0'));
     
 ?>
 <nav class="navbar navbar-default navbar-static-top navbar-fixed-top">
@@ -126,7 +129,7 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="<?php echo url('/overview-account?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-user-o"></i> <?php echo trans('text.profile'); ?> </a></li>
-                            <li><a href="<?php echo url('/message?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-envelope"></i><?php echo trans('text.message'); ?> <span style="background: #91beb1; padding:3px; border-radius:50%; font-size:12px; color: #fff;">10</span> </a></li>
+                            <li><a href="<?php echo url('/message?account_id='.Auth::user()->id); ?>&amp;load=inbox"><i class="fa fa-btn fa-envelope"></i><?php echo trans('text.message'); ?> <?php echo (($message->total>0)? '<span style="background: #91beb1; padding:0px 5px; margin:0px; border-radius:50%; font-size:12px; color: #fff;">'.$message->total.'</span>':'') ?> </a></li>
                             <li><a href="<?php echo url('/posts?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-tasks"></i><?php echo trans('text.posts_management'); ?></a></li>
                             <li><a href="<?php echo url('/posts-groups?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-object-group"></i><?php echo trans('text.posted_groups'); ?></a></li>
                             <li><a href="#" role="button" data-toggle="menufilemanager"><i class="fa fa-btn fa-image"></i><?php echo trans('filemanager.title'); ?></a></li>

@@ -169,13 +169,13 @@ $(document).ready(function() {
     $('input[name=\'search\']').autocomplete({
       'source': function(request, response) {
         $.ajax({
-          url: "<?php echo url('/post-account/autocomplete');?>?filter_title=" +  encodeURIComponent(request) +"&filter_view="+encodeURIComponent($('#view').val()),
+          url: "<?php echo url('/post-account/autocomplete');?>?filter_title=" +  encodeURIComponent(request) +"&filter_view="+encodeURIComponent($('#view-option').val()),
           dataType: 'json',
           success: function(json) {
             response($.map(json, function(item) {
               return {
                 label: item['title'],
-                value: item['title']
+                value: item['title_text']
               }
             }));
           }

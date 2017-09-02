@@ -93,7 +93,8 @@ class User extends Authenticatable
                 (
                     SELECT
                         u.id AS user_id,
-                        u.name AS name
+                        u.name AS name,
+                        u.image AS image
                     FROM
                         users AS u
                 ) AS users

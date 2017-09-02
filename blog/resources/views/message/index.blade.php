@@ -25,7 +25,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     loadingList("<?php echo $data->action_list; ?>");
-    paginateListAction('render-message', "<?php echo $data->action_list; ?>");
+    paginateListAction('render-list-message', "<?php echo $data->action_list_pagination; ?>");
 });
 </script>
 @endsection

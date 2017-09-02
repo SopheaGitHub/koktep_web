@@ -29,7 +29,7 @@
     
 ?>
 <div class="row profile" style="background: #fbfcfc; margin:15px;">
-    <div class="col-md-3">
+    <div class="col-md-3" style="padding-top:10px;">
         <div class="profile-sidebar">
             <!-- SIDEBAR USERPIC -->
             <div class="profile-userpic">
@@ -56,12 +56,12 @@
                         echo '<div class="desc">...</div>';
                     }
                 ?>
-                <div style="padding:10px;"><button type="button" id="submit-account-setting" data-trigger="message" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> Message</button></div>
+                <div style="padding:10px;"><button type="button" data-trigger="message" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> Message</button></div>
             </div>
         </div>
     </div>
     <div class="col-md-9">
-        <div class="row">
+        <div class="row" style="padding:10px;">
             <div class="cover-userpic">
                 <div class="profile-pic">
                     <div>
@@ -243,7 +243,7 @@ $(document).ready(function() {
       var information_id = $(this).data("id");
       var language_id = $(this).data("languageid");
       $.ajax({
-        url: 'message/load-message-form',
+        url: 'message/load-message-form/<?php echo $author_id; ?>',
         dataType: 'html',
         beforeSend: function() {
           // before send
