@@ -33,6 +33,15 @@ class Post extends Model {
 		return $result;
 	}
 
+	public function getExist($array_image=[]) {
+		$result = DB::table('post AS p')
+			->select('p.image', 'pd.title')
+			->leftJoin('post_description AS pd', 'pd.post_id', '=', 'p.post_id')
+			->whereIn('p.image', $array_image)
+			->get();
+		return $result;
+	}
+
 	public function getPostRating($post_id) {
 		$result = DB::table(DB::raw('
 				(SELECT (SELECT COUNT(1) FROM post_comment WHERE post_id = '.$post_id.') AS commented, CEIL((SUM(rating) / COUNT(1))) AS average_rating FROM post_comment WHERE post_id = '.$post_id.') AS average_rating

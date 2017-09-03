@@ -31,7 +31,7 @@
                     <input type="text" name="related" value="" placeholder="<?php echo $data->entry_related; ?>" id="input-related" class="form-control" />
                     <div id="post-related" class="well well-sm" style="height: 150px; overflow: auto;">
                       <?php foreach ($data->post_relateds as $post_related) { ?>
-                      <div id="post-related<?php echo $post_related['post_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $post_related['title']; ?>
+                      <div id="post-related<?php echo $post_related['post_id']; ?>"><i class="fa fa-minus-circle"></i> <img alt="" src="<?php echo $post_related['image']; ?>" style="width:30px;"> <?php echo $post_related['title']; ?>
                         <input type="hidden" name="post_related[]" value="<?php echo $post_related['post_id']; ?>" />
                       </div>
                       <?php } ?>

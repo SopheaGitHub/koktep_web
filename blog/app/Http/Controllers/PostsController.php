@@ -963,9 +963,17 @@ class PostsController extends Controller
 
                 $results = $this->user->getAutocompleteUsers($filter_data);
                 foreach ($results as $result) {
+
+                    if (!empty($result->image) && is_file($this->data->dir_image . $result->image)) {
+                        $image = $this->filemanager->resize($result->image, 100, 100);
+                    } else {
+                        $image = $this->filemanager->resize('no_image.png', 100, 100);
+                    }
+
                     $json[] = [
                         'user_id' => $result->user_id,
-                        'title'   => strip_tags(html_entity_decode($result->name, ENT_QUOTES, 'UTF-8'))
+                        'title'   => "<img alt='' src='".$image."' style='width:30px; border-radius:50%;'> &nbsp; ".strip_tags(html_entity_decode($result->name, ENT_QUOTES, 'UTF-8')),
+                        'title_text' => strip_tags(html_entity_decode($result->name, ENT_QUOTES, 'UTF-8')),
                     ];
                 }
 
@@ -981,9 +989,17 @@ class PostsController extends Controller
                 $results = $this->post->getAutocompletePosts($filter_data);
 
                 foreach ($results as $result) {
+
+                    if (!empty($result->image) && is_file($this->data->dir_image . $result->image)) {
+                        $image = $this->filemanager->resize($result->image, 100, 100);
+                    } else {
+                        $image = $this->filemanager->resize('no_image.png', 100, 100);
+                    }
+                    
                     $json[] = [
                         'post_id' => $result->post_id,
-                        'title'   => strip_tags(html_entity_decode($result->title, ENT_QUOTES, 'UTF-8'))
+                        'title'   => "<img alt='' src='".$image."' style='width:30px;'> &nbsp; ".strip_tags(html_entity_decode($result->title, ENT_QUOTES, 'UTF-8')),
+                        'title_text' => strip_tags(html_entity_decode($result->title, ENT_QUOTES, 'UTF-8')),
                     ];
                 }
             }

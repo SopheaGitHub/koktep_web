@@ -52,7 +52,7 @@ class PostsGroupsController extends Controller
 
     	$this->data->action_list = url('/posts-groups/list');
         $this->data->action_delete = url('/posts-groups/delete');
-        $this->data->add_post_group = url('/posts-groups/create');
+        $this->data->add_post_group = url('/posts-groups/create?account_id='.$this->data->auth_id);
         return view('post_group.index', ['data'=>$this->data]);
     }
 
@@ -289,14 +289,22 @@ class PostsGroupsController extends Controller
             $post_relateds = $this->post->getPostsByPostGroup(['array_post_group_id'=>$array_post_group_value])->get();
             if(count($post_relateds) > 0) {
                 foreach ($post_relateds as $related_info) {
+
+                    if (!empty($related_info->image) && is_file($this->data->dir_image . $related_info->image)) {
+                        $image = $this->filemanager->resize($related_info->image, 100, 100);
+                    } else {
+                        $image = $this->filemanager->resize('no_image.png', 100, 100);
+                    }
+
                     $data['post_relateds'][] = [
                         'post_id' => $related_info->post_id,
-                        'title'   => $related_info->title
+                        'title'   => $related_info->title,
+                        'image'   => $image,
                     ];
                 }
             }
         
-        }        
+        }      
 
         $datas = [
             'icon' => 'icon_edit',

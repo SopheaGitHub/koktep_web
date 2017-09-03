@@ -9,7 +9,6 @@
               <a href="<?php echo $data['refresh']; ?>" id="button-refresh" class="btn btn-default btn-sm"><i class="fa fa-refresh fa-btn"></i><?php echo $data['button_refresh']; ?></a>
               <button type="button" id="button-upload" class="btn btn-primary btn-sm"><i class="fa fa-upload fa-btn"></i><?php echo $data['button_upload']; ?></button>
               <button type="button" id="button-delete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-btn"></i><?php echo $data['button_delete']; ?></button>
-              <button type="button" id="button-folder" class="btn btn-default btn-sm"><i class="fa fa-folder fa-btn"></i><?php echo $data['button_folder']; ?></button>
               <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i><?php echo $data['button_close']; ?></button>
             </span>
         </div>
@@ -275,6 +274,14 @@ $('#modal-image #button-delete').on('click', function(e) {
       success: function(json) {
         if (json['error']) {
           alert(json['error']);
+        }
+
+        if (json['error_array']) {
+          var al = '';
+          $.each(json['error_array'], function( index, value ) {
+            al += value+'\n\n';
+          });
+          alert( al );
         }
 
         if (json['success']) {

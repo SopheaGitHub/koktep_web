@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Image;
+use App\Models\Post;
 use App\Models\Pagination;
 use App\Http\Controllers\ConfigController;
 
@@ -23,6 +24,7 @@ class FilemanagerController extends Controller {
 		$this->middleware('auth');
 		$this->data = new \stdClass();
 		$this->config = new ConfigController();
+		$this->post = New Post();
 
 		// create define
 		$this->data->dir_image = $this->config->dir_image;
@@ -441,54 +443,67 @@ class FilemanagerController extends Controller {
 			}
 		}
 
-		if (!$json) {
-			// Loop through each path
-			foreach ($paths as $path) {
-				$path = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', $this->config->escape($path)), '/');
+		// check if image is using
+		$posts = $this->post->getExist($request['path']);
 
-				// If path is just a file delete it
-				if (is_file($path)) {
-					unlink($path);
+		if(count($posts) > 0) {
+			
+			$json['error_array'][] = trans('filemanager.check').': ' .trans('filemanager.directory_can_not_delete');
+			foreach ($posts as $post) {
+				$post_image = explode('/', $post->image);
+				$json['error_array'][] = '- Image '.((count($post_image)>0)? end($post_image):'').' is using in upload "'.$post->title.'".';
+			}
 
-				// If path is a directory beging deleting each file and sub folder
-				} elseif (is_dir($path)) {
-					$files = array();
+		} else {
+			if (!$json) {
+				// Loop through each path
+				foreach ($paths as $path) {
+					$path = rtrim($this->data->dir_image . str_replace(array('../', '..\\', '..'), '', $this->config->escape($path)), '/');
 
-					// Make path into an array
-					$path = array($path . '*');
+					// If path is just a file delete it
+					if (is_file($path)) {
+						unlink($path);
 
-					// While the path array is still populated keep looping through
-					while (count($path) != 0) {
-						$next = array_shift($path);
+					// If path is a directory beging deleting each file and sub folder
+					} elseif (is_dir($path)) {
+						$files = array();
 
-						foreach (glob($next) as $file) {
-							// If directory add to path array
-							if (is_dir($file)) {
-								$path[] = $file . '/*';
+						// Make path into an array
+						$path = array($path . '*');
+
+						// While the path array is still populated keep looping through
+						while (count($path) != 0) {
+							$next = array_shift($path);
+
+							foreach (glob($next) as $file) {
+								// If directory add to path array
+								if (is_dir($file)) {
+									$path[] = $file . '/*';
+								}
+
+								// Add the file to the files to be deleted array
+								$files[] = $file;
 							}
-
-							// Add the file to the files to be deleted array
-							$files[] = $file;
 						}
-					}
 
-					// Reverse sort the file array
-					rsort($files);
+						// Reverse sort the file array
+						rsort($files);
 
-					foreach ($files as $file) {
-						// If file just delete
-						if (is_file($file)) {
-							unlink($file);
+						foreach ($files as $file) {
+							// If file just delete
+							if (is_file($file)) {
+								unlink($file);
 
-						// If directory use the remove directory function
-						} elseif (is_dir($file)) {
-							rmdir($file);
+							// If directory use the remove directory function
+							} elseif (is_dir($file)) {
+								rmdir($file);
+							}
 						}
 					}
 				}
-			}
 
-			$json['success'] = trans('filemanager.success_delete_directory');
+				$json['success'] = trans('filemanager.success_delete_directory');
+			}
 		}
 
 		return json_encode($json);

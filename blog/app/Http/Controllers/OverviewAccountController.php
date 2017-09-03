@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\User;
 use Auth;
 
 class OverviewAccountController extends Controller
@@ -17,6 +18,7 @@ class OverviewAccountController extends Controller
         // $this->middleware('auth');
 
         $this->data = new \stdClass();
+        $this->user = New User();
         $this->data->web_title = 'Overview';
         $this->data->auth_id = ((Auth::check())? Auth::user()->id:'0');
     }
@@ -35,7 +37,13 @@ class OverviewAccountController extends Controller
         if(isset($request['account_id'])) {
             $this->data->action_list = url('/post-account/list?account_id='.$request['account_id']);
             $this->data->action_paginate_list = url('/post-account/list');
-            return view('overview_account.index', ['data'=>$this->data]);
+
+            if(!$this->user->getUser($request['account_id'])) {
+                return view('errors.504');
+            }else {
+                return view('overview_account.index', ['data'=>$this->data]);
+            }
+
         }else {
             if(isset($request['login'])&&$request['login']=='success'&&Auth::check()) {
                 \Request::merge(['account_id' => $this->data->auth_id]);
@@ -48,7 +56,9 @@ class OverviewAccountController extends Controller
 
                 $this->data->action_list = url('/post-account/list?account_id='.((Auth::check())? Auth::user()->id:'0'));
                 $this->data->action_paginate_list = url('/post-account/list');
+
                 return view('overview_account.index', ['data'=>$this->data]);
+                
             }else {
                 return view('errors.503');
             }

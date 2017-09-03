@@ -5,7 +5,7 @@
         <div class="col-md-7"><h5><a href="#"><?php echo $post_group->name; ?></a></h5></div>
         <div class="col-md-3">
             <span class="pull-right">
-              <a href="<?php echo $data->edit_post.'/'.$post_group->post_group_id; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil-square"></i> <?php echo $data->button_edit; ?></a>
+              <a href="<?php echo $data->edit_post.'/'.$post_group->post_group_id.'?account_id='.$data->auth_id; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil-square"></i> <?php echo $data->button_edit; ?></a>
               <a href="#" class="btn btn-sm btn-danger" id="<?php echo $post_group->post_group_id; ?>" data-toggle="modal" data-target="#modal-delete-post-group"><i class="fa fa-btn fa-trash-o"></i> <?php echo $data->button_delete; ?></a>
             </span>
         </div>
