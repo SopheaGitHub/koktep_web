@@ -9,17 +9,17 @@
         </div>
         <div class="col-md-9">
             <div class="profile-content" style="overflow:hidden;">
-               <div style="text-align:center; background: #91beb1; color: #fff;">
-                  <h3>Detail</h3>
+               <div style="text-align:center; background: #91beb1; color: #fff; padding: 5px 0px;">
+                  <h3><?php echo $data->text_detail; ?></h3>
                </div>
                <br />
                <div class="row">
                   <div class="col-md-6">
-                     <a href="<?php echo $data->action_back; ?>" class="btn btn-default btn-xs"><i class="fa fa-btn fa-angle-double-left"></i>Back</a>
+                     <a href="<?php echo $data->action_back; ?>" class="btn btn-default btn-xs"><i class="fa fa-btn fa-angle-double-left"></i><?php echo $data->button_back; ?></a>
                   </div>
                   <div class="col-md-6">
                      <span class="pull-right">
-                        <button type="button" data-trigger="reply-message" class="btn btn-xs btn-primary button-submit-post" data-original-title=""><i class="fa fa-btn fa-reply"></i>Reply</button>
+                        <button type="button" data-trigger="reply-message" class="btn btn-xs btn-primary button-submit-post" data-original-title=""><i class="fa fa-btn fa-reply"></i><?php echo $data->button_reply; ?></button>
                      </span>
                   </div>
                </div>

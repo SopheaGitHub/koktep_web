@@ -60,6 +60,7 @@ return [
     'my_profile' => 'My Profile',
     'profile' => 'Profile',
     'technical_skills' => 'Technical Skills',
+    'detail' => 'Detail',
     'go_to_contact_account' => 'If my skill related to your searching or you are fall into my skill also, You can <a href="%s"><b>%sContact</b> </a> to me.',
 
     'title_email_login' => 'Use For Login',

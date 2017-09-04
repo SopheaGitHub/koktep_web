@@ -28,8 +28,8 @@
       </form>
     </div>
     <div class="modal-footer" style="text-align:center;">
-      <button type="button" data-toggle="tooltip" id="popup-send-reply-message" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-reply"></i>Reply</button>
-      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i>Close</button>     
+      <button type="button" data-toggle="tooltip" id="popup-send-reply-message" title="" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-reply"></i><?php echo $data->button_reply; ?></button>
+      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i><?php echo $data->button_close; ?></button>     
     </div>
   </div>
 </div>

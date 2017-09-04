@@ -161,6 +161,11 @@ class MessageController extends Controller
             }
         }
 
+        $this->data->text_detail = trans('text.detail');
+        $this->data->button_back = trans('button.back');
+        $this->data->button_reply = trans('button.reply');
+        $this->data->button_close = trans('button.close');
+
         $this->data->action_reply = url('/message/load-message-reply-form/'.$message_id);
         $this->data->action_back = url('/message?account_id='.$this->data->auth_id.'&load='.$load);
         $this->data->action_list = url('/message/list');
@@ -340,6 +345,7 @@ class MessageController extends Controller
         $this->data->text_receiver = trans('message.receiver');
         $this->data->text_subject = trans('message.subject');
         $this->data->button_send = trans('button.send');
+        $this->data->button_reply = trans('button.reply');
         $this->data->button_close = trans('button.close');
         
         $this->data->message_parent_id = $message_id;
