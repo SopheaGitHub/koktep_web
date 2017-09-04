@@ -29,5 +29,6 @@ return [
     'no' => 'No',
     'send' => 'Send',
     'close' => 'Close',
-    'back' => 'Back'
+    'back' => 'Back',
+    'reply' => 'Reply',
 ];

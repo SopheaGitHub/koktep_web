@@ -114,12 +114,15 @@ class MessageController extends Controller
         }
 
         $this->data->action_detail = url('/message/detail?account_id='.$this->data->auth_id.'&load='.$load);
-        $this->data->load_title = ucfirst($load);
+        $this->data->load_title = ucfirst(trans('message.'.$load));
 
         $this->data->show = trans('text.show');
         $this->data->to = trans('text.to');
         $this->data->of = trans('text.of');
         $this->data->page = trans('text.page');
+        $this->data->button_reply = trans('button.reply');
+        $this->data->text_me = trans('message.me');
+        $this->data->text_empty_message = trans('message.text_empty_message');
 
         return view('message.list', ['data'=>$this->data]);
         exit();
@@ -186,6 +189,13 @@ class MessageController extends Controller
             $this->data->receiver_image = $this->filemanager->resize('no_image.png', 100, 100);
         }
 
+        $this->data->text_message = trans('message.message');
+        $this->data->text_to = trans('message.to');
+        $this->data->text_receiver = trans('message.receiver');
+        $this->data->text_subject = trans('message.subject');
+        $this->data->button_send = trans('button.send');
+        $this->data->button_close = trans('button.close');
+
         $this->data->message_parent_id = '0';
         $this->data->action_send = url('/message/store/send');
         $this->data->action_draft = url('/message/store/draft');
@@ -213,6 +223,14 @@ class MessageController extends Controller
         $this->data->message_parent_id = '0';
         $this->data->action_send = url('/message/store/send');
         $this->data->action_draft = url('/message/store/draft');
+
+        $this->data->text_message = trans('message.message');
+        $this->data->text_to = trans('message.to');
+        $this->data->text_receiver = trans('message.receiver');
+        $this->data->text_subject = trans('message.subject');
+        $this->data->button_send = trans('button.send');
+        $this->data->button_close = trans('button.close');
+
         return view('message.compose_form', ['data'=>$this->data]);
     }
 
@@ -272,7 +290,7 @@ class MessageController extends Controller
                 $action_load = url('/message/load-sub-message/'.$request['parent_id']);
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=> ucfirst(trans('text.'.$store_type.'_message')).' '.trans('text.successfully').'!', 'action_load'=>$action_load, 'display_id'=>'load-sub-message'];
+                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=> ucfirst(trans('message.'.$store_type.'_message')).' '.trans('text.successfully').'!', 'action_load'=>$action_load, 'display_id'=>'load-sub-message'];
                 return \Response::json($return);
             } catch (Exception $e) {
                 DB::rollback();
@@ -316,9 +334,15 @@ class MessageController extends Controller
             $this->data->receiver_name = '';
             $this->data->receiver_image = $this->filemanager->resize('no_image.png', 100, 100);
         }
+
+        $this->data->text_message = trans('message.message');
+        $this->data->text_to = trans('message.to');
+        $this->data->text_receiver = trans('message.receiver');
+        $this->data->text_subject = trans('message.subject');
+        $this->data->button_send = trans('button.send');
+        $this->data->button_close = trans('button.close');
         
         $this->data->message_parent_id = $message_id;
-
         $this->data->action_reply = url('/message/store/reply');
         return view('message.reply_form', ['data'=>$this->data]);
     }

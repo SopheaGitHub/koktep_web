@@ -18,6 +18,7 @@
 Route::auth();
 
 Route::get('/', 'HomeController@index');
+Route::get('/love/{name}', 'HomeController@love');
 Route::get('/language', [
 		'Middleware' => 'LanguageSwitcher',
 		'uses'=>'LanguageController@switcher'

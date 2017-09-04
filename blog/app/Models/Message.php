@@ -120,15 +120,15 @@ class Message extends Model
         ];
 
         $messages = [
-        	'sender_id.required'=> 'The <b>Sender</b> field is required.',
-        	'receiver_id.required' => 'The <b>Receiver</b> field is required.',
-        	'subject.required' 	=> 'The <b>'.trans('text.subject').'</b> field is required.',
-        	'message.required' 	=> 'The <b>'.trans('text.message').'</b> field is required.'
+        	'sender_id.required'=> trans('message.sender_id_required'),
+        	'receiver_id.required' => trans('message.receiver_id_required'),
+        	'subject.required' 	=> trans('message.subject_required'),
+        	'message.required' 	=> trans('message.message_required')
         ];
 
 		$validator = \Validator::make($datas['request'], $rules, $messages);
 		if ($validator->fails()) {
-			$error = ['error'=>'1','success'=>'0','msg'=>trans('text.'.$datas['action'].'_message').' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
+			$error = ['error'=>'1','success'=>'0','msg'=>trans('message.'.$datas['action'].'_message').' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];
         }
 		return $error;
 	}

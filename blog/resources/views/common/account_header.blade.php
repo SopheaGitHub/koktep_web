@@ -56,7 +56,7 @@
                         echo '<div class="desc">...</div>';
                     }
                 ?>
-                <div style="padding:10px;"><button type="button" data-trigger="message" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> Message</button></div>
+                <div style="padding:10px;"><button type="button" data-trigger="message" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> <?php echo trans('text.message'); ?></button></div>
             </div>
         </div>
     </div>

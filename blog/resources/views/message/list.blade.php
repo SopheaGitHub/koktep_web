@@ -1,4 +1,4 @@
-<div style="text-align:center; background: #91beb1; color: #fff;">
+<div style="text-align:center; background: #91beb1; color: #fff; padding: 5px 0px;">
 	<h3><?php echo $data->load_title; ?></h3>
 </div>
 <br />
@@ -12,10 +12,10 @@
             <div class="<?php echo (( ($data->load_title=='Inbox') && ($message->viewed<=0) )? 'message-list-active':'message-list'); ?>">
               <p style="font-size: 11px;">
                 <i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y', strtotime($message->created_at)); ?>
-                <?php echo (($message->total_reply > 0)? '<b> &nbsp; | &nbsp; Reply: '.$message->total_reply.'</b>':'') ?>
+                <?php echo (($message->total_reply > 0)? '<b> &nbsp; | &nbsp; '.$data->button_reply.': '.$message->total_reply.'</b>':'') ?>
               </p>
                <div class="message-sender">
-                  <img style="width:30px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$message->id]))? $data->thumb_user[$message->id]:''); ?>"> &nbsp; <span style="font-size: 12px;"><?php echo $message->author_name; ?> <?php echo (($message->sender_id==$data->auth_id)? '(Me)':''); ?></span>
+                  <img style="width:30px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$message->id]))? $data->thumb_user[$message->id]:''); ?>"> &nbsp; <span style="font-size: 12px;"><?php echo $message->author_name; ?> <?php echo (($message->sender_id==$data->auth_id)? '('.$data->text_me.')':''); ?></span>
                </div>
                <div class="message-subject"><?php echo $subject; ?></div>
                <p class="message-preview"><?php echo $text; ?></p>
@@ -25,7 +25,7 @@
    <?php   }
    }
       else {
-      echo 'There is no message';
+      echo $data->text_empty_message;
    }
 ?>
 <div class="row">

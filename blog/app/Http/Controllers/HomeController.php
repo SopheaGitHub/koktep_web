@@ -29,6 +29,17 @@ class HomeController extends Controller
         $this->systemLogs('view', 'home', $request);
         // End
         $this->data->action_list = url('/post-account/list');
-        return view('home', ['data'=>$this->data]);
+        if(\Session::has('love')) {
+            return view('home', ['data'=>$this->data]);
+        }else {
+            return view('home_coming_soon', ['data'=>$this->data]);
+        }
     }
+
+    public function love($name) {
+        \Session::put('love', $name);
+        return redirect('/');
+        exit();
+    }
+
 }
