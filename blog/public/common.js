@@ -178,7 +178,8 @@ function requestSubmitForm(buttonId, formId, formAction) {
 		        	$('#message').html(msg).show();
 		      	},
 		      	error: function(request, status, error) {
-		        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		        	// $('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		        	$('#message').html('').show();
 		      	},
 		      	cache: false,
 		      	contentType: false,
@@ -245,7 +246,8 @@ function requestSubmitForm2(buttonId, formId, formAction) {
 		        	$('#message').html(msg).show();
 		      	},
 		      	error: function(request, status, error) {
-		        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		        	// $('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      		$('#message').html('').show();
 		      	},
 		      	cache: false,
 		      	contentType: false,
@@ -311,7 +313,8 @@ function requestSubmitForm3(buttonId, formId, formAction, id) {
 		        	$('#'+id).html(msg).show();
 		      	},
 		      	error: function(request, status, error) {
-		        	$('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		        	// $('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      		$('#'+id).html('').show();
 		      	},
 		      	cache: false,
 		      	contentType: false,
@@ -379,7 +382,8 @@ function requestSubmitForm4(buttonId, formId, formAction, id) {
 		        	$('#'+id).html(msg).show();
 		      	},
 		      	error: function(request, status, error) {
-		        	$('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		        	// $('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      		$('#'+id).html('').show();
 		      	},
 		      	cache: false,
 		      	contentType: false,
@@ -445,7 +449,8 @@ function requestSubmitForm5(buttonId, formId, formAction, id) {
 		        	$('#'+id).html(msg).show();
 		      	},
 		      	error: function(request, status, error) {
-		        	$('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		        	// $('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      		$('#'+id).html('').show();
 		      	},
 		      	cache: false,
 		      	contentType: false,
@@ -512,7 +517,8 @@ function requestSubmitForm6(buttonId, formId, formAction, id) {
 		        	$('#'+id).html(msg).show();
 		      	},
 		      	error: function(request, status, error) {
-		        	$('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		        	// $('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      		$('#'+id).html('').show();
 		      	},
 		      	cache: false,
 		      	contentType: false,
@@ -578,7 +584,8 @@ function requestSubmitDeleteForm(buttonId, formId, formAction) {
 		        	$('#message').html(msg).show();
 		      	},
 		      	error: function(request, status, error) {
-		        	$('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		        	// $('#message').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+		      		$('#message').html('').show();
 		      	},
 		      	cache: false,
 		      	contentType: false,
@@ -606,7 +613,8 @@ function loadingList (requestAction) {
 	    	$('#display-list').html(html).show();
 	  	},
 	  	error:function(request, status, error) {
-	    	$('#display-list').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	    	// $('#display-list').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	  		$('#display-list').html('').show();
 	  	}
 	});
 	return false;
@@ -629,7 +637,8 @@ function loadingForm (requestAction) {
 	    	$('#load-form').html(html).show();
 	  	},
 	  	error:function(request, status, error) {
-	    	$('#load-form').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	    	// $('#load-form').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	  		$('#load-form').html('').show();
 	  	}
 	});
 	return false;
@@ -652,7 +661,8 @@ function loadingFormToID (requestAction, id) {
 	    	$('#'+id).html(html).show();
 	  	},
 	  	error:function(request, status, error) {
-	    	$('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	    	// $('#'+id).html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	  		$('#'+id).html('').show();
 	  	}
 	});
 	return false;
@@ -681,7 +691,8 @@ function paginateListAction (mainPaginateId, requestAction) {
 	      			$('#display-list').html(html).show();
 	    		},
 	    		error:function(request, status, error) {
-	      			$('#display-list').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	      			// $('#display-list').html('<div class="alert alert-danger" id="error"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-times"></i> Something wrong, Please alert to developer.</b></div>').show();
+	    			$('#display-list').html('').show();
 	    		}
 	      	});
 	      	return false;

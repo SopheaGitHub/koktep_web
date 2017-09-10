@@ -136,6 +136,12 @@ class AccountController extends Controller
         if(!is_dir($directory)) {
             mkdir($directory, 0777, true);
             chmod($directory, 0777);
+
+            if (!file_exists($directory.'index.html')) {
+                $myfile = fopen($directory.'index.html', 'w');
+                fwrite($myfile, "Page not found.");
+                fclose($myfile);
+            }
         }
 
         $image = imagecreatefromstring($source_url);

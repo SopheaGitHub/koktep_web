@@ -68,6 +68,13 @@ class FilemanagerController extends Controller {
 		if(!is_dir($directory)) {
 			mkdir($directory, 0777, true);
 			chmod($directory, 0777);
+
+			if (!file_exists($directory.'/index.html')) {
+	            $myfile = fopen($directory.'/index.html', 'w');
+	            fwrite($myfile, "Page not found.");
+	            fclose($myfile);
+	        }
+
 		}
 
 		if (isset($request['page'])) {
@@ -529,6 +536,12 @@ class FilemanagerController extends Controller {
 
 				if (!is_dir($this->data->dir_image . $path)) {
 					@mkdir($this->data->dir_image . $path, 0777);
+
+					if (!file_exists($this->data->dir_image . $path.'/index.html')) {
+		                $myfile = fopen($this->data->dir_image . $path.'/index.html', 'w');
+		                fwrite($myfile, "Page not found.");
+		                fclose($myfile);
+		            }
 				}
 			}
 

@@ -51,3 +51,16 @@ Route::get('/email', function() {
 	echo 'success';
 	exit();
 });
+
+Route::get('images/', function() {
+	return view('errors.505');
+});
+Route::get('images/{cache}', function() {
+	return view('errors.505');
+});
+Route::get('images/{cache}/{catalog}', function() {
+	return view('errors.505');
+});
+Route::get('images/{cache}/{catalog}/{account}', function() {
+	return view('errors.505');
+});
