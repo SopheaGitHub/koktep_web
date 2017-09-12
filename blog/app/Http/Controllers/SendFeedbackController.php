@@ -74,6 +74,7 @@ class SendFeedbackController extends Controller
 
     public function postSend() {
         $request = \Request::all();
+        
         // add system log
         $this->systemLogs('submit_form', 'send-feedback', $request);
         // End
@@ -89,7 +90,15 @@ class SendFeedbackController extends Controller
                 }
 
                 // Send feedback
-
+                $dataPosts = [
+                    'name' => $request['name'],
+                    'email' => $request['email'],
+                    'message' => $request['message']
+                ];
+                \Mail::send('emails.feedback', ['datas'=>$dataPosts], function($message) use ($request)
+                {
+                    $message->to('teamkoktep@gmail.com', 'team koktep')->subject('Visitor: '.$request['name'].' feedback!' );
+                });
                 // End
 
                 DB::commit();

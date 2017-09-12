@@ -39,7 +39,9 @@ class Controller extends BaseController
     }
 
     protected function systemLogs($action=null, $key=null, $all_resuest=[]) {
+
         $configObj = new ConfigController();
+
         try {
             // get information for log
             if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -72,11 +74,17 @@ class Controller extends BaseController
                 'updated_at' => date('Y-m-d H:i:s')
             ];
 
-            // $my_file = $configObj->dir_logs.'system.log';
-            // $handle = fopen($my_file, 'a') or die('Cannot open file:  '.$my_file);
-            // $new_data = json_encode($systemLogDatas)."\n";
-            // fwrite($handle, $new_data);
-            // fclose($handle);
+            // define action and key than can sent out
+            $arrayActions = ['submit_form'];
+            $arrayKeys = ['contact-us', 'send-feedback'];
+
+            if(in_array($action, $arrayActions) && in_array($key, $arrayKeys)) {
+                $my_file = $configObj->dir_logs.'system.log';
+                $handle = fopen($my_file, 'a') or die('Cannot open file:  '.$my_file);
+                $new_data = json_encode($systemLogDatas)."\n";
+                fwrite($handle, $new_data);
+                fclose($handle);
+            }
 
             return true;
         } catch (Exception $e) {

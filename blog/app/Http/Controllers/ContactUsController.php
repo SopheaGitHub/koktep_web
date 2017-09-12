@@ -74,6 +74,7 @@ class ContactUsController extends Controller
 
     public function postSend() {
         $request = \Request::all();
+
         // add system log
         $this->systemLogs('submit_form', 'contact-us', $request);
         // End
@@ -89,7 +90,15 @@ class ContactUsController extends Controller
                 }
 
                 // Send message
-
+                $dataPosts = [
+                    'name' => $request['name'],
+                    'email' => $request['email'],
+                    'message' => $request['message']
+                ];
+                \Mail::send('emails.contact', ['datas'=>$dataPosts], function($message) use ($request)
+                {
+                    $message->to('teamkoktep@gmail.com', 'team koktep')->subject('Visitor: '.$request['name'].' contact!' );
+                });
                 // End
 
                 DB::commit();
