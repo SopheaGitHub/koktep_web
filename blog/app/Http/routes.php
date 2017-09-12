@@ -64,3 +64,11 @@ Route::get('images/{cache}/{catalog}', function() {
 Route::get('images/{cache}/{catalog}/{account}', function() {
 	return view('errors.505');
 });
+
+Route::get('testsendemail', function() {
+	Mail::send('emails.welcome', array('key' => 'value'), function($message)
+	{
+	    $message->to('teamkoktep@gmail.com', 'John Smith')->subject('Welcome!');
+	});
+	exit();
+});

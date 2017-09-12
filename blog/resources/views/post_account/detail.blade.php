@@ -104,7 +104,7 @@
                                             <div class="form-group required">
                                                 <div class="col-sm-12">
                                                     <label class="control-label"><?php echo $data->text_rating; ?></label>
-                                                    &nbsp;&nbsp;&nbsp; <?php echo $data->text_bad; ?>&nbsp;
+                                                    &nbsp;&nbsp;&nbsp; <?php // echo $data->text_bad; ?>&nbsp;
                                                     <input name="rating" value="1" disabled="disabled" type="radio">
                                                     &nbsp;
                                                     <input name="rating" value="2" disabled="disabled" type="radio">

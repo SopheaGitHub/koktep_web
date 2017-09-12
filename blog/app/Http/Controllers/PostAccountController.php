@@ -80,10 +80,12 @@ class PostAccountController extends Controller
             // End
 
             if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {
-                $this->data->image = $this->filemanager->resize($post->image, 600, 400);
+                // $this->data->image = $this->filemanager->resize($post->image, 600, 400);
+                $this->data->image = $this->data->http_best_path.'/images/'. $post->image;
             } else {
                 $this->data->image = $this->filemanager->resize('no_image.png', 600, 400);
             }
+
             if (!empty($post->author_image) && is_file($this->data->dir_image . $post->author_image)) {
                 $this->data->thumb_author = $this->filemanager->resize($post->author_image, 100, 100);
             } else {
@@ -163,7 +165,7 @@ class PostAccountController extends Controller
 
                 $this->data->post_images[] = [
                     'image'      => $image,
-                    'thumb'      => $this->filemanager->resize($thumb, 600, 400),
+                    'thumb'      => $this->data->http_best_path.'/images/'.$thumb,
                     'sort_order' => $post_image->sort_order
                 ];
             }

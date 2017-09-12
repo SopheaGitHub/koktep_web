@@ -25,23 +25,17 @@
                             </div>
                             <div class="col-sm-12">
                                 <strong><?php echo $data->entry_telephone; ?></strong>
-                                <br /> 123456789<br /><br /></div>
+                                <br /> 010 886 914<br /><br /></div>
                             <div class="col-sm-12">
                                 <strong><?php echo $data->entry_email; ?></strong>
                                 <br />
-                                koktepteam@gmail.com
+                                teamkoktep@gmail.com
                                 <br /><br />
                             </div>
                             <div class="col-sm-12">
                                 <strong><?php echo $data->entry_website; ?></strong>
                                 <br />
-                                koktep.com
-                                <br /><br />
-                            </div>
-                            <div class="col-sm-12">
-                                <strong><?php echo $data->entry_address; ?></strong>
-                                <br />
-                                #121, Bankor, Phnom Penh, Cambodia, Kampong Cham 
+                                www.koktep.com
                                 <br /><br />
                             </div>
                         </div>
