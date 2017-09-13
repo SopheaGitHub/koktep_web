@@ -90,7 +90,7 @@
       imageBackground: true,
       imageBackgroundBorderWidth: 20,
       imageState: {
-        src: '<?php echo $data->image; ?>',
+        src: '<?php echo $data->image2; ?>',
       },
     });
 

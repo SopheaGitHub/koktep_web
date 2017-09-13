@@ -61,6 +61,7 @@ class AccountController extends Controller
         $this->data->button_save = trans('button.save');
         $this->data->button_cancel = trans('button.cancel');
         $this->data->image = $request['image'];
+        $this->data->image2 = str_replace([$this->data->http_best_path, $this->data->http_best_path.'/'], '', $request['image']);
         $this->data->action_form = url('account/load-cropit-form');
         $this->data->action_save_profile = url('account/save-profile');
         return view('account.crop_profile', ['data'=>$this->data]);
@@ -89,6 +90,7 @@ class AccountController extends Controller
         $this->data->button_save = trans('button.save');
         $this->data->button_cancel = trans('button.cancel');
         $this->data->image = $request['image'];
+        $this->data->image2 = str_replace([$this->data->http_best_path, $this->data->http_best_path.'/'], '', $request['image']);
         $this->data->action_form = url('account/load-cropit-form');
         $this->data->action_save_cover = url('account/save-cover');
         return view('account.crop_cover', ['data'=>$this->data]);
@@ -118,6 +120,7 @@ class AccountController extends Controller
         $this->data->button_cancel = trans('button.cancel');
         $this->data->thumb_image = $request['image'];
         $this->data->image = str_replace([$this->data->http_best_path.'images/', $this->data->http_best_path.'/images/'], '', $request['image']);
+        $this->data->image2 = str_replace([$this->data->http_best_path, $this->data->http_best_path.'/'], '', $request['image']);
         $this->data->action_form = url('account/load-cropit-form');
         $this->data->action_save_cover = url('account/save-cover');
         return view('account.crop_watermark', ['data'=>$this->data]);
