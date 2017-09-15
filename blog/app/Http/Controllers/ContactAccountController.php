@@ -29,6 +29,7 @@ class ContactAccountController extends Controller
         $this->data->web_title = 'About';
         $this->data->auth_id = ((Auth::check())? Auth::user()->id:'0');
         $this->data->dir_image = $this->config->dir_image;
+        $this->data->http_best_path = $this->config->http_best_path;
     }
 
     /**

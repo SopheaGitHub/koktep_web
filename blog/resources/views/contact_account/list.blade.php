@@ -52,7 +52,16 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $data->entry_website; ?> :</label>
               <div class="col-sm-10">
-                <a href="<?php echo $address->website; ?>" target="_blank"><?php echo $address->website; ?></a>
+                <?php
+                  $root = 'http://';
+                  if (strpos($address->website, 'http://') !== false) {
+                    $root = 'http://';
+                  }
+                  if (strpos($address->website, 'https://') !== false) {
+                    $root = 'https://';
+                  }
+                ?>
+                <a href="<?php echo $root.str_replace(['http://', 'https://'], '', $address->website); ?>" target="_blank"><?php echo $address->website; ?></a>
               </div>
             </div>
           </fieldset>

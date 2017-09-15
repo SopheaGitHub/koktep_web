@@ -89,11 +89,22 @@ class User extends Authenticatable
     }
 
     public function getAutocompleteUsers($filter_data=[]) {
+
+        $sql = '';
+        if(isset($filter_data['category_id']) && $filter_data['category_id']!='') {
+            $sql .= '(
+                SELECT COUNT(1) AS total_post FROM post AS p 
+                INNER JOIN post_to_category AS ptc ON ptc.post_id = p.post_id
+                WHERE p.author_id = u.id AND category_id = '.$filter_data['category_id'].' LIMIT 1
+            ) AS user_post,';
+        }
+
         $db = DB::table(DB::raw('
                 (
                     SELECT
                         u.id AS user_id,
                         u.name AS name,
+                        '.$sql.'
                         u.image AS image
                     FROM
                         users AS u
@@ -102,7 +113,11 @@ class User extends Authenticatable
         if ($filter_data['filter_title']!='') {
             $db->where('name', 'like', '%'.$filter_data['filter_title'].'%');
         }
+        if(isset($filter_data['category_id']) && $filter_data['category_id']!='') {
+            $db->where('users.user_post', '>=', '1');
+        }
         $db->orderBy($filter_data['sort'], $filter_data['order'])->take($filter_data['limit']);
+
         $result = $db->get();
         return $result;
     }

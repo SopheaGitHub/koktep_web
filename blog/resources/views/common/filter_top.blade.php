@@ -50,7 +50,7 @@
 <form action="#" method="GET" enctype="multipart/form-data" id="form-filter" class="form-horizontal">
     <div class="row" style="padding: 0px 5px;">
         <div>
-            <input type="hidden" name="category_id" value="<?php echo $category_id; ?>" id="category_id">
+            <input type="hidden" name="category_id" id="category-id" value="<?php echo $category_id; ?>" id="category_id">
         </div>
         <div class="col-md-2">
             <select name="view_option" id="view-option" class="form-control select-filter">
@@ -169,7 +169,7 @@ $(document).ready(function() {
     $('input[name=\'search\']').autocomplete({
       'source': function(request, response) {
         $.ajax({
-          url: "<?php echo url('/post-account/autocomplete');?>?filter_title=" +  encodeURIComponent(request) +"&filter_view="+encodeURIComponent($('#view-option').val()),
+          url: "<?php echo url('/post-account/autocomplete');?>?filter_title=" +  encodeURIComponent(request) +"&filter_view="+encodeURIComponent($('#view-option').val())+"&category_id="+encodeURIComponent($('#category-id').val()),
           dataType: 'json',
           success: function(json) {
             response($.map(json, function(item) {

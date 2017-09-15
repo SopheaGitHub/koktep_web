@@ -4,6 +4,7 @@
     $objUser = new App\User();
 
     $author_id = ((\Request::has('account_id'))? \Request::get('account_id'):'0');
+    $author_logged_id = ((\Auth::check())? \Auth::user()->id:'0');
     $user_info = $objUser->getUser($author_id);
     $user_technical_info = $objUser->getTechnicalByUserId($author_id);
 
@@ -36,7 +37,7 @@
                 <div class="profile-pic">
                     <img alt="" src="<?php echo $thumb_profile; ?>">
                     <?php
-                        if($author_id==\Request::get('account_id')) { ?>
+                        if($author_id==$author_logged_id) { ?>
                             <div class="edit"><a href="#" role="button" data-toggle="select-profile" data-id="<?php echo $author_id; ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
                     <?php } ?>
                 </div>
@@ -68,7 +69,7 @@
                         <img width="100%" src="<?php echo $thumb_cover; ?>">
                     </div>
                     <?php
-                        if($author_id==\Request::get('account_id')) { ?>
+                        if($author_id==$author_logged_id) { ?>
                             <div class="edit"><a href="#" role="button" data-toggle="select-cover" data-id="<?php echo $author_id; ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
                     <?php } ?>
                 </div>

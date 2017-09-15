@@ -529,6 +529,7 @@ class PostAccountController extends Controller
             if(isset($request['filter_view'])&&$request['filter_view']=='people') {
                 $filter_data = [
                     'filter_title' => $request['filter_title'],
+                    'category_id' => $request['category_id'],
                     'sort'        => 'name',
                     'order'       => 'ASC',
                     'start'       => 0,
@@ -554,6 +555,7 @@ class PostAccountController extends Controller
             }else {
                 $filter_data = [
                     'filter_title' => $request['filter_title'],
+                    'category_id' => $request['category_id'],
                     'sort'        => 'title',
                     'order'       => 'ASC',
                     'start'       => 0,
