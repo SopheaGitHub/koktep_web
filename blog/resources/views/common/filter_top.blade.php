@@ -72,7 +72,7 @@
         </div>
         <div class="col-md-2">
             <select name="country_id" id="country" onchange="$('#zone').load('<?php echo $load_zone_action; ?>/' + this.value + '/0');" class="form-control select-filter">
-                <option value=""><?php echo trans('text.select_country'); ?></option>
+                <option value="0"><?php echo trans('text.select_country'); ?></option>
                 <?php foreach ($countries as $country_id => $country_name) { ?>
                   <option value="<?php echo $country_id; ?>"><?php echo $country_name; ?></option>
                 <?php } ?>
@@ -169,7 +169,7 @@ $(document).ready(function() {
     $('input[name=\'search\']').autocomplete({
       'source': function(request, response) {
         $.ajax({
-          url: "<?php echo url('/post-account/autocomplete');?>?filter_title=" +  encodeURIComponent(request) +"&filter_view="+encodeURIComponent($('#view-option').val())+"&category_id="+encodeURIComponent($('#category-id').val()),
+          url: "<?php echo url('/post-account/autocomplete');?>?filter_title=" +  encodeURIComponent(request) +"&filter_view="+encodeURIComponent($('#view-option').val())+"&category_id="+encodeURIComponent($('#category-id').val())+"&country_id="+encodeURIComponent($('#country').val())+"&zone_id="+encodeURIComponent($('#zone').val()),
           dataType: 'json',
           success: function(json) {
             response($.map(json, function(item) {

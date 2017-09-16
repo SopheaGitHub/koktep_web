@@ -530,6 +530,8 @@ class PostAccountController extends Controller
                 $filter_data = [
                     'filter_title' => $request['filter_title'],
                     'category_id' => $request['category_id'],
+                    'country_id' => $request['country_id'],
+                    'zone_id' => $request['zone_id'],
                     'sort'        => 'name',
                     'order'       => 'ASC',
                     'start'       => 0,
@@ -556,6 +558,8 @@ class PostAccountController extends Controller
                 $filter_data = [
                     'filter_title' => $request['filter_title'],
                     'category_id' => $request['category_id'],
+                    'country_id' => $request['country_id'],
+                    'zone_id' => $request['zone_id'],
                     'sort'        => 'title',
                     'order'       => 'ASC',
                     'start'       => 0,

@@ -161,11 +161,11 @@ class Post extends Model {
 		}
 
 		if($filter_data['country_id']!='') {
-			$db->join(DB::raw("(SELECT uac.country_id, uac.user_id FROM user_address AS uac WHERE uac.country_id = '".$filter_data['country_id']."' ORDER BY uac.sort_order DESC LIMIT 1) AS country"), 'country.user_id', '=', 'u.id');
+			$db->join(DB::raw("(SELECT uac.country_id, uac.user_id FROM user_address AS uac WHERE uac.country_id = '".$filter_data['country_id']."' GROUP BY uac.country_id, uac.user_id ORDER BY uac.sort_order DESC) AS country"), 'country.user_id', '=', 'u.id');
 		}
 
 		if($filter_data['zone_id']!='') {
-			$db->join(DB::raw("(SELECT uaz.zone_id, uaz.user_id FROM user_address AS uaz WHERE uaz.zone_id = '".$filter_data['zone_id']."' ORDER BY uaz.sort_order DESC LIMIT 1) AS zone"), 'zone.user_id', '=', 'u.id');
+			$db->join(DB::raw("(SELECT uaz.zone_id, uaz.user_id FROM user_address AS uaz WHERE uaz.zone_id = '".$filter_data['zone_id']."' ORDER BY uaz.sort_order DESC) AS zone"), 'zone.user_id', '=', 'u.id');
 		}
 		
 		if($filter_data['browse']!='') {
@@ -266,6 +266,7 @@ class Post extends Model {
 						p.post_id AS post_id,
 						p.created_at AS created_at,
 						p.image AS image,
+						p.author_id AS author_id,
 						pd.title AS title,
 						u.name AS author_name,
 						p.status AS status
@@ -275,6 +276,25 @@ class Post extends Model {
 					LEFT JOIN post_description AS pd ON p.post_id = pd.post_id AND pd.language_id = \'1\'
 				) AS posts
 			'));
+
+		if(isset($filter_data['country_id']) || isset($filter_data['zone_id'])) {
+            
+            if($filter_data['country_id']!='0') {
+            	if($filter_data['country_id']!='' || $filter_data['zone_id']!='') {
+	                $db->join('user_address AS ua', 'posts.author_id', '=', 'ua.user_id');
+	            }
+
+	            if($filter_data['country_id']!='') {
+	                $db->where('ua.country_id', '=', $filter_data['country_id']);
+	            }
+
+	            if($filter_data['zone_id']!='') {
+	                $db->where('ua.zone_id', '=', $filter_data['zone_id']);
+	            }
+            }
+            
+        }
+
 		if ($filter_data['filter_title']!='') {
 			$db->where('title', 'like', '%'.$filter_data['filter_title'].'%');
 		}

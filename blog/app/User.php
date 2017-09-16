@@ -41,7 +41,7 @@ class User extends Authenticatable
 
         // category condition join
         if($filter_data['category_id']!='') {
-            $db->join(DB::raw("( SELECT uptc.category_id, up.post_id, up.author_id FROM post AS up INNER JOIN post_to_category AS uptc ON uptc.post_id = up.post_id WHERE uptc.category_id = '".$filter_data['category_id']."' ORDER BY uptc.post_id DESC LIMIT 1 ) AS category"), 'category.author_id', '=', 'u.id');
+            $db->join(DB::raw("( SELECT up.author_id, uptc.category_id FROM post AS up INNER JOIN post_to_category AS uptc ON uptc.post_id = up.post_id WHERE uptc.category_id = '".$filter_data['category_id']."' GROUP BY up.author_id, uptc.category_id ORDER BY uptc.post_id DESC ) AS category"), 'category.author_id', '=', 'u.id');
         }
 
         if($filter_data['search']!='') {
@@ -73,11 +73,11 @@ class User extends Authenticatable
         }
 
         if($filter_data['country_id']!='') {
-            $db->join(DB::raw("(SELECT uac.country_id, uac.user_id FROM user_address AS uac WHERE uac.country_id = '".$filter_data['country_id']."' ORDER BY uac.sort_order DESC LIMIT 1) AS country"), 'country.user_id', '=', 'u.id');
+            $db->join(DB::raw("(SELECT uac.country_id, uac.user_id FROM user_address AS uac WHERE uac.country_id = '".$filter_data['country_id']."' GROUP BY uac.country_id, uac.user_id ORDER BY uac.sort_order DESC) AS country"), 'country.user_id', '=', 'u.id');
         }
 
         if($filter_data['zone_id']!='') {
-            $db->join(DB::raw("(SELECT uaz.zone_id, uaz.user_id FROM user_address AS uaz WHERE uaz.zone_id = '".$filter_data['zone_id']."' ORDER BY uaz.sort_order DESC LIMIT 1) AS zone"), 'zone.user_id', '=', 'u.id');
+            $db->join(DB::raw("(SELECT uaz.zone_id, uaz.user_id FROM user_address AS uaz WHERE uaz.zone_id = '".$filter_data['zone_id']."' ORDER BY uaz.sort_order DESC) AS zone"), 'zone.user_id', '=', 'u.id');
         }
         
         if($filter_data['browse']!='') {
@@ -110,12 +110,33 @@ class User extends Authenticatable
                         users AS u
                 ) AS users
             '));
-        if ($filter_data['filter_title']!='') {
-            $db->where('name', 'like', '%'.$filter_data['filter_title'].'%');
+
+        if(isset($filter_data['country_id']) || isset($filter_data['zone_id'])) {
+            
+            if($filter_data['country_id']!='0') {
+                if($filter_data['country_id']!='' || $filter_data['zone_id']!='') {
+                    $db->join('user_address AS ua', 'users.user_id', '=', 'ua.user_id');
+                }
+
+                if($filter_data['country_id']!='') {
+                    $db->where('ua.country_id', '=', $filter_data['country_id']);
+                }
+
+                if($filter_data['zone_id']!='') {
+                    $db->where('ua.zone_id', '=', $filter_data['zone_id']);
+                }
+            }
+
         }
+
+        if ($filter_data['filter_title']!='') {
+            $db->where('users.name', 'like', '%'.$filter_data['filter_title'].'%');
+        }
+
         if(isset($filter_data['category_id']) && $filter_data['category_id']!='') {
             $db->where('users.user_post', '>=', '1');
         }
+
         $db->orderBy($filter_data['sort'], $filter_data['order'])->take($filter_data['limit']);
 
         $result = $db->get();

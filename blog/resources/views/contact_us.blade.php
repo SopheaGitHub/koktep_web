@@ -25,7 +25,7 @@
                             </div>
                             <div class="col-sm-12">
                                 <strong><?php echo $data->entry_telephone; ?></strong>
-                                <br /> 010 886 914<br /><br /></div>
+                                <br /> 086 908 456<br /><br /></div>
                             <div class="col-sm-12">
                                 <strong><?php echo $data->entry_email; ?></strong>
                                 <br />
@@ -36,6 +36,12 @@
                                 <strong><?php echo $data->entry_website; ?></strong>
                                 <br />
                                 www.koktep.com
+                                <br /><br />
+                            </div>
+                            <div class="col-sm-12">
+                                <strong><?php echo $data->entry_address ; ?></strong>
+                                <br />
+                                No 92 AB, Sangkat Boeung Kark 2, Khan Toul Kork, Phnom Penh City, Cambodia (hereinafter refer to as the "Building")
                                 <br /><br />
                             </div>
                         </div>
