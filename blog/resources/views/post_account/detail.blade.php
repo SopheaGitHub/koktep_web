@@ -101,22 +101,6 @@
                                                     <textarea name="comment" rows="3" id="input-review" class="form-control" readonly="readonly" placeholder="<?php echo $data->text_comment; ?>"></textarea>
                                                 </div>
                                             </div>
-                                            <div class="form-group required">
-                                                <div class="col-sm-12">
-                                                    <label class="control-label"><?php echo $data->text_rating; ?></label>
-                                                    &nbsp;&nbsp;&nbsp; <?php // echo $data->text_bad; ?>&nbsp;
-                                                    <input name="rating" value="1" disabled="disabled" type="radio">
-                                                    &nbsp;
-                                                    <input name="rating" value="2" disabled="disabled" type="radio">
-                                                    &nbsp;
-                                                    <input name="rating" value="3" disabled="disabled" type="radio">
-                                                    &nbsp;
-                                                    <input name="rating" value="4" disabled="disabled" type="radio">
-                                                    &nbsp;
-                                                    <input name="rating" value="5" disabled="disabled" type="radio">
-                                                    &nbsp;<?php echo $data->text_good; ?>
-                                                </div>
-                                            </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <p><?php echo trans('auth.point_user_login'); ?></p>

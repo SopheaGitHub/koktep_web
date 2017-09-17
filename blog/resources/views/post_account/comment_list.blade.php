@@ -5,22 +5,6 @@
         <textarea name="comment" rows="3" id="input-review" class="form-control" placeholder="<?php echo $data->text_comment; ?>"></textarea>
     </div>
 </div>
-<div class="form-group required">
-    <div class="col-sm-12">
-        <label class="control-label"><?php echo $data->text_rating; ?></label>
-        &nbsp;&nbsp;&nbsp; <?php // echo $data->text_bad; ?>&nbsp;
-        <input name="rating" value="1" type="radio">
-        &nbsp;
-        <input name="rating" value="2" type="radio">
-        &nbsp;
-        <input name="rating" value="3" type="radio">
-        &nbsp;
-        <input name="rating" value="4" type="radio">
-        &nbsp;
-        <input name="rating" value="5" type="radio">
-        &nbsp;<?php echo $data->text_good; ?>
-    </div>
-</div>
 <div class="buttons clearfix">
     <div class="pull-left">
         <button type="button" class="btn btn-primary btn-sm" id="submit-comment"><i class="fa fa-btn fa-paper-plane"></i><?php echo $data->button_send; ?></button>
@@ -42,13 +26,6 @@
                         <div class="commentText">
                             <div><a href="<?php echo $data->overview_account.'?account_id='.$post_comment->user_id; ?>"><?php echo $post_comment->user_name; ?></a></div> 
                             <p class=""><?php echo $comment; ?></p>
-                            <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                <?php if ($post_comment->rating < $i) { ?>
-                                <span class="fa fa-stack" style="margin-left: -12px;"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                <?php } else { ?>
-                                <span class="fa fa-stack" style="color: #27C3ED; margin-left: -12px;"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
-                                <?php } ?>
-                            <?php } ?>
                             <span class="date sub-text">on <?php echo date('M dS, Y', strtotime($post_comment->created_at)); ?></span>
                         </div>
                     </li>

@@ -482,9 +482,6 @@ class Post extends Model {
 		$messages['comment.required'] = trans('text.comment_required');
 		$messages['comment.min'] = trans('text.comment_min');
 
-		$rules['rating'] = 'required';
-		$messages['rating.required'] = trans('text.rating_required');
-
         $validator = \Validator::make($datas['request'], $rules, $messages);
         if ($validator->fails()) {
             $error = ['error'=>'1','success'=>'0','msg'=> trans('text.send_comment').' '.trans('text.unsuccessfully').'!','validatormsg'=>$validator->messages()];

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\PostComment;
+use App\Models\PostVisitorViewDetail;
 use App\Models\Category;
 use App\Models\Language;
 use App\User;
@@ -26,6 +27,7 @@ class PostAccountController extends Controller
         $this->data = new \stdClass();
         $this->post = New Post();
         $this->post_comment = new PostComment();
+        $this->post_visitor_view_detail = new PostVisitorViewDetail();
         $this->category = new Category();
         $this->user = New User();
         $this->language = new Language();
@@ -77,6 +79,15 @@ class PostAccountController extends Controller
             $this->data->check_post = true;
             // update post view
             $this->post->where('post_id', '=', $post_id)->update(['viewed'=>($post->viewed+1)]);
+            // End
+
+            // log visitor
+            $datasPostVisitor = [
+                'post_id' => $post_id,
+                'visitor_id' => $this->data->auth_id,
+                'ip' => \Request::ip()
+            ];
+            $this->post_visitor_view_detail->create($datasPostVisitor);
             // End
 
             if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {

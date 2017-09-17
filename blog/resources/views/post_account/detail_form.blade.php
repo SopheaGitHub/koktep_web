@@ -104,23 +104,6 @@
                                                     <textarea name="comment" rows="3" id="input-review" class="form-control" placeholder="<?php echo $data->text_comment; ?>"></textarea>
                                                 </div>
                                             </div>
-                                            <div class="form-group required">
-                                                <div class="col-sm-12">
-                                                    <label class="control-label"><?php echo $data->text_rating; ?></label>
-                                                    &nbsp;&nbsp;&nbsp; <?php echo $data->text_bad; ?>&nbsp;
-                                                    <input name="rating" value="1" type="radio">
-                                                    &nbsp;
-                                                    <input name="rating" value="2" type="radio">
-                                                    &nbsp;
-                                                    <input name="rating" value="3" type="radio">
-                                                    &nbsp;
-                                                    <input name="rating" value="4" type="radio">
-                                                    &nbsp;
-                                                    <input name="rating" value="5" type="radio">
-                                                    &nbsp;<?php echo $data->text_good; ?>
-                                                </div>
-                                            </div>
-
                                             <?php echo trans('auth.text_koktep_collections'); ?>
                                             <br />
                                             <div class="row">
