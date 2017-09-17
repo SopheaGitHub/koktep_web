@@ -99,7 +99,7 @@ return [
 
     'name_required' => 'The <b>Name</b> field is required.',
     'name_max255' => 'The <b>Name</b> may not be greater than 255 characters.',
-    'relate_post_min2' => 'The <b>Related Posts</b> must be at least 2 item.',
+    'relate_post_min2' => 'The <b>Related Upload</b> must be at least 2 item.',
 
     'email_required' => 'The <b>Email</b> field is required.',
     'email_max255' => 'The <b>Email</b> may not be greater than 255 characters.',
@@ -193,7 +193,7 @@ return [
     'entry_status' => 'Status',
     'entry_sort_order' => 'Sort Order',
     'entry_category' => 'Categories',
-    'entry_related' => 'Related Posts',
+    'entry_related' => 'Related Upload',
     'entry_layout' => 'Layout',
     'entry_name' => 'Name',
     'entry_contact_name' => 'Contact Name',

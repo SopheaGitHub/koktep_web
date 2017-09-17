@@ -298,10 +298,12 @@ class Post extends Model {
 		if ($filter_data['filter_title']!='') {
 			$db->where('title', 'like', '%'.$filter_data['filter_title'].'%');
 		}
-		if($filter_data['category_id']!='') {
+
+		if(isset($filter_data['category_id']) && $filter_data['category_id']!='') {
 			$db->join('post_to_category AS ptc', 'ptc.post_id', '=', 'posts.post_id');
 			$db->where('ptc.category_id', '=', $filter_data['category_id']);
 		}
+
 		$db->where('status', '=', '1');
 		$db->orderBy($filter_data['sort'], $filter_data['order'])->take($filter_data['limit']);
 
