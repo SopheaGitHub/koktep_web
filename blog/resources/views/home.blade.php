@@ -2,7 +2,7 @@
 
 @section('content')
 <div style="margin-top:-9px; height:30px; background: #91beb1; color: #fff; text-align:center;">
-    <h4 style="margin:0px; padding-top:7px;">Show Cash Your Work?</h4>
+    <h5 style="margin:0px; padding-top:7px;"><?php echo trans('text.show_cash_your_work'); ?></h5>
 </div>
 <div>
     <div class="container" style="padding-right: 5px; padding-left: 5px;">

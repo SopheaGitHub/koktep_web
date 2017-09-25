@@ -19,6 +19,11 @@
                 </div>
                 <hr />
                 <p id="message"></p>
+                <?php
+                    if (\Session::has('message')) {
+                        echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert">&times;</button><b><i class="fa fa-check-circle"></i> '.\Session::get('message').'</b></div>';
+                    }
+                ?>
                 <div id="display-list">
 
                 </div>

@@ -94,6 +94,7 @@ class Post extends Model {
 								(SELECT COUNT(1) FROM post_image WHERE post_id = p.post_id) AS total_post_image,
 								p.image as image,
 								p.created_at as created_at,
+								p.updated_at as updated_at,
 								p.watermark_status as watermark_status,
 								pd.title as title,
 								pd.description as description,
@@ -154,6 +155,10 @@ class Post extends Model {
 					# code...
 					break;
 			}
+		}
+
+		if(isset($filter_data['except_id']) && $filter_data['except_id']!='') {
+			$db->whereNotIn('p.post_id', $filter_data['except_id']);
 		}
 
 		if($filter_data['alpha']!='') {
@@ -313,7 +318,7 @@ class Post extends Model {
 
 	public function getPostsToUser($author_id) {
 		$post_data = [];
-		$posts_to_user = Post::where('author_id', '=', $author_id)->whereIn('status', ['1'])->orderBy('created_at', 'DESC')->take(5)->get();
+		$posts_to_user = Post::where('author_id', '=', $author_id)->whereIn('status', ['1'])->orderBy('updated_at', 'DESC')->take(5)->get();
 		foreach ($posts_to_user as $result) {
 			$post_data[] = $result->post_id;
 		}

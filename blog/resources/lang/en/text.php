@@ -179,6 +179,7 @@ return [
 
     'entry_comment' => 'Comment',
     'entry_related_post' => 'Related Images',
+    'entry_other_post' => 'Other Uploaded',
 
     'entry_title' => 'Title',
     'entry_description' => 'Description',
@@ -252,4 +253,6 @@ return [
     'error_watermark_image_size_crop' => 'Please choose an image that has a width greater than 96px and heights greater than 30px',
     'upload_success' => 'Upload successfully',
     'message' => 'Message',
+    'error_post_not_found' => 'Upload not found!',
+    'show_cash_your_work' => 'Show Case Your Work!'
 ];

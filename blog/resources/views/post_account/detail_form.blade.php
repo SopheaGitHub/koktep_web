@@ -119,7 +119,7 @@
                             </div>
                         </div>
                         <hr >
-                        <div><h4><i class="fa fa-btn fa-retweet"></i><?php echo $data->entry_related_post; ?></h4></div>
+                        <div><h4><i class="fa fa-btn fa-retweet"></i><?php echo $data->entry_other_post; ?></h4></div>
                         <div class="row">
                             <?php
                             if (count($data->post_relateds) > 0) {

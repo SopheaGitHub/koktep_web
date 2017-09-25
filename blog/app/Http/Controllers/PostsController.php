@@ -72,6 +72,7 @@ class PostsController extends Controller
         // add system log
         $this->systemLogs('load_list', 'posts', $request);
         // End
+        $this->data->reupload_post = url('/posts/reupload');
         $this->data->edit_post = url('/posts/edit');
 
         // define data filter
@@ -136,7 +137,7 @@ class PostsController extends Controller
         if (isset($request['sort'])) {
             $sort = $request['sort'];
         } else {
-            $sort = 'created_at';
+            $sort = 'updated_at';
         }
 
         if (isset($request['order'])) {
@@ -232,6 +233,7 @@ class PostsController extends Controller
         $this->data->icon_comment = trans('icon.comment');
         $this->data->icon_date = trans('icon.date');
 
+        $this->data->button_reupload = trans('button.reupload');
         $this->data->button_edit = trans('button.edit');
         $this->data->button_delete = trans('button.delete');
         $this->data->button_yes = trans('button.yes');
@@ -585,6 +587,36 @@ class PostsController extends Controller
         ];
 
         echo $this->getPostForm($datas);
+        exit();
+    }
+
+    public function getReupload($post_id) {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('view', 'posts', $request);
+        // End
+
+        try {
+            DB::beginTransaction();
+
+            $post = $this->post->getPost($post_id);
+            $this->data->text_error_post_not_found = trans('text.error_post_not_found');
+
+            if($post) {
+                // update post view
+                $this->post->where('post_id', '=', $post_id)->update(['reupload'=>($post->reupload+1)]);
+                // End
+            }else {
+                return view('post.error_post_not_found', ['data'=>$this->data]);
+            }
+
+            DB::commit();
+            return redirect('/posts?account_id='.$this->data->auth_id)->with('message', trans('button.reupload').' '.trans('text.successfully'));
+        } catch (Exception $e) {
+            DB::rollback();
+            echo $e->getMessage();
+            exit();
+        }        
         exit();
     }
 

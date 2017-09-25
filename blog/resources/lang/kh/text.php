@@ -179,6 +179,7 @@ return [
 
     'entry_comment' => 'មតិយោបល់',
     'entry_related_post' => 'ការបង្ហោះដែលទាក់ទង',
+    'entry_other_post' => 'ការបង្ហោះផ្សេងៗទៀត',
 
     'entry_title' => 'ចំណងជើង',
     'entry_description' => 'ពិពណ៌នា',
@@ -252,4 +253,6 @@ return [
     'error_watermark_image_size_crop' => 'សូមជ្រើរើសយកតែរូបភាពណាដែលមានប្រវែង ទទឹង ធំជាង 96px និង កំពស់ ធំជាង 30px',
     'upload_success' => 'បង្ហោះដោយជោគជ័យ',
     'message' => 'ផ្ញើសារ',
+    'error_post_not_found' => 'រកមិនឃើញការផ្ទុកឡើង!',
+    'show_cash_your_work' => 'បង្ហាញស្នាដៃកិច្ចការរបស់អ្នក!'
 ];

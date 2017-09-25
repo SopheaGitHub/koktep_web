@@ -19,6 +19,7 @@ return [
     'add' => 'Add',
     'create' => 'Create',
     'upload' => 'Upload',
+    'reupload' => 'Reupload',
     'edit' => 'Edit',
     'delete' => 'Delete',
     'cancel' => 'Cancel',

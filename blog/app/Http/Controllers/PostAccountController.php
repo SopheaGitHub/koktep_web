@@ -108,7 +108,47 @@ class PostAccountController extends Controller
             $this->data->post_viewed = ($post->viewed+1);
             $this->data->post_created_at = $post->created_at;
             $this->data->title = $post->title;
+
+            ///// get other 3 post /////
+            // define filter data
+            $filter_data = array(
+                'status' => ['1'],
+                'author_id' => $post->author_id,
+                'category_id' => null,
+                'search' => null,
+                'browse' => null,
+                'time' => null,
+                'alpha' => null,
+                'country_id' => null,
+                'zone_id' => null,
+                'except_id' => [$post_id],
+                'sort'  => 'updated_at',
+                'order' => 'desc'
+            );
+
+            $this->data->posts = $this->post->getPosts($filter_data)->limit(3)->get();
+
+            if(count($this->data->posts) > 0) {
+                foreach ($this->data->posts as $post) {
+                    // thumb podt image
+                    if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {
+                        $this->data->thumb[$post->post_id] = $this->data->http_best_path.'/images/'. $post->image;
+                    } else {
+                        $this->data->thumb[$post->post_id] = $this->filemanager->resize('no_image.png', 600, 400);
+                    }
+
+                    // thumb author image
+                    if (!empty($post->author_image) && is_file($this->data->dir_image . $post->author_image)) {
+                        $this->data->thumb_user[$post->post_id] = $this->filemanager->resize($post->author_image, 100, 100);
+                    } else {
+                        $this->data->thumb_user[$post->post_id] = $this->filemanager->resize('no_image.png', 100, 100);
+                    }
+                }
+            }
+            //// end ////
+
         }else {
+            $this->data->posts = [];
             $this->data->post_image = '';
             $this->data->image = $this->filemanager->resize('no_image.png', 600, 400);
             $this->data->author_name = $this->filemanager->resize('no_image.png', 100, 100);
@@ -140,27 +180,6 @@ class PostAccountController extends Controller
             }
         }
 
-        $post_relateds = $this->post->getPostRelated($post_id);
-        $this->data->post_relateds = [];
-        if(count($post_relateds) > 0) {
-            $this->data->post_relateds = $this->post->getPostsByArrayPostID($post_relateds);
-        }
-
-        if(count($this->data->post_relateds) > 0) {
-            foreach ($this->data->post_relateds as $post) {
-                if (!empty($post->image) && is_file($this->data->dir_image . $post->image)) {
-                    $this->data->thumb[$post->post_id] = $this->filemanager->resize($post->image, 600, 400);
-                } else {
-                    $this->data->thumb[$post->post_id] = $this->filemanager->resize('no_image.png', 600, 400);
-                }
-                if (!empty($post->author_image) && is_file($this->data->dir_image . $post->author_image)) {
-                    $this->data->thumb_user[$post->post_id] = $this->filemanager->resize($post->author_image, 100, 100);
-                } else {
-                    $this->data->thumb_user[$post->post_id] = $this->filemanager->resize('no_image.png', 100, 100);
-                }
-            }
-        }
-
         $post_images = $this->post->getPostImages($post_id);
         $this->data->post_images = [];
 
@@ -185,12 +204,14 @@ class PostAccountController extends Controller
         $this->data->icon_view = trans('icon.view');
         $this->data->icon_comment = trans('icon.comment');
         $this->data->icon_date = trans('icon.date');
+        $this->data->icon_image = trans('icon.image');
 
         $this->data->tab_tags = trans('text.tab_tags');
         $this->data->tab_categories = trans('text.tab_categories');
 
         $this->data->entry_comment = trans('text.entry_comment');
         $this->data->entry_related_post = trans('text.entry_related_post');
+        $this->data->entry_other_post = trans('text.entry_other_post');
         $this->data->your_text = trans('text.your_text');
         $this->data->text_comment = trans('text.text_comment');
         $this->data->text_rating = trans('text.text_rating');
@@ -355,7 +376,7 @@ class PostAccountController extends Controller
         if (isset($request['sort'])) {
             $sort = $request['sort'];
         } else {
-            $sort = 'created_at';
+            $sort = 'updated_at';
         }
 
         if (isset($request['order'])) {
@@ -410,7 +431,7 @@ class PostAccountController extends Controller
                 break;
             
             default:
-                $this->data->posts = $this->post->getPosts($filter_data)->paginate(20)->setPath(url('/post-account'))->appends($paginate_url);
+                $this->data->posts = $this->post->getPosts($filter_data)->paginate( (($view=='grid')? 24:20) )->setPath(url('/post-account'))->appends($paginate_url);
                 break;
         }
 

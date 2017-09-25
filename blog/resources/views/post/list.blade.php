@@ -27,25 +27,16 @@
               <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?>
             </div>
             <div>
-              <?php echo $data->text_rating; ?>
-              <?php for ($i = 1; $i <= 5; $i++) { ?>
-                <?php if ($post->average_rating < $i) { ?>
-                <span class="fa fa-stack" style="margin-right: -12px;"><i class="fa fa-star-o fa-stack-1x"></i></span>
-                <?php } else { ?>
-                <span class="fa fa-stack" style="color: #27C3ED; margin-right: -12px;"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
-                <?php } ?>
-              <?php } ?>
-            </div>
-            <div>
               <i data-toggle="tooltip" title="<?php echo $data->icon_date; ?>" class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y', strtotime($post->created_at)); ?>
             </div>
           <br />
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
+              <a href="<?php echo $data->reupload_post.'/'.$post->post_id; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-repeat"></i> <?php echo $data->button_reupload; ?></a>
               <a href="<?php echo $data->edit_post.'/'.$post->post_id; ?>" class="btn btn-sm btn-primary"><i class="fa fa-btn fa-pencil-square"></i> <?php echo $data->button_edit; ?></a>
               <a href="#" class="btn btn-sm btn-danger" id="<?php echo $post->post_id; ?>" data-toggle="modal" data-target="#modal-delete-post"><i class="fa fa-btn fa-trash-o"></i> <?php echo $data->button_delete; ?></a>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <span class="pull-right">
                 <i class="fa fa-btn <?php echo (($post->status=='1')? 'fa-check':'fa-times') ?>"></i> <?php echo ((isset($data->status[$post->status]))? $data->status[$post->status]:$post->status) ?>
               </span>
