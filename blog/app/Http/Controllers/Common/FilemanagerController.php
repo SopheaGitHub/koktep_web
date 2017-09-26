@@ -112,23 +112,27 @@ class FilemanagerController extends Controller {
 			$name = str_split(basename($image), 14);
 
 			if (is_dir($image)) {
-				$url = '';
 
-				if (isset($request['target'])) {
-					$url .= '&target=' . $request['target'];
+				if(isset($request['target']) && $request['target']=='no-input') {
+					$url = '';
+
+					if (isset($request['target'])) {
+						$url .= '&target=' . $request['target'];
+					}
+
+					if (isset($request['thumb'])) {
+						$url .= '&thumb=' . $request['thumb'];
+					}
+
+					$data['images'][] = array(
+						'thumb' => '',
+						'name'  => implode(' ', $name),
+						'type'  => 'directory',
+						'path'  => substr($image, strlen($this->data->dir_image)),
+						'href'  => url('filemanager?directory=' . urlencode(substr($image, strlen($this->data->dir_image . 'catalog/'.$this->data->auth_id.'/'))).$url)
+					);
 				}
 
-				if (isset($request['thumb'])) {
-					$url .= '&thumb=' . $request['thumb'];
-				}
-
-				$data['images'][] = array(
-					'thumb' => '',
-					'name'  => implode(' ', $name),
-					'type'  => 'directory',
-					'path'  => substr($image, strlen($this->data->dir_image)),
-					'href'  => url('filemanager?directory=' . urlencode(substr($image, strlen($this->data->dir_image . 'catalog/'.$this->data->auth_id.'/'))).$url)
-				);
 			} elseif (is_file($image)) {
 				// Find which protocol to use to pass the full image link back
 				// if ($this->request->server['HTTPS']) {

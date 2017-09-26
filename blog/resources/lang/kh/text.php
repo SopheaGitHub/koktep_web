@@ -18,7 +18,7 @@ return [
     'send_feedback' => 'មតិអ្នកប្រើ',
     'documentation' => 'ឯកសារ',
     'khmer' => 'ភាសាខ្មែរ',
-    'english' => 'ភាសាអង់គ្លេស',
+    'english' => 'English Language',
     'other' => 'ផ្សេងទៀត',
     'register' => 'ចុះឈ្មោះ',
     'account' => 'គណនី',
@@ -254,5 +254,7 @@ return [
     'upload_success' => 'បង្ហោះដោយជោគជ័យ',
     'message' => 'ផ្ញើសារ',
     'error_post_not_found' => 'រកមិនឃើញការផ្ទុកឡើង!',
-    'show_cash_your_work' => 'បង្ហាញស្នាដៃកិច្ចការរបស់អ្នក!'
+    'show_cash_your_work' => 'បង្ហាញស្នាដៃកិច្ចការរបស់អ្នក!',
+    'update_profile' => 'ផ្លាស់ប្តូររូបភាព​ Profile',
+    'update_cover'  => 'ផ្លាស់ប្តូររូបថត Cover'
 ];

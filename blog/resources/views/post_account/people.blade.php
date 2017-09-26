@@ -14,7 +14,7 @@ if (count($data->users) > 0) {
             <div class="media">
                 <div class="media-left">
                 
-                    <div class="profile-sidebar">
+                    <div class="profile-sidebar" style="border-radius: 50%;">
                         <!-- SIDEBAR USERPIC -->
                         <div class="profile-userpic">
                             <a href="<?php echo $data->overview_account.'?account_id='.$user->people_id; ?>"><img alt="" src="<?php echo ((isset($data->thumb_user[$user->people_id]))? $data->thumb_user[$user->people_id]:''); ?>"></a>

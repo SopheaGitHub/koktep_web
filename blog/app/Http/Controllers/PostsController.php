@@ -871,10 +871,10 @@ class PostsController extends Controller
         if ($this->data->image && is_file($this->data->dir_image . $this->data->image)) {
             $this->data->thumb = $this->filemanager->resize($this->data->image, 120, 80);
         } else {
-            $this->data->thumb = $this->filemanager->resize('no_image.png', 120, 80);
+            $this->data->thumb = $this->filemanager->resize('browse_image.png', 120, 80);
         }
 
-        $this->data->placeholder = $this->filemanager->resize('no_image.png', 120, 80);
+        $this->data->placeholder = $this->filemanager->resize('browse_image.png', 120, 80);
 
         $this->data->titlelist = (($datas['titlelist'])? $datas['titlelist']:'');
         $this->data->icon = (($datas['icon'])? $datas['icon']:'');

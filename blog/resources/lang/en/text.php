@@ -17,8 +17,8 @@ return [
     'information' => 'Information',
     'send_feedback' => 'Feedback',
     'documentation' => 'Documentation',
-    'khmer' => 'Khmer',
-    'english' => 'English',
+    'khmer' => 'ភាសាខ្មែរ',
+    'english' => 'English Language',
     'other' => 'Other',
     'register' => 'Register',
     'account' => 'Account',
@@ -254,5 +254,7 @@ return [
     'upload_success' => 'Upload successfully',
     'message' => 'Message',
     'error_post_not_found' => 'Upload not found!',
-    'show_cash_your_work' => 'Show Case Your Work!'
+    'show_cash_your_work' => 'Show Case Your Work!',
+    'update_profile' => 'Update Profile Picture',
+    'update_cover'  => 'Update Cover Photo'
 ];

@@ -5,10 +5,16 @@
         <div class="col-md-4"><h4 class="modal-title"><i class="fa fa-btn fa-image"></i> <?php echo $data['heading_title']; ?></h4></div>
         <div class="col-md-8">
             <span class="pull-right">
-              <a href="<?php echo $data['parent']; ?>" id="button-parent" class="btn btn-default btn-sm"><i class="fa fa-arrow-left fa-btn"></i><?php echo $data['button_back']; ?></a>
-              <a href="<?php echo $data['refresh']; ?>" id="button-refresh" class="btn btn-default btn-sm"><i class="fa fa-refresh fa-btn"></i><?php echo $data['button_refresh']; ?></a>
-              <button type="button" id="button-upload" class="btn btn-primary btn-sm"><i class="fa fa-upload fa-btn"></i><?php echo $data['button_upload']; ?></button>
-              <button type="button" id="button-delete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-btn"></i><?php echo $data['button_delete']; ?></button>
+              <?php
+                if($data['target']=='no-input') { ?>
+                  <a href="<?php echo $data['parent']; ?>" id="button-parent" class="btn btn-default btn-sm"><i class="fa fa-arrow-left fa-btn"></i><?php echo $data['button_back']; ?></a>
+                  <a href="<?php echo $data['refresh']; ?>" id="button-refresh" class="btn btn-default btn-sm"><i class="fa fa-refresh fa-btn"></i><?php echo $data['button_refresh']; ?></a>
+                  <button type="button" id="button-upload" class="btn btn-primary btn-sm"><i class="fa fa-upload fa-btn"></i><?php echo $data['button_upload']; ?></button>
+                  <button type="button" id="button-delete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-btn"></i><?php echo $data['button_delete']; ?></button>
+              <?php  } else { ?>
+                  <a href="<?php echo $data['refresh']; ?>" id="button-refresh" class="btn btn-default btn-sm"><i class="fa fa-refresh fa-btn"></i><?php echo $data['button_refresh']; ?></a>
+                  <button type="button" id="button-upload" class="btn btn-primary btn-sm"><i class="fa fa-upload fa-btn"></i><?php echo $data['button_upload']; ?></button>
+              <?php } ?>
               <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="fa fa-btn fa-close"></i><?php echo $data['button_close']; ?></button>
             </span>
         </div>
@@ -36,15 +42,17 @@
         <?php foreach ($image as $image) { ?>
         <div class="col-sm-2 text-center">
           <?php if ($image['type'] == 'directory') { ?>
-          <div class="text-center"><a href="<?php echo $image['href']; ?>" class="directory" style="vertical-align: middle;"><i class="fa fa-folder fa-5x"></i></a></div>
-          <label>
-            <input type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" />
-            <?php echo $image['name']; ?></label>
+            <div class="text-center"><a href="<?php echo $image['href']; ?>" class="directory" style="vertical-align: middle;"><i class="fa fa-folder fa-5x"></i></a></div>
+            <label>
+              <input type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" />
+              <?php echo $image['name']; ?>
+            </label>
           <?php } ?>
+
           <?php if ($image['type'] == 'image') { ?>
             <?php
               if($data['target']=='no-input') { ?>
-                <div class="thumbnail"  style="background: #F1F3FA;"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></div>
+                <div class="thumbnail" style="background: #F1F3FA;"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></div>
               <?php }else if($data['target']=='select-profile') { ?>
                 <a href="#" role="button" data-toggle="choose-profile" data-image="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
               <?php }else if($data['target']=='select-cover') { ?>
@@ -55,7 +63,11 @@
                 <a href="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
             <?php  } ?>
           <label>
-            <input type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" />
+            <?php
+              if($data['target']=='no-input') { ?>
+                <input type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" />
+            <?php  }
+            ?>
             <?php echo $image['name']; ?></label>
           <?php } ?>
         </div>
@@ -128,6 +140,7 @@ $('#button-parent').on('click', function(e) {
 $('#button-refresh').on('click', function(e) {
   e.preventDefault();
 
+  $('#button-refresh i').replaceWith('<i class="fa fa-circle-o-notch fast-spin"></i>');
   $('#modal-image').load($(this).attr('href'));
 });
 

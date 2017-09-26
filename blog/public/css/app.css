@@ -39,7 +39,7 @@ body {
     -moz-border-radius: 50%;
     border-radius: 50%;
     border: 5px solid rgba(255,255,255,0.9);
-    border: 5px solid #f8f8f8;
+    border: 5px solid #91beb1;
 }
 
 .profile-userpic .profile-pic {
@@ -58,6 +58,12 @@ body {
   right: 0;
   top: 0;
   display: none;
+  background: #4F4C4C; 
+  opacity: 0.8;
+}
+
+.profile-userpic .edit:hover {
+  opacity: 0.9;
 }
 
 .profile-userpic .edit a {
@@ -74,12 +80,17 @@ body {
 }
 
 .cover-userpic .edit {
-  padding-top: 7px; 
-  padding-right: 7px;
+  padding: 7px;
   position: absolute;
   right: 0;
   top: 0;
   display: none;
+  background: #4F4C4C; 
+  opacity: 0.8;
+}
+
+.cover-userpic .edit:hover {
+  opacity: 0.9;
 }
 
 .cover-userpic .edit a {

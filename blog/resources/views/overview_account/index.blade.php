@@ -4,10 +4,10 @@
 <div class="container">
     @include('common.account_header')
     <div class="row profile">
-        <div class="col-md-3">
+        <div class="col-md-3" style="padding: 0 15px;">
             @include('common.account_left')
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9" style="padding: 0 15px;">
             <div class="profile-content" id="display-list" style="overflow:hidden;">
                 
             </div>

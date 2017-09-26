@@ -35,10 +35,10 @@
             <!-- SIDEBAR USERPIC -->
             <div class="profile-userpic">
                 <div class="profile-pic">
-                    <img alt="" src="<?php echo $thumb_profile; ?>">
+                    <img style="background: #fff;" alt="" src="<?php echo $thumb_profile; ?>">
                     <?php
                         if($author_id==$author_logged_id) { ?>
-                            <div class="edit"><a href="#" role="button" data-toggle="select-profile" data-id="<?php echo $author_id; ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
+                            <div class="edit"><a href="#" role="button" data-toggle="select-profile" data-id="<?php echo $author_id; ?>"><i class="fa fa-photo fa-lg"></i> <?php echo trans('text.update_profile'); ?> </a></div>
                     <?php } ?>
                 </div>
             </div>
@@ -65,12 +65,12 @@
         <div class="row" style="padding:10px;">
             <div class="cover-userpic">
                 <div class="profile-pic">
-                    <div>
+                    <div style="background: #fff; border: 5px solid #91beb1;">
                         <img width="100%" src="<?php echo $thumb_cover; ?>">
                     </div>
                     <?php
                         if($author_id==$author_logged_id) { ?>
-                            <div class="edit"><a href="#" role="button" data-toggle="select-cover" data-id="<?php echo $author_id; ?>"><i class="fa fa-pencil fa-lg"></i></a></div>
+                            <div class="edit"><a href="#" role="button" data-toggle="select-cover" data-id="<?php echo $author_id; ?>"><i class="fa fa-photo fa-lg"></i> <?php echo trans('text.update_cover'); ?> </a></div>
                     <?php } ?>
                 </div>
             </div>

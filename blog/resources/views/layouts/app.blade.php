@@ -33,6 +33,18 @@
     <script type="text/javascript" src="<?php echo asset('/javascript/jquery/magnific/jquery.magnific-popup.min.js'); ?>"></script>
     <link href="<?php echo asset('/javascript/jquery/magnific/magnific-popup.css'); ?>" rel="stylesheet" />
 
+    <style type="text/css">
+        .btn-primary:hover {
+            color: #e2e5d8;
+            background-color: #6e8984;
+            border-color: #6e8984;
+        }
+        a[data-toggle='image']:hover {
+            background: #cccccc; 
+            opacity: 0.9;
+        }
+    </style>
+
     @yield('stylesheet')
 
 </head>
