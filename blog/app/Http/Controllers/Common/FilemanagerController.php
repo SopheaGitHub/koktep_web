@@ -284,7 +284,7 @@ class FilemanagerController extends Controller {
 
 		// Check its a directory
 		if (!is_dir($directory)) {
-			$json['error'] = trans('filemanager.check').': ' .$directory.' '.trans('filemanager.directory_not_exist');
+			$json['error'] = $directory.' '.trans('filemanager.directory_not_exist');
 		}
 
 		// Return any upload error
@@ -300,7 +300,7 @@ class FilemanagerController extends Controller {
 
 		if ($_FILES['file']['error'] != UPLOAD_ERR_OK) {
 			// $json['error'] = 'Error: error_upload_' . $_FILES['file']['error'];
-			$json['error'] = trans('filemanager.check').': ' . (( isset($array_error_upload_fille[$_FILES['file']['error']]) )? $array_error_upload_fille[$_FILES['file']['error']]:$_FILES['file']['error']);
+			$json['error'] =  (( isset($array_error_upload_fille[$_FILES['file']['error']]) )? $array_error_upload_fille[$_FILES['file']['error']]:$_FILES['file']['error']);
 		}
 
 		if (!$json) {
@@ -310,7 +310,7 @@ class FilemanagerController extends Controller {
 
 				// Validate the filename length
 				if ((strlen($filename) < 3) || (strlen($filename) > 255)) {
-					$json['error'] = trans('filemanager.check').': ' .trans('filemanager.filename_value_between');
+					$json['error'] = trans('filemanager.filename_value_between');
 				}
 
 				// Allowed file extension types
@@ -322,7 +322,7 @@ class FilemanagerController extends Controller {
 				);
 
 				if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
-					$json['error'] = trans('filemanager.check').': ' .trans('filemanager.incorrect_file_type');
+					$json['error'] = trans('filemanager.incorrect_file_type');
 				}
 
 				// Allowed file mime types
@@ -335,14 +335,14 @@ class FilemanagerController extends Controller {
 				);
 
 				if (!in_array($_FILES['file']['type'], $allowed)) {
-					$json['error'] = trans('filemanager.check').': ' .trans('filemanager.incorrect_file_type');
+					$json['error'] = trans('filemanager.incorrect_file_type');
 				}
 
 				// Check to see if any PHP files are trying to be uploaded
 				$content = file_get_contents($_FILES['file']['tmp_name']);
 
 				if (preg_match('/\<\?php/i', $content)) {
-					$json['error'] = trans('filemanager.check').': ' .trans('filemanager.incorrect_file_type');
+					$json['error'] = trans('filemanager.incorrect_file_type');
 				}
 
 				// Return any upload error
@@ -350,11 +350,24 @@ class FilemanagerController extends Controller {
 					$json['error'] = 'Error: error_upload_' . $_FILES['file']['error'];
 				}
 			} else {
-				$json['error'] = trans('filemanager.check').': ' .trans('filemanager.error_unknown_reason');
+				$json['error'] = trans('filemanager.error_unknown_reason');
 			}
 		}
 
 		if (!$json) {
+
+			// define image name if exits image name
+			$actual_name = pathinfo($filename,PATHINFO_FILENAME);
+			$original_name = $actual_name;
+			$extension = pathinfo($filename, PATHINFO_EXTENSION);
+			$i = 1;
+			while(file_exists($directory . '/' .$actual_name.".".$extension))
+			{           
+			    $actual_name = (string)$original_name.$i;
+			    $filename = $actual_name.".".$extension;
+			    $i++;
+			}
+
 			// upload image
 			move_uploaded_file($_FILES['file']['tmp_name'], $directory . '/' . $filename);
 
@@ -401,7 +414,7 @@ class FilemanagerController extends Controller {
 
 		// Check its a directory
 		if (!is_dir($directory)) {
-			$json['error'] = trans('filemanager.check').': ' .trans('filemanager.directory_not_exist');
+			$json['error'] = trans('filemanager.directory_not_exist');
 		}
 
 		if (!$json) {
@@ -410,12 +423,12 @@ class FilemanagerController extends Controller {
 
 			// Validate the filename length
 			if ((strlen($folder) < 3) || (strlen($folder) > 128)) {
-				$json['error'] = trans('filemanager.check').': ' .trans('filemanager.foldername_value_between');
+				$json['error'] = trans('filemanager.foldername_value_between');
 			}
 
 			// Check if directory already exists or not
 			if (is_dir($directory . '/' . $folder)) {
-				$json['error'] = trans('filemanager.check').': ' .trans('filemanager.directory_same_name');
+				$json['error'] = trans('filemanager.directory_same_name');
 			}
 		}
 
@@ -448,7 +461,7 @@ class FilemanagerController extends Controller {
 
 			// Check path exsists
 			if ($path == $this->data->dir_image . 'catalog') {
-				$json['error'] = trans('filemanager.check').': ' .trans('filemanager.directory_can_not_delete');
+				$json['error'] = trans('filemanager.directory_can_not_delete');
 
 				break;
 			}
@@ -459,10 +472,10 @@ class FilemanagerController extends Controller {
 
 		if(count($posts) > 0) {
 			
-			$json['error_array'][] = trans('filemanager.check').': ' .trans('filemanager.directory_can_not_delete');
+			$json['error_array'][] = trans('filemanager.directory_can_not_delete');
 			foreach ($posts as $post) {
 				$post_image = explode('/', $post->image);
-				$json['error_array'][] = '- Image '.((count($post_image)>0)? end($post_image):'').' is using in upload "'.$post->title.'".';
+				$json['error_array'][] = '- '.trans('filemanager.image').' '.((count($post_image)>0)? end($post_image):'').' '.trans('filemanager.is_using_in_upload').' "'.$post->title.'".';
 			}
 
 		} else {
