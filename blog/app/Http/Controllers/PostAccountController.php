@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\PostComment;
+use App\Models\Rating;
+use App\Models\Favorite;
 use App\Models\PostVisitorViewDetail;
 use App\Models\Category;
 use App\Models\Language;
@@ -31,6 +33,8 @@ class PostAccountController extends Controller
         $this->category = new Category();
         $this->user = New User();
         $this->language = new Language();
+        $this->rating = new Rating();
+        $this->favorite = new Favorite();
         $this->filemanager = new FilemanagerController();
         $this->config = new ConfigController();
         $this->data->web_title = 'Overview';
@@ -224,15 +228,27 @@ class PostAccountController extends Controller
         $this->data->post_detail = url('/post-account/detail');
         $this->data->text_empty = '...';
         $this->data->action = url('/posts/comment');
+
+        $this->data->count_rating = $this->rating->getTotalRatingPostByPostId($request['post_id'], '1');
+        $this->data->check_is_user_exit_raing = $this->rating->checkIfAlreadyRating($this->data->auth_id, $post_id, '1');
+        $this->data->action_rating = url('/posts/rating?user_id='.$this->data->auth_id);
+
+        $this->data->count_favorite = $this->favorite->getTotalFavoritePostByPostId($request['post_id'], '1');
+        $this->data->check_is_user_exit_favorite = $this->favorite->checkIfAlreadyFavorite($this->data->auth_id, $post_id, '1');
+        $this->data->action_favorite = url('/posts/favorite?user_id='.$this->data->auth_id);
+
         $this->data->post_id = $post_id;
         $this->data->action_comment_form = url('/post-account/comment-form?post_id='.$post_id);
-        $this->data->action_load_rating = url('/post-account/load-rating?post_id='.$post_id);
+        $this->data->action_load_comment = url('/post-account/load-comment?post_id='.$post_id);
         $this->data->authorized = ((\Auth::check())? true:false);
+
+        $this->data->action_show_rating = url('/rating-account/load-post-rating?post_id='.$post_id);
+        $this->data->action_show_favorite = url('/favorite-account/load-post-favorite?post_id='.$post_id);
 
         return view('post_account.detail', ['data' => $this->data]);
     }
 
-    public function getLoadRating() {
+    public function getLoadComment() {
         $request = \Request::all();
 
         if(isset($request['post_id'])) {
@@ -245,16 +261,14 @@ class PostAccountController extends Controller
 
         if($post) {
             $this->data->post_commented = $post->commented;
-            $this->data->post_average_rating = $post->average_rating;
         }else {
             $this->data->post_commented = '0';
-            $this->data->post_average_rating = '0';
         }
 
         $this->data->icon_comment = trans('icon.comment');
 
         $this->data->text_rating = trans('text.text_rating');
-        return view('post_account.load_rating_form', ['data' => $this->data]);
+        return view('post_account.load_comment_form', ['data' => $this->data]);
     }
 
     public function getCommentForm() {

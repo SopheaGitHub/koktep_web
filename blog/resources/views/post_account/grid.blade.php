@@ -29,7 +29,10 @@
         
         <?php
           if( ($key >= 0 ) && ($key <= 3 ) ) { ?>
-            <div style="background:#fff; padding:5px; padding-bottom:0px;">
+            <div>
+              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
+            </div>
+            <div style="background:#fff; padding:5px; margin-top:5px; padding-bottom:0px;">
 
               <div class="image-container">
                 <a href="<?php echo $view_detail; ?>"><img class="image" src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" style="width:100%;"></a>
@@ -50,10 +53,6 @@
                 <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
                 <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="<?php echo $data->icon_image; ?>" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
               </div>
-            </div>
-
-            <div>
-              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
             </div>
             <br />
         <?php }
@@ -84,7 +83,10 @@
         
         <?php
           if( ($key >= 4 ) && ($key <= 7 ) ) { ?>
-            <div style="background:#fff; padding:5px; padding-bottom:0px;">
+            <div>
+              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
+            </div>
+            <div style="background:#fff; padding:5px; margin-top:5px; padding-bottom:0px;">
 
               <div class="image-container">
                 <a href="<?php echo $view_detail; ?>"><img class="image" src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" style="width:100%;"></a>
@@ -105,10 +107,6 @@
                 <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
                 <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="<?php echo $data->icon_image; ?>" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
               </div>
-            </div>
-
-            <div>
-              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
             </div>
             <br />
         <?php }
@@ -139,7 +137,10 @@
         
         <?php
           if( ($key >= 8 ) && ($key <= 11 ) ) { ?>
-            <div style="background:#fff; padding:5px; padding-bottom:0px;">
+            <div>
+              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
+            </div>
+            <div style="background:#fff; padding:5px; margin-top:5px; padding-bottom:0px;">
 
               <div class="image-container">
                 <a href="<?php echo $view_detail; ?>"><img class="image" src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" style="width:100%;"></a>
@@ -160,10 +161,6 @@
                 <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
                 <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="<?php echo $data->icon_image; ?>" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
               </div>
-            </div>
-
-            <div>
-              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
             </div>
             <br />
         <?php }
@@ -194,7 +191,10 @@
         
         <?php
           if( ($key >= 12 ) && ($key <= 15 ) ) { ?>
-            <div style="background:#fff; padding:5px; padding-bottom:0px;">
+            <div>
+              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
+            </div>
+            <div style="background:#fff; padding:5px; margin-top:5px; padding-bottom:0px;">
 
               <div class="image-container">
                 <a href="<?php echo $view_detail; ?>"><img class="image" src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" style="width:100%;"></a>
@@ -215,10 +215,6 @@
                 <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
                 <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="<?php echo $data->icon_image; ?>" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
               </div>
-            </div>
-
-            <div>
-              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
             </div>
             <br />
         <?php }
@@ -249,7 +245,10 @@
         
         <?php
           if( ($key >= 16 ) && ($key <= 19 ) ) { ?>
-            <div style="background:#fff; padding:5px; padding-bottom:0px;">
+            <div>
+              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
+            </div>
+            <div style="background:#fff; padding:5px; margin-top:5px; padding-bottom:0px;">
 
               <div class="image-container">
                 <a href="<?php echo $view_detail; ?>"><img class="image" src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" style="width:100%;"></a>
@@ -270,10 +269,6 @@
                 <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
                 <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="<?php echo $data->icon_image; ?>" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
               </div>
-            </div>
-
-            <div>
-              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
             </div>
             <br />
         <?php }
@@ -304,7 +299,10 @@
         
         <?php
           if( ($key >= 20 ) && ($key <= 23 ) ) { ?>
-            <div style="background:#fff; padding:5px; padding-bottom:0px;">
+            <div>
+              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
+            </div>
+            <div style="background:#fff; padding:5px; margin-top:5px; padding-bottom:0px;">
 
               <div class="image-container">
                 <a href="<?php echo $view_detail; ?>"><img class="image" src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" style="width:100%;"></a>
@@ -325,10 +323,6 @@
                 <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
                 <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="<?php echo $data->icon_image; ?>" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
               </div>
-            </div>
-
-            <div>
-              <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
             </div>
             <br />
         <?php }

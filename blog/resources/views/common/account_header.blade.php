@@ -2,11 +2,13 @@
     $objFile = new App\Http\Controllers\Common\FilemanagerController();
     $objConfig = new App\Http\Controllers\ConfigController();
     $objUser = new App\User();
+    $objFavorite = new App\Models\Favorite();
 
     $author_id = ((\Request::has('account_id'))? \Request::get('account_id'):'0');
     $author_logged_id = ((\Auth::check())? \Auth::user()->id:'0');
     $user_info = $objUser->getUser($author_id);
     $user_technical_info = $objUser->getTechnicalByUserId($author_id);
+    $check_is_user_exit_favorite = $objFavorite->checkIfAlreadyFavorite($author_logged_id, $author_id, '2');
 
     if($user_info) {
         $user_info_id = $user_info->id;
@@ -35,7 +37,7 @@
             <!-- SIDEBAR USERPIC -->
             <div class="profile-userpic">
                 <div class="profile-pic">
-                    <img style="background: #fff;" alt="" src="<?php echo $thumb_profile; ?>">
+                    <a href="#" role="button" data-trigger="view-original-profile" style="cursor: zoom-in;"><img style="background: #fff;" alt="" src="<?php echo $thumb_profile; ?>"></a>
                     <?php
                         if($author_id==$author_logged_id) { ?>
                             <div class="edit"><a href="#" role="button" data-toggle="select-profile" data-id="<?php echo $author_id; ?>"><i class="fa fa-photo fa-lg"></i> <?php echo trans('text.update_profile'); ?> </a></div>
@@ -58,6 +60,20 @@
                     }
                 ?>
                 <div style="padding:10px;"><button type="button" data-trigger="message" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> <?php echo trans('text.message'); ?></button></div>
+                <?php
+                  if($check_is_user_exit_favorite) { ?>
+                    <!-- Single button -->
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #91beb1;">
+                        <i class="fa fa-btn fa-heart"></i> <?php echo trans('text.favorited'); ?> <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a href="<?php echo url('/account/unfavorite?favorite_of_id='.$author_id); ?>"><?php echo trans('text.unfavorite_this_profile'); ?></a></li>
+                      </ul>
+                    </div>
+                  <?php }else { ?>
+                    <div id="show-button-favorite"><a href="<?php echo url('/account/favorite?favorite_of_id='.$author_id); ?>" type="button" data-trigger="favorite" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-heart"></i> <?php echo trans('text.favorite'); ?>&nbsp;</a></div>
+                <?php  } ?>
             </div>
         </div>
     </div>
@@ -66,7 +82,7 @@
             <div class="cover-userpic">
                 <div class="profile-pic">
                     <div style="background: #fff; border: 5px solid #91beb1;">
-                        <img width="100%" src="<?php echo $thumb_cover; ?>">
+                      <a href="#" role="button" data-trigger="view-original-cover" style="cursor: zoom-in;"><img width="100%" src="<?php echo $thumb_cover; ?>"></a>
                     </div>
                     <?php
                         if($author_id==$author_logged_id) { ?>
@@ -105,6 +121,7 @@
         $(document).delegate('a[data-toggle=\'select-profile\']', 'click', function() {
             $('#modal-image').remove();
             $.ajax({
+                type: "GET",
                 url: 'filemanager?target=select-profile',
                 dataType: 'html',
                 beforeSend: function() {
@@ -124,6 +141,7 @@
         $(document).delegate('a[data-toggle=\'select-cover\']', 'click', function() {
             $('#modal-image').remove();
             $.ajax({
+                type: "GET",
                 url: 'filemanager?target=select-cover',
                 dataType: 'html',
                 beforeSend: function() {
@@ -150,6 +168,7 @@ $(document).ready(function() {
       $('#modal-image').remove();
       var image = $(this).data("image");
       $.ajax({
+          type: "GET",
           url: 'account/crop-profile?image='+encodeURIComponent(image),
           dataType: 'html',
           beforeSend: function() {
@@ -173,6 +192,7 @@ $(document).ready(function() {
       $('#modal-image').remove();
       var image = $(this).data("image");
       $.ajax({
+          type: "GET",
           url: 'account/crop-cover?image='+encodeURIComponent(image),
           dataType: 'html',
           beforeSend: function() {
@@ -199,6 +219,7 @@ $(document).ready(function() {
         $(document).delegate('a[data-toggle=\'reselect-profile\']', 'click', function() {
               $('#modal-image').remove();
               $.ajax({
+                type: "GET",
                 url: 'filemanager?target=select-profile',
                 dataType: 'html',
                 beforeSend: function() {
@@ -219,6 +240,7 @@ $(document).ready(function() {
         $(document).delegate('a[data-toggle=\'reselect-cover\']', 'click', function() {
             $('#modal-image').remove();
                 $.ajax({
+                    type: "GET",
                     url: 'filemanager?target=select-cover',
                     dataType: 'html',
                     beforeSend: function() {
@@ -239,11 +261,13 @@ $(document).ready(function() {
 </script>
 <script type="text/javascript">
   $(document).ready(function() {
+
     $(document).delegate('button[data-trigger=\'message\']', 'click', function() {
       $('#modal-message-form').remove();
       var information_id = $(this).data("id");
       var language_id = $(this).data("languageid");
       $.ajax({
+        type: "GET",
         url: 'message/load-message-form/<?php echo $author_id; ?>',
         dataType: 'html',
         beforeSend: function() {
@@ -262,5 +286,58 @@ $(document).ready(function() {
       });
       return false;
     });
+
+    $(document).delegate('a[data-trigger=\'view-original-profile\']', 'click', function() {
+      $('#modal-view-original-profile').remove();
+      $.ajax({
+          type: "GET",
+          url: "account/view-original-profile?account_id=<?php echo $author_id; ?>",
+          dataType: 'html',
+          beforeSend: function() {
+              // before send
+              $('#block-loader').show();
+          },
+          complete: function() {
+              // completed
+              $('#block-loader').hide();
+          },
+          success: function(html) {
+              $('body').append('<div id="modal-view-original-profile" class="modal">' + html + '</div>');
+
+              $('#modal-view-original-profile').modal('show');
+          },
+          error:function(request, status, error) {
+              // $('#load-total-favorite').html('').show();
+          }
+      });
+      return false;
+    });
+
+    $(document).delegate('a[data-trigger=\'view-original-cover\']', 'click', function() {
+      $('#modal-view-original-cover').remove();
+      $.ajax({
+          type: "GET",
+          url: "account/view-original-cover?account_id=<?php echo $author_id; ?>",
+          dataType: 'html',
+          beforeSend: function() {
+              // before send
+              $('#block-loader').show();
+          },
+          complete: function() {
+              // completed
+              $('#block-loader').hide();
+          },
+          success: function(html) {
+              $('body').append('<div id="modal-view-original-cover" class="modal">' + html + '</div>');
+
+              $('#modal-view-original-cover').modal('show');
+          },
+          error:function(request, status, error) {
+              // $('#load-total-favorite').html('').show();
+          }
+      });
+      return false;
+    });
+
   });
 </script>

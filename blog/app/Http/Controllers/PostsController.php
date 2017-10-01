@@ -8,6 +8,8 @@ use App\Models\PostComment;
 use App\Models\PostDeleted;
 use App\Models\Language;
 use App\Models\Layout;
+use App\Models\Rating;
+use App\Models\Favorite;
 use App\Models\UrlAlias;
 use App\Models\Category;
 use App\User;
@@ -33,6 +35,8 @@ class PostsController extends Controller
         $this->post_deleted = new PostDeleted();
         $this->language = new Language();
         $this->layout = new Layout();
+        $this->rating = new Rating();
+        $this->favorite = new Favorite();
         $this->url_alias = new UrlAlias();
         $this->category = new Category();
         $this->user = New User();
@@ -950,7 +954,7 @@ class PostsController extends Controller
                 }
 
                 $this->data->action_form = url('/post-account/comment-form?post_id='.$request['post_id']);
-                $this->data->action_load_rating = url('/post-account/load-rating?post_id='.$request['post_id']);
+                $this->data->action_load_comment = url('/post-account/load-comment?post_id='.$request['post_id']);
 
                 if(\Request::has('comment')) {
                     // insert post comment
@@ -967,11 +971,98 @@ class PostsController extends Controller
                 }
 
                 DB::commit();
-                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>trans('text.success_comment'), 'load_form'=>$this->data->action_form, 'load_rating'=>$this->data->action_load_rating, 'display_id'=>'load-rating'];
+                $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=>trans('text.success_comment'), 'load_form'=>$this->data->action_form, 'load_form_to_id'=>$this->data->action_load_comment, 'display_id'=>'load-comment'];
                 return \Response::json($return);
             } catch (Exception $e) {
                 DB::rollback();
                 echo $e->getMessage();
+                exit();
+            }
+        }
+        exit();
+    }
+
+    public function getRating() {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'posts', $request);
+        // End
+        if(\Request::ajax()) {
+            DB::beginTransaction();
+            try {
+
+                if($request['star']=='' || $request['star']=='0') {
+                    // delete post rating
+                    $rating = $this->rating->where('user_id', '=', $request['user_id'])->where('rating_of_id', '=', $request['post_id'])->where('rating_type_id', '=', '1')->delete();
+                }else {
+                    $check_is_user_exit_raing = $this->rating->checkIfAlreadyRating($request['user_id'], $request['post_id'], '1');
+                    if($check_is_user_exit_raing) {
+                        // edit post rating
+                        $rating = $this->rating->where('user_id', '=', $request['user_id'])->where('rating_of_id', '=', $request['post_id'])->where('rating_type_id', '=', '1')->update(['star' => $request['star'] ]);
+                    } else {
+                        // insert rating
+                        $ratingDatas = [
+                            'user_id'       => $request['user_id'],
+                            'rating_of_id'  => $request['post_id'],
+                            'rating_type_id'=> '1',
+                            'star'          => $request['star'],
+                        ];
+
+                        $rating = $this->rating->create($ratingDatas);
+                        // End
+                    }
+                }
+
+                // get post rating
+                $countRating = $this->rating->getTotalRatingPostByPostId($request['post_id'], '1');
+
+                DB::commit();
+                echo $countRating->total_rating;
+                exit();
+            } catch (Exception $e) {
+                DB::rollback();
+                // echo $e->getMessage();
+                exit();
+            }
+        }
+        exit();
+    }
+
+    public function getFavorite() {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'posts', $request);
+        // End
+        if(\Request::ajax()) {
+            DB::beginTransaction();
+            try {
+
+                $this->data->check_is_user_exit_favorite = $this->favorite->checkIfAlreadyFavorite($request['user_id'], $request['post_id'], '1');
+                if($this->data->check_is_user_exit_favorite) {
+                    // remove favorite
+                    $favorite = $this->favorite->where('user_id', '=', $request['user_id'])->where('favorite_of_id', '=', $request['post_id'])->where('favorite_type_id', '=', '1')->delete();
+                    // End
+                }else {
+                    // insert favorite
+                    $favoriteDatas = [
+                        'user_id'       => $request['user_id'],
+                        'favorite_of_id'  => $request['post_id'],
+                        'favorite_type_id'=> '1',
+                    ];
+
+                    $favorite = $this->favorite->create($favoriteDatas);
+                    // End
+                }
+                
+                // get post favorite
+                $countFavorite = $this->favorite->getTotalFavoritePostByPostId($request['post_id'], '1');
+
+                DB::commit();
+                echo $countFavorite->total_favorite;
+                exit();
+            } catch (Exception $e) {
+                DB::rollback();
+                // echo $e->getMessage();
                 exit();
             }
         }

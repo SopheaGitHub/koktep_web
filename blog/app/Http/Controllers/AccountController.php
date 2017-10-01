@@ -8,6 +8,7 @@ use App\Models\Country;
 use App\Models\Zone;
 use App\Models\GeoZone;
 use App\Models\SocialMedia;
+use App\Models\Favorite;
 use App\Http\Controllers\Common\FilemanagerController;
 use App\Http\Controllers\ConfigController;
 
@@ -29,6 +30,7 @@ class AccountController extends Controller
         $this->zone = new Zone();
         $this->geo_zone = new GeoZone();
         $this->social_media = new SocialMedia();
+        $this->favorite = new Favorite();
         $this->filemanager = new FilemanagerController();
         $this->config = new ConfigController();
         $this->data->web_title = 'Account';
@@ -695,6 +697,117 @@ class AccountController extends Controller
         $request = \Request::all();
         $this->data->image = $request['image'];
         return view('account.load_cropit', ['data' => $this->data]);
+    }
+
+    public function getFavorite() {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'account', $request);
+        // End
+
+        DB::beginTransaction();
+        try {
+            $this->data->check_is_user_exit_favorite = $this->favorite->checkIfAlreadyFavorite($this->data->auth_id, $request['favorite_of_id'], '2');
+            if(!$this->data->check_is_user_exit_favorite) {
+                $favoriteDatas = [
+                    'user_id'           => $this->data->auth_id,
+                    'favorite_of_id'    => $request['favorite_of_id'],
+                    'favorite_type_id'  => '2'
+                ];
+                $favorite = $this->favorite->create($favoriteDatas);
+            }
+            DB::commit();
+            return redirect('overview-account?account_id='.$request['favorite_of_id']);
+        } catch (Exception $e) {
+            DB::rollback();
+            // echo $e->getMessage();
+            exit();
+        }
+        exit();
+    }
+
+    public function getUnfavorite() {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('submit_form', 'account', $request);
+        // End
+
+        DB::beginTransaction();
+        try {
+            $this->data->check_is_user_exit_favorite = $this->favorite->checkIfAlreadyFavorite($this->data->auth_id, $request['favorite_of_id'], '2');
+            if($this->data->check_is_user_exit_favorite) {
+                $favorite = $this->favorite->where('user_id', '=', $this->data->auth_id)->where('favorite_of_id', '=', $request['favorite_of_id'])->where('favorite_type_id', '=', '2')->delete();
+            }
+            DB::commit();
+            return redirect('overview-account?account_id='.$request['favorite_of_id']);
+        } catch (Exception $e) {
+            DB::rollback();
+            // echo $e->getMessage();
+            exit();
+        }
+        exit();
+    }
+
+    public function getViewOriginalProfile() {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_list', 'account', $request);
+        // End
+
+        if($request['account_id']!='') {
+            $account_id = $request['account_id'];
+        }else {
+            $account_id = 0;
+        }
+
+        $user = $this->user->getUser($account_id);
+
+        if($user) {
+            $this->data->user_name = $user->name;
+            if (!empty($user->image) && is_file($this->data->dir_image . $user->image)) {
+                $this->data->profile_user = $this->data->http_best_path.'/images/'.$user->image;
+            } else {
+                $this->data->profile_user = $this->filemanager->resize('no_image.png', 100, 100);
+            }
+        }else {
+            $this->data->user_name = '';
+            $this->data->profile_user = $this->filemanager->resize('no_image.png', 100, 100);
+        }
+
+        $this->data->overview_account = url('/overview-account');
+        return view('account.load_original_profile', ['data' => $this->data]);
+
+    }
+
+    public function getViewOriginalCover() {
+        $request = \Request::all();
+        // add system log
+        $this->systemLogs('load_list', 'account', $request);
+        // End
+
+        if($request['account_id']!='') {
+            $account_id = $request['account_id'];
+        }else {
+            $account_id = 0;
+        }
+
+        $user = $this->user->getUser($account_id);
+
+        if($user) {
+            $this->data->user_name = $user->name;
+            if (!empty($user->first_cover) && is_file($this->data->dir_image . $user->first_cover)) {
+                $this->data->cover_user = $this->data->http_best_path.'/images/'.$user->first_cover;
+            } else {
+                $this->data->cover_user = $this->filemanager->resize('no_image.png', 850, 280);
+            }
+        }else {
+            $this->data->user_name = '';
+            $this->data->cover_user = $this->filemanager->resize('no_image.png', 850, 280);
+        }
+
+        $this->data->overview_account = url('/overview-account');
+        return view('account.load_original_cover', ['data' => $this->data]);
+
     }
 
 }

@@ -204,7 +204,6 @@ body {
   color: #6e8984;
   background-color: #f6f9fb;
   border-left: 2px solid #6e8984;
-  margin-left: -2px;
 }
 
 /* Profile Content */
@@ -313,7 +312,7 @@ a {
 }
 
 a:hover {
-  color: #91beb1;
+  color: #6e8984;
   text-decoration: none;
 }
 

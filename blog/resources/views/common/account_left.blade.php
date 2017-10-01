@@ -44,6 +44,10 @@
                 <a href="<?php echo url('/contact-account?account_id='.$user_id); ?>">
                 <i class="fa fa-btn fa-address-book"></i><?php echo trans('text.contact'); ?> </a>
             </li>
+            <li <?php echo (($route_name=='favorite-account')? 'class="active"':''); ?> >
+                <a href="<?php echo url('/favorite-account?account_id='.$user_id); ?>">
+                <i class="fa fa-btn fa-heart"></i><?php echo trans('text.favorited'); ?> </a>
+            </li>
         </ul>
     </div>
 </div>

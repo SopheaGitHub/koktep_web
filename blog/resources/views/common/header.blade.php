@@ -124,12 +124,11 @@
                 @else
                     <li class="dropdown <?php echo (($route_category_id=='user_auth_menu')? 'active':''); ?>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <span class="thumb-sm avatar pull-left img-circle" style="background: #ffffff;"><img class="img-circle" width="30px" src="<?php echo $thumb_profile; ?>" alt="..."></span> &nbsp;&nbsp; <?php echo Auth::user()->name; ?>
+                            <span class="thumb-sm avatar pull-left img-circle" style="background: #ffffff;"><img class="img-circle" width="30px" src="<?php echo $thumb_profile; ?>" alt="..."></span> &nbsp;&nbsp; <?php echo Auth::user()->name; ?> <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="<?php echo url('/overview-account?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-user-o"></i> <?php echo trans('text.profile'); ?> </a></li>
-                            <li><a href="<?php echo url('/message?account_id='.Auth::user()->id); ?>&amp;load=inbox"><i class="fa fa-btn fa-envelope"></i><?php echo trans('text.message'); ?> <?php echo (($message->total>0)? '<span style="background: #91beb1; padding:0px 5px; margin:0px; border-radius:50%; font-size:12px; color: #fff;">'.$message->total.'</span>':'') ?> </a></li>
                             <li><a href="<?php echo url('/posts?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-tasks"></i><?php echo trans('text.posts_management'); ?></a></li>
                             <li><a href="<?php echo url('/posts-groups?account_id='.Auth::user()->id); ?>"><i class="fa fa-btn fa-object-group"></i><?php echo trans('text.posted_groups'); ?></a></li>
                             <li><a href="#" role="button" data-toggle="menufilemanager"><i class="fa fa-btn fa-image"></i><?php echo trans('filemanager.title'); ?></a></li>
@@ -138,6 +137,36 @@
                             <li><a href="<?php echo url('/logout'); ?>"><i class="fa fa-btn fa-sign-out"></i><?php echo trans('text.logout'); ?></a></li>
                         </ul>
                     </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-envelope" aria-hidden="true"></i><span style="color: red; position: absolute; top:4px; left: 28px;">22</span></a>
+                        <ul class="dropdown-menu">
+                            <li><span style="padding:20px; color: #cccccc;">Messages</span></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">hello sdfd</span></a></li>
+                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">hello sas fsd f</span></a></li>
+                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">hello sas fsd f</span></a></li>
+                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">hello sdaa fsd f</span></a></li>
+                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">hello sas fsd f</span></a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Show All Messages</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i><span style="color: red; position: absolute; top:4px; left: 28px;">22</span></a>
+                        <ul class="dropdown-menu">
+                            <li><span style="padding:20px; color: #cccccc;">Notifications</span></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Upload "Naturale"</span></a></li>
+                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Favorite "Naturale"</span></a></li>
+                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Upload "Naturale"</span></a></li>
+                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Favorite "Naturale"</span></a></li>
+                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Favorite "Naturale"</span></a></li>
+                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Upload "Naturale"</span></a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Show All Notifications</a></li>
+                        </ul>
+                    </li>
+                    
                 @endif
             </ul>
             

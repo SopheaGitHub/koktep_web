@@ -239,7 +239,7 @@ function requestSubmitForm2(buttonId, formId, formAction) {
 		          		msg += '</div>';
 		          		if(data.action=='create') {
 		            		loadingForm(data.load_form);
-		            		loadingFormToID(data.load_rating, data.display_id);
+		            		loadingFormToID(data.load_form_to_id, data.display_id);
 		          		}
 		        	}
 

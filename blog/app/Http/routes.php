@@ -34,6 +34,8 @@ Route::controllers([
 	'/account' 	=> 'AccountController',
 	'/category'	=> 'CategoryController',
 	'/about-account'	=> 'AboutAccountController',
+	'/favorite-account'  => 'FavoriteAccountController',
+	'/rating-account'  => 'RatingAccountController',
 	'/contact-account'	=> 'ContactAccountController',
 	'/overview-account'	=> 'OverviewAccountController',
 	'/post-account'		=> 'PostAccountController',
