@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use App\Http\Controllers\ConfigController;
+use App\Models\Notification;
 use DB;
 
 class Controller extends BaseController
@@ -143,6 +144,15 @@ class Controller extends BaseController
 
         return ['lat'=>'','lon'=>''];
 
+    }
+
+    public function notification($datas=[]) {
+        if(count($datas) > 0) {
+            $notificationObj = new Notification();
+            // insert into table notification
+            $notification = $notificationObj->create($datas);
+        }
+        return true;
     }
 
 }

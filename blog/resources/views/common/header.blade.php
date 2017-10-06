@@ -11,6 +11,8 @@
         $locale = 'en';
     }
 
+    $auth_id = ((Auth::check())? Auth::user()->id:'0');
+
     $language = $objLanguage->getLanguageByCode( $locale );
     $categories = [];
     if($language) {
@@ -28,8 +30,19 @@
         $thumb_profile = $objFile->resize('no_image.png', 100, 100);
     }
 
-    $message = $objMessage->getTotalInboxByAutorId(((Auth::check())? Auth::user()->id:'0'));
-    
+    $total_message = $objMessage->getTotalInboxByAutorId($auth_id);
+    $messages = $objMessage->getMessagesInboxByAutorId($auth_id)->get();
+    if(count($messages) > 0) {
+        foreach ($messages as $message) {
+            if (!empty($message->user_profile) && is_file($objConfig->dir_image . $message->user_profile)) {
+                $message_thumb_user[$message->message_id] = $objFile->resize($message->user_profile, 100, 100);
+            } else {
+                $message_thumb_user[$message->message_id] = $objFile->resize('no_image.png', 100, 100);
+            }
+        }
+    }
+
+
 ?>
 <nav class="navbar navbar-default navbar-static-top navbar-fixed-top">
     <div class="container">
@@ -138,17 +151,30 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-envelope" aria-hidden="true"></i><span style="color: red; position: absolute; top:4px; left: 28px;">22</span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-envelope" aria-hidden="true"></i><span style="color: red; position: absolute; top:4px; left: 28px;"><?php echo (($total_message->total>0)? $total_message->total:''); ?></span></a>
                         <ul class="dropdown-menu">
                             <li><span style="padding:20px; color: #cccccc;">Messages</span></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">hello sdfd</span></a></li>
-                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">hello sas fsd f</span></a></li>
-                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">hello sas fsd f</span></a></li>
-                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">hello sdaa fsd f</span></a></li>
-                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">hello sas fsd f</span></a></li>
+                            <?php
+                                if(count($messages) > 0) {?>
+                                    <li class="message-noti-li">
+                                <?php  foreach ($messages as $message) { ?>
+                                        <div>
+                                            <a href="<?php echo url('/message/detail?account_id='.$auth_id.'&load=inbox&message_id='.(($message->parent_id!='0')? $message->parent_id:$message->message_id) ).'&viewed_id='.$message->message_id; ?>">
+                                                <div class="<?php echo (($message->viewed == 0)? 'message-box-active':'message-box'); ?>">
+                                                    <img class="message-author-image" src="<?php echo ((isset($message_thumb_user[$message->message_id]))? $message_thumb_user[$message->message_id]:''); ?>"> &nbsp; 
+                                                    <span class="message-author-name"><?php echo $message->user_name; ?> <?php echo (($message->sender_id==$auth_id)? '('.trans('message.me').')':''); ?></span>, 
+                                                    <span class="message-date"><?php echo date('M dS, Y H:i', strtotime($message->message_date)); ?></span><br />
+                                                    <span class="message-text"><?php echo (($message->parent_id=='0')? trans('button.send').' Messages':trans('button.reply').' To Messages ') ?> : <?php echo mb_substr(strip_tags(html_entity_decode($message->subject, ENT_QUOTES, 'UTF-8')), 0, 100).'...'; ?></span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                <?php } ?> 
+                                    </li>
+                            <?php }
+                            ?>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">Show All Messages</a></li>
+                            <li><a href="<?php echo url('/message?account_id='.Auth::user()->id); ?>&amp;load=inbox">Show All Messages</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">

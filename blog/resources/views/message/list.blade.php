@@ -1,4 +1,4 @@
-<div style="text-align:center; background: #91beb1; color: #fff; padding: 5px 0px;">
+<div class="message-list-box">
 	<h3><?php echo $data->load_title; ?></h3>
 </div>
 <br />
@@ -8,20 +8,18 @@
             $subject = mb_substr(strip_tags(html_entity_decode($message->subject, ENT_QUOTES, 'UTF-8')), 0, 100).((mb_strlen($message->subject)>100)? '...':'');
             $text = mb_substr(strip_tags(html_entity_decode($message->text, ENT_QUOTES, 'UTF-8')), 0, 225).((mb_strlen($message->text)>225)? '...':'');
          ?>
-         <a href="<?php echo $data->action_detail.'&amp;message_id='.$message->id; ?>">
-            <div class="<?php echo (( ($data->load_title=='Inbox') && ($message->viewed<=0) )? 'message-list-active':'message-list'); ?>">
-              <p style="font-size: 11px;">
-                <i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y', strtotime($message->created_at)); ?>
-                <?php echo (($message->total_reply > 0)? '<b> &nbsp; | &nbsp; '.$data->button_reply.': '.$message->total_reply.'</b>':'') ?>
-              </p>
-               <div class="message-sender">
-                  <img style="width:30px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$message->id]))? $data->thumb_user[$message->id]:''); ?>"> &nbsp; <span style="font-size: 12px;"><?php echo $message->author_name; ?> <?php echo (($message->sender_id==$data->auth_id)? '('.$data->text_me.')':''); ?></span>
-               </div>
-               <div class="message-subject"><?php echo $subject; ?></div>
-               <p class="message-preview"><?php echo $text; ?></p>
-
+          <div class="message-list">
+            <div>
+              <a href="<?php echo $data->action_detail.'&amp;message_id='.(($message->parent_id!='0')? $message->parent_id:$message->message_id).'&viewed_id='.$message->message_id; ?>">
+                <div class="<?php echo (($data->load_title=='Inbox' && $message->viewed == 0)? 'message-box-active':'message-box'); ?>">
+                  <img class="message-author-image" src="<?php echo ((isset($data->thumb_user[$message->id]))? $data->thumb_user[$message->id]:''); ?>"> 
+                  &nbsp; <span class="message-author-name"><b><?php echo $message->author_name; ?> <?php echo (($message->sender_id==$data->auth_id)? '('.$data->text_me.')':''); ?></b></span>, 
+                  <span class="message-date"><?php echo date('M dS, Y H:i', strtotime($message->created_at)); ?></span><br />
+                  <span class="message-text"><?php echo (($message->parent_id=='0')? trans('button.send').' Messages':trans('button.reply').' To Messages ') ?> : <?php echo mb_substr(strip_tags(html_entity_decode($message->subject, ENT_QUOTES, 'UTF-8')), 0, 100).'...'; ?></span>
+                </div>
+              </a>
             </div>
-         </a>
+          </div>
    <?php   }
    }
       else {

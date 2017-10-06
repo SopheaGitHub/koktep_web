@@ -11,13 +11,37 @@ class Message extends Model
 	protected $table = 'message';
 	protected $fillable = ['parent_id', 'sender_id', 'receiver_id', 'viewed', 'subject', 'text', 'status'];
 
+	public function getMessagesInboxByAutorId($autor_id) {
+		$db = DB::table('message as m')
+		->select(DB::raw('
+				m.id AS message_id,
+				CASE
+					WHEN parent_id = 0 THEN m. SUBJECT
+					ELSE (SELECT `subject` FROM message WHERE id = m.parent_id)
+				END AS subject,
+				m.viewed AS viewed,
+				m.parent_id,
+				m.created_at AS message_date,
+				m.sender_id,
+				m.receiver_id,
+				u. NAME AS user_name,
+				u.image AS user_profile
+			'))
+		->join('users as u', 'u.id', '=', 'm.sender_id')
+		->where('m.receiver_id', '=', $autor_id)
+		->where('m.status', '=', '1')
+		->orderBy('m.created_at', 'DESC')
+		->limit(10);
+		return $db;
+	}
+
 	public function getTotalInboxByAutorId($autor_id) {
-		$result = DB::select('SELECT COUNT(1) AS total FROM message WHERE receiver_id = "'.$autor_id.'" AND viewed = "0" AND parent_id = "0" AND status = "1" ');
+		$result = DB::select('SELECT COUNT(1) AS total FROM message WHERE receiver_id = "'.$autor_id.'" AND viewed = "0" AND status = "1" ');
 		return $result[0];
 	}
 
 	public function getTotalSentByAutorId($autor_id) {
-		$result = DB::select('SELECT COUNT(1) AS total FROM message WHERE sender_id = "'.$autor_id.'" AND viewed = "0" AND parent_id = "0" AND status = "1" ');
+		$result = DB::select('SELECT COUNT(1) AS total FROM message WHERE sender_id = "'.$autor_id.'" AND viewed = "0" AND status = "1" ');
 		return $result[0];
 	}
 
@@ -69,8 +93,13 @@ class Message extends Model
 			m.id, 
 			m.sender_id, 
 			m.receiver_id, 
-			m.subject, 
-			m.viewed, 
+			m.id AS message_id,
+			CASE
+				WHEN parent_id = 0 THEN m. SUBJECT
+				ELSE (SELECT `subject` FROM message WHERE id = m.parent_id)
+			END AS subject,
+			viewed AS viewed,
+			m.parent_id,
 			m.text, 
 			m.created_at,
 			(SELECT COUNT(1) AS total_reply FROM message WHERE parent_id = m.id) AS total_reply,
@@ -84,7 +113,7 @@ class Message extends Model
 			$db->where($column_author, '=', $filter_data['author_id']);
 		}
 		
-		$db->where('m.status', '=', $status)->where('m.parent_id', '=', '0')->orderBy($filter_data['sort'], $filter_data['order']);
+		$db->where('m.status', '=', $status)->orderBy($filter_data['sort'], $filter_data['order']);
 		return $db;
 	}
 

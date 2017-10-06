@@ -383,6 +383,16 @@ class PostsController extends Controller
 
                 $this->data->reload_page = url('/posts/upload-success/'.$post->id);
 
+                // add notification
+                $notificationDatas = [
+                    'user_id' => $this->data->auth_id,
+                    'notification_action_id' => '1',
+                    'notification_type_id' => '1',
+                    'notification_of_id' => $post->id
+                ];
+                $this->notification($notificationDatas);
+                // End
+
                 DB::commit();
                 $return = ['error'=>'0','success'=>'1','action'=>'create','msg'=> ucfirst(trans('text.save')).' '.trans('text.successfully').'!', 'reload_page'=>$this->data->reload_page];
                 return \Response::json($return);
@@ -614,6 +624,16 @@ class PostsController extends Controller
                 return view('post.error_post_not_found', ['data'=>$this->data]);
             }
 
+            // add notification
+            $notificationDatas = [
+                'user_id' => $this->data->auth_id,
+                'notification_action_id' => '3',
+                'notification_type_id' => '1',
+                'notification_of_id' => $post_id
+            ];
+            $this->notification($notificationDatas);
+            // End
+
             DB::commit();
             return redirect('/posts?account_id='.$this->data->auth_id)->with('message', trans('button.reupload').' '.trans('text.successfully'));
         } catch (Exception $e) {
@@ -752,6 +772,16 @@ class PostsController extends Controller
                 }
                 */
 
+                // End
+
+                // add notification
+                $notificationDatas = [
+                    'user_id' => $this->data->auth_id,
+                    'notification_action_id' => '2',
+                    'notification_type_id' => '1',
+                    'notification_of_id' => $post_id
+                ];
+                $this->notification($notificationDatas);
                 // End
 
                 DB::commit();
@@ -968,6 +998,16 @@ class PostsController extends Controller
 
                     $post_comment = $this->post_comment->create($postCommentDatas);
                     // End
+
+                    // add notification
+                    $notificationDatas = [
+                        'user_id' => $this->data->auth_id,
+                        'notification_action_id' => '7',
+                        'notification_type_id' => '1',
+                        'notification_of_id' => $request['post_id']
+                    ];
+                    $this->notification($notificationDatas);
+                    // End
                 }
 
                 DB::commit();
@@ -1010,6 +1050,16 @@ class PostsController extends Controller
 
                         $rating = $this->rating->create($ratingDatas);
                         // End
+
+                        // add notification
+                        $notificationDatas = [
+                            'user_id' => $this->data->auth_id,
+                            'notification_action_id' => '6',
+                            'notification_type_id' => '1',
+                            'notification_of_id' => $request['post_id']
+                        ];
+                        $this->notification($notificationDatas);
+                        // End
                     }
                 }
 
@@ -1051,6 +1101,16 @@ class PostsController extends Controller
                     ];
 
                     $favorite = $this->favorite->create($favoriteDatas);
+                    // End
+
+                    // add notification
+                    $notificationDatas = [
+                        'user_id' => $this->data->auth_id,
+                        'notification_action_id' => '4',
+                        'notification_type_id' => '1',
+                        'notification_of_id' => $request['post_id']
+                    ];
+                    $this->notification($notificationDatas);
                     // End
                 }
                 

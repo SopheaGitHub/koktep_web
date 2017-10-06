@@ -48,6 +48,36 @@ class FavoriteAccountController extends Controller
         $this->systemLogs('load_list', 'favorite-account', $request);
         // End
 
+        if($request['account_id']!='') {
+            $account_id = $request['account_id'];
+        }else {
+            $account_id = 0;
+        }
+
+        $user_favorite_auth = $this->favorite->getProfileFavoriteOfAuth($this->data->auth_id);
+        if( $user_favorite_auth->all_profile_id != '' ) {
+            $all_user_favorite_auth = $user_favorite_auth->all_profile_id;
+        }else{
+            $all_user_favorite_auth = '0';
+        }
+        $datas_filter = [
+            'auth_id' => $this->data->auth_id,
+            'favorite_of_auth_id' => $all_user_favorite_auth,
+            'account_id' => $account_id
+        ];
+
+        $this->data->users_favorite_author = $this->favorite->getProfileFavoriteOfAuthor($datas_filter)->get();
+        if(count($this->data->users_favorite_author) > 0) {
+            foreach ($this->data->users_favorite_author as $favorite) {
+                if (!empty($favorite->user_profile) && is_file($this->data->dir_image . $favorite->user_profile)) {
+                    $this->data->thumb_user[$favorite->profile_id] = $this->filemanager->resize($favorite->user_profile, 100, 100);
+                } else {
+                    $this->data->thumb_user[$favorite->profile_id] = $this->filemanager->resize('no_image.png', 100, 100);
+                }
+            }
+        }
+        
+        $this->data->overview_account = url('/overview-account');
         return view('favorite_account.list', ['data' => $this->data]);
     }
 

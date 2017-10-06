@@ -47,6 +47,7 @@ class MessageController extends Controller
         // $this->data->message_sent = $this->message->getTotalSentByAutorId($this->data->auth_id);
         $this->data->message_draft = $this->message->getTotalDraftByAutorId($this->data->auth_id);
         
+        $this->data->load = $load;
         $this->data->action_url = url('/message?account_id='.$this->data->auth_id);
         $this->data->action_list = url('/message/list?account_id='.$this->data->auth_id.'&load='.$load);
         $this->data->action_list_pagination = url('/message/list');
@@ -71,7 +72,7 @@ class MessageController extends Controller
         if (isset($request['sort'])) {
             $sort = $request['sort'];
         } else {
-            $sort = 'updated_at';
+            $sort = 'created_at';
         }
 
         if (isset($request['order'])) {
@@ -130,6 +131,7 @@ class MessageController extends Controller
 
     public function getDetail() {
         $request = \Request::all();
+
         // add system log
         $this->systemLogs('view', 'message', $request);
         // End
@@ -148,6 +150,12 @@ class MessageController extends Controller
             $message_id = null;
         }
 
+        if(isset($request['viewed_id'])) {
+            $viewed_id = $request['viewed_id'];
+        }else {
+            $viewed_id = 0;
+        }
+
         $this->data->message = $this->message->getMessage($message_id);
         if(count($this->data->message) > 0) {
             if (!empty($this->data->message->author_image) && is_file($this->data->dir_image . $this->data->message->author_image)) {
@@ -157,7 +165,7 @@ class MessageController extends Controller
             }
 
             if($load=='inbox') {
-                $this->message->where('id', '=', $this->data->message->id)->update(['viewed'=>($this->data->message->viewed+1)]);
+                $this->message->where('id', '=', $viewed_id)->update(['viewed'=>1]);
             }
         }
 
@@ -287,10 +295,6 @@ class MessageController extends Controller
                 ];
 
                 $message = $this->message->create($messageDatas);
-
-                if($store_type=='reply') {
-                    $this->message->where('id', '=', $request['parent_id'])->update(['viewed'=>'0']);
-                }
 
                 $action_load = url('/message/load-sub-message/'.$request['parent_id']);
 

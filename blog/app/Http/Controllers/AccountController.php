@@ -707,14 +707,24 @@ class AccountController extends Controller
 
         DB::beginTransaction();
         try {
-            $this->data->check_is_user_exit_favorite = $this->favorite->checkIfAlreadyFavorite($this->data->auth_id, $request['favorite_of_id'], '2');
-            if(!$this->data->check_is_user_exit_favorite) {
+            $check_is_user_exit_favorite = $this->favorite->checkIfAlreadyFavoriteProfile($this->data->auth_id, $request['favorite_of_id'], '2');
+            if($check_is_user_exit_favorite->total_favorited <= 0) {
                 $favoriteDatas = [
                     'user_id'           => $this->data->auth_id,
                     'favorite_of_id'    => $request['favorite_of_id'],
                     'favorite_type_id'  => '2'
                 ];
                 $favorite = $this->favorite->create($favoriteDatas);
+
+                // add notification
+                $notificationDatas = [
+                    'user_id' => $this->data->auth_id,
+                    'notification_action_id' => '5',
+                    'notification_type_id' => '2',
+                    'notification_of_id' => $request['favorite_of_id']
+                ];
+                $this->notification($notificationDatas);
+                // End
             }
             DB::commit();
             return redirect('overview-account?account_id='.$request['favorite_of_id']);
@@ -734,9 +744,9 @@ class AccountController extends Controller
 
         DB::beginTransaction();
         try {
-            $this->data->check_is_user_exit_favorite = $this->favorite->checkIfAlreadyFavorite($this->data->auth_id, $request['favorite_of_id'], '2');
-            if($this->data->check_is_user_exit_favorite) {
-                $favorite = $this->favorite->where('user_id', '=', $this->data->auth_id)->where('favorite_of_id', '=', $request['favorite_of_id'])->where('favorite_type_id', '=', '2')->delete();
+            $check_is_user_exit_favorite = $this->favorite->checkIfAlreadyFavoriteProfile($this->data->auth_id, $request['favorite_of_id'], '2');
+            if($check_is_user_exit_favorite->total_favorited > 0) {
+                $favorite = $this->favorite->where('favorite_type_id', '=', '2')->whereRaw('(user_id = '.$this->data->auth_id.' AND favorite_of_id = '.$request['favorite_of_id'].')')->orWhereRaw('(user_id = '.$request['favorite_of_id'].' AND favorite_of_id = '.$this->data->auth_id.')')->delete();
             }
             DB::commit();
             return redirect('overview-account?account_id='.$request['favorite_of_id']);

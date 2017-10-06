@@ -677,7 +677,6 @@ ul.filter-left-display-menu li {
 .message-list-active {
   border-top: 1px dotted #91beb1;
   padding: 10px;
-  background: #F1F3FA;
   cursor: pointer;
   color: #a0a0a0;
 }
@@ -694,4 +693,76 @@ ul.filter-left-display-menu li {
 .message-list:hover, .message-list-active:hover {
   opacity: 0.8;
   padding: 10px;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #91beb1;
+    background-color: #eee;
+}
+
+.message-list-box {
+  text-align:center; 
+  background: #91beb1; 
+  color: #fff; 
+  padding: 5px 0px;
+}
+
+.message-author-name {
+  font-size: 12px;
+}
+
+.message-date {
+  font-size: 10px; 
+  color:#999;
+}
+
+.message-text {
+  font-size: 11px; 
+  color:#999;
+}
+
+.message-author-image {
+  width:30px; 
+  margin-top:5px; 
+  border-radius:50%;
+}
+
+.message-box {
+  padding: 10px; 
+  margin:5px 0px;
+}
+
+.message-box-active {
+  background: #F1F3FA;
+  padding: 10px; 
+  margin:5px 0px;
+}
+
+.message-noti-li {
+  height: 250px; 
+  width: 250px; 
+  overflow-y: scroll;
+}
+
+.user-favorite-list-box {
+  margin-bottom: 15px;
+}
+
+.user-favorite-list-box-row {
+  margin: 0px; 
+  border: 1px solid #F1F3FA; 
+  background: #F1F3FA;
+}
+
+.author-favorite-image {
+  background: #fff; 
+  border-radius: 50%; 
+  border: 5px solid #91beb1; 
+  width:80px;
+ }
+
+.box-profile-favorite {
+  color: #91beb1; 
+  margin-top:5px; 
+  margin-bottom: 5px;
 }

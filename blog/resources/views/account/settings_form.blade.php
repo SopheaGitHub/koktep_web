@@ -37,7 +37,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $data->entry_description; ?></label>
                 <div class="col-sm-10">
-                  <textarea name="description" class="form-control" style="max-width:100%;min-width:100%;min-height:200px;max-height:200px;" placeholder="<?php echo $data->entry_email; ?>"><?php echo ((isset($data->description))? $data->description:''); ?></textarea>
+                  <textarea name="description" class="form-control" style="max-width:100%;min-width:100%;min-height:200px;max-height:200px;" placeholder="<?php echo $data->entry_description; ?>"><?php echo ((isset($data->description))? $data->description:''); ?></textarea>
                 </div>
               </div>
             </form>

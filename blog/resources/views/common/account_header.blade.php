@@ -8,7 +8,7 @@
     $author_logged_id = ((\Auth::check())? \Auth::user()->id:'0');
     $user_info = $objUser->getUser($author_id);
     $user_technical_info = $objUser->getTechnicalByUserId($author_id);
-    $check_is_user_exit_favorite = $objFavorite->checkIfAlreadyFavorite($author_logged_id, $author_id, '2');
+    $check_is_user_exit_favorite = $objFavorite->checkIfAlreadyFavoriteProfile($author_logged_id, $author_id, '2');
 
     if($user_info) {
         $user_info_id = $user_info->id;
@@ -61,7 +61,7 @@
                 ?>
                 <div style="padding:10px;"><button type="button" data-trigger="message" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> <?php echo trans('text.message'); ?></button></div>
                 <?php
-                  if($check_is_user_exit_favorite) { ?>
+                  if($check_is_user_exit_favorite->total_favorited > 0) { ?>
                     <!-- Single button -->
                     <div class="btn-group">
                       <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #91beb1;">
