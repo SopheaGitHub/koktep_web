@@ -27,6 +27,7 @@ return [
     'message_required' => 'The <b>Message</b> field is required.',
     'send_message' => 'Send message',
     'reply_message' => 'Reply message',
-    'me' => 'Me'
+    'me' => 'Me',
+    'you' => 'You'
 
 ];

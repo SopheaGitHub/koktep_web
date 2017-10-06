@@ -27,6 +27,7 @@ return [
     'message_required' => '<b>សារ</b> តម្រូវឱ្យបញ្ចូល។',
     'send_message' => 'ផ្ញើសារ',
     'reply_message' => 'ឆ្លើយតបសារ',
-    'me' => 'ខ្ញុំ'
+    'me' => 'ខ្ញុំ',
+    'you' => 'អ្នក'
 
 ];

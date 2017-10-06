@@ -24,7 +24,7 @@ class Message extends Model
 				m.created_at AS message_date,
 				m.sender_id,
 				m.receiver_id,
-				u. NAME AS user_name,
+				u.name AS user_name,
 				u.image AS user_profile
 			'))
 		->join('users as u', 'u.id', '=', 'm.sender_id')

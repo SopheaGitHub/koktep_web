@@ -20,7 +20,7 @@
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <div><a href="<?php echo $data->overview_account.'?account_id='.$rating->user_id; ?>"><b><?php echo $rating->user_name; ?></b></a></div>
+                      <div><a href="<?php echo $data->overview_account.'?account_id='.$rating->user_id; ?>"><b><?php echo $rating->user_name; ?> <?php echo (($rating->user_id==$data->auth_id)? '('.trans('message.you').')':''); ?></b></a></div>
                       <?php
                         $skills = explode(',', $rating->user_skills);
                         foreach ($skills as $value) {
@@ -29,7 +29,7 @@
                       ?>
                     </div>
                     <div class="col-md-4" style="margin-top:5px; margin-bottom: 5px;">
-                      <div style="color: #cccccc; font-size: 11px;"><i class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y', strtotime($rating->rating_date)); ?></div>
+                      <div style="color: #cccccc; font-size: 11px;"><i class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y H:i', strtotime($rating->rating_date)); ?></div>
                       <br />
                       <?php for ($i = 1; $i <= 5; $i++) { ?>
                         <?php if ($rating->star < $i) { ?>

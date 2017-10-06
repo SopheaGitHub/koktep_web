@@ -7,7 +7,7 @@
 						<div class="col-md-3" style="margin:0px; padding:5px;">
 							<div>
 			              		<a href="<?php echo $data->overview_account.'?account_id='.$favorite->profile_id; ?>">
-			              			<img calss="author-favorite-image" alt="" src="<?php echo ((isset($data->thumb_user[$favorite->profile_id]))? $data->thumb_user[$favorite->profile_id]:''); ?>">
+			              			<img class="author-favorite-image" alt="" src="<?php echo ((isset($data->thumb_user[$favorite->profile_id]))? $data->thumb_user[$favorite->profile_id]:''); ?>">
 			              		</a>
 			          		</div>
 						</div>
@@ -23,7 +23,7 @@
 						<div class="col-md-4" class="box-profile-favorite">
 							<?php
 								if($favorite->table_note=='u') {
-									echo '<b>(You)</b>';
+									echo '<b style="color: #91beb1;">(You)</b>';
 								}else if ($favorite->table_note=='u_f') { ?>
 									<div class="btn-group">
 					                  	<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #91beb1;">

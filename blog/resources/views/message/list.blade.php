@@ -13,7 +13,7 @@
               <a href="<?php echo $data->action_detail.'&amp;message_id='.(($message->parent_id!='0')? $message->parent_id:$message->message_id).'&viewed_id='.$message->message_id; ?>">
                 <div class="<?php echo (($data->load_title=='Inbox' && $message->viewed == 0)? 'message-box-active':'message-box'); ?>">
                   <img class="message-author-image" src="<?php echo ((isset($data->thumb_user[$message->id]))? $data->thumb_user[$message->id]:''); ?>"> 
-                  &nbsp; <span class="message-author-name"><b><?php echo $message->author_name; ?> <?php echo (($message->sender_id==$data->auth_id)? '('.$data->text_me.')':''); ?></b></span>, 
+                  &nbsp; <span class="message-author-name"><b><?php echo $message->author_name; ?> <?php echo (($message->sender_id==$data->auth_id)? '('.$data->text_you.')':''); ?></b></span>, 
                   <span class="message-date"><?php echo date('M dS, Y H:i', strtotime($message->created_at)); ?></span><br />
                   <span class="message-text"><?php echo (($message->parent_id=='0')? trans('button.send').' Messages':trans('button.reply').' To Messages ') ?> : <?php echo mb_substr(strip_tags(html_entity_decode($message->subject, ENT_QUOTES, 'UTF-8')), 0, 100).'...'; ?></span>
                 </div>

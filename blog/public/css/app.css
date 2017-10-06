@@ -730,12 +730,17 @@ ul.filter-left-display-menu li {
 .message-box {
   padding: 10px; 
   margin:5px 0px;
+  background:  #f8f9f9 ;
 }
 
 .message-box-active {
-  background: #F1F3FA;
+  background: #d4efdf;
   padding: 10px; 
   margin:5px 0px;
+}
+
+.message-box:hover, .message-box-active:hover {
+  background: #f4f6f7;
 }
 
 .message-noti-li {

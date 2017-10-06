@@ -4,6 +4,7 @@
     $objLanguage = new App\Models\Language();
     $objCategory = new App\Models\Category();
     $objMessage = new App\Models\Message();
+    $objNotification = new App\Models\Notification();
 
     if(\Session::has('locale')) {
         $locale = \Session::get('locale');
@@ -14,10 +15,14 @@
     $auth_id = ((Auth::check())? Auth::user()->id:'0');
 
     $language = $objLanguage->getLanguageByCode( $locale );
-    $categories = [];
+    $language_id = '1';
+    
     if($language) {
-        $categories = $objCategory->getCategoriesByLanguage(['sort'=>'sort_order', 'order'=>'asc', 'parent_id'=>'0', 'language_id'=>$language->language_id])->get();
+        $language_id = $language->language_id;
     }
+    
+    $categories = [];
+    $categories = $objCategory->getCategoriesByLanguage(['sort'=>'sort_order', 'order'=>'asc', 'parent_id'=>'0', 'language_id'=>$language_id])->get();
 
     // load image library
     if(Auth::check()) {
@@ -42,7 +47,16 @@
         }
     }
 
-
+    $notifications = $objNotification->getNotificationByUserId($auth_id, $language_id);
+    if(count($notifications['datas']) > 0) {
+        foreach ($notifications['datas'] as $notification) {
+            if (!empty($notification->user_profile) && is_file($objConfig->dir_image . $notification->user_profile)) {
+                $notification_thumb_user[$notification->id] = $objFile->resize($notification->user_profile, 100, 100);
+            } else {
+                $notification_thumb_user[$notification->id] = $objFile->resize('no_image.png', 100, 100);
+            }
+        }
+    }
 ?>
 <nav class="navbar navbar-default navbar-static-top navbar-fixed-top">
     <div class="container">
@@ -163,7 +177,7 @@
                                             <a href="<?php echo url('/message/detail?account_id='.$auth_id.'&load=inbox&message_id='.(($message->parent_id!='0')? $message->parent_id:$message->message_id) ).'&viewed_id='.$message->message_id; ?>">
                                                 <div class="<?php echo (($message->viewed == 0)? 'message-box-active':'message-box'); ?>">
                                                     <img class="message-author-image" src="<?php echo ((isset($message_thumb_user[$message->message_id]))? $message_thumb_user[$message->message_id]:''); ?>"> &nbsp; 
-                                                    <span class="message-author-name"><?php echo $message->user_name; ?> <?php echo (($message->sender_id==$auth_id)? '('.trans('message.me').')':''); ?></span>, 
+                                                    <span class="message-author-name"><?php echo $message->user_name; ?> <?php echo (($message->sender_id==$auth_id)? '('.trans('message.you').')':''); ?></span>, 
                                                     <span class="message-date"><?php echo date('M dS, Y H:i', strtotime($message->message_date)); ?></span><br />
                                                     <span class="message-text"><?php echo (($message->parent_id=='0')? trans('button.send').' Messages':trans('button.reply').' To Messages ') ?> : <?php echo mb_substr(strip_tags(html_entity_decode($message->subject, ENT_QUOTES, 'UTF-8')), 0, 100).'...'; ?></span>
                                                 </div>
@@ -178,18 +192,32 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i><span style="color: red; position: absolute; top:4px; left: 28px;">22</span></a>
+                        <a href="#" data-trigger="notification-viewed" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-bell" aria-hidden="true"></i><span id="load-notification" style="color: red; position: absolute; top:4px; left: 28px;"><?php echo (($notifications['total']>0)? $notifications['total']:'') ?></span></a>
                         <ul class="dropdown-menu">
                             <li><span style="padding:20px; color: #cccccc;">Notifications</span></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Upload "Naturale"</span></a></li>
-                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Favorite "Naturale"</span></a></li>
-                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Upload "Naturale"</span></a></li>
-                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Favorite "Naturale"</span></a></li>
-                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Favorite "Naturale"</span></a></li>
-                            <li><a href="http://localhost/development/koktep_web/blog/public/overview-account?account_id=1"><img style="width:25px; margin-top:5px; border-radius:50%;" src="http://localhost/development/koktep_storage//images/cache/catalog/1/profile/profile_chansophea1-100x100.jpg"> &nbsp; <span style="font-size: 11px;">Chan Sophea</span>, <span style="font-size: 11px; color:#cccccc;">02 March, 2017</span><br /><span style="font-size: 11px; color:#cccccc;">Upload "Naturale"</span></a></li>
+                            <li>
+                                <?php
+                                    if(count($notifications['datas']) > 0) {?>
+                                        <li class="message-noti-li">
+                                    <?php  foreach ($notifications['datas'] as $notification) { ?>
+                                            <div>
+                                                <a href="<?php echo url('/'.str_replace(['@author_id@', '@post_id@', '@category_id@'], [$notification->author_id, $notification->post_id, (( empty($notification->category_id) )? '0':strtolower($notification->category_id))  ], $notification->link) ); ?>">
+                                                    <div class="<?php echo (($notification->viewed_status=='new')? 'message-box-active':'message-box'); ?>">
+                                                        <img class="message-author-image" src="<?php echo ((isset($notification_thumb_user[$notification->id]))? $notification_thumb_user[$notification->id]:''); ?>"> &nbsp; 
+                                                        <span class="message-author-name"><?php echo $notification->user_name; ?> <?php echo (($notification->user_id==$auth_id)? '('.trans('message.you').')':''); ?></span>, 
+                                                        <span class="message-date"><?php echo date('M dS, Y H:i', strtotime($notification->notification_date)); ?></span><br />
+                                                        <span class="message-text"><?php echo str_replace(['@profile@ ', '@upload_title@'], ['', '"'.$notification->post_title.'"'], $notification->text); ?></span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                    <?php } ?> 
+                                        </li>
+                                <?php }
+                                ?>
+                            </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">Show All Notifications</a></li>
+                            <li><a href="<?php echo url('/notification?account_id='.$auth_id); ?>">Show All Notifications</a></li>
                         </ul>
                     </li>
                     
@@ -199,3 +227,32 @@
         </div>
     </div>
 </nav>
+<div id="load-unauthorized-notification"></div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).delegate('a[data-trigger=\'notification-viewed\']', 'click', function() {
+            $.ajax({
+                type: "GET",
+                url: "<?php echo url('/notification/clear-viewed?account_id='.$auth_id); ?>",
+                beforeSend:function() {
+                    // $('#block-loader').show();
+                },
+                complete:function() {
+                    // $('#block-loader').hide();
+                },
+                success:function(html) {
+                    var leng = html.length;
+                    if(leng < 15) {
+                        $('#load-notification').html('').show();
+                    }else {
+                        $('#load-unauthorized-notification').html(html).show();
+                    }
+                },
+                error:function(request, status, error) {
+                    $('#load-unauthorized-notification').html('').show();
+                }
+            });
+            return false;
+        });
+    });
+</script>

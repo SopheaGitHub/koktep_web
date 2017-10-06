@@ -123,6 +123,7 @@ class MessageController extends Controller
         $this->data->page = trans('text.page');
         $this->data->button_reply = trans('button.reply');
         $this->data->text_me = trans('message.me');
+        $this->data->text_you = trans('message.you');
         $this->data->text_empty_message = trans('message.text_empty_message');
 
         return view('message.list', ['data'=>$this->data]);

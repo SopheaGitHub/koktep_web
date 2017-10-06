@@ -18,9 +18,9 @@
     <div class="modal-body">
       <div class="row">
         <div class="col-sm-6 col-md-6">
-          <p>- Click <a href="<?php echo $view_detail; ?>" class="btn btn-primary btn-xs">Go To <i class="fa fa-arrow-circle-o-right"></i>
+          <p>- <a href="<?php echo $view_detail; ?>" class="btn btn-primary btn-xs">Go To <i class="fa fa-arrow-circle-o-right"></i>
 </a> view detail.</p>
-          <p>- Click <a href="<?php echo $data->action_post_management; ?>" class="btn btn-default btn-xs">Go To <i class="fa fa-arrow-circle-o-right"></i>
+          <p>- <a href="<?php echo $data->action_post_management; ?>" class="btn btn-default btn-xs">Go To <i class="fa fa-arrow-circle-o-right"></i>
 </a> upload management.</p>
         </div>
         <div class="col-sm-6 col-md-6">

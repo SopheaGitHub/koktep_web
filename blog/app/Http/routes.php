@@ -29,6 +29,7 @@ Route::controllers([
 	'/information' => 'InformationController',
 	'/contact-us' => 'ContactUsController',
 	'/message' => 'MessageController',
+	'/notification' => 'NotificationController',
 	'/send-feedback' => 'SendFeedbackController',
 	'/documentation' => 'DocumentationController',
 	'/account' 	=> 'AccountController',
