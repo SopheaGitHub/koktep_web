@@ -79,6 +79,28 @@ class AccountController extends Controller
         if (file_exists($this->data->dir_image.'cache/'.$file_path.$username.'-100x100.jpg')) {
             unlink($this->data->dir_image.'cache/'.$file_path.$username.'-100x100.jpg');
         }
+        if (file_exists($this->data->dir_image.'cache/'.$file_path.$username.'-120x80.jpg')) {
+            unlink($this->data->dir_image.'cache/'.$file_path.$username.'-120x80.jpg');
+        }
+        if (file_exists($this->data->dir_image.'cache/'.$file_path.$username.'-600x400.jpg')) {
+            unlink($this->data->dir_image.'cache/'.$file_path.$username.'-600x400.jpg');
+        }
+
+        if(isset($request['original_image']) && $request['original_image'] != '') {
+            if (file_exists($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-100x100.jpg')) {
+                unlink($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-100x100.jpg');
+            }
+            if (file_exists($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-120x80.jpg')) {
+                unlink($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-120x80.jpg');
+            }
+            if (file_exists($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-600x400.jpg')) {
+                unlink($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-600x400.jpg');
+            }
+
+            // $ori_extension = pathinfo($request['original_image'], PATHINFO_EXTENSION);
+            copy($request['original_image'], $this->data->dir_image.'/'.$file_path.'ori_'.$username.'.jpg');
+        }
+
         return back();
     }
 
@@ -105,9 +127,31 @@ class AccountController extends Controller
         $this->base64_decode($request['image_cover'], $username, $file_path);
         $this->user->where('id', '=', $this->data->auth_id)->update(['first_cover'=>$file_path.$username.'.jpg']);
         // remove old profile
+        if (file_exists($this->data->dir_image.'cache/'.$file_path.$username.'-120x80.jpg')) {
+            unlink($this->data->dir_image.'cache/'.$file_path.$username.'-120x80.jpg');
+        }
+        if (file_exists($this->data->dir_image.'cache/'.$file_path.$username.'-600x400.jpg')) {
+            unlink($this->data->dir_image.'cache/'.$file_path.$username.'-600x400.jpg');
+        }
         if (file_exists($this->data->dir_image.'cache/'.$file_path.$username.'-850x280.jpg')) {
             unlink($this->data->dir_image.'cache/'.$file_path.$username.'-850x280.jpg');
         }
+
+        if(isset($request['original_image']) && $request['original_image'] != '') {
+            if (file_exists($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-100x100.jpg')) {
+                unlink($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-100x100.jpg');
+            }
+            if (file_exists($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-120x80.jpg')) {
+                unlink($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-120x80.jpg');
+            }
+            if (file_exists($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-600x400.jpg')) {
+                unlink($this->data->dir_image.'cache/'.$file_path.'ori_'.$username.'-600x400.jpg');
+            }
+
+            // $ori_extension = pathinfo($request['original_image'], PATHINFO_EXTENSION);
+            copy($request['original_image'], $this->data->dir_image.'/'.$file_path.'ori_'.$username.'.jpg');
+        }
+
         return back();
     }
 
@@ -775,7 +819,13 @@ class AccountController extends Controller
         if($user) {
             $this->data->user_name = $user->name;
             if (!empty($user->image) && is_file($this->data->dir_image . $user->image)) {
-                $this->data->profile_user = $this->data->http_best_path.'/images/'.$user->image;
+                $array_image = explode('/', $user->image);
+                if(count($array_image) > 0) {
+                    $image_name = (end($array_image));
+                }else{
+                    $image_name = '';
+                }
+                $this->data->profile_user = $this->data->http_best_path.'/images/'.str_replace($image_name, 'ori_'.$image_name, $user->image);
             } else {
                 $this->data->profile_user = $this->filemanager->resize('no_image.png', 100, 100);
             }
@@ -806,7 +856,19 @@ class AccountController extends Controller
         if($user) {
             $this->data->user_name = $user->name;
             if (!empty($user->first_cover) && is_file($this->data->dir_image . $user->first_cover)) {
-                $this->data->cover_user = $this->data->http_best_path.'/images/'.$user->first_cover;
+                $array_image = explode('/', $user->first_cover);
+                if(count($array_image) > 0) {
+                    $image_name = (end($array_image));
+                }else{
+                    $image_name = '';
+                }
+                
+                if(is_file($this->data->dir_image.str_replace($image_name, 'ori_'.$image_name, $user->first_cover))) {
+                    $this->data->cover_user = $this->data->http_best_path.'/images/'.str_replace($image_name, 'ori_'.$image_name, $user->first_cover);
+                }else {
+                    $this->data->cover_user = $this->filemanager->resize('no_image.png', 850, 280);
+                }
+
             } else {
                 $this->data->cover_user = $this->filemanager->resize('no_image.png', 850, 280);
             }
