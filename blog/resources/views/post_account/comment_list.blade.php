@@ -26,7 +26,7 @@
                         <div class="commentText">
                             <div><a href="<?php echo $data->overview_account.'?account_id='.$post_comment->user_id; ?>"><?php echo $post_comment->user_name; ?></a></div> 
                             <p class=""><?php echo $comment; ?></p>
-                            <span class="date sub-text">on <?php echo date('M dS, Y', strtotime($post_comment->created_at)); ?></span>
+                            <span class="date sub-text">on <?php echo date('M dS, Y H:i', strtotime($post_comment->created_at)); ?></span>
                         </div>
                     </li>
             <?php }

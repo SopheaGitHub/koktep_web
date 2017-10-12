@@ -167,6 +167,18 @@ class User extends Authenticatable
         return $result;
     }
 
+    public function checkIfUserCompleted($user_id) {
+        $result = DB::table('users AS u')
+        ->select(DB::raw('
+                CASE WHEN u.description != \'\' THEN 1
+                ELSE 0 END AS total_description,
+                (SELECT COUNT(1) AS total FROM user_address AS ua WHERE ua.user_id = u.id) AS total_address,
+                (SELECT COUNT(1) AS total FROM user_technical AS ut WHERE ut.user_id = u.id) AS total_technical
+            '))
+        ->where('u.id', '=', $user_id)->first();
+        return $result;
+    }
+
     public function insertUserTechnical($datas=[]) {
         $sql = '';
         if (isset($datas['user_technicals']) && count($datas['user_technicals']) > 0) {

@@ -19,7 +19,7 @@
               <a href="<?php echo $view_detail; ?>" class="overlaylogo">
                 <div class="text">
                   <span style="color: #91beb1;"><?php echo $post->title; ?></span>
-                  <div><i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y', strtotime($post->created_at)); ?></div>
+                  <div><i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y H:i', strtotime($post->created_at)); ?></div>
                   <p><?php echo $description; ?></p>
                 </div>
               </a>

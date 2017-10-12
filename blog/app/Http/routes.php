@@ -17,6 +17,14 @@
 
 Route::auth();
 
+
+// Route::get('/', function() {
+// 	return view('deploy_message');
+// });
+// Route::get('post-account/detail', function() {
+// 	return view('deploy_message');
+// });
+
 Route::get('/', 'HomeController@index');
 Route::get('/love/{name}', 'HomeController@love');
 Route::get('/language', [

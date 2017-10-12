@@ -36,7 +36,7 @@
                     <div class="profile-content">
                         <div><span><img style="width:40px; 5px solid rgba(255,255,255,0.5); border-radius:50%;" src="<?php echo ((isset($data->thumb_author))? $data->thumb_author:''); ?>"></span> &nbsp; <a href="<?php echo $data->overview_account.'?account_id='.$data->author_id; ?>"> <b><?php echo $data->author_name; ?></b></a></div>
                         <div style="padding: 10px 0px; font-size: 11px; color: #cccccc;">
-                            <i data-toggle="tooltip" title="<?php echo $data->icon_date; ?>" class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y', strtotime($data->post_created_at)); ?>  &nbsp;&nbsp;
+                            <i data-toggle="tooltip" title="<?php echo $data->icon_date; ?>" class="fa fa-btn fa-calendar"></i>on <?php echo date('M dS, Y H:i', strtotime($data->post_created_at)); ?>  &nbsp;&nbsp;
                             <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $data->post_viewed; ?> &nbsp;&nbsp;
                         </div>
                         <b><?php echo $data->title; ?></b>
@@ -176,7 +176,7 @@
                                     <a href="<?php echo $view_detail; ?>" class="overlaylogo">
                                       <div class="text">
                                         <span style="color: #91beb1;"><?php echo $post->title; ?></span>
-                                        <div><i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y', strtotime($post->created_at)); ?></div>
+                                        <div><i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y H:i', strtotime($post->created_at)); ?></div>
                                         <p><?php echo $description; ?></p>
                                       </div>
                                     </a>

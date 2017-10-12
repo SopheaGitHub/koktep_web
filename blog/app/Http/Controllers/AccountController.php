@@ -220,12 +220,18 @@ class AccountController extends Controller
         // check if auth != get account id
         if($request['account_id']==$this->data->auth_id) {
 
+            if(isset($request['tab'])) {
+                $tab = $request['tab'];
+            }else{
+                $tab = '';
+            }
+
             $this->data->text_title = trans('text.account_settings');
             $this->data->button_cancel = trans('button.cancel');
             $this->data->button_save_change = trans('button.save_change');
 
             $this->data->go_back = url('/overview-account?account_id='.$this->data->auth_id);
-            $this->data->action_form = url('/account/settings-load-form');
+            $this->data->action_form = url('/account/settings-load-form?tab='.$tab);
             $this->data->action_setting_information = url('/account/setting-information/'.$this->data->auth_id);
             $this->data->action_setting_contact = url('/account/setting-contact/'.$this->data->auth_id);
             $this->data->action_setting_technical_skills = url('/account/setting-technical-skills/'.$this->data->auth_id);
@@ -244,6 +250,12 @@ class AccountController extends Controller
         $this->systemLogs('load_form', 'account', $request);
         // End
 
+        if(isset($request['tab'])) {
+            $tab = $request['tab'];
+        }else{
+            $tab = '';
+        }
+
         $user = $this->user->getUser($this->data->auth_id);
         $user_technical = $this->user->getTechnicalByUserId($this->data->auth_id);
         $user_address = $this->user->getAddressByUserId($this->data->auth_id);
@@ -258,7 +270,8 @@ class AccountController extends Controller
             'user_technical' => $user_technical,
             'user_address'  => $user_address,
             'user_social_medias'  => $user_social_medias,
-            'user_watermark' => $user_watermark
+            'user_watermark' => $user_watermark,
+            'tab' => $tab
         ];
         echo $this->getSettingForm($datas);
         exit();
@@ -652,7 +665,12 @@ class AccountController extends Controller
         $this->data->image_placeholder = $this->filemanager->resize('no_image.png', 100, 100);
         // End
 
-
+        if(isset($datas['tab'])) {
+            $this->data->tab = $datas['tab'];
+        }else{
+            $this->data->tab = '';
+        }
+        
         $this->data->button_save = trans('button.save');
         $this->data->button_save_change = trans('button.save_change');
         $this->data->button_cancel = trans('button.cancel');

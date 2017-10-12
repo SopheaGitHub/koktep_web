@@ -3,7 +3,9 @@
 @section('content')
 <div class="container">
     @include('common.account_header')
+
     <div class="row profile">
+        @include('common.show_setting_message')
         <div class="col-md-3" style="padding: 0 15px;">
             @include('common.account_left')
         </div>

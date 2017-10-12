@@ -7,7 +7,7 @@
           <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse1"><i class="fa fa-btn fa-info-circle"></i><?php echo $data->tab_user_information; ?></h4>
         </div>
         <!-- <div id="collapse1" class="panel-collapse collapse in"> -->
-          <div id="collapse1" class="panel-collapse collapse">
+          <div id="collapse1" class="panel-collapse collapse <?php echo (($data->tab=='information')? 'in':''); ?>">
           <div class="panel-body">
 
             <form action="#" method="post" enctype="multipart/form-data" id="form-setting-information" class="form-horizontal">
@@ -50,7 +50,7 @@
         <div class="panel-heading">
           <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse2"><i class="fa fa-btn fa-address-book"></i><?php echo $data->tab_user_contact; ?></h4>
         </div>
-        <div id="collapse2" class="panel-collapse collapse">
+        <div id="collapse2" class="panel-collapse collapse <?php echo (($data->tab=='contact')? 'in':''); ?>">
           <div class="panel-body">
 
             <form action="#" method="post" enctype="multipart/form-data" id="form-setting-contact" class="form-horizontal">
@@ -218,7 +218,7 @@
         <div class="panel-heading">
           <h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#collapse3"><i class="fa fa-btn fa-book"></i><?php echo $data->tab_skill_charge; ?></h4>
         </div>
-        <div id="collapse3" class="panel-collapse collapse">
+        <div id="collapse3" class="panel-collapse collapse <?php echo (($data->tab=='skill')? 'in':''); ?>">
           <div class="panel-body">
 
             <form action="#" method="post" enctype="multipart/form-data" id="form-setting-technical-skills" class="form-horizontal">
