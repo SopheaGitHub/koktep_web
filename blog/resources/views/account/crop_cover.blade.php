@@ -45,18 +45,27 @@
       <div class="row">
         <div class="col-md-12">
           <?php
+            $loading = 0;
             if($data->width < 850 || $data->height < 290 ) { ?>
               <div class="alert alert-warning" id="warning">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <i class="fa fa-btn fa-info-circle"></i><?php echo $data->error_size; ?><br />
               </div>
-          <?php  }
+          <?php  } else {
+            $loading=1;
+          }
           ?>
           <div class="image-editor">
             <a href="#" role="button" data-toggle="reselect-cover" data-dismiss="modal"><i class="fa fa-pencil fa-lg"></i></a>
             <!-- <input type="file" class="cropit-image-input"> -->
             <div style="padding-bottom: 10px;">
-              <div class="cropit-preview"></div>
+              <div class="cropit-preview">
+                <?php
+                  if($loading=='1') { ?>
+                    <div style="text-align: center;"><img src="<?php echo url('/images/bx_loader.gif'); ?>" alt="Loading..."></div>
+                <?php  }
+                ?>
+              </div>
             </div>
             <div class="image-size-label"></div>
             <div class="row">

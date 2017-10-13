@@ -50,7 +50,7 @@
 <form action="#" method="GET" enctype="multipart/form-data" id="form-filter" class="form-horizontal">
     <div class="row" style="padding: 0px 5px;">
         <div>
-            <input type="hidden" name="category_id" id="category-id" value="<?php echo $category_id; ?>" id="category_id">
+            <input type="hidden" name="category_id" id="category-id" value="<?php echo $category_id; ?>">
         </div>
         <div class="col-md-2">
             <select name="view_option" id="view-option" class="form-control select-filter">
