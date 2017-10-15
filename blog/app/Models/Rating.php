@@ -16,7 +16,7 @@ class Rating extends Model
 	}
 
 	public function getTotalRatingPostByPostId($rating_of_id, $rating_type_id) {
-		$result = DB::table('rating')->select(DB::raw('COUNT(1) AS total_rating'))->where('rating_of_id', '=', $rating_of_id)->where('rating_type_id', '=', $rating_type_id)->first();
+		$result = DB::table('rating')->select(DB::raw('CEIL((SUM(star) / COUNT(1))) AS average_rating'))->where('rating_of_id', '=', $rating_of_id)->where('rating_type_id', '=', $rating_type_id)->first();
 		return $result;
 	}
 

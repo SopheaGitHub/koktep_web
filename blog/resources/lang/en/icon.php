@@ -14,8 +14,10 @@ return [
     */
 
     'view' => 'View',
+    'rating' => 'Rating',
     'comment' => 'Comment',
     'date' => 'Date',
     'image' => 'Image',
+    'favorite' => 'Favorite'
 
 ];

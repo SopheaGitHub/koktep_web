@@ -38,6 +38,7 @@ class Post extends Model {
 			->select('p.image', 'pd.title')
 			->leftJoin('post_description AS pd', 'pd.post_id', '=', 'p.post_id')
 			->whereIn('p.image', $array_image)
+			->where('p.status', '!=', '300')
 			->get();
 		return $result;
 	}
@@ -89,8 +90,9 @@ class Post extends Model {
 		$db = DB::table('post as p')
 		->select(DB::raw('p.post_id as post_id,
 								p.viewed as viewed,
+								(SELECT CEIL((SUM(star) / COUNT(1))) AS average_rating FROM rating AS r WHERE r.rating_of_id = p.post_id AND r.rating_type_id = 1 ) AS average_rating,
+								(SELECT COUNT(1) AS total_favorite FROM favorite AS f WHERE f.favorite_of_id = p.post_id AND f.favorite_type_id = 1 ) AS total_favorite,
 								(SELECT COUNT(1) FROM post_comment WHERE post_id = p.post_id) AS commented,
-								(SELECT CEIL((SUM(rating) / COUNT(1))) AS average_rating FROM post_comment WHERE post_id = p.post_id) AS average_rating,
 								(SELECT COUNT(1) FROM post_image WHERE post_id = p.post_id) AS total_post_image,
 								p.image as image,
 								p.created_at as created_at,

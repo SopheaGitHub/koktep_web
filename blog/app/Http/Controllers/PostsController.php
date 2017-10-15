@@ -234,6 +234,8 @@ class PostsController extends Controller
         $this->data->text_rating = trans('text.text_rating');
 
         $this->data->icon_view = trans('icon.view');
+        $this->data->icon_rating = trans('icon.rating');
+        $this->data->icon_favorite = trans('icon.favorite');
         $this->data->icon_comment = trans('icon.comment');
         $this->data->icon_date = trans('icon.date');
 
@@ -1067,7 +1069,7 @@ class PostsController extends Controller
                 $countRating = $this->rating->getTotalRatingPostByPostId($request['post_id'], '1');
 
                 DB::commit();
-                echo $countRating->total_rating;
+                echo $countRating->average_rating;
                 exit();
             } catch (Exception $e) {
                 DB::rollback();

@@ -54,7 +54,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div style="font-size: 12px;">
-                                        <label><a href="#" role="button" data-trigger="show-rating">Rating <span id="load-total-rating" style="padding: 5px; border-radius: 50%;"><?php echo $data->count_rating->total_rating; ?></span></a></label>
+                                        <label><a href="#" role="button" data-trigger="show-rating">Rating <span id="load-total-rating" style="padding: 5px; border-radius: 50%;"><?php echo $data->count_rating->average_rating; ?></span></a></label>
                                         <input type="text" class="kv-gly-star rating-loading" value="<?php echo (($data->check_is_user_exit_raing)? $data->check_is_user_exit_raing->star:'0'); ?>" data-size="xs" title="">
                                     </div>
                                 </div>
@@ -187,6 +187,8 @@
 
                                   <div style="text-align:right; font-size:10px; color: #ccc;">
                                     <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
+                                    <i data-toggle="tooltip" title="<?php echo $data->icon_rating; ?>" class="fa fa-btn fa-star"></i><?php echo (($post->average_rating!='')? $post->average_rating:'0'); ?> &nbsp;
+                                    <i data-toggle="tooltip" title="<?php echo $data->icon_favorite; ?>" class="fa fa-btn fa-heart"></i><?php echo $post->total_favorite; ?> &nbsp;
                                     <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
                                     <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="<?php echo $data->icon_image; ?>" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
                                   </div>

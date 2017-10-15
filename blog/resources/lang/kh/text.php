@@ -150,6 +150,7 @@ return [
     'delete_confirmation' => 'អះអាងការលុប',
     'delete_confirmation_message' => 'តើ​អ្នក​ប្រាកដ​ឬ​ទេ?',
     'show' => 'បង្ហាញ',
+    'show_case_or_author' => 'បង្ហាញកិច្ចការឬអ្នកនិពន្ធ',
     'to' => 'ទៅ',
     'of' => 'នៃ',
     'page' => 'ទំព័រ/ទី',

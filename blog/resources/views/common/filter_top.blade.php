@@ -12,7 +12,7 @@
 
     // defind array
     // $array_view = ['posted'=>'Posted', 'people'=>'People', 'teams'=>'Teams', 'collection'=>'Collection'];
-    $array_view = ['posted'=>trans('text.uploaded'), 'people'=>trans('text.uploader')];
+    $array_view = ['default'=>'-- '.trans('text.show_case_or_author').' --', 'posted'=>trans('text.uploaded'), 'people'=>trans('text.uploader')];
     $array_browse = [''=>'-- '.trans('text.browse').' --', 'viewed'=>trans('text.viewed'), 'commented'=>trans('text.commented')];
     $array_time = [''=>'-- '.trans('text.recent').' --', 'today'=>trans('text.today'), 'this_week'=>trans('text.this_week'), 'this_month'=>trans('text.this_month'), 'this_year'=>trans('text.this_year')];
     $array_alpha = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];

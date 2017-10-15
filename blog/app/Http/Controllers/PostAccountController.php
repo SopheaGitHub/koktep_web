@@ -206,6 +206,8 @@ class PostAccountController extends Controller
         }
 
         $this->data->icon_view = trans('icon.view');
+        $this->data->icon_rating = trans('icon.rating');
+        $this->data->icon_favorite = trans('icon.favorite');
         $this->data->icon_comment = trans('icon.comment');
         $this->data->icon_date = trans('icon.date');
         $this->data->icon_image = trans('icon.image');
@@ -336,7 +338,11 @@ class PostAccountController extends Controller
 
         // defind view loading people or posted
         if(isset($request['view_option'])) {
-            $view_option = $request['view_option'];
+            if($request['view_option']=='default') {
+                $view_option = 'posted';
+            }else {
+                $view_option = $request['view_option'];
+            }
         }else {
             $view_option = null;
         }
@@ -533,6 +539,8 @@ class PostAccountController extends Controller
         $this->data->page = trans('text.page');
 
         $this->data->icon_view = trans('icon.view');
+        $this->data->icon_rating = trans('icon.rating');
+        $this->data->icon_favorite = trans('icon.favorite');
         $this->data->icon_comment = trans('icon.comment');
         $this->data->icon_image = trans('icon.image');
 
