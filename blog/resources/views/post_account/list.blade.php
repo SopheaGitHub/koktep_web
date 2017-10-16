@@ -4,42 +4,39 @@
         $post_category = (($post->category_id)? $post->category_id.'-'.str_replace(' ', '-', strtolower($post->category_name)):'0');
         $view_detail = $data->post_detail.'?account_id='.$post->author_id.'&post_id='.$post->post_id.'&category_id='.$post_category;
       
-        $description = mb_substr(strip_tags(html_entity_decode($post->description, ENT_QUOTES, 'UTF-8')), 0, 100).((mb_strlen($post->description)>100)? '...':'');
+        $description = mb_substr(strip_tags(html_entity_decode($post->description, ENT_QUOTES, 'UTF-8')), 0, 225).((mb_strlen($post->description)>225)? '...':'');
 
       ?>
-      <div class="row">
-        <div class="col-sm-4 col-md-4" style="margin-bottom: 10px;">
-          <div>
-            <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:25px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span style="font-size: 10px;"><?php echo $post->author_name; ?></span></a>
-          </div>
-          <div style="background:#fff; padding:5px; margin-top:5px; padding-bottom:0px;">
+      <div class="row" style="background:#fbfcfc; border:1px solid #91beb1; border-radius:4px; margin:0px; padding:5px;">
+        <div class="col-sm-4 col-md-4" style="padding:0px;">
+          <div style="background:#fbfcfc;">
 
             <div class="image-container">
               <a href="<?php echo $view_detail; ?>"><img class="image" src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" style="width:100%;"></a>
-              <a href="<?php echo $view_detail; ?>" class="overlaylogo">
-                <div class="text">
-                  <span style="color: #91beb1;"><?php echo $post->title; ?></span>
-                  <div><i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y H:i', strtotime($post->created_at)); ?></div>
-                  <p><?php echo $description; ?></p>
-                </div>
-              </a>
-              <div class="overlay">
-                <div class="text"><a href="<?php echo $view_detail; ?>"><?php echo $post->title; ?></a></div>
-              </div>
-            </div>
-
-            <div style="text-align:right; font-size:10px; color: #ccc;">
-              <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
-              <i data-toggle="tooltip" title="<?php echo $data->icon_rating; ?>" class="fa fa-btn fa-star"></i><?php echo (($post->average_rating!='')? $post->average_rating:'0'); ?> &nbsp;
-              <i data-toggle="tooltip" title="<?php echo $data->icon_favorite; ?>" class="fa fa-btn fa-heart"></i><?php echo $post->total_favorite; ?> &nbsp;
-              <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
-              <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="<?php echo $data->icon_image; ?>" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
+              <a href="<?php echo $view_detail; ?>" class="overlaylogo">&nbsp;</a>
             </div>
           </div>
 
         </div>
+        <div class="col-sm-8 col-md-8">
+          <div>
+            <a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:40px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span><?php echo $post->author_name; ?></span></a>
+          </div>
+          <br />
+          <div>
+            <div style="color:#cccccc; font-size: 12px;"><i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y H:i', strtotime($post->created_at)); ?></div>
+            <div style="font-size:12px; color: #ccc;">
+              <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
+              <i data-toggle="tooltip" title="<?php echo $data->icon_rating; ?>" class="fa fa-btn fa-star"></i><?php echo (($post->average_rating!='')? $post->average_rating:'0'); ?> &nbsp;
+              <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
+              <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="<?php echo $data->icon_image; ?>" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
+            </div>
+            <a class="well-title" href="<?php echo $view_detail; ?>"><?php echo $post->title; ?></a>
+            <p class="well-description"><?php echo $description; ?></p>
+          </div>
+        </div>
       </div>
-      
+      <br />
     <?php } 
   } else { ?>
   <em><?php echo $data->text_empty; ?></em>

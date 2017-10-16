@@ -13,7 +13,7 @@
 	            </div>
 	            <br />
 	            <div>
-                    <div style="color:#cccccc; font-size: 10px;"><i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y H:i', strtotime($post->created_at)); ?></div>
+                    <div style="color:#cccccc; font-size: 12px;"><i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y H:i', strtotime($post->created_at)); ?></div>
                     <a class="well-title" href="<?php echo $view_detail; ?>"><?php echo $post->title; ?></a>
                     <p class="well-description"><?php echo $description; ?></p>
                 </div>
@@ -22,7 +22,7 @@
 	                <a href="<?php echo $view_detail; ?>" class="overlaylogo">&nbsp;</a>
 	            </div>
 
-	            <div style="text-align:right; font-size:10px; color: #ccc;">
+	            <div style="text-align:right; font-size:12px; color: #ccc;">
 	                <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
 	                <i data-toggle="tooltip" title="<?php echo $data->icon_rating; ?>" class="fa fa-btn fa-star"></i><?php echo (($post->average_rating!='')? $post->average_rating:'0'); ?> &nbsp;
 	                <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
