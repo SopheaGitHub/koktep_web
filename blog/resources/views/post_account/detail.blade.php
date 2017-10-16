@@ -53,15 +53,9 @@
                         <form>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div style="font-size: 12px;">
+                                    <div>
                                         <label><a href="#" role="button" data-trigger="show-rating">Rating <span id="load-total-rating" style="padding: 5px; border-radius: 50%;"><?php echo $data->count_rating->average_rating; ?></span></a></label>
                                         <input type="text" class="kv-gly-star rating-loading" value="<?php echo (($data->check_is_user_exit_raing)? $data->check_is_user_exit_raing->star:'0'); ?>" data-size="xs" title="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div style="font-size: 12px;">
-                                        <label><a href="#" role="button" data-trigger="show-favorite">Favorite <span id="load-total-favorite" style="padding: 5px; border-radius: 50%;"><?php echo $data->count_favorite->total_favorite; ?></span></a></label><br />
-                                        <div id="show-total-favorite"><i data-class="<?php echo (($data->check_is_user_exit_favorite)? 'primary':'default'); ?>" class="btn btn-<?php echo (($data->check_is_user_exit_favorite)? 'primary':'default'); ?>-favorite fa fa-btn fa-heart load-favorite"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -188,7 +182,6 @@
                                   <div style="text-align:right; font-size:10px; color: #ccc;">
                                     <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
                                     <i data-toggle="tooltip" title="<?php echo $data->icon_rating; ?>" class="fa fa-btn fa-star"></i><?php echo (($post->average_rating!='')? $post->average_rating:'0'); ?> &nbsp;
-                                    <i data-toggle="tooltip" title="<?php echo $data->icon_favorite; ?>" class="fa fa-btn fa-heart"></i><?php echo $post->total_favorite; ?> &nbsp;
                                     <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;
                                     <a href="<?php echo $view_detail; ?>"><i data-toggle="tooltip" title="<?php echo $data->icon_image; ?>" class="fa fa-btn fa-picture-o"></i></a><?php echo ($post->total_post_image+1); ?>
                                   </div>
@@ -280,39 +273,6 @@ $(document).ready(function() {
             });
         });
 
-        $(document).on('click', '.load-favorite', function() {
-            var class_id = '';
-            if($(this).data('class')=='default') {
-                class_id = 'primary';
-            }else{
-                class_id = 'default';
-            }
-            
-            $.ajax({
-                type: "GET",
-                url: "<?php echo $data->action_favorite; ?>&post_id=<?php echo $data->post_id;?>",
-                beforeSend:function() {
-                    $('#block-loader').show();
-                },
-                complete:function() {
-                    $('#block-loader').hide();
-                },
-                success:function(html) {
-                    var leng = html.length;
-                    if(leng < 15) {
-                        $('#show-total-favorite i').replaceWith('<i data-class="'+class_id+'" class="btn btn-'+class_id+'-favorite fa fa-btn fa-heart load-favorite"></i>');
-                        $('#load-total-favorite').html(html).show();
-                    }else {
-                        $('#load-unauthorized').html(html).show();
-                    }
-                },
-                error:function(request, status, error) {
-                    $('#load-total-favorite').html('').show();
-                }
-            });
-            return false;
-        });
-
         $(document).delegate('a[data-trigger=\'show-rating\']', 'click', function() {
             $('#modal-show-rating').remove();
             $.ajax({
@@ -331,32 +291,6 @@ $(document).ready(function() {
                     $('body').append('<div id="modal-show-rating" class="modal">' + html + '</div>');
 
                     $('#modal-show-rating').modal('show');
-                },
-                error:function(request, status, error) {
-                    // $('#load-total-favorite').html('').show();
-                }
-            });
-            return false;
-        });
-
-        $(document).delegate('a[data-trigger=\'show-favorite\']', 'click', function() {
-            $('#modal-show-favorite').remove();
-            $.ajax({
-                type: "GET",
-                url: '<?php echo $data->action_show_favorite; ?>',
-                dataType: 'html',
-                beforeSend: function() {
-                    // before send
-                    $('#block-loader').show();
-                },
-                complete: function() {
-                    // completed
-                    $('#block-loader').hide();
-                },
-                success: function(html) {
-                    $('body').append('<div id="modal-show-favorite" class="modal">' + html + '</div>');
-
-                    $('#modal-show-favorite').modal('show');
                 },
                 error:function(request, status, error) {
                     // $('#load-total-favorite').html('').show();

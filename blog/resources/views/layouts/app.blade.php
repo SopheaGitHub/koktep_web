@@ -34,6 +34,11 @@
     <link href="<?php echo asset('/javascript/jquery/magnific/magnific-popup.css'); ?>" rel="stylesheet" />
 
     <style type="text/css">
+        .btn-primary {
+            color: #ffffff;
+            /*background-color: #1bb794;*/
+            border-color: #1bb793;
+        }
         .btn-primary:hover {
             color: #e2e5d8;
             background-color: #6e8984;

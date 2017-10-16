@@ -31,7 +31,7 @@
     }
     
 ?>
-<div class="row profile" style="background: #fbfcfc; margin:15px;">
+<div class="row" style="background: #fbfcfc; margin:15px; margin-bottom:25px;">
     <div class="col-md-3" style="padding-top:10px;">
         <div class="profile-sidebar">
             <!-- SIDEBAR USERPIC -->
@@ -90,28 +90,6 @@
                     <?php } ?>
                 </div>
             </div>
-        </div>
-        <div class="row overview">
-            <!-- <div class="col-md-4 user-pad text-center">
-                <h5>FOLLOWERS</h5>
-                <div style="padding:10px;"><button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-envelope"></i> Follower</button></div>
-                <h4>2,784</h4>
-            </div> -->
-            <!-- <div class="col-md-4 user-pad text-center">
-                <h5>APPRECIATIONS</h5>
-                <div style="padding:10px;"><button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-star"></i> Stars</button></div>
-                <h4>4,901</h4>
-            </div> -->
-            <!-- <div class="col-md-4 user-pad text-center">
-                <h5>APPRECIATIONS</h5>
-                <div style="padding:10px;"><button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-heart"></i> Favorites</button></div>
-                <h4>4,901</h4>
-            </div> -->
-            <!-- <div class="col-md-4 user-pad text-center">
-                <h5>FOLLOWING</h5>
-                <div style="padding:10px;"><button type="button" id="submit-account-setting" data-toggle="tooltip" title="" class="btn btn-sm btn-primary" data-original-title=""><i class="fa fa-btn fa-user"></i> Following</button></div>
-                <h4>456</h4>
-            </div> -->
         </div>
     </div>
 </div>

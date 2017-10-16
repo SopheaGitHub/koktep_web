@@ -48,7 +48,7 @@
 }
 </style>
 <form action="#" method="GET" enctype="multipart/form-data" id="form-filter" class="form-horizontal">
-    <div class="row" style="padding: 0px 5px;">
+    <div class="row" style="padding: 0px 10px;">
         <div>
             <input type="hidden" name="category_id" id="category-id" value="<?php echo $category_id; ?>">
         </div>
@@ -95,15 +95,15 @@
                 </div>
             </div>
         </div>
-    </div>
-    <hr />
-    <div style="border:1px solid #fff; margin-top:-35px; background: #fbfcfc; width:auto; padding-left: 5px; float: right;">
-        <ul class="filter-left-display-menu">
-            <li><a href="#" role="button" data-trigger="view-grid-large"><i data-toggle="tooltip" title="<?php echo trans('text.grid_large'); ?>" class="fa fa-btn fa-th-large"></i></a></li>
-            <li><a href="#" role="button" data-trigger="view-grid"><i data-toggle="tooltip" title="<?php echo trans('text.grid'); ?>" class="fa fa-btn fa-th"></i></a></li>
-            <li><a href="#" role="button" data-trigger="view-list"><i data-toggle="tooltip" title="<?php echo trans('text.list'); ?>" class="fa fa-btn fa-list"></i></a></li>
-        </ul>
-        <input type="hidden" name="view" id="view" value="grid-large" />
+
+        <div class="col-md-12" style="text-align: right;">
+            <ul class="filter-left-display-menu">
+                <li><a href="#" role="button" data-trigger="view-grid-large"><i data-toggle="tooltip" title="<?php echo trans('text.grid_large'); ?>" class="fa fa-btn fa-th-large"></i></a></li>
+                <!-- <li><a href="#" role="button" data-trigger="view-grid"><i data-toggle="tooltip" title="<?php // echo trans('text.grid'); ?>" class="fa fa-btn fa-th"></i></a></li> -->
+                <li><a href="#" role="button" data-trigger="view-list"><i data-toggle="tooltip" title="<?php echo trans('text.list'); ?>" class="fa fa-btn fa-th-list"></i></a></li>
+            </ul>
+            <input type="hidden" name="view" id="view" value="grid-large" />
+        </div>
     </div>
 </form>
 <script type="text/javascript"><!--
