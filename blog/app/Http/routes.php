@@ -51,7 +51,9 @@ Route::controllers([
 	'/posts'			=> 'PostsController',
 	'/posts-groups-account'	=> 'PostsGroupsAccountController',
 	'/posts-groups'	=> 'PostsGroupsController',
-	'/geo-zones' 	=> 'GeoZonesController'
+	'/geo-zones' 	=> 'GeoZonesController',
+
+	'/exhibition' 	=> 'ExhibitionController'
 ]);
 
 Route::get('/email', function() {
