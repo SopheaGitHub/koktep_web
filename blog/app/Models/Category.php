@@ -102,6 +102,15 @@ class Category extends Model {
 		return $db;
 	}
 
+	public function getArrayCategories() {
+		$categories = [];
+		$result = DB::select(DB::raw('SELECT c.category_id AS category_id, cd.name AS category_name FROM category AS c INNER JOIN category_description AS cd ON c.category_id = cd.category_id AND cd.language_id = 1 ORDER BY category_id ASC'));
+		foreach ($result as $value) {
+			$categories[$value->category_id] = $value->category_name;
+		}
+		return $categories;
+	}
+
 	public function getCategoriesByLanguage($filter_data=[]) {
 		$db = DB::table(DB::raw('
 				(

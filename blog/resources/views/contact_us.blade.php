@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="padding-fixed-header"></div>
 <div class="container">
     <div class="row profile">
         <div class="col-md-12">

@@ -9,9 +9,9 @@
   </style>
 <div class="row">
   <div class="col-md-3"></div>
-  <div class="col-md-6" style="background-color:teal; text-align:center;">
+  <div class="col-md-6" style="background-color:teal; text-align:center; line-height: 0px;">
 
-      <h3 style="margin:0px; padding:5px; color:#fff;"><i class="fa fa-btn fa-calendar"></i> Exhibition Date: 02 December 2017 - 05 December 2017</h3>
+      <marquee behavior="scroll" scrolldelay="100" direction="left"><h3 style="margin:0px; padding:5px; color:#fff;"><i class="fa fa-btn fa-calendar-check-o"></i> <?php echo $data->exhibition_title; ?> ( Date: <?php echo $data->exhibition_open_date; ?> - <?php echo $data->exhibition_close_date; ?> )</h3></marquee>
 
   </div>
   <div class="col-md-3"></div>
@@ -31,30 +31,27 @@
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
-          <div class="item active">
-            <img src="<?php echo url('/images/slider/download.svg'); ?>" alt="...">
+
+          <?php
+            if(count($data->thumb_slide) > 0) {
+              $i=1;
+              foreach ($data->thumb_slide as $key => $value) { ?>
+                <div class="item <?php echo (($i==1)? 'active':'') ?> ">
+                  <a href="<?php echo url('/exhibition/view-exhibition?category='.$key); ?>"><img src="<?php echo $value; ?>" alt="..."></a>
+                  <div class="carousel-caption">
+                    <a href="<?php echo url('/exhibition/view-exhibition?category='.$key); ?>"><?php echo ((isset($data->category_name[$key]))? $data->category_name[$key]:''); ?></a>
+                  </div>
+                </div>
+            <?php $i++; }
+            }
+          ?>
+
+          <!-- <div class="item">
+            <img src="<?php // echo url('/images/slider/banner.jpg'); ?>" alt="...">
             <div class="carousel-caption">
-              <a href="#">Art</a>
+              <a href="<?php ///echo url('/exhibition/view-exhibition?category=2-design'); ?>">Design</a>
             </div>
-          </div>
-          <div class="item">
-            <img src="<?php echo url('/images/slider/download (1).svg'); ?>" alt="...">
-            <div class="carousel-caption">
-              <a href="#">Design</a>
-            </div>
-          </div>
-          <div class="item">
-            <img src="<?php echo url('/images/slider/download (2).svg'); ?>" alt="...">
-            <div class="carousel-caption">
-              <a href="#">Photography</a>
-            </div>
-          </div>
-          <div class="item">
-            <img src="<?php echo url('/images/slider/download (1).svg'); ?>" alt="...">
-            <div class="carousel-caption">
-              <a href="#">Development</a>
-            </div>
-          </div>
+          </div> -->
         </div>
 
         <!-- Controls -->
@@ -74,147 +71,100 @@
 <div class="row">
   <div class="col-md-3"></div>
   <div class="col-md-6">
-    <div class="row" id="exhibition-art" style="background: #ffffff; border-bottom:1px solid #f1f1f1;">
+    <?php
+      if(count($data->data_categories) > 0) {
+        foreach ($data->data_categories as $key => $value) { ?>
+          <div class="row" id="exhibition-<?php echo $key; ?>" style="background: #ffffff; border-bottom:1px solid #f1f1f1;">
+            <div class="col-md-12">
+              <a href="<?php echo url('/exhibition/view-exhibition?category='.$key); ?>" class="btn btn-primary btn-sm" style="width:100%; background: teal; border-radius:0px; font-size: 16px;"><img src="<?php echo url('/images/head_pointer.gif'); ?>" width="30px;" alt="" /> <?php echo $value['category_name']; ?></a>
+            </div>
+            <div class="col-md-6">
+              <a href="<?php echo url('/exhibition/view-exhibition?category='.$key); ?>"><img src="<?php echo $value['thumb_image']; ?>" style="width:100%" alt="Canoeing again"></a>
+            </div>
+            <div class="col-md-6">
+              <div id="container-<?php echo $key; ?>"></div>
+            </div>
+          </div>
+      <?php  }
+      }
+    ?>
+    
+
+    <!-- <div class="row" style="background: #ffffff; border-bottom:1px solid #f1f1f1;">
       <div class="col-md-12">
-        <a href="#" class="btn btn-primary btn-sm" style="width:100%; background: teal; border-radius:0px; font-size: 16px;">View Art's Exhibition</a>
+        <a href="<?php // echo url('/exhibition/view-exhibition?category=2-design'); ?>" class="btn btn-primary btn-sm" style="width:100%; background: teal; border-radius:0px; font-size: 16px;"><img src="<?php // echo url('/images/head_pointer.gif'); ?>" width="30px;" alt="" /> View Design's Exhibition</a>
       </div>
       <div class="col-md-6">
-        <img src="<?php echo url('/images/photo/girl.jpg'); ?>" style="width:100%" alt="Canoeing again">
-      </div>
-      <div class="col-md-6">
-        <div id="container-art"></div>
-      </div>
-    </div>
-    <div class="row" style="background: #ffffff; border-bottom:1px solid #f1f1f1;">
-      <div class="col-md-12">
-        <a href="#" class="btn btn-primary btn-sm" style="width:100%; background: teal; border-radius:0px; font-size: 16px;">View Design's Exhibition</a>
-      </div>
-      <div class="col-md-6">
-        <img src="<?php echo url('/images/photo/girl_train.jpg'); ?>" style="width:100%" alt="Canoeing again">
+        <a href="<?php // echo url('/exhibition/view-exhibition?category=2-design'); ?>"><img src="<?php // echo url('/images/all_sample_design.jpg'); ?>" style="width:100%" alt="Canoeing again"></a>
       </div>
       <div class="col-md-6">
         <div id="container-design"></div>
       </div>
-    </div>
-    <div class="row" style="background: #ffffff; border-bottom:1px solid #f1f1f1;">
-      <div class="col-md-12">
-        <a href="#" class="btn btn-primary btn-sm" style="width:100%; background: teal; border-radius:0px; font-size: 16px;">View Photography's Exhibition</a>
-      </div>
-      <div class="col-md-6">
-        <img src="<?php echo url('/images/photo/girl_mountain.jpg'); ?>" style="width:100%" alt="Canoeing again">
-      </div>
-      <div class="col-md-6">
-        <div id="container-photography"></div>
-      </div>
-    </div>
-    <div class="row" style="background: #ffffff; border-bottom:1px solid #f1f1f1;">
-      <div class="col-md-12">
-        <a href="#" class="btn btn-primary btn-sm" style="width:100%; background: teal; border-radius:0px; font-size: 16px;">View Development's Exhibition</a>
-      </div>
-      <div class="col-md-6">
-        <img src="<?php echo url('/images/photo/boy.jpg'); ?>" style="width:100%" alt="Canoeing again">
-      </div>
-      <div class="col-md-6">
-        <div id="container-development"></div>
-      </div>
-    </div>
+    </div> -->
+
   </div>
   <div class="col-md-3"></div>
 </div>
 @endsection
 @section('script')
+  <script type="text/javascript"><!--
+  <?php
+    if(count($data->data_categories) > 0) {
+      foreach ($data->data_categories as $key => $value) { ?>
+        var chart = Highcharts.chart('container-<?php echo $key; ?>', {
+          title: {
+            text: "<?php echo $value['chart_title']; ?>",
+            style: {
+              color: "#969696"
+            }
+          },
+          subtitle: {
+              text: ''
+          },
+          xAxis: {
+            categories: [<?php echo '"'.implode('","', $value['name_charts']).'"'; ?>]
+          },
+          series: [{
+              type: 'column',
+              colorByPoint: true,
+              data: [<?php echo implode(',', $value['data_charts']); ?>],
+              showInLegend: false
+          }],
+          chart: {
+            backgroundColor: "#313131",
+          }
+        });
+    <?php  }
+    }
+  ?>
+  //--></script>
+
   <script type="text/javascript">
-    var chart1 = Highcharts.chart('container-art', {
 
-      title: {
-          text: 'Art\'s Ratting'
-      },
+    
 
-      subtitle: {
-          text: ''
-      },
+    // var chart = Highcharts.chart('container-development', {
 
-      xAxis: {
-          categories: ['ART01', 'ART02', 'ART03', 'ART04', 'ART05', 'ART06', 'ART07', 'ART08', 'ART09', 'ART10']
-      },
+    //   title: {
+    //       text: 'Development\'s Ratting'
+    //   },
 
-      series: [{
-          type: 'column',
-          colorByPoint: true,
-          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1],
-          showInLegend: false
-      }],
+    //   subtitle: {
+    //       text: ''
+    //   },
 
-    });
+    //   xAxis: {
+    //       categories: ['DEV01', 'DEV02', 'DEV03', 'DEV04', 'DEV05', 'DEV06', 'DEV07', 'DEV08', 'DEV09']
+    //   },
 
-    var chart2 = Highcharts.chart('container-design', {
+    //   series: [{
+    //       type: 'column',
+    //       colorByPoint: true,
+    //       data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4],
+    //       showInLegend: false
+    //   }]
 
-      title: {
-          text: 'Design\'s Ratting'
-      },
-
-      subtitle: {
-          text: ''
-      },
-
-      xAxis: {
-          categories: ['DES01', 'DES02', 'DES03', 'DES04', 'DES05', 'DES06', 'DES07', 'DES08', 'DES09', 'DES10']
-      },
-
-      series: [{
-          type: 'column',
-          colorByPoint: true,
-          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1],
-          showInLegend: false
-      }]
-
-    });
-
-    var chart3 = Highcharts.chart('container-photography', {
-
-      title: {
-          text: 'Photography\'s Ratting'
-      },
-
-      subtitle: {
-          text: ''
-      },
-
-      xAxis: {
-          categories: ['PHO01', 'PHO02', 'PHO03', 'PHO04', 'PHO05', 'PHO06', 'PHO07', 'PHO08', 'PHO09', 'PHO10']
-      },
-
-      series: [{
-          type: 'column',
-          colorByPoint: true,
-          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1],
-          showInLegend: false
-      }]
-
-    });
-
-    var chart4 = Highcharts.chart('container-development', {
-
-      title: {
-          text: 'Development\'s Ratting'
-      },
-
-      subtitle: {
-          text: ''
-      },
-
-      xAxis: {
-          categories: ['DEV01', 'DEV02', 'DEV03', 'DEV04', 'DEV05', 'DEV06', 'DEV07', 'DEV08', 'DEV09', 'DEV10']
-      },
-
-      series: [{
-          type: 'column',
-          colorByPoint: true,
-          data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1],
-          showInLegend: false
-      }]
-
-    });
+    // });
 
   </script>
 @endsection

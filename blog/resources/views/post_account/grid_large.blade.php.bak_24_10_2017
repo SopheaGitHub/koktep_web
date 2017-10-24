@@ -6,27 +6,23 @@
 	          	$view_detail = $data->post_detail.'?account_id='.$post->author_id.'&post_id='.$post->post_id.'&category_id='.$post_category;
 	          	$description = mb_substr(strip_tags(html_entity_decode($post->description, ENT_QUOTES, 'UTF-8')), 0, 150).((mb_strlen($post->description)>150)? '...':'');
 	        ?>
-
-	        <!-- <div class="item_grid_large well">
-            	<div class="image-container">
-                	<a href="<?php // echo ((isset($data->thumb[$request->request_id]))? $data->thumb[$request->request_id]:''); ?>" class="thumbnailimage" title="<?php // echo $request->file_title; ?>"><img class="image" src="<?php // echo ((isset($data->thumb[$request->request_id]))? $data->thumb[$request->request_id]:''); ?>" style="width:100%; cursor: zoom-in;"></a>
-                	<div class="overlaylogo" style="color: teal;">Request: <?php // echo ((strlen($request->request_id) > 1)? $request->request_id:'0'.$request->request_id); ?>, <?php // echo $request->category_name; ?></div>
-            	</div>
-          	</div> -->
 	        
 	        <div class="item_grid_large well">
+				<div>
+	              	<a href="<?php echo $data->overview_account.'?account_id='.$post->author_id; ?>"><img style="width:40px; margin-top:5px; border-radius:50%;" src="<?php echo ((isset($data->thumb_user[$post->post_id]))? $data->thumb_user[$post->post_id]:''); ?>"> &nbsp; <span><?php echo $post->author_name; ?></span></a>
+	            </div>
+	            <br />
+	            <div>
+                    <div style="color:#cccccc; font-size: 12px;"><i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y H:i', strtotime($post->created_at)); ?></div>
+                    <a class="well-title" href="<?php echo $view_detail; ?>"><?php echo $post->title; ?></a>
+                    <p class="well-description"><?php echo $description; ?></p>
+                </div>
 	            <div class="image-container">
 	                <a href="<?php echo $view_detail; ?>"><img class="image" src="<?php echo ((isset($data->thumb[$post->post_id]))? $data->thumb[$post->post_id]:''); ?>" style="width:100%;"></a>
-	                <a href="<?php echo $view_detail; ?>" class="overlaylogo">
-	                  <div class="text">
-	                    <span><?php echo $post->title; ?></span>
-	                    <div><i class="fa fa-btn fa-calendar"></i><?php echo date('M dS, Y H:i', strtotime($post->created_at)); ?></div>
-	                    <p><?php echo $description; ?></p>
-	                  </div>
-	                </a>
+	                <a href="<?php echo $view_detail; ?>" class="overlaylogo">&nbsp;</a>
 	            </div>
 
-	            <div style="text-align:right; font-size:12px;">
+	            <div style="text-align:right; font-size:12px; color: #ccc;">
 	                <i data-toggle="tooltip" title="<?php echo $data->icon_view; ?>" class="fa fa-btn fa-eye"></i><?php echo $post->viewed; ?> &nbsp;
 	                <i data-toggle="tooltip" title="<?php echo $data->icon_rating; ?>" class="fa fa-btn fa-star"></i><?php echo (($post->average_rating!='')? $post->average_rating:'0'); ?> &nbsp;
 	                <i data-toggle="tooltip" title="<?php echo $data->icon_comment; ?>" class="fa fa-btn fa-comment"></i><?php echo $post->commented; ?> &nbsp;

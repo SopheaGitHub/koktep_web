@@ -57,9 +57,9 @@
             }
         }
     }
-?>
-<nav class="navbar navbar-default navbar-static-top navbar-fixed-top">
-    <div class="container">
+?>   
+<nav class="navbar navbar-default navbar-static-top navbar-fixed-top" style="background: teal;">
+    <div class="container-fluid" style="padding-right: 0px; padding:0px;">
         <div class="navbar-header">
 
             <!-- Collapsed Hamburger -->
@@ -71,10 +71,7 @@
             </button>
 
             <!-- Branding Image -->
-            <a class="navbar-brand" href="<?php echo url('/'); ?>" style="color:#EFD518;">
-              <img src="<?php  echo url('/images/logo_koktep_v2.png'); ?>" width="50%">
-              <!-- <i class="fa fa-btn fa-twitter"></i> KOKTEP -->
-            </a>
+            <a class="navbar-brand" href="<?php echo url('/'); ?>">KOKTEP.COM</a>
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -151,7 +148,7 @@
                 @else
                     <li class="dropdown <?php echo (($route_category_id=='user_auth_menu')? 'active':''); ?>">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <span class="thumb-sm avatar pull-left img-circle" style="background: #ffffff;"><img class="img-circle" width="30px" src="<?php echo $thumb_profile; ?>" alt="..."></span> &nbsp;&nbsp; <?php echo Auth::user()->name; ?> <span class="caret"></span>
+                            <span class="thumb-sm avatar pull-left img-circle" style="background: #ffffff;"><img class="img-circle" width="30px" src="<?php echo $thumb_profile; ?>" alt="..."></span> &nbsp;&nbsp; <?php echo Auth::user()->name; ?>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">

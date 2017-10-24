@@ -9,13 +9,12 @@
     <base href="<?php echo url('/').'/'; ?>" />
     <!-- <link href="<?php //echo url('/images/icon_koktep_v2.png'); ?>" rel="icon" /> -->
     <!-- main js -->
-    <script type="text/javascript" src="<?php echo asset('/javascript/jquery/lplusin.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo asset('/javascript/jquery/jquery-2.1.1.min.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo asset('/javascript/bootstrap/js/bootstrap.min.js'); ?>"></script>
 
     <!-- Fonts -->
     <link type="text/css" href="<?php echo asset('/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet" media="all">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 
     <!-- Styles -->
     <link href="<?php echo asset('/javascript/bootstrap/css/bootstrap.min.css'); ?>" type="text/css" rel="stylesheet" />
@@ -36,13 +35,14 @@
     <style type="text/css">
         .btn-primary {
             color: #ffffff;
-            /*background-color: #1bb794;*/
+            background-color: teal;
             border-color: #1bb793;
         }
         .btn-primary:hover {
-            color: #e2e5d8;
-            background-color: #6e8984;
-            border-color: #6e8984;
+            color: #ffffff;
+            background-color: teal;
+            border-color: #1bb793;
+            opacity: 0.7;
         }
         a[data-toggle='image']:hover {
             background: #cccccc; 
@@ -61,9 +61,7 @@
       <!-- include header -->
       @include('common.header')
     </header>
-    
-    <div class="padding-fixed-header"></div>
-
+    <!-- <div class="padding-fixed-header"></div> -->
     <section>
       @yield('content')
     </section>

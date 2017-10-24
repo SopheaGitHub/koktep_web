@@ -398,6 +398,119 @@ class FilemanagerController extends Controller {
 		return json_encode($json);
 	}
 
+	public function storeFile($request=[], $return=0) {
+		$respone = [];
+		// add system log
+        $this->systemLogs('upload', 'filemanager', $request);
+        // End
+
+		$json = array();
+
+		// Make sure we have the correct directory
+		if (isset($request['directory'])) {
+			$directory = rtrim($this->data->dir_image . 'exhibition/' . str_replace(array('../', '..\\', '..'), '', $request['directory']), '/');
+		} else {
+			$directory = $this->data->dir_image . 'exhibition/';
+		}
+
+		// Check its a directory
+		if (!is_dir($directory)) {
+			$json['error'] = $directory.' '.trans('filemanager.directory_not_exist');
+		}
+
+		// Return any upload error
+		$array_error_upload_fille = [
+			'1' => trans('filemanager.UPLOAD_ERR_INI_SIZE'),
+			'2' => trans('filemanager.UPLOAD_ERR_FORM_SIZE'),
+			'3' => trans('filemanager.UPLOAD_ERR_PARTIAL'),
+			'4' => trans('filemanager.UPLOAD_ERR_NO_FILE'),
+			'6'	=> trans('filemanager.UPLOAD_ERR_NO_TMP_DIR'),
+			'7' => trans('filemanager.UPLOAD_ERR_CANT_WRITE'),
+			'8' => trans('filemanager.UPLOAD_ERR_EXTENSION')
+		];
+
+		if ($_FILES['file']['error'] != UPLOAD_ERR_OK) {
+			$json['error'] =  (( isset($array_error_upload_fille[$_FILES['file']['error']]) )? $array_error_upload_fille[$_FILES['file']['error']]:$_FILES['file']['error']);
+		}
+
+		if (!$json) {
+			if (!empty($_FILES['file']['name']) && is_file($_FILES['file']['tmp_name'])) {
+				// Sanitize the filename
+				$filename = basename(html_entity_decode($_FILES['file']['name'], ENT_QUOTES, 'UTF-8'));
+
+				// Validate the filename length
+				if ((strlen($filename) < 3) || (strlen($filename) > 255)) {
+					$json['error'] = trans('filemanager.filename_value_between');
+				}
+
+				// Allowed file extension types
+				$allowed = array(
+					'jpg',
+					'jpeg',
+					'gif',
+					'png'
+				);
+
+				if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
+					$json['error'] = trans('filemanager.incorrect_file_type');
+				}
+
+				// Allowed file mime types
+				$allowed = array(
+					'image/jpeg',
+					'image/pjpeg',
+					'image/png',
+					'image/x-png',
+					'image/gif'
+				);
+
+				if (!in_array($_FILES['file']['type'], $allowed)) {
+					$json['error'] = trans('filemanager.incorrect_file_type');
+				}
+
+				// Check to see if any PHP files are trying to be uploaded
+				$content = file_get_contents($_FILES['file']['tmp_name']);
+
+				if (preg_match('/\<\?php/i', $content)) {
+					$json['error'] = trans('filemanager.incorrect_file_type');
+				}
+
+				// Return any upload error
+				if ($_FILES['file']['error'] != UPLOAD_ERR_OK) {
+					$json['error'] = 'Error: error_upload_' . $_FILES['file']['error'];
+				}
+			} else {
+				$json['error'] = trans('filemanager.error_unknown_reason');
+			}
+		}
+
+		if (!$json) {
+			if($return==1) {
+				// define image name if exits image name
+				$actual_name = pathinfo($filename,PATHINFO_FILENAME);
+				$original_name = $actual_name;
+				$extension = pathinfo($filename, PATHINFO_EXTENSION);
+				$i = 1;
+				while(file_exists($directory . '/' .$actual_name.".".$extension))
+				{           
+				    $actual_name = (string)$original_name.$i;
+				    $filename = $actual_name.".".$extension;
+				    $i++;
+				}
+
+				// upload image
+				move_uploaded_file($_FILES['file']['tmp_name'], $directory . '/' . $filename);
+
+				$json['success'] = trans('filemanager.success_upload');
+				$respone=['status'=>'validate', 'file_name'=>$filename, 'json'=>$json];
+			}
+		} else {
+			$respone=['status'=>'validate', 'file_name'=>'', 'json'=>$json];
+		}
+		
+		return $respone;
+	}
+
 	public function postFolder() {
 		$request = \Request::all();
 		// add system log

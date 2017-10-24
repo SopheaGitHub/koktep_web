@@ -10,6 +10,7 @@ if(\Session::has('locale')) {
 }
 $language = $objLanguage->getLanguageByCode( $locale );
 ?>
+<div class="padding-fixed-header"></div>
 <div class="container">
     <div class="row">
         <div class="col-md-12">

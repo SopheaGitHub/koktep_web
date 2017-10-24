@@ -48,7 +48,7 @@
 }
 </style>
 <form action="#" method="GET" enctype="multipart/form-data" id="form-filter" class="form-horizontal">
-    <div class="row" style="padding: 0px 10px;">
+    <div class="row">
         <div>
             <input type="hidden" name="category_id" id="category-id" value="<?php echo $category_id; ?>">
         </div>

@@ -2,6 +2,7 @@
 
 <!-- Main Content -->
 @section('content')
+<div class="padding-fixed-header"></div>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">

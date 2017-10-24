@@ -31,6 +31,7 @@
     }
     
 ?>
+<div class="padding-fixed-header"></div>
 <div class="row" style="background: #fbfcfc; margin:15px; margin-bottom:25px;">
     <div class="col-md-3" style="padding-top:10px;">
         <div class="profile-sidebar">
@@ -81,7 +82,7 @@
         <div class="row" style="padding:10px;">
             <div class="cover-userpic">
                 <div class="profile-pic">
-                    <div style="background: #fff; border: 5px solid #91beb1;">
+                    <div style="background: #fff; border: 5px solid teal;">
                       <a href="#" role="button" data-trigger="view-original-cover" style="cursor: zoom-in;"><img width="100%" src="<?php echo $thumb_cover; ?>"></a>
                     </div>
                     <?php

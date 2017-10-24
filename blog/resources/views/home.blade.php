@@ -1,21 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div style="margin-top:-9px; height:30px; background: #91beb1; color: #fff; text-align:center;">
-    <h5 style="margin:0px; padding-top:7px;"><?php echo trans('text.show_cash_your_work'); ?></h5>
+<div class="jumbotron my-4">
+    <h1 class="display-3">A Warm Welcome!</h1>
+    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
+    <a href="#" class="btn btn-primary btn-lg">Contact Us!</a>
 </div>
-<div>
-    <div class="container" style="padding-right: 5px; padding-left: 5px;">
-        @include('common.filter_top')
-    </div>
+<div style="background: teal; color: #fff; padding: 0px 20px;">
+    @include('common.filter_top')
 </div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div id="display-list">
-                
-            </div>
-        </div>
+<div style="padding: 20px;">
+    <div id="display-list">
+        
     </div>
 </div>
 @endsection

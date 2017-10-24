@@ -28,6 +28,7 @@
 @endsection
 
 @section('content')
+<div class="padding-fixed-header"></div>
 <?php
     if($data->check_post) { ?>
         <div class="container">

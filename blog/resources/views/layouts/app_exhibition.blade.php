@@ -54,14 +54,26 @@
         a.btn:hover{
             opacity: 0.8;
         }
+        .modal-content {
+            position: relative;
+            background-color: #f1f1f1; 
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            border: 1px solid #999;
+            border: 1px solid rgba(0,0,0,.2);
+            border-radius: 6px;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);
+            box-shadow: 0 1px 9px rgba(0,0,0,.5);
+        }
     </style>
     @yield('stylesheet')
 
 </head>
 <body id="app-layout">
-    <!-- <div id="block-loader">
+    <div id="block-loader">
         <div class="myloader"></div>
-    </div> -->
+    </div>
     <div id="blank">&nbsp;</div>
     <header>
       <!-- include header -->
@@ -80,5 +92,6 @@
     <script src="<?php echo asset('/common_exhibition.js'); ?>" type="text/javascript"></script>
     <script type="text/javascript" src="<?php echo asset('/javascript/cropit/dist/jquery.cropit.js'); ?>"></script>
     @yield('script')
+    <script type="text/javascript">$('#block-loader').hide();</script>
 </body>
 </html>
