@@ -137,7 +137,7 @@
 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <!-- <a href="<?php //echo url('/posts/create'); ?>" class="btn btn-primary navbar-btn btn-xs"><i class="fa fa-btn fa-upload"></i> <?php //echo trans('button.upload'); ?> </a> -->
-            <span class="abutton"><a href="#" role="button" data-toggle="load-upload-form" class="btn btn-primary navbar-btn btn-xs"><i class="fa fa-btn fa-upload"></i> <?php echo trans('button.upload'); ?> </a></span>
+            <!-- <span class="abutton"><a href="#" role="button" data-toggle="load-upload-form" class="btn btn-primary navbar-btn btn-xs"><i class="fa fa-btn fa-upload"></i> <?php // echo trans('button.upload'); ?> </a></span> -->
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">

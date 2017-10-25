@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>K Art, Design, Photo..., Develop... </title>
+    <title>Art, Design, Photo..., Develop... </title>
     <base href="<?php echo url('/').'/'; ?>" />
-    <!-- <link href="<?php //echo url('/images/icon_koktep_v2.png'); ?>" rel="icon" /> -->
+    <link href="<?php echo url('/images/logo_koktepv2_web_logo.png'); ?>" rel="icon" />
     <!-- main js -->
     <script type="text/javascript" src="<?php echo asset('/javascript/jquery/jquery-2.1.1.min.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo asset('/javascript/bootstrap/js/bootstrap.min.js'); ?>"></script>

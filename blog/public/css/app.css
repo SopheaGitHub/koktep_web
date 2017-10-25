@@ -5,7 +5,8 @@ body {
   color: #969696;
   line-height: 17px;
   /*text-align: center;*/
-  background-color: #f1f1f1;
+  /*background-color: #f1f1f1;*/
+  background-color: #ffffff;
 }
 
 .fa-btn {
@@ -797,4 +798,8 @@ ul.filter-left-display-menu li {
 
 .jumbotron h1 {
   font-size: 30px;
+}
+
+.jumbotron p {
+  font-size: 18px;
 }
